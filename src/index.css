@@ -1,0 +1,159 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --navy: #071A35;
+    --navy-2: #0B2745;
+    --navy-3: #103258;
+    --gold: #D4AF37;
+    --gold-2: #E8C766;
+    --silver: #C0C0C0;
+    --dark: #090909;
+    --white: #FFFFFF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--dark);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5 { font-family: 'Montserrat', sans-serif; font-weight: 800; }
+  .font-sub { font-family: 'Poppins', sans-serif; }
+  .font-body { font-family: 'Inter', sans-serif; }
+
+  ::selection { background: var(--gold); color: var(--navy); }
+}
+
+@layer components {
+  .glass {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .glass-light {
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+  }
+  .glass-navy {
+    background: rgba(7, 26, 53, 0.55);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(212, 175, 55, 0.18);
+  }
+  .splash-particle {
+    position: absolute;
+    border-radius: 9999px;
+    background: radial-gradient(circle, rgba(212,175,55,0.9) 0%, rgba(212,175,55,0.08) 40%, transparent 100%);
+    filter: blur(0.6px);
+    animation: splash-drift 6s ease-in-out infinite;
+  }
+  .splash-sweep {
+    box-shadow: 0 0 32px rgba(255, 220, 130, 0.9);
+  }
+  .gold-text {
+    background: linear-gradient(135deg, #E8C766 0%, #D4AF37 50%, #B8932B 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .gold-border { border: 1px solid rgba(212, 175, 55, 0.4); }
+  .btn-gold {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #E8C766, #D4AF37);
+    color: #071A35;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 8px 30px rgba(212, 175, 55, 0.25);
+  }
+  .btn-gold:hover { box-shadow: 0 12px 40px rgba(212, 175, 55, 0.5); transform: translateY(-2px); }
+  .btn-ghost {
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(10px);
+    color: #fff;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); background: rgba(212, 175, 55, 0.08); }
+  .section-pad { padding: 8rem 1.5rem; }
+  .container-x { max-width: 1280px; margin: 0 auto; }
+  .luxury-shadow { box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4); }
+  .rounded-lux { border-radius: 20px; }
+  .grid-bg {
+    background-image:
+      linear-gradient(rgba(212, 175, 55, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(212, 175, 55, 0.06) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .blueprint-bg {
+    background-image:
+      linear-gradient(rgba(120, 180, 255, 0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(120, 180, 255, 0.08) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+}
+
+@layer utilities {
+  .text-shadow-lux { text-shadow: 0 4px 30px rgba(0, 0, 0, 0.5); }
+  .glow-gold { box-shadow: 0 0 40px rgba(212, 175, 55, 0.35); }
+  .glow-gold-sm { box-shadow: 0 0 20px rgba(212, 175, 55, 0.3); }
+  .perspective { perspective: 1000px; }
+  .preserve-3d { transform-style: preserve-3d; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #071A35; }
+::-webkit-scrollbar-thumb { background: linear-gradient(#D4AF37, #B8932B); border-radius: 4px; }
+
+/* Marquee */
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.animate-marquee { animation: marquee 30s linear infinite; }
+.animate-marquee-rev { animation: marquee 35s linear infinite reverse; }
+
+/* Float */
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-18px); } }
+.animate-float { animation: float 6s ease-in-out infinite; }
+@keyframes float-slow { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-12px) rotate(3deg); } }
+.animate-float-slow { animation: float-slow 9s ease-in-out infinite; }
+
+/* Shimmer */
+@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+.animate-shimmer { background-size: 200% 100%; animation: shimmer 3s linear infinite; }
+
+/* Splash drift */
+@keyframes splash-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.65; }
+  50% { transform: translate(6px, -8px) scale(1.15); opacity: 0.95; }
+}
+
+/* Glow pulse */
+@keyframes glow-pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+.animate-glow { animation: glow-pulse 3s ease-in-out infinite; }
+
+/* Spin slow */
+@keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.animate-spin-slow { animation: spin-slow 20s linear infinite; }
+
+/* Decorative overlays must never block mouse events */
+.pointer-events-none { pointer-events: none; }
+.pointer-events-auto { pointer-events: auto; }
+
+/* Hide default cursor on desktop — but keep elements clickable */
+@media (min-width: 1024px) and (pointer: fine) {
+  body, a, button, [role="button"], input, select, textarea, label { cursor: none; }
+}
