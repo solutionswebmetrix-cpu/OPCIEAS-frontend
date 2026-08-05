@@ -1,11 +1,6 @@
 import {
-  CANONICAL_CATEGORIES,
-  PRODUCT_IMAGE_GROUPS,
-  CATEGORY_BANNERS,
   IMG,
   SCHOOL_FURNITURE_IMAGES,
-  CanonicalCategoryName,
-  toKebab,
 } from './images';
 import { apiGet, apiPost, apiFormData } from './api';
 import type {
@@ -36,57 +31,7 @@ export type {
   AuthStatus,
 };
 
-const CATEGORY_META: Record<CanonicalCategoryName, { tagline: string; description: string }> = {
-  'Office Furniture': {
-    tagline: 'Ergonomic and premium office solutions',
-    description: 'Executive desks, conference tables, ergonomic workstations, reception counters, cabinets and storage engineered for premium corporate, government and enterprise workspaces with export-ready finish and quality control.',
-  },
-  'Educational Furniture': {
-    tagline: 'Classroom, library and campus essentials',
-    description: 'Library furniture, reading tables, laboratory benches, training desks, lecture podiums and college furniture designed for durable daily use in educational institutions with ergonomic and tender-compliant specifications.',
-  },
-  'School Furniture': {
-    tagline: 'Classroom and activity furniture for schools',
-    description: 'Student desks and chairs, dual desks, teacher furniture, nursery and kindergarten activity furniture, playground equipment and school storage systems designed for safety, ergonomics and heavy-duty institutional use.',
-  },
-  'Hospital Furniture': {
-    tagline: 'Healthcare and medical furniture solutions',
-    description: 'Patient beds, semi-fowler and ICU beds, over-bed tables, bedside lockers, examination tables, crash carts and hospital storage engineered for hygiene, easy cleaning and long-term use in clinical and healthcare environments.',
-  },
-  'Hostel Furniture': {
-    tagline: 'Durable hostel and dormitory furniture',
-    description: 'Heavy-duty metal and steel beds, bunk beds, wardrobes, lockers, study tables and storage systems for student hostels, dormitories and institutional housing with robust frames and low-maintenance finishes.',
-  },
-  'Industrial Storage': {
-    tagline: 'Warehouse and heavy-duty storage solutions',
-    description: 'Industrial racks, warehouse racks, slotted angle racks, pallet racks, heavy-duty shelves, SS wire racks, lockers and cabinets engineered for high load capacities, boltless assembly and export-ready galvanized or powder-coated finishes.',
-  },
-  'Bathroom Collection': {
-    tagline: 'Premium bathroom storage and accessories',
-    description: 'Bathroom vanities, mirror cabinets, storage shelves, towel racks and bathroom storage systems with waterproof, rust-resistant and stain-resistant finishes suitable for commercial, hospitality and institutional washrooms.',
-  },
-  'Letter Box': {
-    tagline: 'Premium letter boxes for homes and societies',
-    description: 'ABS, metal and wooden letter boxes, apartment cluster mail systems, society letter box banks, wall-mounted and outdoor letter boxes with secure locking and weatherproof finishes for residential complexes and offices.',
-  },
-};
-
-const mockCategories: Category[] = CANONICAL_CATEGORIES.map((c) => {
-  const meta = CATEGORY_META[c.name];
-  return {
-    id: c.id,
-    slug: c.slug,
-    name: c.name,
-    tagline: meta.tagline,
-    description: meta.description,
-    banner_image: CATEGORY_BANNERS[c.name] ?? null,
-    icon: null,
-  };
-});
-
-const CATEGORY_NAME_TO_ID: Record<string, string> = Object.fromEntries(
-  CANONICAL_CATEGORIES.map((c) => [c.name, c.id])
-);
+/* Product categories are now sourced exclusively from the PHP API and database. */
 
 const DEFAULT_MATERIALS: Record<CanonicalCategoryName, string[]> = {
   'Office Furniture':      ['Engineered Wood + Powder-Coated Steel', 'Laminate / Veneer Top', 'Mild Steel Frame'],
@@ -268,51 +213,7 @@ function generateSpecs(cleanName: string, cat: CanonicalCategoryName): Record<st
   };
 }
 
-function buildProductsFromImageGroups(): Product[] {
-  const cleanNameCounts: Record<string, number> = {};
-  const slugCounts: Record<string, number> = {};
-  const products: Product[] = [];
-  const groupsSorted = [...PRODUCT_IMAGE_GROUPS].sort((a, b) => a.cleanName.localeCompare(b.cleanName));
-  for (let idx = 0; idx < groupsSorted.length; idx++) {
-    const g = groupsSorted[idx];
-    const cat = g.category;
-    const category_id = CATEGORY_NAME_TO_ID[cat] || null;
-    const displayName = g.cleanName;
-    const nameKey = displayName.toLowerCase();
-    cleanNameCounts[nameKey] = (cleanNameCounts[nameKey] || 0) + 1;
-    const countForName = cleanNameCounts[nameKey];
-    const finalName = countForName > 1 ? `${displayName} (Variant ${countForName})` : displayName;
-    let slug = toKebab(finalName);
-    if (!slug) slug = 'product-' + (idx + 1);
-    if (slugCounts[slug]) {
-      slugCounts[slug] += 1;
-      slug = `${slug}-${slugCounts[slug]}`;
-    } else {
-      slugCounts[slug] = 1;
-    }
-    const gallery = g.gallery && g.gallery.length ? [...g.gallery] : [g.image];
-    const featuredSeed = hashCode(g.cleanName + g.key) % 7;
-    const featured = featuredSeed === 0;
-    products.push({
-      id: String(1000 + idx),
-      slug,
-      name: finalName,
-      category_id,
-      short_desc: generateShortDesc(g.cleanName, cat),
-      long_desc:  generateLongDesc(g.cleanName, cat),
-      image:      g.image || gallery[0] || null,
-      gallery,
-      specs:      generateSpecs(g.cleanName, cat),
-      features:   generateFeatures(g.cleanName, cat),
-      price_range: generatePriceRange(g.cleanName, cat),
-      featured,
-      created_at: new Date(Date.now() - idx * 3600_000).toISOString(),
-    });
-  }
-  return products;
-}
-
-const mockProducts: Product[] = buildProductsFromImageGroups();
+/* Static product generation removed; frontend products are loaded only from the PHP API. */
 
 const mockIndustries: Industry[] = [
   { id: '1', slug: 'government',   name: 'Government',   tagline: 'Trusted for government tenders', overview: 'OPCIEAS supports government departments, public sector undertakings, civic bodies, and defense-linked procurement programs with furniture that meets stringent tender specifications and institutional expectations. We engineer durable chairs, desks, storage systems, and seating solutions suited to offices, training centers, courts, and public facilities, with a strong focus on value, safety, and long-term maintenance. Our team understands the need for compliant documentation, predictable delivery schedules, and scalable manufacturing for large projects. From procurement-ready specifications to bulk production and installation support, OPCIEAS delivers dependable solutions for high-accountability environments. Every order is backed by quality assurance, customization flexibility, and experience working with public institutions that demand reliability, accountability, and on-time execution. Contact our team to discuss your next government furniture requirement.', hero_image: null, solutions: [{ title: 'Tender Ready', desc: 'Compliant products for government procurement.' }, { title: 'Bulk Manufacturing', desc: 'High volume production capability.' }, { title: 'Timely Delivery', desc: 'On-time execution of large projects.' }], certifications: ['ISO 9001:2015', 'NSIC', 'MSME'] },
@@ -421,7 +322,7 @@ function toNumber(value: any): number | null {
 const BACKEND_BASE =
   (import.meta as any).env?.VITE_BACKEND_URL ||
   (import.meta as any).env?.VITE_API_URL?.replace(/\/api\/?$/, '') ||
-  'http://localhost:8000';
+  '';
 
 function resolveImageAbsolute(value: string | null): string | null {
   if (!value) return null;
@@ -534,24 +435,13 @@ export async function fetchCategories(): Promise<Category[]> {
   try {
     const resp = await apiGet<any>('/categories/list.php');
     const items: any[] = unwrap<any[]>(resp) || [];
-    if (Array.isArray(items) && items.length) {
-      const normalized = items.map(normalizeCategory);
-      return normalized.map((c) => {
-        if (!c.tagline || !c.banner_image) {
-          const mock = mockCategories.find((m) => m.slug === c.slug);
-          if (mock) {
-            return { ...c, tagline: c.tagline || mock.tagline, banner_image: c.banner_image || mock.banner_image, description: c.description || mock.description };
-          }
-        }
-        return c;
-      });
+    if (Array.isArray(items)) {
+      return items.map(normalizeCategory);
     }
   } catch {
-    // STEP 13: NO static fallback - categories MUST come from DB
     console.warn('[fetchCategories] API unavailable, returning empty array');
     return [];
   }
-  // STEP 13: NO static fallback
   return [];
 }
 
@@ -560,10 +450,11 @@ export async function fetchCategory(slug: string): Promise<Category | null> {
   return list.find((c) => c.slug === slug) || null;
 }
 
-export async function fetchProducts(categoryId?: string): Promise<Product[]> {
+export async function fetchProducts(categoryId?: string, categorySlug?: string): Promise<Product[]> {
   try {
     const params: Record<string, any> = { status: 'Published', limit: 500 };
     if (categoryId) params.category_id = categoryId;
+    if (categorySlug) params.categorySlug = categorySlug;
     const resp = await apiGet<any>('/products/list.php', params);
     const items: any[] = unwrap<any[]>(resp) || [];
     if (Array.isArray(items)) {
@@ -856,5 +747,5 @@ export async function getAuthStatus(): Promise<AuthStatus> {
 
 export { IMG, SCHOOL_FURNITURE_IMAGES };
 
-export const _debugProductCount = mockProducts.length;
-export const _debugCategoryCount = mockCategories.length;
+export const _debugProductCount = 0;
+export const _debugCategoryCount = 0;

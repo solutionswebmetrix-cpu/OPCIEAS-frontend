@@ -50,7 +50,7 @@ export default function AllProductsPage() {
           <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
             {cats.map((c, i) => (
               <motion.div key={c.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: (i % 4) * 0.08 }}>
-                <Link to={`/products/${c.slug}`} className="group relative block aspect-[4/3] overflow-hidden rounded-lux border border-navy/10 luxury-shadow">
+                <Link to={`/products/category/${c.slug}`} className="group relative block aspect-[4/3] overflow-hidden rounded-lux border border-navy/10 luxury-shadow">
                   <img src={c.banner_image || ''} alt={c.name} className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy/90 to-transparent" />
                   <div className="absolute bottom-0 p-4">

@@ -129,18 +129,36 @@ export default function ProductCategoryPage() {
   const [search, setSearch] = useState('');
   const [sort, setSort] = useState('newest');
 
+  const loadCategoryData = async () => {
+    if (!slug) return;
+    setLoading(true);
+    const [c, ps] = await Promise.all([
+      fetchCategory(slug),
+      fetchProducts(undefined, slug),
+    ]);
+    setCat(c);
+    setProducts(ps);
+    setLoading(false);
+  };
+
   useEffect(() => {
-    (async () => {
-      setLoading(true);
-      if (!slug) return;
-      const c = await fetchCategory(slug);
-      setCat(c);
-      if (c) {
-        const ps = await fetchProducts(c.id);
-        setProducts(ps);
+    void loadCategoryData();
+  }, [slug]);
+
+  useEffect(() => {
+    const refreshProducts = () => {
+      if (document.visibilityState !== 'hidden') {
+        void loadCategoryData();
       }
-      setLoading(false);
-    })();
+    };
+
+    window.addEventListener('focus', refreshProducts);
+    document.addEventListener('visibilitychange', refreshProducts);
+
+    return () => {
+      window.removeEventListener('focus', refreshProducts);
+      document.removeEventListener('visibilitychange', refreshProducts);
+    };
   }, [slug]);
 
   let filtered = products.filter((p) =>
@@ -174,10 +192,10 @@ export default function ProductCategoryPage() {
         title={`${cat.name} | OPCIEAS`}
         description={cat.description || `Premium ${cat.name} products from OPCIEAS for commercial, institutional and export applications.`}
         keywords={`${cat.name}, commercial furniture, ${cat.name.toLowerCase()}, OPCIEAS`}
-        canonical={`https://www.opcieascommercialfurniture.com/products/${cat.slug}`}
+        canonical={`https://www.opcieascommercialfurniture.com/products/category/${cat.slug}`}
         schema={{ '@context': 'https://schema.org', '@type': 'Product', name: cat.name, description: cat.description }}
       />
-      <SectionBanner title={cat.name} tagline={cat.tagline || ''} image={cat.banner_image || ''} crumb={cat.name} crumbTo={`/products/${cat.slug}`} />
+      <SectionBanner title={cat.name} tagline={cat.tagline || ''} image={cat.banner_image || ''} crumb={cat.name} crumbTo={`/products/category/${cat.slug}`} />
 
       <section className="bg-white py-20">
         <div className="container-x px-6">
@@ -255,7 +273,7 @@ export default function ProductCategoryPage() {
           {filtered.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-20 text-center">
               <Boxes className="mb-4 h-12 w-12 text-navy/20" />
-              <p className="font-sub text-sm text-navy/50">No products match your search.</p>
+              <p className="font-sub text-sm text-navy/50">No products found in this category.</p>
             </div>
           ) : (
             <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">

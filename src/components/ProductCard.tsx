@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Eye, ArrowUpRight } from 'lucide-react';
-import { IMG } from '../lib/images';
 import type { Product } from '../lib/data';
 
 interface Props {
@@ -25,7 +24,11 @@ export default function ProductCard({ product, index }: Props) {
           to={`/product/${product.slug}`}
           className="block aspect-[4/5] overflow-hidden"
         >
-          <img src={product.image || IMG.heroBg} alt={product.name} className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
+          {product.image ? (
+            <img src={product.image} alt={product.name} className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
+          ) : (
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-slate-200 to-slate-300" />
+          )}
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/20 to-transparent" />
           <div className="absolute inset-0 flex flex-col justify-end p-5">
             {product.price_range && <p className="font-sub text-[10px] uppercase tracking-wider text-gold">{product.price_range}</p>}

@@ -13,7 +13,11 @@ export default function SectionBanner({ title, tagline, image, crumb, crumbTo }:
   return (
     <section className="relative min-h-[50vh] overflow-hidden bg-navy pt-32">
       <div className="pointer-events-none absolute inset-0">
-        <img src={image} alt={title} className="h-full w-full object-cover opacity-30" loading="lazy" />
+        {image ? (
+          <img src={image} alt={title} className="h-full w-full object-cover opacity-30" loading="lazy" />
+        ) : (
+          <div className="h-full w-full bg-gradient-to-br from-slate-900 via-slate-800 to-slate-700 opacity-40" />
+        )}
         <div className="absolute inset-0 bg-gradient-to-b from-navy/80 via-navy/70 to-navy" />
       </div>
       <div className="container-x relative z-10 flex min-h-[50vh] flex-col justify-center px-6 py-16">

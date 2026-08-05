@@ -67,6 +67,7 @@ export default function App() {
           <Route path="/agriculture" element={<AgriculturePage />} />
           <Route path="/social-services" element={<SocialServicesPage />} />
           <Route path="/products" element={<AllProductsPage />} />
+          <Route path="/products/category/:slug" element={<ProductCategoryPage />} />
           <Route path="/products/:slug" element={<ProductCategoryPage />} />
           <Route path="/product/:slug" element={<ProductDetailPage />} />
           <Route path="/rfq" element={<RFQ />} />
