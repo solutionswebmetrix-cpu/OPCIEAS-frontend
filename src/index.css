@@ -28,6 +28,18 @@
   h1, h2, h3, h4, h5 { font-family: 'Montserrat', sans-serif; font-weight: 800; }
   .font-sub { font-family: 'Poppins', sans-serif; }
   .font-body { font-family: 'Inter', sans-serif; }
+  .font-serif, .font-times { font-family: 'Times New Roman', Times, Georgia, serif; }
+  .font-serif-italic, .font-times-italic { font-family: 'Times New Roman', Times, Georgia, serif; font-style: italic; }
+  .font-heading-serif, .font-heading-times {
+    font-family: 'Times New Roman', Times, Georgia, serif;
+    font-weight: 900;
+    letter-spacing: 0.02em;
+  }
+  .font-sub-serif, .font-sub-times {
+    font-family: 'Times New Roman', Times, Georgia, serif;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+  }
 
   ::selection { background: var(--gold); color: var(--navy); }
 }
@@ -103,6 +115,84 @@
       linear-gradient(90deg, rgba(120, 180, 255, 0.08) 1px, transparent 1px);
     background-size: 40px 40px;
   }
+  .premium-callout {
+    background: linear-gradient(135deg, rgba(212,175,55,0.15) 0%, rgba(212,175,55,0.05) 100%);
+    border: 2px solid var(--gold);
+    box-shadow: 0 10px 40px rgba(212,175,55,0.2), inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+  .premium-callout-dark {
+    background: linear-gradient(135deg, rgba(212,175,55,0.2) 0%, rgba(7,26,53,0.95) 100%);
+    border: 2px solid var(--gold);
+    box-shadow: 0 12px 50px rgba(212,175,55,0.3), inset 0 1px 0 rgba(255,255,255,0.15);
+  }
+  .flyer-bg {
+    background:
+      radial-gradient(ellipse at top left, rgba(212,175,55,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at bottom right, rgba(16,50,88,0.5) 0%, transparent 50%),
+      linear-gradient(180deg, #071A35 0%, #0B2745 50%, #071A35 100%);
+  }
+  .qr-container {
+    background: #ffffff;
+    padding: 16px;
+    border-radius: 16px;
+    border: 2px solid var(--gold);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+  .compliance-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(212,175,55,0.12);
+    border: 1px solid rgba(212,175,55,0.4);
+    color: var(--gold);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+  .no-liability-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(120,180,255,0.1);
+    border: 1px solid rgba(120,180,255,0.35);
+    color: #9CC5FF;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+  .icon-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 500;
+    backdrop-filter: blur(10px);
+  }
+  .icon-pill svg { color: var(--gold); }
+  .flyer-whitespace-lg { padding: 32px; }
+  .flyer-whitespace-xl { padding: 48px; }
+  .divider-gold {
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, var(--gold) 50%, transparent 100%);
+  }
+  .slides-container {
+    background: #090909;
+  }
+  .slide {
+    min-height: 100vh;
+    border-bottom: 2px solid rgba(212,175,55,0.2);
+    scroll-snap-align: start;
+  }
+  html { scroll-snap-type: y proximity; }
 }
 
 @layer utilities {

@@ -1,5 +1,7 @@
 import PageMeta from '../components/PageMeta';
 import Hero from '../components/Hero';
+import HomepageIntro from '../components/HomepageIntro';
+import ThreeDivisions from '../components/ThreeDivisions';
 import About from '../components/About';
 import WhyChooseUs from '../components/WhyChooseUs';
 import Manufacturing from '../components/Manufacturing';
@@ -23,10 +25,12 @@ export default function HomePage() {
     <>
       <PageMeta
         title="OPCIEAS | Premium Commercial Furniture Manufacturer"
-        description="OPCIEAS is a premium commercial furniture manufacturer specializing in government tenders, corporate interiors, institutional projects, and export-ready furniture solutions."
-        keywords="commercial furniture manufacturer, government tender furniture, export furniture, corporate interiors, institutional furniture, educational furniture, office furniture, industrial storage"
+        description="OPCIEAS is a premium commercial furniture manufacturer specializing in government tenders, corporate interiors, institutional projects, and export-ready furniture solutions. Three integrated divisions: Tech Business Promotion, Furniture & Textiles, and Social Services."
+        keywords="commercial furniture manufacturer, government tender furniture, export furniture, corporate interiors, institutional furniture, educational furniture, office furniture, industrial storage, tech business promotion, social services, textiles"
       />
       <Hero />
+      <HomepageIntro />
+      <ThreeDivisions />
       <About />
       <WhyChooseUs />
       <Manufacturing />
