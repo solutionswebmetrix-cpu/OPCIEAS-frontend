@@ -37,7 +37,7 @@ export default function About() {
 
     const tl = gsap.to(container, {
       x: -halfWidth,
-      duration: 30,
+      duration: 22,
       ease: 'none',
       repeat: -1,
       paused: isPaused,
@@ -71,7 +71,7 @@ export default function About() {
           <div className="group relative overflow-hidden rounded-lux border-2 border-gold/30 p-1">
             <div className="absolute inset-0 animate-glow rounded-lux bg-gradient-to-r from-gold/20 via-transparent to-gold/20" />
             <div 
-              className="relative overflow-hidden rounded-lux"
+              className="about-gallery-shell relative overflow-hidden rounded-lux"
               onMouseEnter={() => setIsPaused(true)}
               onMouseLeave={() => setIsPaused(false)}
             >
@@ -83,13 +83,12 @@ export default function About() {
                 {[...galleryImages, ...galleryImages].map((img, i) => (
                   <div 
                     key={i} 
-                    className="group/img relative flex-shrink-0 overflow-hidden rounded-xl luxury-shadow"
-                    style={{ width: '300px', height: '380px' }}
+                    className="about-image-card group/img relative flex-shrink-0 overflow-hidden rounded-xl luxury-shadow"
                   >
                     <img 
                       src={img} 
                       alt={`OPCIEAS gallery ${i + 1}`} 
-                      className="h-full w-full object-cover transition-transform duration-700 group-hover/img:scale-110"
+                      className="h-full w-full object-cover object-center transition-transform duration-700 group-hover/img:scale-110"
                       loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-navy/60 to-transparent opacity-0 transition-opacity duration-500 group-hover/img:opacity-100" />

@@ -15,9 +15,8 @@ import {
   Warehouse,
   Sofa,
   FileText,
-  Lightbulb,
-  Sprout,
   Fish,
+  Leaf,
   Sun,
   Users,
   TreePine,
@@ -64,7 +63,7 @@ const SOCIAL_EXACT_NARRATION = `OPCIEAS Social Services division is dedicated to
 
 const SOCIAL_PILLARS = [
   { icon: Users, title: 'Self Help', desc: 'SHG formation, savings discipline, micro-enterprise enablement, and financial literacy that empower women and grassroots collectives.' },
-  { icon: Sprout, title: 'Village Development', desc: 'Participatory planning for rural infrastructure, water and sanitation, community buildings, and livelihood support systems.' },
+  { icon: Leaf, title: 'Village Development', desc: 'Participatory planning for rural infrastructure, water and sanitation, community buildings, and livelihood support systems.' },
   { icon: Sun, title: 'Solar Adoption', desc: 'Rooftop solar, off-grid systems, street lighting, and solar-powered community centres for clean energy access everywhere.' },
   { icon: Fish, title: 'Aquaculture', desc: 'Inland fish farming, pond management, quality seed supply, feed technology, and training for farmer-producer groups.' },
   { icon: Fish, title: 'Fisheries', desc: 'Coastal fisheries, safe harvest practices, cold chain linkages, and market access for fishing communities.' },
@@ -88,6 +87,7 @@ interface DivisionProps {
   linkTo: string;
   pillars: Array<{ icon: any; title: string; desc: string }>;
   index: number;
+  narrationScopeClass?: string;
 }
 
 function DivisionSection({
@@ -102,6 +102,7 @@ function DivisionSection({
   linkTo,
   pillars,
   index,
+  narrationScopeClass,
 }: DivisionProps) {
   const isEven = index % 2 === 0;
 
@@ -141,7 +142,7 @@ function DivisionSection({
       </div>
 
       {/* Narration + Pillars */}
-      <div className="container-x px-6 py-20 text-white sm:py-24">
+      <div className="container-x px-6 py-20 text-navy sm:py-24">
         <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
           {/* Narration */}
           <motion.div
@@ -149,13 +150,14 @@ function DivisionSection({
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
+            className={narrationScopeClass}
           >
             <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Narration</p>
-            <h3 className="mt-3 font-heading text-2xl font-black text-white sm:text-3xl">
+            <h3 className="furniture-section-heading mt-3 font-heading text-2xl font-black text-navy sm:text-3xl">
               About the Division
             </h3>
             <div className="mt-6 h-[2px] w-16 bg-gradient-to-r from-gold to-gold-2" />
-            <p className="mt-8 font-body text-[15px] leading-[1.95] text-white/85 whitespace-pre-line">
+            <p className="furniture-section-copy mt-8 font-body text-[15px] leading-[1.95] text-navy whitespace-pre-line">
               {narration}
             </p>
             <Link
@@ -240,6 +242,7 @@ export default function ThreeDivisions() {
         linkTo="/furniture"
         pillars={FURNITURE_PILLARS}
         index={1}
+        narrationScopeClass="furniture-textiles-about"
       />
 
       {/* 3. SOCIAL SERVICES */}
