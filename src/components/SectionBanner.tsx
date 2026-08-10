@@ -30,7 +30,7 @@ export default function SectionBanner({ title, tagline, image, crumb, crumbTo }:
         >
           {title}
         </motion.h1>
-        {tagline && <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="mt-3 max-w-xl font-sub text-lg text-white/60">{tagline}</motion.p>}
+        {tagline && <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="mt-3 max-w-xl font-sub text-lg text-white/80">{tagline}</motion.p>}
       </div>
     </section>
   );

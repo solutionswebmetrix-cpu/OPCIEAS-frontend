@@ -29,8 +29,11 @@ import NotFoundPage from './pages/NotFoundPage';
 import CareersPage from './pages/CareersPage';
 import BuyerRegisterPage from './pages/BuyerRegisterPage';
 import BuyerLoginPage from './pages/BuyerLoginPage';
+import BuyerApplicationPage from './pages/BuyerApplicationPage';
 import SellerRegisterPage from './pages/SellerRegisterPage';
+import SupplierApplicationPage from './pages/SupplierApplicationPage';
 import PurchaseRequirementPage from './pages/PurchaseRequirementPage';
+import InitiativePage from './pages/InitiativePage';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -70,6 +73,9 @@ export default function App() {
           <Route path="/products/category/:slug" element={<ProductCategoryPage />} />
           <Route path="/products/:slug" element={<ProductCategoryPage />} />
           <Route path="/product/:slug" element={<ProductDetailPage />} />
+          <Route path="/category/:slug" element={<ProductCategoryPage />} />
+          <Route path="/service/:slug" element={<InitiativePage />} />
+          <Route path="/page/:slug" element={<CompanyPage />} />
           <Route path="/rfq" element={<RFQ />} />
           <Route path="/export" element={<ExportPage />} />
           <Route path="/gallery" element={<GalleryPage />} />
@@ -77,10 +83,19 @@ export default function App() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/industries/:slug" element={<IndustryPage />} />
           <Route path="/company/:page" element={<CompanyPage />} />
+          <Route path="/about" element={<CompanyPage />} />
+          <Route path="/about/:page" element={<CompanyPage />} />
           <Route path="/careers" element={<CareersPage />} />
+          <Route path="/company/careers" element={<CareersPage />} />
+          <Route path="/company/careers/:slug" element={<CareersPage />} />
+          <Route path="/careers/:slug" element={<CareersPage />} />
+          <Route path="/initiatives/:slug" element={<InitiativePage />} />
+          <Route path="/initiative/:slug" element={<InitiativePage />} />
           <Route path="/buyer/register" element={<BuyerRegisterPage />} />
           <Route path="/buyer/login" element={<BuyerLoginPage />} />
+          <Route path="/buyer/application" element={<BuyerApplicationPage />} />
           <Route path="/seller/register" element={<SellerRegisterPage />} />
+          <Route path="/seller/application" element={<SupplierApplicationPage />} />
           <Route path="/requirements" element={<PurchaseRequirementPage />} />
           <Route path="/requirements/post" element={<PurchaseRequirementPage />} />
           <Route path="/requirements/my" element={<PurchaseRequirementPage />} />

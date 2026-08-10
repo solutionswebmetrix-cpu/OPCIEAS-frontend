@@ -72,7 +72,7 @@ export default function Manufacturing() {
           <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-4 font-heading text-3xl font-black text-white sm:text-4xl xl:text-5xl">
             Engineering Excellence at Every Stage
           </motion.h2>
-          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mt-4 font-body text-sm text-white/60">
+          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mt-4 font-body text-sm text-white/80">
             Modern machinery, rigorous quality control, skilled workforce and export-grade packaging — all under one roof.
           </motion.p>
         </div>
@@ -95,7 +95,7 @@ export default function Manufacturing() {
                 <div className="flex h-14 w-14 items-center justify-center rounded-full border border-gold/40 bg-navy-2 text-gold">
                   <s.icon className="h-6 w-6" />
                 </div>
-                <p className="mt-3 font-sub text-xs font-medium text-white/70">{s.label}</p>
+                <p className="mt-3 font-sub text-xs font-medium text-white/90">{s.label}</p>
               </motion.div>
             ))}
           </div>
@@ -114,7 +114,7 @@ export default function Manufacturing() {
               <p className="font-heading text-3xl font-black gold-text sm:text-4xl">
                 <Counter value={c.value} suffix={c.suffix} />
               </p>
-              <p className="mt-2 font-sub text-xs uppercase tracking-wider text-white/50">{c.label}</p>
+              <p className="mt-2 font-sub text-xs uppercase tracking-wider text-white/80">{c.label}</p>
             </motion.div>
           ))}
         </div>

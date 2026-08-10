@@ -55,7 +55,7 @@ export default function AllProductsPage() {
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy/90 to-transparent" />
                   <div className="absolute bottom-0 p-4">
                     <h3 className="font-heading text-lg font-bold text-white">{c.name}</h3>
-                    {c.tagline && <p className="font-sub text-xs text-white/60">{c.tagline}</p>}
+                    {c.tagline && <p className="font-sub text-xs text-white/80">{c.tagline}</p>}
                     <span className="mt-2 inline-flex items-center gap-1 font-sub text-xs text-gold">View Products <ArrowRight className="h-3 w-3" /></span>
                   </div>
                 </Link>

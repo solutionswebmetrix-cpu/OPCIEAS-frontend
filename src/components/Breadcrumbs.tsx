@@ -5,7 +5,7 @@ interface Crumb { label: string; to?: string; }
 
 export default function Breadcrumbs({ items }: { items: Crumb[] }) {
   return (
-    <nav className="flex items-center gap-1 font-sub text-xs text-white/50">
+    <nav className="flex items-center gap-1 font-sub text-xs text-white/80">
       <Link to="/" className="transition hover:text-gold">Home</Link>
       {items.map((c, i) => (
         <span key={i} className="flex items-center gap-1">

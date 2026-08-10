@@ -61,7 +61,7 @@ export default function TechnologyPage() {
               <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Core Focus Areas</p>
               <div className="mt-6 grid gap-3 sm:grid-cols-2">
                 {pillars.map((pillar) => (
-                  <div key={pillar} className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/80">
+                  <div key={pillar} className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/90">
                     {pillar}
                   </div>
                 ))}

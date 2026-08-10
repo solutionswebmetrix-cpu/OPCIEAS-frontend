@@ -57,7 +57,7 @@ export default function FurniturePage() {
               <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Key Deliverables</p>
               <div className="mt-6 space-y-3">
                 {deliverables.map((item) => (
-                  <div key={item} className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/80">
+                  <div key={item} className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/90">
                     {item}
                   </div>
                 ))}

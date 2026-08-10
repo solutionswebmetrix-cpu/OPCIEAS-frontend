@@ -24,7 +24,7 @@ export default function ContactPage() {
                   <li>opcieas.co</li>
                 </ul>
                 <h3 className="font-heading text-lg text-white mt-4">Business Hours</h3>
-                <p className="text-white/70">Mon–Sat 09:00–18:00</p>
+                <p className="text-white/85">Mon–Sat 09:00–18:00</p>
               </div>
             </div>
 

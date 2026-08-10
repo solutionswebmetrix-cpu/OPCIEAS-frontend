@@ -40,7 +40,7 @@ function TiltCard({ icon: Icon, title, desc, i }: { icon: typeof Award; title: s
         <Icon className="h-6 w-6" />
       </div>
       <h3 className="font-heading text-lg font-bold text-white" style={{ transform: 'translateZ(20px)' }}>{title}</h3>
-      <p className="mt-2 font-body text-sm text-white/60" style={{ transform: 'translateZ(15px)' }}>{desc}</p>
+      <p className="mt-2 font-body text-sm text-white/80" style={{ transform: 'translateZ(15px)' }}>{desc}</p>
       <div className="absolute inset-0 rounded-lux opacity-0 transition-opacity duration-500 group-hover:opacity-100" style={{ background: 'radial-gradient(circle at 50% 0%, rgba(212,175,55,0.12), transparent 70%)' }} />
     </motion.div>
   );

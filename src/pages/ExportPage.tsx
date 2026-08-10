@@ -18,19 +18,19 @@ export default function ExportPage() {
               <div className="mt-6 grid gap-4 sm:grid-cols-2">
                 <div className="rounded-lux glass-navy p-6">
                   <h4 className="font-heading text-lg text-white">Export Compliance</h4>
-                  <p className="mt-2 text-white/60">End-to-end export documentation, packaging and certification.</p>
+                  <p className="mt-2 text-white/80">End-to-end export documentation, packaging and certification.</p>
                 </div>
                 <div className="rounded-lux glass-navy p-6">
                   <h4 className="font-heading text-lg text-white">Export Packaging</h4>
-                  <p className="mt-2 text-white/60">Custom export-grade packaging for safe international transit.</p>
+                  <p className="mt-2 text-white/80">Custom export-grade packaging for safe international transit.</p>
                 </div>
                 <div className="rounded-lux glass-navy p-6">
                   <h4 className="font-heading text-lg text-white">Global Shipping</h4>
-                  <p className="mt-2 text-white/60">Trusted forwarders and timely shipments to key markets.</p>
+                  <p className="mt-2 text-white/80">Trusted forwarders and timely shipments to key markets.</p>
                 </div>
                 <div className="rounded-lux glass-navy p-6">
                   <h4 className="font-heading text-lg text-white">Quality Assurance</h4>
-                  <p className="mt-2 text-white/60">Stringent QA and export-ready finish standards.</p>
+                  <p className="mt-2 text-white/80">Stringent QA and export-ready finish standards.</p>
                 </div>
               </div>
 

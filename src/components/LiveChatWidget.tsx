@@ -204,7 +204,7 @@ export default function LiveChatWidget() {
               </div>
               <div>
                 <p className="font-semibold text-white">Live Chat</p>
-                <p className="text-xs text-white/70">Tap to continue your conversation.</p>
+                <p className="text-xs text-white/85">Tap to continue your conversation.</p>
               </div>
             </div>
             <div className="flex items-center gap-2">
@@ -248,7 +248,7 @@ export default function LiveChatWidget() {
             <div className="mb-4 flex items-center justify-between gap-3">
               <div>
                 <p className="text-sm font-semibold text-white">AI Live Chat</p>
-                <p className="text-xs text-white/60">Powered by OPCIEAS</p>
+                <p className="text-xs text-white/80">Powered by OPCIEAS</p>
               </div>
               <div className="flex items-center gap-2">
                 <button
@@ -383,7 +383,7 @@ export default function LiveChatWidget() {
                 <label className="cursor-pointer">
                   <input type="file" className="hidden" accept=".pdf,.png,.jpg,.jpeg,.dwg,.dxf" onChange={handleFileUpload} disabled={uploadingFile} />
                   <div className="p-2 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 transition">
-                    {uploadingFile ? <Loader2 className="h-4 w-4 text-white/70 animate-spin" /> : <Upload className="h-4 w-4 text-white/70" />}
+                    {uploadingFile ? <Loader2 className="h-4 w-4 text-white/85 animate-spin" /> : <Upload className="h-4 w-4 text-white/85" />}
                   </div>
                 </label>
                 <input

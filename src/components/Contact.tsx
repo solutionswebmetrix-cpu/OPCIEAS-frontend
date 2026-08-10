@@ -28,7 +28,7 @@ export default function Contact() {
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gold/10 text-gold"><c.icon className="h-6 w-6" /></div>
                 <div>
                   <p className="font-heading text-sm font-bold text-white">{c.title}</p>
-                  {c.lines.map((l) => <p key={l} className="font-body text-sm text-white/60">{l}</p>)}
+                  {c.lines.map((l) => <p key={l} className="font-body text-sm text-white/80">{l}</p>)}
                 </div>
               </div>
             ))}
@@ -45,7 +45,7 @@ export default function Contact() {
                   { icon: Calendar, label: 'Request Quote', href: '/rfq' },
                   { icon: Video, label: 'Live Chat', href: '/contact' },
                 ].map((m) => (
-                  <a key={m.label} href={m.href} className="flex items-center gap-1.5 rounded-full border border-white/15 px-3 py-1.5 font-sub text-xs text-white/70 transition hover:border-gold hover:text-gold">
+                  <a key={m.label} href={m.href} className="flex items-center gap-1.5 rounded-full border border-white/15 px-3 py-1.5 font-sub text-xs text-white/85 transition hover:border-gold hover:text-gold">
                     <m.icon className="h-3.5 w-3.5" /> {m.label}
                   </a>
                 ))}

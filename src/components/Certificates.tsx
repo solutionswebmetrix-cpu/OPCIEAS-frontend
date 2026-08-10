@@ -37,10 +37,10 @@ export default function Certificates() {
                 <c.icon className="h-8 w-8" />
               </div>
               <h3 className="font-heading text-lg font-bold text-white">{c.name}</h3>
-              <p className="mt-1 font-body text-xs text-white/60">{c.desc}</p>
+              <p className="mt-1 font-body text-xs text-white/80">{c.desc}</p>
               <div className="mt-4 flex justify-center gap-2 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
                 <button className="rounded-full border border-gold/40 px-3 py-1 font-sub text-[10px] text-gold hover:bg-gold hover:text-navy">View PDF</button>
-                <button className="rounded-full border border-white/20 px-3 py-1 font-sub text-[10px] text-white/70 hover:text-white">Verify</button>
+                <button className="rounded-full border border-white/20 px-3 py-1 font-sub text-[10px] text-white/85 hover:text-white">Verify</button>
               </div>
               <div className="absolute inset-0 rounded-lux opacity-0 transition-opacity duration-500 group-hover:opacity-100" style={{ background: 'radial-gradient(circle at 50% 0%, rgba(212,175,55,0.12), transparent 70%)' }} />
             </motion.div>

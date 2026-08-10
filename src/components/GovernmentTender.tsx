@@ -28,7 +28,7 @@ export default function GovernmentTender() {
           <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-4 font-heading text-3xl font-black text-white sm:text-4xl xl:text-5xl">
             Trusted Government Tender Furniture Manufacturer
           </motion.h2>
-          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mt-4 font-body text-sm text-white/60">
+          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mt-4 font-body text-sm text-white/80">
             Approved supplier with the capacity, certifications and compliance to deliver government, PSU and institutional furniture tenders at scale.
           </motion.p>
         </div>
@@ -47,7 +47,7 @@ export default function GovernmentTender() {
                 <s.icon className="h-6 w-6" />
               </div>
               <h3 className="font-heading text-base font-bold text-white">{s.title}</h3>
-              <p className="mt-2 font-body text-xs text-white/60">{s.desc}</p>
+              <p className="mt-2 font-body text-xs text-white/80">{s.desc}</p>
               <div className="absolute inset-0 rounded-lux opacity-0 transition-opacity duration-500 group-hover:opacity-100" style={{ background: 'radial-gradient(circle at 50% 0%, rgba(212,175,55,0.1), transparent 70%)' }} />
             </motion.div>
           ))}

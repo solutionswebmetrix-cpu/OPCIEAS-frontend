@@ -127,7 +127,7 @@ export default function ProductDetailPage() {
           {/* Info */}
           <div>
             <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="font-heading text-3xl font-black text-white sm:text-4xl">{product.name}</motion.h1>
-            {product.short_desc && <p className="mt-2 font-sub text-lg text-white/60">{product.short_desc}</p>}
+            {product.short_desc && <p className="mt-2 font-sub text-lg text-white/80">{product.short_desc}</p>}
             {product.price_range && <p className="mt-4 font-heading text-xl font-bold gold-text">{product.price_range}</p>}
 
             {/* Actions */}
@@ -147,7 +147,7 @@ export default function ProductDetailPage() {
                 <dl className="mt-3 divide-y divide-white/10 rounded-lux bg-white/5">
                   {Object.entries(specs).map(([k, v]) => (
                     <div key={k} className="flex justify-between px-4 py-3">
-                      <dt className="font-sub text-sm text-white/50">{k}</dt>
+                      <dt className="font-sub text-sm text-white/80">{k}</dt>
                       <dd className="font-sub text-sm font-medium text-white">{v}</dd>
                     </div>
                   ))}
@@ -161,7 +161,7 @@ export default function ProductDetailPage() {
                 <h3 className="font-heading text-lg font-bold text-white">Key Features</h3>
                 <ul className="mt-3 grid grid-cols-2 gap-2">
                   {features.map((f, i) => (
-                    <li key={i} className="flex items-center gap-2 font-sub text-sm text-white/70"><Check className="h-4 w-4 flex-shrink-0 text-gold" /> {f}</li>
+                    <li key={i} className="flex items-center gap-2 font-sub text-sm text-white/85"><Check className="h-4 w-4 flex-shrink-0 text-gold" /> {f}</li>
                   ))}
                 </ul>
               </div>
@@ -170,11 +170,11 @@ export default function ProductDetailPage() {
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
               <div className="rounded-lux border border-white/10 bg-white/5 p-5">
                 <p className="font-heading text-sm font-bold text-white">Applications</p>
-                <p className="mt-2 font-body text-sm text-white/60">Suitable for institutional, commercial, hospitality and export projects. Specific applications available on request.</p>
+                <p className="mt-2 font-body text-sm text-white/80">Suitable for institutional, commercial, hospitality and export projects. Specific applications available on request.</p>
               </div>
               <div className="rounded-lux border border-white/10 bg-white/5 p-5">
                 <p className="font-heading text-sm font-bold text-white">MOQ & Catalogue</p>
-                <p className="mt-2 font-body text-sm text-white/60">Minimum order quantities vary by product and project. Download our catalogue or request a quote for exact details.</p>
+                <p className="mt-2 font-body text-sm text-white/80">Minimum order quantities vary by product and project. Download our catalogue or request a quote for exact details.</p>
               </div>
             </div>
           </div>
@@ -185,7 +185,7 @@ export default function ProductDetailPage() {
           <div className="container-x mt-12 px-6">
             <div className="max-w-3xl">
               <h3 className="font-heading text-xl font-bold text-white">Product Description</h3>
-              <p className="mt-3 font-body text-sm leading-relaxed text-white/60">{product.long_desc}</p>
+              <p className="mt-3 font-body text-sm leading-relaxed text-white/80">{product.long_desc}</p>
             </div>
           </div>
         )}
@@ -214,7 +214,7 @@ export default function ProductDetailPage() {
 
       <div className="bg-navy pb-8 pt-4">
         <div className="container-x px-6">
-          <Link to="/products" className="inline-flex items-center gap-2 font-sub text-sm text-white/60 transition hover:text-gold"><ChevronLeft className="h-4 w-4" /> Back to Products</Link>
+          <Link to="/products" className="inline-flex items-center gap-2 font-sub text-sm text-white/80 transition hover:text-gold"><ChevronLeft className="h-4 w-4" /> Back to Products</Link>
         </div>
       </div>
     </>

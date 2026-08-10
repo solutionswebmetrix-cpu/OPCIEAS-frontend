@@ -97,7 +97,7 @@ export default function Product360Viewer({ images, productName, open, onClose }:
           <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-2">
               <button onClick={() => setZoom((z) => Math.max(1, z - 0.2))} className="rounded-full bg-white/10 p-2 text-white transition hover:bg-gold hover:text-navy"><ZoomOut className="h-4 w-4" /></button>
-              <span className="font-sub text-xs text-white/60">{Math.round(zoom * 100)}%</span>
+              <span className="font-sub text-xs text-white/85">{Math.round(zoom * 100)}%</span>
               <button onClick={() => setZoom((z) => Math.min(3, z + 0.2))} className="rounded-full bg-white/10 p-2 text-white transition hover:bg-gold hover:text-navy"><ZoomIn className="h-4 w-4" /></button>
             </div>
             <div className="flex items-center gap-2">

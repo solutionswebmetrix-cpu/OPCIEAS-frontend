@@ -135,13 +135,13 @@ function DivisionSection({
             <h2 className="mt-6 font-heading text-4xl font-black leading-tight text-white sm:text-5xl xl:text-6xl">
               {name}
             </h2>
-            <p className="mt-4 font-sub text-lg text-white/70">{tagline}</p>
+            <p className="mt-4 font-sub text-lg text-white/85">{tagline}</p>
           </motion.div>
         </div>
       </div>
 
       {/* Narration + Pillars */}
-      <div className="container-x px-6 py-20 sm:py-24">
+      <div className="container-x px-6 py-20 text-white sm:py-24">
         <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
           {/* Narration */}
           <motion.div
@@ -151,11 +151,11 @@ function DivisionSection({
             transition={{ duration: 0.7 }}
           >
             <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Narration</p>
-            <h3 className="mt-3 font-heading text-2xl font-black text-navy sm:text-3xl">
+            <h3 className="mt-3 font-heading text-2xl font-black text-white sm:text-3xl">
               About the Division
             </h3>
             <div className="mt-6 h-[2px] w-16 bg-gradient-to-r from-gold to-gold-2" />
-            <p className="mt-8 font-body text-[15px] leading-[1.95] text-navy/80 whitespace-pre-line">
+            <p className="mt-8 font-body text-[15px] leading-[1.95] text-white/85 whitespace-pre-line">
               {narration}
             </p>
             <Link
@@ -174,7 +174,7 @@ function DivisionSection({
             transition={{ duration: 0.7, delay: 0.1 }}
           >
             <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Core Focus Areas</p>
-            <h3 className="mt-3 font-heading text-2xl font-black text-navy sm:text-3xl">
+            <h3 className="mt-3 font-heading text-2xl font-black text-white sm:text-3xl">
               Key Pillars
             </h3>
             <div className="mt-8 grid gap-5 sm:grid-cols-2">
@@ -193,7 +193,7 @@ function DivisionSection({
                       <PI className="h-5 w-5" strokeWidth={1.75} />
                     </div>
                     <h4 className="mt-4 font-heading text-base font-bold text-navy">{p.title}</h4>
-                    <p className="mt-2 font-body text-sm leading-relaxed text-navy/65">{p.desc}</p>
+                    <p className="mt-2 font-body text-sm leading-relaxed text-navy/80">{p.desc}</p>
                   </motion.div>
                 );
               })}

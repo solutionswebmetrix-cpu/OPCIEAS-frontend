@@ -43,7 +43,7 @@ export default function Clients() {
         <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-4 font-heading text-3xl font-black text-white sm:text-4xl">
           Premium Clients & Strategic Partners
         </motion.h2>
-        <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mx-auto mt-4 max-w-2xl font-body text-sm text-white/60">
+        <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mx-auto mt-4 max-w-2xl font-body text-sm text-white/80">
           OPCIEAS serves leading corporates, hospitality brands, government organisations, educational institutions and large-scale institutional buyers with world-class furniture solutions.
         </motion.p>
       </div>
@@ -69,7 +69,7 @@ export default function Clients() {
                 />
               </div>
               <p className="font-heading text-xl font-bold text-white">{client.name}</p>
-              <p className="mt-2 font-body text-sm text-white/60">{client.subtitle}</p>
+              <p className="mt-2 font-body text-sm text-white/80">{client.subtitle}</p>
             </motion.div>
           ))}
         </div>

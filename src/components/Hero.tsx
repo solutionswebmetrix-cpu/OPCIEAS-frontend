@@ -206,7 +206,7 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.2, duration: 0.6 }}
-            className="mt-4 font-sub text-lg text-white/70"
+            className="mt-4 font-sub text-lg text-white/85"
           >
             Trusted manufacturer of premium commercial, institutional and export furniture with certified quality and bulk delivery capability.
           </motion.p>
@@ -215,14 +215,14 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.4, duration: 0.6 }}
-            className="mt-5 max-w-xl font-body text-sm text-white/50"
+            className="mt-5 max-w-xl font-body text-sm text-white/75"
           >
             Premium furniture solutions for offices, education, hospitality, healthcare and institutional projects across India and global markets.
           </motion.p>
 
           <div className="mt-5 flex flex-wrap gap-2">
             {['25+ Years Experience', 'ISO 9001:2015 Certified', 'Government Tender Specialist', 'Export Ready', 'Trusted by TATA, NOKIA, JW Marriott', 'Bulk Manufacturing', 'Institutional Projects'].map((t) => (
-              <span key={t} className="rounded-full border border-white/15 bg-white/10 px-3 py-1.5 font-sub text-xs font-medium text-white/80">{t}</span>
+              <span key={t} className="rounded-full border border-white/15 bg-white/10 px-3 py-1.5 font-sub text-xs font-medium text-white/90">{t}</span>
             ))}
           </div>
 
@@ -256,7 +256,7 @@ export default function Hero() {
                 <p className="font-heading text-2xl font-extrabold gold-text sm:text-3xl">
                   <Counter value={s.value} suffix={s.suffix} />
                 </p>
-                <p className="mt-1 font-sub text-[10px] uppercase tracking-wider text-white/50">{s.label}</p>
+                <p className="mt-1 font-sub text-[10px] uppercase tracking-wider text-white/75">{s.label}</p>
               </div>
             ))}
           </motion.div>
@@ -283,7 +283,7 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2.2 }}
-        className="absolute bottom-8 left-1/2 z-20 -translate-x-1/2 text-white/50"
+        className="absolute bottom-8 left-1/2 z-20 -translate-x-1/2 text-white/80"
       >
         <Link to="/company/about">
           <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 1.8, repeat: Infinity }}>

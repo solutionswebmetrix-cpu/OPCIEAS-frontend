@@ -44,7 +44,7 @@ export default function Footer() {
           <div className="grid gap-6 lg:grid-cols-2 lg:items-center">
             <div>
               <h3 className="font-heading text-2xl font-black text-white sm:text-3xl">Stay Updated</h3>
-              <p className="mt-2 font-body text-sm text-white/60">Subscribe for product updates, export news and tender opportunities.</p>
+              <p className="mt-2 font-body text-sm text-white/80">Subscribe for product updates, export news and tender opportunities.</p>
             </div>
             <form onSubmit={subscribe} className="flex gap-3">
               <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email" className="flex-1 rounded-full border border-white/15 bg-navy/50 px-5 py-3 font-body text-sm text-white outline-none focus:border-gold" />
@@ -69,14 +69,14 @@ export default function Footer() {
                 <p className="font-sub text-[10px] tracking-[0.2em] text-gold">PVT. LTD.</p>
               </div>
             </div>
-            <p className="mt-5 max-w-sm font-body text-sm leading-relaxed text-white/50">
+            <p className="mt-5 max-w-sm font-body text-sm leading-relaxed text-white/75">
               Premium commercial furniture manufacturer since 2000. Government tender specialist, ISO certified, exporting to 20+ countries.
             </p>
             <p className="mt-4 font-sub text-sm italic text-gold">"Everyone Says Go Green... We Show How!!!"</p>
             {/* Social */}
             <div className="mt-6 flex gap-3">
               {['in', 'f', 'X', 'ig', 'yt'].map((s) => (
-                <a key={s} href="/" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 font-sub text-xs text-white/70 transition hover:border-gold hover:bg-gold hover:text-navy">{s}</a>
+                <a key={s} href="/" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 font-sub text-xs text-white/85 transition hover:border-gold hover:bg-gold hover:text-navy">{s}</a>
               ))}
             </div>
           </div>
@@ -88,7 +88,7 @@ export default function Footer() {
                 <p className="mb-4 font-heading text-sm font-bold text-gold">{col.title}</p>
                 <ul className="space-y-2.5">
                   {col.links.map((l) => (
-                    <li key={l.label}><Link to={l.to} className="font-body text-sm text-white/50 transition hover:text-white">{l.label}</Link></li>
+                    <li key={l.label}><Link to={l.to} className="font-body text-sm text-white/75 transition hover:text-white">{l.label}</Link></li>
                   ))}
                 </ul>
               </div>
@@ -98,11 +98,11 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-white/10 py-8 sm:flex-row">
-          <p className="font-body text-xs text-white/40">© 2025 OPCIEAS Pvt. Ltd. All rights reserved.</p>
+          <p className="font-body text-xs text-white/65">© 2025 OPCIEAS Pvt. Ltd. All rights reserved.</p>
           <div className="flex gap-6">
-            <a href="/privacy-policy" className="font-body text-xs text-white/40 transition hover:text-white">Privacy Policy</a>
-            <a href="/terms-of-use" className="font-body text-xs text-white/40 transition hover:text-white">Terms</a>
-            <a href="/" className="font-body text-xs text-white/40 transition hover:text-white">Sitemap</a>
+            <a href="/privacy-policy" className="font-body text-xs text-white/65 transition hover:text-white">Privacy Policy</a>
+            <a href="/terms-of-use" className="font-body text-xs text-white/65 transition hover:text-white">Terms</a>
+            <a href="/" className="font-body text-xs text-white/65 transition hover:text-white">Sitemap</a>
           </div>
         </div>
       </div>

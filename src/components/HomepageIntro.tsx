@@ -109,12 +109,12 @@ export default function HomepageIntro() {
                   {ENTREPRENEURIAL_CONCLUSION}
                 </p>
                 <div className="mt-8 flex flex-wrap gap-3">
-                  <Link to="/opcieas-presentation.html" className="rounded-full border border-navy/10 bg-white px-4 py-2 font-sub text-xs font-semibold text-navy transition-all duration-300 hover:border-gold hover:bg-gold hover:text-navy">
+                  <a href="/opcieas-presentation.html" className="rounded-full border border-navy/10 bg-white px-4 py-2 font-sub text-xs font-semibold text-navy transition-all duration-300 hover:border-gold hover:bg-gold hover:text-navy">
                     View Presentation
-                  </Link>
-                  <Link to="/opcieas-catalogue.html" className="rounded-full border border-gold/40 bg-gold/10 px-4 py-2 font-sub text-xs font-semibold text-navy transition-all duration-300 hover:bg-gold hover:text-navy">
+                  </a>
+                  <a href="/opcieas-catalogue.html" className="rounded-full border border-gold/40 bg-gold/10 px-4 py-2 font-sub text-xs font-semibold text-navy transition-all duration-300 hover:bg-gold hover:text-navy">
                     Open Catalogue
-                  </Link>
+                  </a>
                 </div>
               </div>
             </div>

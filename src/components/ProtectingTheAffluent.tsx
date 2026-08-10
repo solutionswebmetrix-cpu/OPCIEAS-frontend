@@ -53,7 +53,7 @@ export default function ProtectingTheAffluent() {
                   <Icon className="h-7 w-7" />
                 </div>
                 <h3 className="font-heading text-xl font-bold text-white mb-3">{feature.title}</h3>
-                <p className="font-body text-sm text-white/60">{feature.desc}</p>
+                <p className="font-body text-sm text-white/80">{feature.desc}</p>
               </motion.div>
             );
           })}

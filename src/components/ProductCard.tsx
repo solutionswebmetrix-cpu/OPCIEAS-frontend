@@ -33,7 +33,7 @@ export default function ProductCard({ product, index }: Props) {
           <div className="absolute inset-0 flex flex-col justify-end p-5">
             {product.price_range && <p className="font-sub text-[10px] uppercase tracking-wider text-gold">{product.price_range}</p>}
             <h3 className="mt-1 font-heading text-lg font-bold text-white">{product.name}</h3>
-            {product.short_desc && <p className="mt-1 line-clamp-2 font-body text-xs text-white/50">{product.short_desc}</p>}
+            {product.short_desc && <p className="mt-1 line-clamp-2 font-body text-xs text-white/80">{product.short_desc}</p>}
             <div className="relative z-10 mt-3 flex gap-2">
               <span className="flex items-center gap-1 rounded-full bg-white/15 px-3 py-1.5 font-sub text-xs text-white backdrop-blur transition group-hover:bg-gold group-hover:text-navy">
                 <Eye className="h-3 w-3" /> View Details

@@ -55,7 +55,7 @@ export default function SocialServicesPage() {
               <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Highlighted Areas</p>
               <div className="mt-6 grid gap-3">
                 {focusAreas.map((area) => (
-                  <div key={area} className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/80">
+                  <div key={area} className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/90">
                     {area}
                   </div>
                 ))}

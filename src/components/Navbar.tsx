@@ -176,11 +176,11 @@ export default function Navbar() {
           {/* Actions */}
           <div className="hidden lg:flex items-center gap-3 h-10 relative">
             <div className="relative">
-              <button onClick={() => setLangOpen((s) => !s)} className="inline-flex h-10 items-center gap-1.5 rounded-full border border-white/15 px-3 text-xs font-sub text-white/70 transition hover:border-gold hover:text-gold"><Globe className="h-3.5 w-3.5" /> EN</button>
+              <button onClick={() => setLangOpen((s) => !s)} className="inline-flex h-10 items-center gap-1.5 rounded-full border border-white/15 px-3 text-xs font-sub text-white/85 transition hover:border-gold hover:text-gold"><Globe className="h-3.5 w-3.5" /> EN</button>
               {langOpen && (
                 <div className="absolute right-0 mt-2 w-44 rounded-lux glass-navy p-2 shadow-lg">
                   <button className="w-full text-left rounded px-3 py-2 font-sub text-sm text-white">English <span className="text-gold">(Active)</span></button>
-                  <button className="w-full text-left rounded px-3 py-2 font-sub text-sm text-white/70">Hindi <span className="text-white/40">(Coming Soon)</span></button>
+                  <button className="w-full text-left rounded px-3 py-2 font-sub text-sm text-white/85">Hindi <span className="text-white/60">(Coming Soon)</span></button>
                 </div>
               )}
             </div>
@@ -210,7 +210,7 @@ export default function Navbar() {
                       <p className="font-sub text-base font-bold text-white">{m.label}</p>
                       <div className="mt-2 space-y-1 pl-4">
                           {m.items?.map((item) => (
-                            <button key={item.name} onClick={() => { setOpen(false); goTo(item.to, (item as any).scrollId); }} className="block w-full text-left py-1.5 font-sub text-sm text-white/60 hover:text-gold">{item.name}</button>
+                            <button key={item.name} onClick={() => { setOpen(false); goTo(item.to, (item as any).scrollId); }} className="block w-full text-left py-1.5 font-sub text-sm text-white/80 hover:text-gold">{item.name}</button>
                           ))}
                       </div>
                     </div>

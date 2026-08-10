@@ -118,7 +118,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
             initial={{ opacity: 0 }}
             animate={{ opacity: showTagline ? 1 : 0 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
-            className="mt-4 max-w-2xl text-sm uppercase tracking-[0.35em] text-white/60 sm:text-base"
+            className="mt-4 max-w-2xl text-sm uppercase tracking-[0.35em] text-white/80 sm:text-base"
           >
             Everyone Says Go Green... We Show How!!!
           </motion.p>
@@ -127,7 +127,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: showSubtitle ? 1 : 0, y: showSubtitle ? 0 : 16 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
-            className="mt-8 grid gap-3 text-sm font-medium text-white/70 sm:grid-cols-3"
+            className="mt-8 grid gap-3 text-sm font-medium text-white/85 sm:grid-cols-3"
           >
             {subtitles.map((line) => (
               <div key={line} className="rounded-3xl border border-white/10 bg-white/5 px-5 py-3 shadow-[0_0_40px_rgba(0,0,0,0.15)] backdrop-blur-xl">
