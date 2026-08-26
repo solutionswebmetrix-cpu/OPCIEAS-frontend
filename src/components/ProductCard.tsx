@@ -11,6 +11,7 @@ interface Props {
 
 export default function ProductCard({ product, index }: Props) {
   const waText = encodeURIComponent(`Hi, I'm interested in ${product.name}. Please share details.`);
+  const supplyLabel = product.supply_type === 'IN_HOUSE' ? 'In-House Manufacturing' : product.supply_type === 'PARTNER' ? 'Partner Supply' : 'Direct Manufacturer';
 
   return (
     <motion.div
@@ -31,7 +32,10 @@ export default function ProductCard({ product, index }: Props) {
           )}
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/20 to-transparent" />
           <div className="absolute inset-0 flex flex-col justify-end p-5">
-            {product.price_range && <p className="font-sub text-[10px] uppercase tracking-wider text-gold">{product.price_range}</p>}
+            <div className="mb-2 flex items-center gap-2">
+              <span className="rounded-full border border-gold/60 bg-gold/15 px-2 py-0.5 font-sub text-[9px] uppercase tracking-[0.2em] text-gold">{supplyLabel}</span>
+              {product.price_range && <span className="font-sub text-[10px] uppercase tracking-wider text-white/80">{product.price_range}</span>}
+            </div>
             <h3 className="mt-1 font-heading text-lg font-bold text-white">{product.name}</h3>
             {product.short_desc && <p className="mt-1 line-clamp-2 font-body text-xs text-white/80">{product.short_desc}</p>}
             <div className="relative z-10 mt-3 flex gap-2">

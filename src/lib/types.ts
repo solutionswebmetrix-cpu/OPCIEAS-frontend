@@ -83,6 +83,7 @@ export interface Product {
   id: string;
   seller_id?: string;
   category_id: string | null;
+  subcategory?: string | null;
   name: string;
   slug: string;
   sku?: string | null;
@@ -90,13 +91,23 @@ export interface Product {
   short_description?: string | null;
   long_desc?: string | null;
   description?: string | null;
+  key_features?: string[];
   features: string[];
+  supply_type?: 'IN_HOUSE' | 'PARTNER' | null;
   specs: Record<string, string>;
   specifications?: Record<string, any> | string | null;
   dimensions?: Record<string, any> | string | null;
   material?: string | null;
+  materials_used?: string | null;
   color?: string | null;
   warranty_months?: number | null;
+  warranty_terms?: string | null;
+  packaging_specifications?: string | null;
+  export_available?: boolean;
+  export_badge?: string | null;
+  weight?: string | null;
+  variants?: string[] | Record<string, any> | null;
+  tags?: string[] | Record<string, any> | null;
   min_order_quantity?: number;
   max_order_quantity?: number | null;
   unit?: string;
@@ -251,6 +262,14 @@ export interface RFQPayload {
   payment_terms?: string;
   delivery_terms?: string;
   visibility?: string;
+  project_type?: string;
+  sample_requirement?: string;
+  custom_dimensions?: string;
+  frame_colour?: string;
+  modification_requirements?: string;
+  product_sku?: string;
+  specification_notes?: string;
+  file?: File | null;
 }
 
 export interface ContactPayload {

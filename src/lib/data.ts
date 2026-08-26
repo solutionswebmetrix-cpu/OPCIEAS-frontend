@@ -31,189 +31,11 @@ export type {
   AuthStatus,
 };
 
-/* Product categories are now sourced exclusively from the PHP API and database. */
-
-const DEFAULT_MATERIALS: Record<CanonicalCategoryName, string[]> = {
-  'Office Furniture':      ['Engineered Wood + Powder-Coated Steel', 'Laminate / Veneer Top', 'Mild Steel Frame'],
-  'Educational Furniture': ['Mild Steel + Engineered Wood', 'Powder-Coated Frame', 'Anti-Scratch Laminate'],
-  'School Furniture':      ['Mild Steel + HDPE / Plastic', 'Powder-Coated Tubular Frame', 'Anti-Scratch Laminated Top'],
-  'Hospital Furniture':    ['CR / MS Steel Frame', 'Epoxy / Powder-Coated Finish', 'Foam + Leatherette Upholstery'],
-  'Hostel Furniture':      ['Mild Steel / Steel', 'Powder-Coated Finish', 'Engineered Wood Work Surface'],
-  'Industrial Storage':    ['Mild Steel', 'Powder-Coated / Galvanized', 'Heavy-Duty Uprights & Beams'],
-  'Bathroom Collection':   ['Stainless Steel 304 / PVC / Marine Ply', 'Waterproof Finish', 'Rust-Resistant Hardware'],
-  'Letter Box':            ['Stainless Steel 304 / Mild Steel / ABS Plastic / Wood', 'Powder-Coated or Polished', 'Lockable Mechanism'],
-};
-
-const DEFAULT_FINISHES: Record<CanonicalCategoryName, string[]> = {
-  'Office Furniture':      ['Laminate', 'High Gloss', 'Veneer', 'Powder Coated'],
-  'Educational Furniture': ['Powder Coated', 'Laminate', 'Matte'],
-  'School Furniture':      ['Powder Coated', 'Laminate', 'UV Protected'],
-  'Hospital Furniture':    ['Epoxy Coated', 'Powder Coated', 'Easy-Clean Surface'],
-  'Hostel Furniture':      ['Powder Coated', 'Laminate', 'Matte'],
-  'Industrial Storage':    ['Powder Coated', 'Galvanized', 'Chrome Plated'],
-  'Bathroom Collection':   ['Mirror Polish', 'Brushed', 'Waterproof Laminate', 'Chrome'],
-  'Letter Box':            ['Powder Coated', 'Mirror Polish', 'Natural Wood Polish', 'Matte'],
-};
-
-const DEFAULT_COLORS: Record<CanonicalCategoryName, string[]> = {
-  'Office Furniture':      ['Walnut Brown', 'Maple Cream', 'White', 'Charcoal Grey', 'Black', 'Navy Blue'],
-  'Educational Furniture': ['Maple', 'Grey', 'White', 'Blue', 'Beige'],
-  'School Furniture':      ['Sky Blue', 'Red', 'Green', 'Yellow', 'Orange', 'Pink', 'White', 'Woodgrain'],
-  'Hospital Furniture':    ['White', 'Sky Blue', 'Beige', 'Medical Grey', 'Sage Green'],
-  'Hostel Furniture':      ['Charcoal Grey', 'Black', 'Royal Blue', 'Ivory', 'Woodgrain'],
-  'Industrial Storage':    ['Silver Grey', 'Blue', 'Orange', 'Galvanized Silver', 'Ral 7035'],
-  'Bathroom Collection':   ['Chrome Silver', 'Brushed Gold', 'White', 'Matte Black', 'Woodgrain'],
-  'Letter Box':            ['Stainless Steel', 'Black', 'Brown Wood', 'White', 'Gold', 'Grey'],
-};
-
-const DEFAULT_SIZE_RANGES: Record<CanonicalCategoryName, string[]> = {
-  'Office Furniture':      ['Standard', 'Compact', 'Executive (1.8m+)', 'Boardroom (3.0m+)'],
-  'Educational Furniture': ['2-Seater', '4-Seater', '6-Seater', 'Modular'],
-  'School Furniture':      ['Nursery / Kids', 'Primary', 'Secondary', 'Adult / Teacher'],
-  'Hospital Furniture':    ['Single', 'Bariatric', 'Paediatric', 'Standard Clinical'],
-  'Hostel Furniture':      ['Single Cot', 'Bunk Bed', '3-Tier', 'With Storage'],
-  'Industrial Storage':    ['8 Shelves / Level', '12 Shelves / Level', '16 Shelves / Level', '20+ Shelves / Level', 'Custom'],
-  'Bathroom Collection':   ['600mm', '800mm', '1000mm', '1200mm', 'Custom'],
-  'Letter Box':            ['Single Unit', '8 Flats', '16 Flats', '24 Flats', 'Custom Cluster'],
-};
-
-const PRICE_BRACKETS: Record<CanonicalCategoryName, [number, number]> = {
-  'Office Furniture':      [12000, 120000],
-  'Educational Furniture': [5000, 55000],
-  'School Furniture':      [1500, 40000],
-  'Hospital Furniture':    [15000, 110000],
-  'Hostel Furniture':      [8000, 45000],
-  'Industrial Storage':    [7000, 80000],
-  'Bathroom Collection':   [5000, 35000],
-  'Letter Box':            [1500, 55000],
-};
-
-function hashCode(s: string): number {
-  let h = 0;
-  for (let i = 0; i < s.length; i++) h = (Math.imul(31, h) + s.charCodeAt(i)) | 0;
-  return Math.abs(h);
-}
-
-function pickByHash<T>(arr: T[], seed: string, idx = 0): T {
-  return arr[(hashCode(seed + '||' + String(idx))) % arr.length];
-}
-
 function formatINR(n: number): string {
   return '₹' + n.toLocaleString('en-IN');
 }
 
-function generatePriceRange(cleanName: string, cat: CanonicalCategoryName): string {
-  const [lo, hi] = PRICE_BRACKETS[cat];
-  const mid = Math.floor((lo + hi) / 2);
-  const seed = hashCode(cleanName);
-  const p1 = lo + (seed % Math.max(1, Math.floor((mid - lo) / 500))) * 500;
-  const p2 = mid + ((seed >> 3) % Math.max(1, Math.floor((hi - mid) / 1000))) * 1000;
-  const a = Math.min(p1, p2);
-  const b = Math.max(p1, p2);
-  return `${formatINR(Math.max(a, lo))} - ${formatINR(Math.min(b, hi))}`;
-}
-
-function generateShortDesc(cleanName: string, cat: CanonicalCategoryName): string {
-  const prefix: Record<CanonicalCategoryName, string> = {
-    'Office Furniture':      'Premium commercial-grade',
-    'Educational Furniture': 'Institutional-quality',
-    'School Furniture':      'Heavy-duty, student-ready',
-    'Hospital Furniture':    'Hygiene-friendly clinical',
-    'Hostel Furniture':      'Durable dormitory',
-    'Industrial Storage':    'Heavy-duty industrial',
-    'Bathroom Collection':   'Waterproof premium',
-    'Letter Box':            'Secure, weatherproof',
-  };
-  return `${prefix[cat]} ${cleanName.toLowerCase()} designed for ${cat.toLowerCase()} use with durable finish and export-ready quality.`;
-}
-
-function generateLongDesc(cleanName: string, cat: CanonicalCategoryName): string {
-  return `${cleanName} from OPCIEAS is engineered for demanding ${cat.toLowerCase()} environments. Manufactured with premium raw materials, strict quality control and export-grade finishing, this product combines durable construction with ergonomic design and low long-term maintenance. Suitable for government tender supply, bulk institutional orders, commercial establishments, hospitality, education campuses, industrial facilities and export markets. Every unit is backed by standardized dimensions, quality assurance documentation and customization flexibility for finishes, colors and sizes to meet project-specific requirements. Contact our team for RFQ, bulk pricing, installation support and tender-ready technical specifications.`;
-}
-
-const FEATURE_POOL: Record<CanonicalCategoryName, string[]> = {
-  'Office Furniture': [
-    'Ergonomic Design', 'Cable Management', 'Lockable Drawers', 'Modular Construction',
-    'Scratch-Resistant Laminate', 'Powder-Coated Frame', 'Ample Storage', 'Stain-Resistant Surface',
-    'Tender-Ready Specs', 'Export-Grade Finish', 'Custom Sizes Available', 'Bulk Manufacturing Capacity',
-  ],
-  'Educational Furniture': [
-    'Heavy-Duty Frame', 'Ergonomic Sizing', 'Scratch-Resistant Top', 'Stackable / Compact Storage',
-    'Powder-Coated Finish', 'Age-Appropriate Design', 'Easy To Clean', 'Long-Lasting Welds',
-    'Bulk Supply Ready', 'Tender Compliant', 'Anti-Skid Feet', 'Classroom Tested',
-  ],
-  'School Furniture': [
-    'Safe Rounded Edges', 'Ergonomic', 'Scratch-Resistant', 'Heavy-Duty Tubular Frame',
-    'Powder-Coated', 'UV-Stabilized Plastic Components', 'Anti-Skid Feet', 'Weather-Resistant (Outdoor Models)',
-    'Age-Appropriate Height', 'Bulk Supply', 'Tender Ready', 'Low Maintenance',
-  ],
-  'Hospital Furniture': [
-    'Hygienic, Easy-Clean Surfaces', 'Medical-Grade Powder Coat', 'Adjustable Height / Backrest',
-    'Side Rails (Models Applicable)', 'Lockable Castors', 'Corrosion-Resistant Frame',
-    'Clinical-Validated Design', 'Standardized For Tenders', 'Custom Configurations', 'Bulk Supply Ready',
-  ],
-  'Hostel Furniture': [
-    'Strong Welded Steel Frame', 'Powder-Coated Corrosion Resistance', 'Safety Rails (Bunk Models)',
-    'Integrated Ladder', 'Ample Under-Bed Storage', 'Lockable Compartments',
-    'Dormitory-Ready', 'Bulk Order Friendly', 'Easy Assembly Kit', 'Long Lifespan',
-  ],
-  'Industrial Storage': [
-    'High Load Capacity', 'Boltless / Bolted Assembly', 'Adjustable Shelf Levels',
-    'Powder-Coated or Galvanized Finish', 'Rust Resistant', 'Modular Expansion',
-    'Forklift-Compatible (Racks)', 'Export Packaging', 'Custom Dimensions', 'Warehouse Tested',
-  ],
-  'Bathroom Collection': [
-    'Waterproof / Humidity-Resistant', 'Rust-Resistant Hardware', 'Premium Finish (Chrome / SS)',
-    'Easy Wall Mounting', 'Ample Storage', 'Stain-Resistant Surface',
-    'Commercial-Grade Build', 'Hospitality & Office Ready', 'Mirror / Shelf Options', 'Low Maintenance',
-  ],
-  'Letter Box': [
-    'Secure Locking Mechanism', 'Weatherproof Construction', 'Anti-Corrosion Finish',
-    'Easy Installation (Wall / Floor)', 'Apartment Cluster Configurations', 'Multiple Flats Modules',
-    'Newspaper Holder (Optional)', 'Keyed Lock', 'Mail Theft Protection', 'Custom Branding',
-  ],
-};
-
-function generateFeatures(cleanName: string, cat: CanonicalCategoryName): string[] {
-  const pool = FEATURE_POOL[cat];
-  const count = 4 + (hashCode(cleanName) % 3);
-  const picks: string[] = [];
-  let cursor = 0;
-  while (picks.length < count && cursor < pool.length * 2) {
-    const item = pool[(hashCode(cleanName + '|f|' + cursor)) % pool.length];
-    if (!picks.includes(item)) picks.push(item);
-    cursor++;
-  }
-  return picks;
-}
-
-function generateSpecs(cleanName: string, cat: CanonicalCategoryName): Record<string, string> {
-  const materials = DEFAULT_MATERIALS[cat];
-  const finishes = DEFAULT_FINISHES[cat];
-  const colors = DEFAULT_COLORS[cat];
-  const sizes = DEFAULT_SIZE_RANGES[cat];
-  const dimsByCat: Record<CanonicalCategoryName, string> = {
-    'Office Furniture':      'As per selected model / Custom',
-    'Educational Furniture': 'Standard institutional sizes / Custom',
-    'School Furniture':      'Student ergonomic sizing / Age-specific',
-    'Hospital Furniture':    'Clinical standard sizes / Custom',
-    'Hostel Furniture':      'Standard cot / bunk dimensions',
-    'Industrial Storage':    'Load capacity 200–2000 kg / level, custom height & width',
-    'Bathroom Collection':   'Wall-mount / countertop as per model',
-    'Letter Box':            'As per flat-count module / Custom cluster',
-  };
-  return {
-    'Material':   pickByHash(materials, cleanName, 1) + ' | ' + pickByHash(materials, cleanName, 2),
-    'Finish':     pickByHash(finishes, cleanName, 3),
-    'Color Options': `${pickByHash(colors, cleanName, 4)}, ${pickByHash(colors, cleanName, 5)}, ${pickByHash(colors, cleanName, 6)}`,
-    'Size Options':  `${pickByHash(sizes, cleanName, 7)} | ${pickByHash(sizes, cleanName, 8)}`,
-    'Dimensions':   dimsByCat[cat],
-    'Warranty':     '1 Year Manufacturer Warranty (Terms Apply)',
-    'Compliance':   'ISO 9001:2015 | NSIC | MSME | Export Ready',
-  };
-}
-
-/* Static product generation removed; frontend products are loaded only from the PHP API. */
+/* Product data is loaded only from the PHP API and database. */
 
 const mockIndustries: Industry[] = [
   { id: '1', slug: 'government',   name: 'Government',   tagline: 'Trusted for government tenders', overview: 'OPCIEAS supports government departments, public sector undertakings, civic bodies, and defense-linked procurement programs with furniture that meets stringent tender specifications and institutional expectations. We engineer durable chairs, desks, storage systems, and seating solutions suited to offices, training centers, courts, and public facilities, with a strong focus on value, safety, and long-term maintenance. Our team understands the need for compliant documentation, predictable delivery schedules, and scalable manufacturing for large projects. From procurement-ready specifications to bulk production and installation support, OPCIEAS delivers dependable solutions for high-accountability environments. Every order is backed by quality assurance, customization flexibility, and experience working with public institutions that demand reliability, accountability, and on-time execution. Contact our team to discuss your next government furniture requirement.', hero_image: null, solutions: [{ title: 'Tender Ready', desc: 'Compliant products for government procurement.' }, { title: 'Bulk Manufacturing', desc: 'High volume production capability.' }, { title: 'Timely Delivery', desc: 'On-time execution of large projects.' }], certifications: ['ISO 9001:2015', 'NSIC', 'MSME'] },
@@ -381,11 +203,17 @@ function normalizeProduct(raw: any): Product {
   }
 
   const category_id = raw.category_id != null ? String(raw.category_id) : null;
+  const dimensions = raw.dimensions && typeof raw.dimensions === 'string' ? (() => { try { return JSON.parse(raw.dimensions); } catch { return raw.dimensions; } })() : (raw.dimensions ?? null);
+  const specs = raw.specifications ?? raw.specs ?? {};
+  const supplyTypeRaw = raw.supply_type ?? raw.supplyType ?? ((typeof specs === 'object' && specs && 'Supply Type' in specs) ? specs['Supply Type'] : null);
+  const supplyType = supplyTypeRaw === 'PARTNER' || supplyTypeRaw === 'IN_HOUSE' ? supplyTypeRaw : (typeof supplyTypeRaw === 'string' ? (supplyTypeRaw.toUpperCase() === 'PARTNER' ? 'PARTNER' : (supplyTypeRaw.toUpperCase() === 'IN_HOUSE' ? 'IN_HOUSE' : null)) : null);
+  const exportAvailable = raw.export_available != null ? !!Number(raw.export_available) : !!(raw.export_availability ?? raw.exportApplicable ?? raw.export_applicable);
 
   return {
     id: String(raw.id ?? raw.product_id ?? ''),
     seller_id: raw.seller_id != null ? String(raw.seller_id) : undefined,
     category_id,
+    subcategory: raw.subcategory ?? raw.sub_category ?? null,
     name: raw.name ?? '',
     slug: raw.slug ?? '',
     sku: raw.sku ?? null,
@@ -393,13 +221,23 @@ function normalizeProduct(raw: any): Product {
     short_description: raw.short_description ?? raw.short_desc ?? null,
     long_desc: raw.long_desc ?? raw.description ?? null,
     description: raw.description ?? raw.long_desc ?? null,
-    features: parseFeatures(raw.features),
-    specs: parseSpecs(raw.specifications ?? raw.specs),
-    specifications: raw.specifications ?? raw.specs ?? null,
-    dimensions: raw.dimensions ?? null,
-    material: raw.material ?? null,
+    key_features: Array.isArray(raw.key_features) ? raw.key_features : parseFeatures(raw.key_features ?? raw.features),
+    features: parseFeatures(raw.features ?? raw.key_features),
+    supply_type: supplyType,
+    specs: parseSpecs(specs),
+    specifications: specs,
+    dimensions,
+    material: raw.material ?? raw.materials_used ?? null,
+    materials_used: raw.materials_used ?? raw.material ?? null,
     color: raw.color ?? null,
     warranty_months: typeof raw.warranty_months === 'number' ? raw.warranty_months : null,
+    warranty_terms: raw.warranty_terms ?? raw.warranty ?? raw.warranty_policy ?? null,
+    packaging_specifications: raw.packaging_specifications ?? raw.packaging ?? null,
+    export_available: exportAvailable,
+    export_badge: raw.export_badge ?? 'Export Specifications & Paid Samples Available.',
+    weight: raw.weight ?? raw.product_weight ?? null,
+    variants: raw.variants ?? null,
+    tags: raw.tags ?? null,
     min_order_quantity: typeof raw.min_order_quantity === 'number' ? raw.min_order_quantity : undefined,
     max_order_quantity: typeof raw.max_order_quantity === 'number' ? raw.max_order_quantity : null,
     unit: raw.unit ?? undefined,
@@ -556,6 +394,13 @@ export async function submitRFQ(payload: RFQPayload | Record<string, any>): Prom
       payment_terms: payload.payment_terms ?? null,
       delivery_terms: payload.delivery_terms ?? null,
       visibility: payload.visibility ?? 'public',
+      project_type: payload.project_type ?? null,
+      sample_requirement: payload.sample_requirement ?? null,
+      custom_dimensions: payload.custom_dimensions ?? null,
+      frame_colour: payload.frame_colour ?? null,
+      modification_requirements: payload.modification_requirements ?? null,
+      product_sku: payload.product_sku ?? null,
+      specification_notes: payload.specification_notes ?? null,
     };
     const resp = await apiPost<any>('/rfqs/submit.php', body);
     return resp;

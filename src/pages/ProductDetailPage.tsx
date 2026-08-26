@@ -53,6 +53,15 @@ export default function ProductDetailPage() {
   const specs = product.specs || {};
   const features = product.features || [];
   const waText = `Hi, I'm interested in ${encodeURIComponent(product.name)}. Please share details.`;
+  const dimensionValue = specs['Dimensions'] || specs.Dimensions || specs['dimensions'] || (product.dimensions ? JSON.stringify(product.dimensions) : 'Available on request');
+  const materialsValue = specs['Materials Used'] || specs['Material'] || product.materials_used || product.material || 'Available on request';
+  const packagingValue = specs['Packaging Specifications'] || specs['Packaging'] || product.packaging_specifications || 'Available on request';
+  const warrantyText = product.warranty_terms || specs['Warranty'] || '12 Months Warranty on domestic supply.';
+  const weightValue = specs['Weight'] || product.weight || 'Available on request';
+  const variantsValue = specs['Variants'] || (Array.isArray(product.variants) ? product.variants.join(', ') : typeof product.variants === 'string' ? product.variants : 'Available on request');
+  const hasExport = !!(product.export_available || /export/i.test(String(specs['Export Available'] || '')));
+  const supplyLabel = product.supply_type === 'IN_HOUSE' ? 'In-House Manufacturing' : product.supply_type === 'PARTNER' ? 'Partner Supply' : 'Direct Manufacturer';
+  const supplyNote = product.supply_type === 'IN_HOUSE' ? 'Manufactured in our own facility with production control and quality assurance.' : 'Supplied through trusted production partners and quality-checked before dispatch.';
 
   return (
     <>
@@ -128,7 +137,16 @@ export default function ProductDetailPage() {
           <div>
             <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="font-heading text-3xl font-black text-white sm:text-4xl">{product.name}</motion.h1>
             {product.short_desc && <p className="mt-2 font-sub text-lg text-white/80">{product.short_desc}</p>}
+            <div className="mt-4 inline-flex rounded-full border border-gold/70 bg-gold/10 px-3 py-1.5 font-sub text-xs font-semibold uppercase tracking-[0.2em] text-gold">{supplyLabel}</div>
+            {hasExport && (<div className="mt-3 inline-flex rounded-full border border-gold/70 bg-gold/10 px-3 py-1.5 font-sub text-xs font-semibold uppercase tracking-[0.2em] text-gold">Export Specifications & Paid Samples Available.</div>)}
             {product.price_range && <p className="mt-4 font-heading text-xl font-bold gold-text">{product.price_range}</p>}
+            <p className="mt-3 font-body text-sm text-white/75">{supplyNote}</p>
+            <div className="mt-4 grid gap-2 text-sm text-white/80 sm:grid-cols-2">
+              <div><span className="font-sub uppercase tracking-[0.18em] text-white/60">SKU</span><p className="mt-1 font-medium">{product.sku || 'Available on request'}</p></div>
+              <div><span className="font-sub uppercase tracking-[0.18em] text-white/60">Category</span><p className="mt-1 font-medium">{product.subcategory || product.category_id || 'General'}</p></div>
+              <div><span className="font-sub uppercase tracking-[0.18em] text-white/60">Availability</span><p className="mt-1 font-medium">{product.stock_quantity ? `${product.stock_quantity} units available` : 'Available on request'}</p></div>
+              <div><span className="font-sub uppercase tracking-[0.18em] text-white/60">Warranty</span><p className="mt-1 font-medium">{warrantyText}</p></div>
+            </div>
 
             {/* Actions */}
             <div className="mt-6 flex flex-wrap gap-3">
@@ -180,15 +198,43 @@ export default function ProductDetailPage() {
           </div>
         </div>
 
-        {/* Long description */}
-        {product.long_desc && (
-          <div className="container-x mt-12 px-6">
+        <div className="container-x mt-12 px-6">
+          <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
             <div className="max-w-3xl">
               <h3 className="font-heading text-xl font-bold text-white">Product Description</h3>
-              <p className="mt-3 font-body text-sm leading-relaxed text-white/80">{product.long_desc}</p>
+              <p className="mt-3 font-body text-sm leading-relaxed text-white/80">{product.long_desc || product.description || product.short_desc || 'Description available on request.'}</p>
+            </div>
+            <div className="rounded-lux border border-white/10 bg-white/5 p-5">
+              <h3 className="font-heading text-lg font-bold text-white">Technical Specifications</h3>
+              <ul className="mt-4 space-y-3 font-sub text-sm text-white/80">
+                <li><span className="text-white/60">Dimensions:</span> {dimensionValue}</li>
+                <li><span className="text-white/60">Materials Used:</span> {materialsValue}</li>
+                <li><span className="text-white/60">Weight:</span> {weightValue}</li>
+                <li><span className="text-white/60">Packaging:</span> {packagingValue}</li>
+                <li><span className="text-white/60">Variants:</span> {variantsValue}</li>
+              </ul>
             </div>
           </div>
-        )}
+        </div>
+
+        <div className="container-x mt-12 px-6">
+          <div className="grid gap-6 lg:grid-cols-2">
+            <div className="rounded-lux border border-white/10 bg-white/5 p-6">
+              <h3 className="font-heading text-lg font-bold text-white">Key Features</h3>
+              <ul className="mt-4 space-y-2">
+                {features.length ? features.map((feature, index) => (
+                  <li key={index} className="flex items-start gap-2 font-sub text-sm text-white/80"><Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-gold" /> {feature}</li>
+                )) : <li className="font-sub text-sm text-white/70">Available on request.</li>}
+              </ul>
+            </div>
+            <div className="rounded-lux border border-white/10 bg-white/5 p-6">
+              <h3 className="font-heading text-lg font-bold text-white">Warranty</h3>
+              <p className="mt-4 font-sub text-sm text-white/80">{warrantyText}</p>
+              <p className="mt-2 font-sub text-sm text-white/80">Fabric and cushion parts are excluded from warranty.</p>
+              <p className="mt-4 font-sub text-sm text-gold">High durability and long-life performance.</p>
+            </div>
+          </div>
+        </div>
 
         {/* Inquiry form */}
         <div className="container-x mt-16 px-6">

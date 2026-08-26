@@ -16,6 +16,7 @@ export default function RFQ() {
     company_name: '', contact_name: '', email: '', phone: '',
     country: '', city: '', gst: '', category: '', product: '',
     quantity: '', budget: '', expected_delivery: '', message: '',
+    project_type: '', sample_requirement: '', custom_dimensions: '', frame_colour: '', modification_requirements: '',
   });
 
   const set = (k: string, v: string) => setForm((p) => ({ ...p, [k]: v }));
@@ -31,7 +32,7 @@ export default function RFQ() {
         throw new Error(result.message || 'Submission failed');
       }
       setStatus('success');
-      setForm({ company_name: '', contact_name: '', email: '', phone: '', country: '', city: '', gst: '', category: '', product: '', quantity: '', budget: '', expected_delivery: '', message: '' });
+      setForm({ company_name: '', contact_name: '', email: '', phone: '', country: '', city: '', gst: '', category: '', product: '', quantity: '', budget: '', expected_delivery: '', message: '', project_type: '', sample_requirement: '', custom_dimensions: '', frame_colour: '', modification_requirements: '' });
     } catch (err: any) {
       setErrorMsg(err?.message || 'Something went wrong. Please try again or contact us directly.');
       setStatus('error');
@@ -79,6 +80,32 @@ export default function RFQ() {
             <Field label="Quantity" value={form.quantity} onChange={(v) => set('quantity', v)} />
             <Field label="Project Budget" value={form.budget} onChange={(v) => set('budget', v)} />
             <Field label="Expected Delivery" value={form.expected_delivery} onChange={(v) => set('expected_delivery', v)} />
+            <div>
+              <label className="mb-1.5 block font-sub text-xs text-white/80">Project Type</label>
+              <select value={form.project_type} onChange={(e) => set('project_type', e.target.value)} className="w-full rounded-xl border border-white/10 bg-navy/50 px-4 py-3 font-body text-sm text-white outline-none focus:border-gold">
+                <option value="">Select</option>
+                <option value="New Project">New Project</option>
+                <option value="Replacement / Upgrade">Replacement / Upgrade</option>
+                <option value="Custom Manufacturing">Custom Manufacturing</option>
+                <option value="Bulk Procurement">Bulk Procurement</option>
+              </select>
+            </div>
+            <div>
+              <label className="mb-1.5 block font-sub text-xs text-white/80">Sample Requirement</label>
+              <select value={form.sample_requirement} onChange={(e) => set('sample_requirement', e.target.value)} className="w-full rounded-xl border border-white/10 bg-navy/50 px-4 py-3 font-body text-sm text-white outline-none focus:border-gold">
+                <option value="">Select</option>
+                <option value="Need sample">Need sample</option>
+                <option value="No sample needed">No sample needed</option>
+                <option value="Factory visit / trial">Factory visit / trial</option>
+              </select>
+            </div>
+            <Field label="Custom Dimensions" value={form.custom_dimensions} onChange={(v) => set('custom_dimensions', v)} />
+            <Field label="Frame Colour / Finish" value={form.frame_colour} onChange={(v) => set('frame_colour', v)} />
+          </div>
+
+          <div className="mt-5">
+            <label className="mb-1.5 block font-sub text-xs text-white/80">Modification Requirements</label>
+            <textarea value={form.modification_requirements} onChange={(e) => set('modification_requirements', e.target.value)} rows={3} className="w-full rounded-xl border border-white/10 bg-navy/50 px-4 py-3 font-body text-sm text-white outline-none focus:border-gold" placeholder="Any special measurements, branding, custom cutouts, or manufacturing changes?" />
           </div>
 
           <div className="mt-5">
