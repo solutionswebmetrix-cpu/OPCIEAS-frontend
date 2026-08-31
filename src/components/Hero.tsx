@@ -192,10 +192,10 @@ export default function Hero() {
         >
           <source src="/videos/banner.mp4" type="video/mp4" />
         </motion.video>
-        {/* Subtle bottom fade for clean transition to next section only */}
-        <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-white via-white/70 to-transparent" />
-        {/* Localized light gradient for text readability — text area only, NOT full video coverage */}
-        <div className="absolute inset-y-0 left-0 w-[58%] bg-gradient-to-r from-white/70 via-white/38 to-transparent md:w-[52%] lg:w-[48%]" />
+        {/* Very subtle fade only at the section edge; keep video clear across the entire banner */}
+        <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white/25 via-white/8 to-transparent" />
+        {/* Very light navy tint behind text only, not a white wash across the right side */}
+        <div className="absolute inset-y-0 left-0 w-[60%] bg-gradient-to-r from-[#071A35]/10 via-[#071A35]/0 to-transparent md:w-[54%] lg:w-[48%]" />
       </div>
 
       {/* Subtle decorative orbs — very low opacity to not obscure video details */}
@@ -205,8 +205,8 @@ export default function Hero() {
       <div className="container-x relative z-10 flex min-h-screen items-center px-6 py-32">
         {/* Left content with strong localized soft white background behind text block for readability */}
         <div className="relative max-w-3xl">
-          {/* Diffused white halo behind text area ONLY — strong contrast, does not cover video */}
-          <div aria-hidden className="pointer-events-none absolute -inset-x-16 -inset-y-10 -z-10 rounded-[3.5rem] bg-white/55 blur-[36px]" />
+          {/* Minimal transparent readability layer behind text only, without washing out the video */}
+          <div aria-hidden className="pointer-events-none absolute -inset-x-5 -inset-y-6 -z-10 rounded-[1.5rem] bg-white/15" />
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -221,10 +221,10 @@ export default function Hero() {
             >COMMERCIAL FURNITURE MANUFACTURER SINCE 2000</span>
           </motion.div>
 
-          {/* Typewriter headline — FULL DARK NAVY with bright white text-shadow for video contrast */}
+          {/* Typewriter headline — strong dark navy for readability over video */}
           <h1
             className="font-heading text-4xl font-black leading-[1.05] sm:text-5xl xl:text-6xl"
-            style={{ color: '#071A35' }}
+            style={{ color: '#061A36', fontWeight: 900, opacity: 1 }}
           >
             <span className="block font-black whitespace-pre">
               {text1 || '\u00A0'}
@@ -235,8 +235,8 @@ export default function Hero() {
             <span
               className="mt-2 block max-w-[14ch] text-[1.7rem] font-bold leading-[1.12] whitespace-normal sm:max-w-[18ch] sm:text-[2.3rem] lg:max-w-none lg:whitespace-nowrap lg:text-[2.8rem]"
               style={{
-                color: '#0B1F3A',
-                fontWeight: 700,
+                color: '#061A36',
+                fontWeight: 800,
                 textShadow: 'none',
                 opacity: 1,
               }}
@@ -252,7 +252,7 @@ export default function Hero() {
             animate={{ opacity: 1 }}
             transition={{ delay: 1.2, duration: 0.6 }}
             className="mt-4 font-sub text-lg"
-            style={{ color: '#071A35', textShadow: '0 1px 10px rgba(255,255,255,0.95), 0 0 2px rgba(255,255,255,0.85)' }}
+            style={{ color: '#061A36', fontWeight: 650, opacity: 1, textShadow: 'none' }}
           >
             Vibrant, durable single-seat and dual-seat desk systems engineered for safety, comfort, and active classrooms.
           </motion.p>
@@ -261,8 +261,8 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.4, duration: 0.6 }}
-            className="mt-5 max-w-xl font-body text-sm"
-            style={{ color: '#071A35', textShadow: '0 1px 8px rgba(255,255,255,0.92), 0 0 2px rgba(255,255,255,0.8)' }}
+            className="mt-5 max-w-[760px] font-body text-base leading-[1.55] sm:text-[1.1rem] lg:text-[1.2rem]"
+            style={{ color: '#061A36', fontWeight: 550, opacity: 1, textShadow: 'none' }}
           >
             Premium furniture solutions for offices, education, hospitality, healthcare and institutional projects across India and global markets.
           </motion.p>
@@ -271,8 +271,8 @@ export default function Hero() {
             {['25+ Years Experience', 'ISO 9001:2015 Certified', 'Government Tender Specialist', 'Export Ready', 'Trusted by TATA, NOKIA, JW Marriott', 'Bulk Manufacturing', 'Institutional Projects'].map((t) => (
               <span
                 key={t}
-                className="rounded-full border border-navy/20 bg-white/95 px-3 py-1.5 font-sub text-xs font-medium shadow-md backdrop-blur-md"
-                style={{ color: '#071A35' }}
+                className="rounded-full border border-navy/20 bg-white/90 px-3 py-1.5 font-sub text-xs font-medium shadow-md backdrop-blur-md"
+                style={{ color: '#061A36', opacity: 1 }}
               >{t}</span>
             ))}
           </div>
