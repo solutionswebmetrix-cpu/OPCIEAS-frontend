@@ -51,29 +51,29 @@ export default function Product360Viewer({ images, productName, open, onClose }:
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[2000] flex items-center justify-center bg-black/90 p-4"
+        className="fixed inset-0 z-[2000] flex items-center justify-center bg-white/95 backdrop-blur-sm border border-navy/10 p-4"
         onClick={onClose}
       >
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.9, opacity: 0 }}
-          className="relative w-full max-w-4xl overflow-hidden rounded-lux bg-navy p-6"
+          className="relative w-full max-w-4xl overflow-hidden rounded-lux bg-white p-6"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="mb-4 flex items-center justify-between">
             <div>
-              <h3 className="font-heading text-lg font-bold text-white">{productName}</h3>
+              <h3 className="font-heading text-lg font-bold text-navy">{productName}</h3>
               <p className="font-sub text-xs text-gold">360° Product Viewer</p>
             </div>
-            <button onClick={onClose} className="rounded-full bg-white/10 p-2 text-white transition hover:bg-white/20">
+            <button onClick={onClose} className="rounded-full bg-navy/10 p-2 text-navy transition hover:bg-navy/20">
               <X className="h-5 w-5" />
             </button>
           </div>
 
           <div
             ref={containerRef}
-            className="relative aspect-square w-full cursor-grab overflow-hidden rounded-lux bg-dark select-none active:cursor-grabbing"
+            className="relative aspect-square w-full cursor-grab overflow-hidden rounded-lux bg-light-grey border border-navy/10 select-none active:cursor-grabbing"
             onMouseDown={onDown}
             onMouseMove={onMove}
             onMouseUp={onUp}
@@ -89,22 +89,22 @@ export default function Product360Viewer({ images, productName, open, onClose }:
               style={{ transform: `scale(${zoom})`, transition: 'transform 0.2s' }}
               draggable={false}
             />
-            <div className="pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full glass px-4 py-2 font-sub text-xs text-white/80">
+            <div className="pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full glass px-4 py-2 font-sub text-xs text-navy/80">
               Drag to rotate • View {idx + 1} / {images.length}
             </div>
           </div>
 
           <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-2">
-              <button onClick={() => setZoom((z) => Math.max(1, z - 0.2))} className="rounded-full bg-white/10 p-2 text-white transition hover:bg-gold hover:text-navy"><ZoomOut className="h-4 w-4" /></button>
-              <span className="font-sub text-xs text-white/85">{Math.round(zoom * 100)}%</span>
-              <button onClick={() => setZoom((z) => Math.min(3, z + 0.2))} className="rounded-full bg-white/10 p-2 text-white transition hover:bg-gold hover:text-navy"><ZoomIn className="h-4 w-4" /></button>
+              <button onClick={() => setZoom((z) => Math.max(1, z - 0.2))} className="rounded-full bg-navy/10 p-2 text-navy transition hover:bg-gold hover:text-navy"><ZoomOut className="h-4 w-4" /></button>
+              <span className="font-sub text-xs text-navy/70">{Math.round(zoom * 100)}%</span>
+              <button onClick={() => setZoom((z) => Math.min(3, z + 0.2))} className="rounded-full bg-navy/10 p-2 text-navy transition hover:bg-gold hover:text-navy"><ZoomIn className="h-4 w-4" /></button>
             </div>
             <div className="flex items-center gap-2">
-              <button onClick={() => setAuto(!auto)} className={`flex items-center gap-2 rounded-full px-4 py-2 font-sub text-xs transition ${auto ? 'bg-gold text-navy' : 'bg-white/10 text-white hover:bg-white/20'}`}>
+              <button onClick={() => setAuto(!auto)} className={`flex items-center gap-2 rounded-full px-4 py-2 font-sub text-xs transition ${auto ? 'bg-gold text-navy' : 'bg-navy/10 text-navy hover:bg-navy/20'}`}>
                 <RotateCw className="h-4 w-4" /> {auto ? 'Stop Auto-Rotate' : 'Auto-Rotate'}
               </button>
-              <button onClick={() => setIdx((i) => (i + 1) % images.length)} className="flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 font-sub text-xs text-white transition hover:bg-gold hover:text-navy">
+              <button onClick={() => setIdx((i) => (i + 1) % images.length)} className="flex items-center gap-2 rounded-full bg-navy/10 px-4 py-2 font-sub text-xs text-navy transition hover:bg-gold hover:text-navy">
                 <Maximize2 className="h-4 w-4" /> Next Angle
               </button>
             </div>

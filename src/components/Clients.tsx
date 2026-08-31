@@ -37,13 +37,13 @@ const clients = Object.entries(clientAssets)
 
 export default function Clients() {
   return (
-    <section id="clients" className="relative overflow-hidden bg-navy py-24">
+    <section id="clients" className="relative overflow-hidden bg-white py-24">
       <div className="container-x mb-12 px-6 text-center">
         <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-sub text-sm uppercase tracking-[0.3em] text-gold">Trusted By</motion.p>
-        <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-4 font-heading text-3xl font-black text-white sm:text-4xl">
+        <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl">
           Premium Clients & Strategic Partners
         </motion.h2>
-        <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mx-auto mt-4 max-w-2xl font-body text-sm text-white/80">
+        <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mx-auto mt-4 max-w-2xl font-body text-sm text-body-text">
           OPCIEAS serves leading corporates, hospitality brands, government organisations, educational institutions and large-scale institutional buyers with world-class furniture solutions.
         </motion.p>
       </div>
@@ -57,9 +57,9 @@ export default function Clients() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.08 }}
-              className="group relative overflow-hidden rounded-lux border border-white/10 bg-white/5 p-6 text-left transition-all duration-500 hover:-translate-y-1 hover:border-gold/40 hover:bg-white/10"
+              className="group relative overflow-hidden rounded-lux border border-gray-200 bg-light-grey p-6 text-left transition-all duration-500 hover:-translate-y-1 hover:border-gold/40 hover:bg-white"
             >
-              <div className="mb-5 flex h-36 items-center justify-center rounded-2xl border border-white/10 bg-white/90 p-3 shadow-[0_10px_30px_rgba(0,0,0,0.18)] backdrop-blur-sm transition-all duration-500 group-hover:border-gold/40 group-hover:shadow-[0_18px_40px_rgba(0,0,0,0.28)] sm:h-40 lg:h-44">
+              <div className="mb-5 flex h-36 items-center justify-center rounded-2xl border border-gray-200 bg-white p-3 shadow-[0_10px_30px_rgba(0,0,0,0.08)] backdrop-blur-sm transition-all duration-500 group-hover:border-gold/40 group-hover:shadow-[0_18px_40px_rgba(0,0,0,0.12)] sm:h-40 lg:h-44">
                 <img
                   src={client.src}
                   alt={`${client.name} logo`}
@@ -68,8 +68,8 @@ export default function Clients() {
                   className="h-full w-full max-w-[80%] max-h-[80%] object-contain object-center"
                 />
               </div>
-              <p className="font-heading text-xl font-bold text-white">{client.name}</p>
-              <p className="mt-2 font-body text-sm text-white/80">{client.subtitle}</p>
+              <p className="font-heading text-xl font-bold text-navy">{client.name}</p>
+              <p className="mt-2 font-body text-sm text-body-text">{client.subtitle}</p>
             </motion.div>
           ))}
         </div>

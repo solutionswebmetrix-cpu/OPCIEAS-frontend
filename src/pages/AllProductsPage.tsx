@@ -29,7 +29,7 @@ export default function AllProductsPage() {
   if (search) filtered = filtered.filter((p) => p.name.toLowerCase().includes(search.toLowerCase()));
 
   if (loading) {
-    return <div className="flex min-h-screen items-center justify-center bg-navy"><div className="h-8 w-8 animate-spin rounded-full border-2 border-gold border-t-transparent" /></div>;
+    return <div className="flex min-h-screen items-center justify-center bg-white"><div className="h-8 w-8 animate-spin rounded-full border-2 border-gold border-t-transparent" /></div>;
   }
 
   return (
@@ -50,13 +50,15 @@ export default function AllProductsPage() {
           <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
             {cats.map((c, i) => (
               <motion.div key={c.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: (i % 4) * 0.08 }}>
-                <Link to={`/products/category/${c.slug}`} className="group relative block aspect-[4/3] overflow-hidden rounded-lux border border-navy/10 luxury-shadow">
-                  <img src={c.banner_image || ''} alt={c.name} className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy/90 to-transparent" />
-                  <div className="absolute bottom-0 p-4">
-                    <h3 className="font-heading text-lg font-bold text-white">{c.name}</h3>
-                    {c.tagline && <p className="font-sub text-xs text-white/80">{c.tagline}</p>}
-                    <span className="mt-2 inline-flex items-center gap-1 font-sub text-xs text-gold">View Products <ArrowRight className="h-3 w-3" /></span>
+                <Link to={`/products/category/${c.slug}`} className="group relative block overflow-hidden rounded-lux border border-navy/10 bg-white shadow-sm transition-all duration-300 hover:shadow-md">
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <img src={c.banner_image || ''} alt={c.name} className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white/95 via-white/30 to-transparent" />
+                  </div>
+                  <div className="p-5">
+                    <h3 className="font-heading text-lg font-bold text-navy">{c.name}</h3>
+                    {c.tagline && <p className="mt-1 font-sub text-xs text-navy/70">{c.tagline}</p>}
+                    <span className="mt-3 inline-flex items-center gap-1 font-sub text-xs text-gold font-medium">View Products <ArrowRight className="h-3 w-3" /></span>
                   </div>
                 </Link>
               </motion.div>
@@ -74,9 +76,9 @@ export default function AllProductsPage() {
               <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search all products..." className="w-full rounded-full bg-navy/5 px-10 py-2.5 font-sub text-sm text-navy outline-none ring-1 ring-navy/10 focus:ring-gold" />
             </div>
             <div className="flex flex-wrap gap-2">
-              <button onClick={() => setActiveCat('all')} className={`rounded-full px-4 py-2 font-sub text-xs transition ${activeCat === 'all' ? 'bg-gold text-navy' : 'bg-navy/10 text-navy hover:bg-navy/20'}`}>All</button>
+              <button onClick={() => setActiveCat('all')} className={`rounded-full px-4 py-2 font-sub text-xs transition ${activeCat === 'all' ? 'bg-gold text-navy' : 'bg-gray-100 text-navy hover:bg-gray-200'}`}>All</button>
               {cats.map((c) => (
-                <button key={c.id} onClick={() => setActiveCat(c.id)} className={`rounded-full px-4 py-2 font-sub text-xs transition ${activeCat === c.id ? 'bg-gold text-navy' : 'bg-navy/10 text-navy hover:bg-navy/20'}`}>{c.name}</button>
+                <button key={c.id} onClick={() => setActiveCat(c.id)} className={`rounded-full px-4 py-2 font-sub text-xs transition ${activeCat === c.id ? 'bg-gold text-navy' : 'bg-gray-100 text-navy hover:bg-gray-200'}`}>{c.name}</button>
               ))}
             </div>
           </div>

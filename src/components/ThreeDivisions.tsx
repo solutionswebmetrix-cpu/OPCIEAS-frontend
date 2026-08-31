@@ -110,14 +110,15 @@ function DivisionSection({
     <section
       id={id}
       style={{ scrollMarginTop: '100px' }}
-      className={`relative overflow-hidden ${isEven ? 'bg-white' : 'bg-navy/[0.03]'}`}
+      className={`relative overflow-hidden ${isEven ? 'bg-white' : 'bg-light-grey/50'}`}
     >
       {/* Banner */}
-      <div className="relative overflow-hidden bg-navy">
+      <div className="relative overflow-hidden bg-white border-b border-navy/5">
         <div className="pointer-events-none absolute inset-0">
-          <img src={image} alt={name} className="h-full w-full object-cover opacity-25" loading="lazy" />
-          <div className={`absolute inset-0 bg-gradient-to-r ${accent} opacity-20`} />
-          <div className="absolute inset-0 bg-gradient-to-b from-navy/80 via-navy/60 to-navy" />
+          <img src={image} alt={name} className="h-full w-full object-cover opacity-[0.10]" loading="lazy" />
+          <div className={`absolute inset-0 bg-gradient-to-r ${accent} opacity-[0.08]`} />
+          <div className="absolute inset-0 bg-gradient-to-b from-white via-white/70 to-white" />
+          <div className="absolute inset-0 grid-bg opacity-25" />
         </div>
         <div className="container-x relative z-10 px-6 py-24 sm:py-32">
           <motion.div
@@ -127,16 +128,17 @@ function DivisionSection({
             transition={{ duration: 0.7 }}
             className="max-w-3xl"
           >
-            <div className="inline-flex items-center gap-3 rounded-full glass px-4 py-2">
-              <div className={`inline-flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br ${accent} text-white`}>
+            <div className="inline-flex items-center gap-3 rounded-full border border-gold/30 bg-white px-4 py-2 shadow-sm">
+              <div className={`inline-flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br ${accent} text-white shadow-sm`}>
                 <Icon className="h-4 w-4" />
               </div>
-              <span className="font-sub text-xs uppercase tracking-[0.3em] text-white/80">{tag}</span>
+              <span className="font-sub text-xs uppercase tracking-[0.3em] text-navy">{tag}</span>
             </div>
-            <h2 className="mt-6 font-heading text-4xl font-black leading-tight text-white sm:text-5xl xl:text-6xl">
+            <h2 className="mt-6 font-heading text-4xl font-black leading-tight text-navy sm:text-5xl xl:text-6xl">
               {name}
             </h2>
-            <p className="mt-4 font-sub text-lg text-white/85">{tagline}</p>
+            <p className="mt-4 font-sub text-lg text-body-text">{tagline}</p>
+            <div className="mt-6 h-[3px] w-24 bg-gradient-to-r from-gold to-gold-2 rounded-full" />
           </motion.div>
         </div>
       </div>
@@ -157,7 +159,7 @@ function DivisionSection({
               About the Division
             </h3>
             <div className="mt-6 h-[2px] w-16 bg-gradient-to-r from-gold to-gold-2" />
-            <p className="furniture-section-copy mt-8 font-body text-[15px] leading-[1.95] text-navy whitespace-pre-line">
+            <p className="furniture-section-copy mt-8 font-body text-[15px] leading-[1.95] text-body-text whitespace-pre-line">
               {narration}
             </p>
             <Link
@@ -176,7 +178,7 @@ function DivisionSection({
             transition={{ duration: 0.7, delay: 0.1 }}
           >
             <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Core Focus Areas</p>
-            <h3 className="mt-3 font-heading text-2xl font-black text-white sm:text-3xl">
+            <h3 className="mt-3 font-heading text-2xl font-black text-navy sm:text-3xl">
               Key Pillars
             </h3>
             <div className="mt-8 grid gap-5 sm:grid-cols-2">
@@ -191,11 +193,11 @@ function DivisionSection({
                     transition={{ delay: 0.05 * i }}
                     className="rounded-lux border border-navy/10 bg-white p-6 shadow-sm transition-all duration-300 hover:border-gold/30 hover:shadow-md"
                   >
-                    <div className={`inline-flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br ${accent} text-white`}>
+                    <div className={`inline-flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br ${accent} text-white shadow-sm`}>
                       <PI className="h-5 w-5" strokeWidth={1.75} />
                     </div>
                     <h4 className="mt-4 font-heading text-base font-bold text-navy">{p.title}</h4>
-                    <p className="mt-2 font-body text-sm leading-relaxed text-navy/80">{p.desc}</p>
+                    <p className="mt-2 font-body text-sm leading-relaxed text-navy/70">{p.desc}</p>
                   </motion.div>
                 );
               })}

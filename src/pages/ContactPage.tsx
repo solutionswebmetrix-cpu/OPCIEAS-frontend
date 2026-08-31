@@ -6,7 +6,7 @@ export default function ContactPage() {
     <main>
       <Contact />
 
-      <section className="relative overflow-hidden bg-dark py-16">
+      <section className="relative overflow-hidden bg-light-grey py-16">
         <div className="container-x px-6">
           <div className="grid gap-8 lg:grid-cols-2">
             <div>

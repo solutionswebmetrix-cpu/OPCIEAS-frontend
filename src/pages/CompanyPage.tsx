@@ -116,8 +116,8 @@ export default function CompanyPage() {
   }, [page]);
 
   if (!meta) {
-    return <div className="flex min-h-screen flex-col items-center justify-center bg-navy pt-32 text-center">
-      <p className="font-heading text-2xl font-bold text-white">Page not found</p>
+    return <div className="flex min-h-screen flex-col items-center justify-center bg-white pt-32 text-center">
+      <p className="font-heading text-2xl font-bold text-navy">Page not found</p>
     </div>;
   }
 
@@ -236,26 +236,26 @@ export default function CompanyPage() {
                 <div className="flex items-center gap-3"><div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gold/10 text-gold"><Mail className="h-5 w-5" /></div><div><p className="font-sub text-xs text-navy/50">Email</p><a href="mailto:opcieas.opcieas4@gmail.com" className="font-sub text-sm text-navy hover:text-gold">opcieas.opcieas4@gmail.com</a></div></div>
               </div>
             </div>
-            <div className="rounded-lux bg-navy p-8">
+            <div className="rounded-lux bg-white p-8 border border-gray-200">
               {contactStatus === 'success' ? (
                 <div className="flex flex-col items-center justify-center py-12 text-center">
-                  <CheckCircle className="mb-3 h-12 w-12 text-green-400" />
-                  <h3 className="font-heading text-lg font-bold text-white">Message Sent!</h3>
-                  <p className="mt-2 font-sub text-sm text-white/60">We'll get back to you within 24 hours.</p>
-                  <button onClick={() => setContactStatus('idle')} className="mt-4 rounded-full bg-white/10 px-5 py-2 font-sub text-xs text-white hover:bg-white/20">Send Another</button>
+                  <CheckCircle className="mb-3 h-12 w-12 text-green-600" />
+                  <h3 className="font-heading text-lg font-bold text-navy">Message Sent!</h3>
+                  <p className="mt-2 font-sub text-sm text-navy/60">We'll get back to you within 24 hours.</p>
+                  <button onClick={() => setContactStatus('idle')} className="mt-4 rounded-full bg-navy/10 px-5 py-2 font-sub text-xs text-navy hover:bg-navy/20">Send Another</button>
                 </div>
               ) : (
                 <form onSubmit={submitContactForm} className="space-y-3">
-                  <h3 className="font-heading text-xl font-bold text-white">Send a Message</h3>
-                  <input required value={contactForm.name} onChange={(e) => set('name', e.target.value)} placeholder="Name *" className="w-full rounded-xl bg-white/5 px-4 py-2.5 font-sub text-sm text-white placeholder-white/30 outline-none ring-1 ring-white/10 focus:ring-gold" />
-                  <input required type="email" value={contactForm.email} onChange={(e) => set('email', e.target.value)} placeholder="Email *" className="w-full rounded-xl bg-white/5 px-4 py-2.5 font-sub text-sm text-white placeholder-white/30 outline-none ring-1 ring-white/10 focus:ring-gold" />
-                  <input value={contactForm.phone} onChange={(e) => set('phone', e.target.value)} placeholder="Phone" className="w-full rounded-xl bg-white/5 px-4 py-2.5 font-sub text-sm text-white placeholder-white/30 outline-none ring-1 ring-white/10 focus:ring-gold" />
-                  <input value={contactForm.subject} onChange={(e) => set('subject', e.target.value)} placeholder="Subject" className="w-full rounded-xl bg-white/5 px-4 py-2.5 font-sub text-sm text-white placeholder-white/30 outline-none ring-1 ring-white/10 focus:ring-gold" />
-                  <textarea required value={contactForm.message} onChange={(e) => set('message', e.target.value)} placeholder="Message *" rows={4} className="w-full rounded-xl bg-white/5 px-4 py-2.5 font-sub text-sm text-white placeholder-white/30 outline-none ring-1 ring-white/10 focus:ring-gold" />
+                  <h3 className="font-heading text-xl font-bold text-navy">Send a Message</h3>
+                  <input required value={contactForm.name} onChange={(e) => set('name', e.target.value)} placeholder="Name *" className="w-full rounded-xl bg-navy/5 px-4 py-2.5 font-sub text-sm text-navy placeholder-navy/30 outline-none ring-1 ring-navy/10 focus:ring-gold" />
+                  <input required type="email" value={contactForm.email} onChange={(e) => set('email', e.target.value)} placeholder="Email *" className="w-full rounded-xl bg-navy/5 px-4 py-2.5 font-sub text-sm text-navy placeholder-navy/30 outline-none ring-1 ring-navy/10 focus:ring-gold" />
+                  <input value={contactForm.phone} onChange={(e) => set('phone', e.target.value)} placeholder="Phone" className="w-full rounded-xl bg-navy/5 px-4 py-2.5 font-sub text-sm text-navy placeholder-navy/30 outline-none ring-1 ring-navy/10 focus:ring-gold" />
+                  <input value={contactForm.subject} onChange={(e) => set('subject', e.target.value)} placeholder="Subject" className="w-full rounded-xl bg-navy/5 px-4 py-2.5 font-sub text-sm text-navy placeholder-navy/30 outline-none ring-1 ring-navy/10 focus:ring-gold" />
+                  <textarea required value={contactForm.message} onChange={(e) => set('message', e.target.value)} placeholder="Message *" rows={4} className="w-full rounded-xl bg-navy/5 px-4 py-2.5 font-sub text-sm text-navy placeholder-navy/30 outline-none ring-1 ring-navy/10 focus:ring-gold" />
                   <button type="submit" disabled={contactStatus === 'loading'} className="btn-gold flex w-full items-center justify-center gap-2 rounded-full px-6 py-3 font-sub text-sm">
                     {contactStatus === 'loading' ? <><Loader2 className="h-4 w-4 animate-spin" /> Sending...</> : <><Send className="h-4 w-4" /> Send Message</>}
                   </button>
-                  {contactStatus === 'error' && <p className="text-center font-sub text-xs text-red-400">Something went wrong. Please try again.</p>}
+                  {contactStatus === 'error' && <p className="text-center font-sub text-xs text-red-600">Something went wrong. Please try again.</p>}
                 </form>
               )}
             </div>

@@ -29,7 +29,7 @@ const regions = [
 
 export default function Export() {
   return (
-    <section id="export" className="relative overflow-hidden bg-dark py-32">
+    <section id="export" className="relative overflow-hidden bg-light-grey py-32">
       <div className="pointer-events-none absolute inset-0 grid-bg opacity-20" />
       <div className="container-x relative px-6">
         <div className="mx-auto mb-16 max-w-2xl text-center">

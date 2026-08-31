@@ -16,7 +16,7 @@ const features = [
 
 export default function ProtectingTheAffluent() {
   return (
-    <section className="relative overflow-hidden bg-dark py-24">
+    <section className="relative overflow-hidden bg-white py-24">
       <div className="container-x relative px-6">
         <div className="mx-auto mb-16 max-w-2xl text-center">
           <motion.p 
@@ -31,7 +31,7 @@ export default function ProtectingTheAffluent() {
             initial={{ opacity: 0, y: 20 }} 
             whileInView={{ opacity: 1, y: 0 }} 
             viewport={{ once: true }} 
-            className="mt-4 font-heading text-3xl font-black text-white sm:text-4xl"
+            className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl"
           >
             Protecting & Supporting
           </motion.h2>
@@ -52,8 +52,8 @@ export default function ProtectingTheAffluent() {
                 <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-gold/10 text-gold mb-6">
                   <Icon className="h-7 w-7" />
                 </div>
-                <h3 className="font-heading text-xl font-bold text-white mb-3">{feature.title}</h3>
-                <p className="font-body text-sm text-white/80">{feature.desc}</p>
+                <h3 className="font-heading text-xl font-bold text-navy mb-3">{feature.title}</h3>
+                <p className="font-body text-sm text-body-text">{feature.desc}</p>
               </motion.div>
             );
           })}

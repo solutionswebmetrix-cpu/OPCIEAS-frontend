@@ -169,7 +169,7 @@ export default function ProductCategoryPage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-navy">
+      <div className="flex min-h-screen items-center justify-center bg-white">
         <div className="h-8 w-8 animate-spin rounded-full border-2 border-gold border-t-transparent" />
       </div>
     );
@@ -177,8 +177,8 @@ export default function ProductCategoryPage() {
 
   if (!cat) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center bg-navy px-6 text-center">
-        <p className="font-heading text-2xl font-bold text-white">Category not found</p>
+      <div className="flex min-h-screen flex-col items-center justify-center bg-white px-6 text-center">
+        <p className="font-heading text-2xl font-bold text-navy">Category not found</p>
         <Link to="/products" className="mt-4 rounded-full bg-gold px-6 py-2 font-sub text-sm text-navy">View All Products</Link>
       </div>
     );
@@ -284,7 +284,7 @@ export default function ProductCategoryPage() {
       </section>
 
       {/* Inquiry */}
-      <section className="bg-navy py-20">
+      <section className="bg-white py-20">
         <div className="container-x px-6">
           <div className="mx-auto max-w-2xl">
             <InquiryForm category={cat.name} />

@@ -127,7 +127,7 @@ export default function About() {
             transition={{ duration: 0.6 }}
             className="mt-4 font-heading text-3xl font-black leading-tight text-navy sm:text-4xl xl:text-5xl"
           >
-            Premium Commercial Furniture for Government, Institutional & Export Projects
+            Engineering Superior Furniture Solutions for Education, Workspaces, and Beyond
           </motion.h2>
           <motion.p
             initial={{ opacity: 0 }}
@@ -136,16 +136,22 @@ export default function About() {
             transition={{ delay: 0.2 }}
             className="mt-5 font-body text-base leading-relaxed text-navy/70"
           >
-            OPCIEAS is a seasoned and successful leader in the industry, a rapidly expanding company with an impressive track record in production, design, and development. Our innovative team excels in delivering high-performance solutions, offering customized strategies across sales, creative designs, and tailored requirements.
+            At OPCIEAS, we specialize in designing and manufacturing high-performing educational, commercial, and child-safe furniture tailored to meet international quality standards. Built on a foundation of structural integrity, ergonomic research, and modern aesthetics, our product range supports dynamic learning environments and high-productivity corporate offices.
           </motion.p>
-          <div className="mt-6 grid gap-3 sm:grid-cols-2">
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+            className="mt-4 font-body text-base leading-relaxed text-navy/70"
+          >
+            Every piece of furniture engineered at OPCIEAS undergoes rigorous quality testing to ensure maximum durability, safety, and long-term utility. From vibrant single and dual-seat classroom desks to heavy-duty executive office setups, we partner with educational institutions, architects, and corporate clients to transform functional spaces into inspiring environments.
+          </motion.p>
+          <div className="mt-6 grid gap-3 sm:grid-cols-3">
             {[
-              { title: 'Who We Are', desc: 'A premium commercial furniture manufacturer for government, institutional, corporate and export clients.' },
-              { title: 'Mission', desc: 'To deliver certified quality, customizable furniture and dependable service on time, every time.' },
-              { title: 'Vision', desc: 'To be the global partner of choice for commercial furniture solutions backed by manufacturing excellence.' },
-              { title: 'Core Values', desc: 'Innovation, quality, reliability, sustainability and customer satisfaction guide every decision.' },
-              { title: 'Infrastructure', desc: 'A modern manufacturing facility with CNC, welding, powder coating, finishing and expert assembly teams.' },
-              { title: 'Government Tender Expertise', desc: 'Tender-ready manufacturing for bulk government, PSU and institutional furniture contracts.' },
+              { title: 'Ergonomic Design', desc: 'Proper posture support and comfortable long-duration classroom use engineered into every product.' },
+              { title: 'Child Safety Focus', desc: 'High-grade materials, rounded safety edges, and non-toxic protective coatings for peace of mind.' },
+              { title: 'Commercial-Grade Durability', desc: 'Heavy-duty construction built to withstand intensive institutional and commercial environments.' },
             ].map((item) => (
               <div key={item.title} className="rounded-lux border border-navy/10 bg-navy/5 p-4">
                 <p className="font-heading text-sm font-bold text-navy">{item.title}</p>

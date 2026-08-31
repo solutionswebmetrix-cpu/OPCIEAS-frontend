@@ -29,15 +29,15 @@ function ProductCard({ name, img, count, slug, i }: { name: string; img?: string
     >
       <Link to={`/products/category/${slug}`}>
         <img src={img || IMG.heroBg} alt={`${name} by OPCIEAS`} className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/20 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white/90 via-white/30 to-transparent" />
         <div className="absolute inset-0 flex flex-col justify-end p-5">
           <p className="font-sub text-[10px] uppercase tracking-wider text-gold">{count ? `${count}+ Products` : 'Signature Collection'}</p>
-          <h3 className="mt-1 font-heading text-lg font-bold text-white">{name}</h3>
+          <h3 className="mt-1 font-heading text-lg font-bold text-navy">{name}</h3>
           <div className="relative z-10 mt-3 flex gap-2 opacity-0 transition-all duration-500 group-hover:opacity-100">
-            <button className="flex items-center gap-1 rounded-full bg-white/15 px-3 py-1.5 font-sub text-xs text-white backdrop-blur transition hover:bg-gold hover:text-navy">
+            <button className="flex items-center gap-1 rounded-full bg-navy/10 px-3 py-1.5 font-sub text-xs text-navy backdrop-blur transition hover:bg-gold hover:text-navy">
               <Eye className="h-3 w-3" /> Quick View
             </button>
-            <button className="flex items-center gap-1 rounded-full bg-white/15 px-3 py-1.5 font-sub text-xs text-white backdrop-blur transition hover:bg-gold hover:text-navy">
+            <button className="flex items-center gap-1 rounded-full bg-navy/10 px-3 py-1.5 font-sub text-xs text-navy backdrop-blur transition hover:bg-gold hover:text-navy">
               <Download className="h-3 w-3" /> Catalogue
             </button>
           </div>

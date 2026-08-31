@@ -59,11 +59,11 @@ export default function BuyerLoginPage() {
 
   const Field = ({ label, icon: Icon, name, type = 'text', placeholder = '', required = false, endAdornment }: any) => (
     <div>
-      <label className="block text-sm font-semibold text-slate-700 mb-1.5">
+      <label className="block text-sm font-semibold text-navy/80 mb-1.5">
         {label} {required && <span className="text-red-500">*</span>}
       </label>
       <div className="relative">
-        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
+        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-navy/40 pointer-events-none">
           <Icon size={18} />
         </div>
         <input
@@ -71,10 +71,10 @@ export default function BuyerLoginPage() {
           value={(form as any)[name]}
           onChange={(e) => update(name, e.target.value)}
           placeholder={placeholder}
-          className={`w-full pl-10 ${endAdornment ? 'pr-12' : 'pr-4'} py-3.5 rounded-xl border ${errors[name] ? 'border-red-400 focus:ring-red-400' : 'border-slate-300 focus:ring-emerald-500'} focus:outline-none focus:ring-2 bg-white transition`}
+          className={`w-full pl-10 ${endAdornment ? 'pr-12' : 'pr-4'} py-3.5 rounded-xl border ${errors[name] ? 'border-red-400 focus:ring-red-400' : 'border-gray-300 focus:ring-gold'} focus:outline-none focus:ring-2 bg-white text-navy transition`}
         />
         {endAdornment && (
-          <button type="button" onClick={() => endAdornment.onClick?.()} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+          <button type="button" onClick={() => endAdornment.onClick?.()} className="absolute right-3 top-1/2 -translate-y-1/2 text-navy/40 hover:text-navy/60">
             {endAdornment.icon}
           </button>
         )}

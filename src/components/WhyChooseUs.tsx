@@ -39,8 +39,8 @@ function TiltCard({ icon: Icon, title, desc, i }: { icon: typeof Award; title: s
       <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gold/10 text-gold transition-all duration-500 group-hover:scale-110 group-hover:bg-gold group-hover:text-navy" style={{ transform: 'translateZ(30px)' }}>
         <Icon className="h-6 w-6" />
       </div>
-      <h3 className="font-heading text-lg font-bold text-white" style={{ transform: 'translateZ(20px)' }}>{title}</h3>
-      <p className="mt-2 font-body text-sm text-white/80" style={{ transform: 'translateZ(15px)' }}>{desc}</p>
+      <h3 className="font-heading text-lg font-bold text-navy" style={{ transform: 'translateZ(20px)' }}>{title}</h3>
+      <p className="mt-2 font-body text-sm text-body-text" style={{ transform: 'translateZ(15px)' }}>{desc}</p>
       <div className="absolute inset-0 rounded-lux opacity-0 transition-opacity duration-500 group-hover:opacity-100" style={{ background: 'radial-gradient(circle at 50% 0%, rgba(212,175,55,0.12), transparent 70%)' }} />
     </motion.div>
   );
@@ -48,13 +48,13 @@ function TiltCard({ icon: Icon, title, desc, i }: { icon: typeof Award; title: s
 
 export default function WhyChooseUs() {
   return (
-    <section id="why-choose-us" style={{ scrollMarginTop: '100px' }} className="relative overflow-hidden bg-dark py-32">
+    <section id="why-choose-us" style={{ scrollMarginTop: '100px' }} className="relative overflow-hidden bg-white py-32">
       <div className="absolute inset-0 grid-bg opacity-40" />
       <div className="absolute left-1/2 top-0 h-96 w-96 -translate-x-1/2 rounded-full bg-gold/5 blur-[120px]" />
       <div className="container-x relative px-6">
         <div className="mx-auto mb-16 max-w-2xl text-center">
           <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-sub text-sm uppercase tracking-[0.3em] text-gold">Why Choose OPCIEAS</motion.p>
-          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-4 font-heading text-3xl font-black text-white sm:text-4xl xl:text-5xl">
+          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl xl:text-5xl">
             The Edge That Powers Enterprise Projects
           </motion.h2>
         </div>

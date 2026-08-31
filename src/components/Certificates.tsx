@@ -12,12 +12,12 @@ const certs = [
 
 export default function Certificates() {
   return (
-    <section id="certificates" className="relative overflow-hidden bg-navy py-32">
-      <div className="absolute inset-0 blueprint-bg opacity-20" />
+    <section id="certificates" className="relative overflow-hidden bg-white py-32">
+      <div className="absolute inset-0 blueprint-bg opacity-10" />
       <div className="container-x relative px-6">
         <div className="mx-auto mb-16 max-w-2xl text-center">
           <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-sub text-sm uppercase tracking-[0.3em] text-gold">Certifications</motion.p>
-          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-4 font-heading text-3xl font-black text-white sm:text-4xl xl:text-5xl">
+          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl xl:text-5xl">
             Certified. Verified. Trusted.
           </motion.h2>
         </div>
@@ -31,16 +31,16 @@ export default function Certificates() {
               viewport={{ once: true, margin: '-50px' }}
               transition={{ delay: (i % 3) * 0.1, duration: 0.6 }}
               whileHover={{ rotate: -1.5, y: -6 }}
-              className="group relative overflow-hidden rounded-lux glass-navy p-8 text-center transition-all duration-500 hover:glow-gold"
+              className="group relative overflow-hidden rounded-lux bg-white p-8 text-center border border-navy/10 luxury-shadow transition-all duration-500 hover:shadow-[0_20px_60px_rgba(212,175,55,0.15)]"
             >
               <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-gold/10 text-gold transition-all duration-500 group-hover:scale-110 group-hover:bg-gold group-hover:text-navy">
                 <c.icon className="h-8 w-8" />
               </div>
-              <h3 className="font-heading text-lg font-bold text-white">{c.name}</h3>
-              <p className="mt-1 font-body text-xs text-white/80">{c.desc}</p>
+              <h3 className="font-heading text-lg font-bold text-navy">{c.name}</h3>
+              <p className="mt-1 font-body text-xs text-navy/70">{c.desc}</p>
               <div className="mt-4 flex justify-center gap-2 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
                 <button className="rounded-full border border-gold/40 px-3 py-1 font-sub text-[10px] text-gold hover:bg-gold hover:text-navy">View PDF</button>
-                <button className="rounded-full border border-white/20 px-3 py-1 font-sub text-[10px] text-white/85 hover:text-white">Verify</button>
+                <button className="rounded-full border border-navy/20 px-3 py-1 font-sub text-[10px] text-navy/70 hover:text-navy">Verify</button>
               </div>
               <div className="absolute inset-0 rounded-lux opacity-0 transition-opacity duration-500 group-hover:opacity-100" style={{ background: 'radial-gradient(circle at 50% 0%, rgba(212,175,55,0.12), transparent 70%)' }} />
             </motion.div>

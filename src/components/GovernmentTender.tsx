@@ -18,17 +18,17 @@ const services = [
 
 export default function GovernmentTender() {
   return (
-    <section id="tender" className="relative overflow-hidden bg-navy py-32">
-      <div className="absolute inset-0 blueprint-bg opacity-40" />
+    <section id="tender" className="relative overflow-hidden bg-white py-32">
+      <div className="absolute inset-0 blueprint-bg opacity-20" />
       <div className="absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold/5 blur-[140px]" />
 
       <div className="container-x relative px-6">
         <div className="mx-auto mb-16 max-w-2xl text-center">
           <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-sub text-sm uppercase tracking-[0.3em] text-gold">Government Tender</motion.p>
-          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-4 font-heading text-3xl font-black text-white sm:text-4xl xl:text-5xl">
+          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl xl:text-5xl">
             Trusted Government Tender Furniture Manufacturer
           </motion.h2>
-          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mt-4 font-body text-sm text-white/80">
+          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mt-4 font-body text-sm text-body-text">
             Approved supplier with the capacity, certifications and compliance to deliver government, PSU and institutional furniture tenders at scale.
           </motion.p>
         </div>
@@ -46,8 +46,8 @@ export default function GovernmentTender() {
               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gold/10 text-gold transition-all duration-500 group-hover:scale-110 group-hover:bg-gold group-hover:text-navy">
                 <s.icon className="h-6 w-6" />
               </div>
-              <h3 className="font-heading text-base font-bold text-white">{s.title}</h3>
-              <p className="mt-2 font-body text-xs text-white/80">{s.desc}</p>
+              <h3 className="font-heading text-base font-bold text-navy">{s.title}</h3>
+              <p className="mt-2 font-body text-xs text-body-text">{s.desc}</p>
               <div className="absolute inset-0 rounded-lux opacity-0 transition-opacity duration-500 group-hover:opacity-100" style={{ background: 'radial-gradient(circle at 50% 0%, rgba(212,175,55,0.1), transparent 70%)' }} />
             </motion.div>
           ))}

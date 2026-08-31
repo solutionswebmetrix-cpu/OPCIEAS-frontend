@@ -5,9 +5,13 @@ export default {
     extend: {
       colors: {
         navy: { DEFAULT: '#071A35', 2: '#0B2745', 3: '#103258' },
-        gold: { DEFAULT: '#D4AF37', 2: '#E8C766', 3: '#B8932B' },
+        gold: { DEFAULT: '#D9AD2B', 2: '#E8C766', 3: '#B8932B', light: '#F5E8B5' },
         silver: { DEFAULT: '#C0C0C0' },
         dark: { DEFAULT: '#090909', 2: '#111111' },
+        'light-grey': { DEFAULT: '#F7F8FA', 2: '#F1F4F7' },
+        'border-grey': '#D9E0E8',
+        'body-text': '#34445A',
+        'muted-text': '#68778C',
       },
       borderRadius: { lux: '20px' },
       fontFamily: {

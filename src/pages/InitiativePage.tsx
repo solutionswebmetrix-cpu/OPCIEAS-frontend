@@ -61,7 +61,7 @@ export default function InitiativePage() {
   const page = initiatives[slug || ''];
 
   if (!page) {
-    return <div className="flex min-h-screen items-center justify-center bg-navy"> <p className="font-heading text-xl font-bold text-white">Page not found</p></div>;
+    return <div className="flex min-h-screen items-center justify-center bg-white"> <p className="font-heading text-xl font-bold text-navy">Page not found</p></div>;
   }
 
   return (
@@ -105,10 +105,10 @@ export default function InitiativePage() {
 
       <section className="bg-white py-20">
         <div className="container-x px-6">
-          <div className="mx-auto max-w-3xl rounded-lux bg-navy p-8 text-white">
+          <div className="mx-auto max-w-3xl rounded-lux border border-navy/10 bg-white p-8 text-navy">
             <div className="flex items-center gap-3 text-gold"><Factory className="h-5 w-5" /><span className="font-sub text-sm uppercase tracking-[0.3em]">Inquiry</span></div>
             <h2 className="mt-4 font-heading text-2xl font-black sm:text-3xl">Start a conversation with OPCIEAS</h2>
-            <p className="mt-3 font-body text-sm text-white/60">Tell us about your project, institution or outreach program and our team will respond with relevant furniture and infrastructure recommendations.</p>
+            <p className="mt-3 font-body text-sm text-navy/60">Tell us about your project, institution or outreach program and our team will respond with relevant furniture and infrastructure recommendations.</p>
             <div className="mt-8"><InquiryForm category={page.title} /></div>
           </div>
         </div>

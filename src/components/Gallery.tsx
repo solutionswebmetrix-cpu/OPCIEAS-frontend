@@ -20,12 +20,12 @@ export default function Gallery() {
   const filtered = active === 'All' ? images : images.filter((im) => im.cat === active);
 
   return (
-    <section id="gallery" className="relative overflow-hidden bg-dark py-32">
+    <section id="gallery" className="relative overflow-hidden bg-light-grey py-32">
       <div className="pointer-events-none absolute inset-0 grid-bg opacity-20" />
       <div className="container-x relative px-6">
         <div className="mx-auto mb-12 max-w-2xl text-center">
           <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-sub text-sm uppercase tracking-[0.3em] text-gold">Premium Gallery</motion.p>
-          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-4 font-heading text-3xl font-black text-white sm:text-4xl xl:text-5xl">
+          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl xl:text-5xl">
             Inside OPCIEAS
           </motion.h2>
         </div>
@@ -36,7 +36,7 @@ export default function Gallery() {
             <button
               key={c}
               onClick={() => setActive(c)}
-              className={`rounded-full px-4 py-2 font-sub text-xs transition-all ${active === c ? 'btn-gold' : 'glass text-white/85 hover:text-gold'}`}
+              className={`rounded-full px-4 py-2 font-sub text-xs transition-all ${active === c ? 'btn-gold' : 'glass text-navy/85 hover:text-gold'}`}
             >
               {c}
             </button>
@@ -54,7 +54,7 @@ export default function Gallery() {
               viewport={{ once: true }}
               transition={{ delay: (i % 4) * 0.08, duration: 0.5 }}
               onClick={() => setLightbox(i)}
-              className={`group relative cursor-pointer overflow-hidden rounded-lux border border-white/10 ${hClass[im.h]}`}
+              className={`group relative cursor-pointer overflow-hidden rounded-lux border border-navy/10 ${hClass[im.h]}`}
             >
               <img src={im.src} alt={`${im.cat} furniture by OPCIEAS`} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
               <div className="absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />

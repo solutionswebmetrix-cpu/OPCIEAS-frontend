@@ -32,11 +32,11 @@ export default function IndustryPage() {
     })();
   }, [slug]);
 
-  if (loading) return <div className="flex min-h-screen items-center justify-center bg-navy"><div className="h-8 w-8 animate-spin rounded-full border-2 border-gold border-t-transparent" /></div>;
+  if (loading) return <div className="flex min-h-screen items-center justify-center bg-white"><div className="h-8 w-8 animate-spin rounded-full border-2 border-gold border-t-transparent" /></div>;
 
   if (!ind) {
-    return <div className="flex min-h-screen flex-col items-center justify-center bg-navy px-6 text-center">
-      <p className="font-heading text-2xl font-bold text-white">Industry not found</p>
+    return <div className="flex min-h-screen flex-col items-center justify-center bg-white px-6 text-center">
+      <p className="font-heading text-2xl font-bold text-navy">Industry not found</p>
       <Link to="/" className="mt-4 rounded-full bg-gold px-6 py-2 font-sub text-sm text-navy">Back Home</Link>
     </div>;
   }
@@ -92,23 +92,23 @@ export default function IndustryPage() {
 
       {/* Completed Projects */}
       {projects.length > 0 && (
-        <section className="bg-navy py-20">
+        <section className="bg-white py-20">
           <div className="container-x px-6">
-            <h2 className="mb-8 font-heading text-2xl font-black text-white sm:text-3xl">Completed Projects</h2>
+            <h2 className="mb-8 font-heading text-2xl font-black text-navy sm:text-3xl">Completed Projects</h2>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {projects.map((p, i) => (
-                <motion.div key={p.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: (i % 3) * 0.08 }} className="overflow-hidden rounded-lux border border-white/10 bg-white/5">
+                <motion.div key={p.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: (i % 3) * 0.08 }} className="overflow-hidden rounded-lux border border-navy/10 bg-white luxury-shadow">
                   <div className="aspect-video overflow-hidden">
                     <img src={p.image || ''} alt={p.title} className="h-full w-full object-cover" loading="lazy" />
                   </div>
                   <div className="p-5">
-                    <h3 className="font-heading text-lg font-bold text-white">{p.title}</h3>
+                    <h3 className="font-heading text-lg font-bold text-navy">{p.title}</h3>
                     {p.client && <p className="mt-1 font-sub text-sm text-gold">{p.client}</p>}
-                    <div className="mt-2 flex items-center gap-4 font-sub text-xs text-white/50">
+                    <div className="mt-2 flex items-center gap-4 font-sub text-xs text-navy/50">
                       {p.location && <span className="flex items-center gap-1"><MapPin className="h-3 w-3" /> {p.location}</span>}
                       {p.year && <span className="flex items-center gap-1"><Calendar className="h-3 w-3" /> {p.year}</span>}
                     </div>
-                    {p.description && <p className="mt-3 font-body text-sm text-white/60">{p.description}</p>}
+                    {p.description && <p className="mt-3 font-body text-sm text-navy/60">{p.description}</p>}
                   </div>
                 </motion.div>
               ))}
@@ -150,7 +150,7 @@ export default function IndustryPage() {
       )}
 
       {/* Inquiry */}
-      <section className="bg-navy py-20">
+      <section className="bg-white py-20">
         <div className="container-x px-6">
           <div className="mx-auto max-w-2xl">
             <InquiryForm category={ind.name} />

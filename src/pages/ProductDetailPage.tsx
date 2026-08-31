@@ -34,7 +34,7 @@ export default function ProductDetailPage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-navy">
+      <div className="flex min-h-screen items-center justify-center bg-white">
         <div className="h-8 w-8 animate-spin rounded-full border-2 border-gold border-t-transparent" />
       </div>
     );
@@ -42,8 +42,8 @@ export default function ProductDetailPage() {
 
   if (!product) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center bg-navy px-6 text-center">
-        <p className="font-heading text-2xl font-bold text-white">Product not found</p>
+      <div className="flex min-h-screen flex-col items-center justify-center bg-white px-6 text-center">
+        <p className="font-heading text-2xl font-bold text-navy">Product not found</p>
         <Link to="/products" className="mt-4 rounded-full bg-gold px-6 py-2 font-sub text-sm text-navy">View All Products</Link>
       </div>
     );
@@ -74,17 +74,17 @@ export default function ProductDetailPage() {
           schema={{ '@context': 'https://schema.org', '@type': 'Product', name: product.name, description: product.short_desc || product.long_desc || '' }}
         />
       )}
-      <section className="bg-navy pt-32">
+      <section className="bg-white pt-32">
         <div className="container-x px-6 pb-8">
           <Breadcrumbs items={[{ label: 'Products', to: '/products' }, { label: product.name }]} />
         </div>
       </section>
 
-      <section className="bg-navy pb-20">
+      <section className="bg-white pb-20">
         <div className="container-x grid gap-10 px-6 lg:grid-cols-2">
           {/* Gallery */}
           <div>
-            <div className="group relative aspect-square overflow-hidden rounded-lux border border-white/10">
+            <div className="group relative aspect-square overflow-hidden rounded-lux border border-navy/10">
               <img
                 src={gallery[activeImg]}
                 alt={product.name}
@@ -95,23 +95,23 @@ export default function ProductDetailPage() {
                   <button
                     onClick={() => setActiveImg((i) => (i - 1 + gallery.length) % gallery.length)}
                     aria-label="Previous image"
-                    className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-navy/60 p-2 text-white shadow-md opacity-0 transition hover:bg-gold hover:text-navy group-hover:opacity-100 focus:opacity-100"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-white/90 border border-navy/10 p-2 text-navy shadow-sm opacity-0 transition hover:bg-gold hover:text-navy group-hover:opacity-100 focus:opacity-100"
                   >
                     <ChevronLeft className="h-5 w-5" />
                   </button>
                   <button
                     onClick={() => setActiveImg((i) => (i + 1) % gallery.length)}
                     aria-label="Next image"
-                    className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-navy/60 p-2 text-white shadow-md opacity-0 transition hover:bg-gold hover:text-navy group-hover:opacity-100 focus:opacity-100"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-white/90 border border-navy/10 p-2 text-navy shadow-sm opacity-0 transition hover:bg-gold hover:text-navy group-hover:opacity-100 focus:opacity-100"
                   >
                     <ChevronRight className="h-5 w-5" />
                   </button>
                 </>
               )}
-              <div className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-navy/60 px-3 py-1 font-sub text-[11px] text-white opacity-0 transition group-hover:opacity-100">
+              <div className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-white/90 border border-navy/10 px-3 py-1 font-sub text-[11px] text-navy shadow-sm opacity-0 transition group-hover:opacity-100">
                 {activeImg + 1} / {gallery.length}
               </div>
-              <button onClick={() => setViewerOpen(true)} className="absolute bottom-4 right-4 flex items-center gap-2 rounded-full glass px-4 py-2 font-sub text-xs text-white transition hover:bg-gold hover:text-navy">
+              <button onClick={() => setViewerOpen(true)} className="absolute bottom-4 right-4 flex items-center gap-2 rounded-full bg-white border border-navy/10 px-4 py-2 font-sub text-xs text-navy shadow-sm transition hover:bg-gold hover:text-navy">
                 <RotateCw className="h-4 w-4" /> 360° View
               </button>
             </div>
@@ -135,23 +135,23 @@ export default function ProductDetailPage() {
 
           {/* Info */}
           <div>
-            <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="font-heading text-3xl font-black text-white sm:text-4xl">{product.name}</motion.h1>
-            {product.short_desc && <p className="mt-2 font-sub text-lg text-white/80">{product.short_desc}</p>}
+            <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="font-heading text-3xl font-black text-navy sm:text-4xl">{product.name}</motion.h1>
+            {product.short_desc && <p className="mt-2 font-sub text-lg text-body-text">{product.short_desc}</p>}
             <div className="mt-4 inline-flex rounded-full border border-gold/70 bg-gold/10 px-3 py-1.5 font-sub text-xs font-semibold uppercase tracking-[0.2em] text-gold">{supplyLabel}</div>
             {hasExport && (<div className="mt-3 inline-flex rounded-full border border-gold/70 bg-gold/10 px-3 py-1.5 font-sub text-xs font-semibold uppercase tracking-[0.2em] text-gold">Export Specifications & Paid Samples Available.</div>)}
             {product.price_range && <p className="mt-4 font-heading text-xl font-bold gold-text">{product.price_range}</p>}
-            <p className="mt-3 font-body text-sm text-white/75">{supplyNote}</p>
-            <div className="mt-4 grid gap-2 text-sm text-white/80 sm:grid-cols-2">
-              <div><span className="font-sub uppercase tracking-[0.18em] text-white/60">SKU</span><p className="mt-1 font-medium">{product.sku || 'Available on request'}</p></div>
-              <div><span className="font-sub uppercase tracking-[0.18em] text-white/60">Category</span><p className="mt-1 font-medium">{product.subcategory || product.category_id || 'General'}</p></div>
-              <div><span className="font-sub uppercase tracking-[0.18em] text-white/60">Availability</span><p className="mt-1 font-medium">{product.stock_quantity ? `${product.stock_quantity} units available` : 'Available on request'}</p></div>
-              <div><span className="font-sub uppercase tracking-[0.18em] text-white/60">Warranty</span><p className="mt-1 font-medium">{warrantyText}</p></div>
+            <p className="mt-3 font-body text-sm text-navy/70">{supplyNote}</p>
+            <div className="mt-4 grid gap-2 text-sm text-navy sm:grid-cols-2">
+              <div><span className="font-sub uppercase tracking-[0.18em] text-navy/60">SKU</span><p className="mt-1 font-medium">{product.sku || 'Available on request'}</p></div>
+              <div><span className="font-sub uppercase tracking-[0.18em] text-navy/60">Category</span><p className="mt-1 font-medium">{product.subcategory || product.category_id || 'General'}</p></div>
+              <div><span className="font-sub uppercase tracking-[0.18em] text-navy/60">Availability</span><p className="mt-1 font-medium">{product.stock_quantity ? `${product.stock_quantity} units available` : 'Available on request'}</p></div>
+              <div><span className="font-sub uppercase tracking-[0.18em] text-navy/60">Warranty</span><p className="mt-1 font-medium">{warrantyText}</p></div>
             </div>
 
             {/* Actions */}
             <div className="mt-6 flex flex-wrap gap-3">
               <Link to="/rfq" className="btn-gold flex items-center gap-2 rounded-full px-5 py-2.5 font-sub text-sm">Request Quote</Link>
-              <a href="/products" className="btn-ghost flex items-center gap-2 rounded-full px-5 py-2.5 font-sub text-sm text-white"><Download className="h-4 w-4" /> Download Catalogue</a>
+              <a href="/products" className="btn-ghost flex items-center gap-2 rounded-full px-5 py-2.5 font-sub text-sm text-navy"><Download className="h-4 w-4" /> Download Catalogue</a>
               <a href={`https://wa.me/919845579049?text=${waText}`} target="_blank" rel="noreferrer" className="flex items-center gap-2 rounded-full bg-[#25D366] px-5 py-2.5 font-sub text-sm text-white"><MessageCircle className="h-4 w-4" /> WhatsApp Inquiry</a>
               <button onClick={() => setViewerOpen(true)} className="btn-ghost flex items-center gap-2 rounded-full px-5 py-2.5 font-sub text-sm"><RotateCw className="h-4 w-4" /> 360° Viewer</button>
               <a href="tel:+919845579049" className="btn-ghost flex items-center gap-2 rounded-full px-5 py-2.5 font-sub text-sm"><Phone className="h-4 w-4" /> Call</a>
@@ -161,12 +161,12 @@ export default function ProductDetailPage() {
             {/* Specs */}
             {Object.keys(specs).length > 0 && (
               <div className="mt-8">
-                <h3 className="font-heading text-lg font-bold text-white">Specifications</h3>
-                <dl className="mt-3 divide-y divide-white/10 rounded-lux bg-white/5">
+                <h3 className="font-heading text-lg font-bold text-navy">Specifications</h3>
+                <dl className="mt-3 divide-y divide-navy/10 rounded-lux bg-light-grey border border-navy/10">
                   {Object.entries(specs).map(([k, v]) => (
                     <div key={k} className="flex justify-between px-4 py-3">
-                      <dt className="font-sub text-sm text-white/80">{k}</dt>
-                      <dd className="font-sub text-sm font-medium text-white">{v}</dd>
+                      <dt className="font-sub text-sm text-navy/70">{k}</dt>
+                      <dd className="font-sub text-sm font-medium text-navy">{v}</dd>
                     </div>
                   ))}
                 </dl>
@@ -176,23 +176,23 @@ export default function ProductDetailPage() {
             {/* Features */}
             {features.length > 0 && (
               <div className="mt-6">
-                <h3 className="font-heading text-lg font-bold text-white">Key Features</h3>
+                <h3 className="font-heading text-lg font-bold text-navy">Key Features</h3>
                 <ul className="mt-3 grid grid-cols-2 gap-2">
                   {features.map((f, i) => (
-                    <li key={i} className="flex items-center gap-2 font-sub text-sm text-white/85"><Check className="h-4 w-4 flex-shrink-0 text-gold" /> {f}</li>
+                    <li key={i} className="flex items-center gap-2 font-sub text-sm text-navy/80"><Check className="h-4 w-4 flex-shrink-0 text-gold" /> {f}</li>
                   ))}
                 </ul>
               </div>
             )}
 
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
-              <div className="rounded-lux border border-white/10 bg-white/5 p-5">
-                <p className="font-heading text-sm font-bold text-white">Applications</p>
-                <p className="mt-2 font-body text-sm text-white/80">Suitable for institutional, commercial, hospitality and export projects. Specific applications available on request.</p>
+              <div className="rounded-lux border border-navy/10 bg-white p-5">
+                <p className="font-heading text-sm font-bold text-navy">Applications</p>
+                <p className="mt-2 font-body text-sm text-navy/70">Suitable for institutional, commercial, hospitality and export projects. Specific applications available on request.</p>
               </div>
-              <div className="rounded-lux border border-white/10 bg-white/5 p-5">
-                <p className="font-heading text-sm font-bold text-white">MOQ & Catalogue</p>
-                <p className="mt-2 font-body text-sm text-white/80">Minimum order quantities vary by product and project. Download our catalogue or request a quote for exact details.</p>
+              <div className="rounded-lux border border-navy/10 bg-white p-5">
+                <p className="font-heading text-sm font-bold text-navy">MOQ & Catalogue</p>
+                <p className="mt-2 font-body text-sm text-navy/70">Minimum order quantities vary by product and project. Download our catalogue or request a quote for exact details.</p>
               </div>
             </div>
           </div>
@@ -201,17 +201,17 @@ export default function ProductDetailPage() {
         <div className="container-x mt-12 px-6">
           <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
             <div className="max-w-3xl">
-              <h3 className="font-heading text-xl font-bold text-white">Product Description</h3>
-              <p className="mt-3 font-body text-sm leading-relaxed text-white/80">{product.long_desc || product.description || product.short_desc || 'Description available on request.'}</p>
+              <h3 className="font-heading text-xl font-bold text-navy">Product Description</h3>
+              <p className="mt-3 font-body text-sm leading-relaxed text-navy/70">{product.long_desc || product.description || product.short_desc || 'Description available on request.'}</p>
             </div>
-            <div className="rounded-lux border border-white/10 bg-white/5 p-5">
-              <h3 className="font-heading text-lg font-bold text-white">Technical Specifications</h3>
-              <ul className="mt-4 space-y-3 font-sub text-sm text-white/80">
-                <li><span className="text-white/60">Dimensions:</span> {dimensionValue}</li>
-                <li><span className="text-white/60">Materials Used:</span> {materialsValue}</li>
-                <li><span className="text-white/60">Weight:</span> {weightValue}</li>
-                <li><span className="text-white/60">Packaging:</span> {packagingValue}</li>
-                <li><span className="text-white/60">Variants:</span> {variantsValue}</li>
+            <div className="rounded-lux border border-navy/10 bg-white p-5">
+              <h3 className="font-heading text-lg font-bold text-navy">Technical Specifications</h3>
+              <ul className="mt-4 space-y-3 font-sub text-sm text-navy/70">
+                <li><span className="text-navy/50">Dimensions:</span> {dimensionValue}</li>
+                <li><span className="text-navy/50">Materials Used:</span> {materialsValue}</li>
+                <li><span className="text-navy/50">Weight:</span> {weightValue}</li>
+                <li><span className="text-navy/50">Packaging:</span> {packagingValue}</li>
+                <li><span className="text-navy/50">Variants:</span> {variantsValue}</li>
               </ul>
             </div>
           </div>
@@ -219,18 +219,18 @@ export default function ProductDetailPage() {
 
         <div className="container-x mt-12 px-6">
           <div className="grid gap-6 lg:grid-cols-2">
-            <div className="rounded-lux border border-white/10 bg-white/5 p-6">
-              <h3 className="font-heading text-lg font-bold text-white">Key Features</h3>
+            <div className="rounded-lux border border-navy/10 bg-white p-6">
+              <h3 className="font-heading text-lg font-bold text-navy">Key Features</h3>
               <ul className="mt-4 space-y-2">
                 {features.length ? features.map((feature, index) => (
-                  <li key={index} className="flex items-start gap-2 font-sub text-sm text-white/80"><Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-gold" /> {feature}</li>
-                )) : <li className="font-sub text-sm text-white/70">Available on request.</li>}
+                  <li key={index} className="flex items-start gap-2 font-sub text-sm text-navy/70"><Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-gold" /> {feature}</li>
+                )) : <li className="font-sub text-sm text-navy/70">Available on request.</li>}
               </ul>
             </div>
-            <div className="rounded-lux border border-white/10 bg-white/5 p-6">
-              <h3 className="font-heading text-lg font-bold text-white">Warranty</h3>
-              <p className="mt-4 font-sub text-sm text-white/80">{warrantyText}</p>
-              <p className="mt-2 font-sub text-sm text-white/80">Fabric and cushion parts are excluded from warranty.</p>
+            <div className="rounded-lux border border-navy/10 bg-white p-6">
+              <h3 className="font-heading text-lg font-bold text-navy">Warranty</h3>
+              <p className="mt-4 font-sub text-sm text-navy/70">{warrantyText}</p>
+              <p className="mt-2 font-sub text-sm text-navy/70">Fabric and cushion parts are excluded from warranty.</p>
               <p className="mt-4 font-sub text-sm text-gold">High durability and long-life performance.</p>
             </div>
           </div>
@@ -238,7 +238,39 @@ export default function ProductDetailPage() {
 
         {/* Inquiry form */}
         <div className="container-x mt-16 px-6">
-          <div className="mx-auto max-w-2xl rounded-lux bg-white/5 p-8">
+          <div className="grid gap-6 mb-8">
+            <div className="rounded-lux border border-navy/10 bg-white p-6">
+              <h3 className="font-heading text-lg font-bold text-navy">Product Quality & Manufacturing</h3>
+              <p className="mt-4 font-body text-sm text-navy/70">Every product—whether manufactured in our facility or sourced through our strategic partners—undergoes strict multi-point commercial durability inspections.</p>
+              {product.supply_type === 'IN_HOUSE' && (
+                <>
+                  <p className="mt-3 font-sub text-sm text-gold font-semibold">In-House Manufacturing | Factory Direct</p>
+                  <p className="mt-2 font-body text-sm text-navy/70">This product is manufactured in our specialized production facility with complete production control and quality assurance protocols.</p>
+                </>
+              )}
+              {product.supply_type === 'PARTNER' && (
+                <p className="mt-3 font-sub text-sm text-gold font-semibold">Verified Supply Partner Item</p>
+              )}
+            </div>
+            {product.supply_type === 'IN_HOUSE' && (
+              <div className="rounded-lux border border-gold/50 bg-gold/5 p-6">
+                <h3 className="font-heading text-lg font-bold text-navy">Custom Modifications & Bulk Orders</h3>
+                <p className="mt-3 font-body text-sm text-navy/70">As a direct manufacturer, we offer complete customization for enterprise buyers, educational institutions, government projects, and hostel chains.</p>
+                <p className="mt-3 font-sub text-sm text-navy">Available options:</p>
+                <ul className="mt-2 space-y-1 font-body text-sm text-navy/70 ml-4">
+                  <li>• Custom Dimensions & Structural Modifications</li>
+                  <li>• Custom Frame Colors & Powder Coating</li>
+                  <li>• Specialized Materials & Finishes</li>
+                  <li>• Bulk Order Specifications & Pricing</li>
+                  <li>• Turnkey Project Delivery</li>
+                </ul>
+                <Link to="/rfq" className="mt-4 inline-flex items-center gap-2 rounded-full bg-gold px-6 py-2.5 font-sub text-sm font-semibold text-navy transition hover:bg-gold-2">
+                  Request Custom Dimensions / Bulk Modifications
+                </Link>
+              </div>
+            )}
+          </div>
+          <div className="mx-auto max-w-2xl rounded-lux border border-navy/10 bg-white p-8">
             <InquiryForm productName={product.name} />
           </div>
         </div>
@@ -258,9 +290,9 @@ export default function ProductDetailPage() {
 
       <Product360Viewer images={gallery} productName={product.name} open={viewerOpen} onClose={() => setViewerOpen(false)} />
 
-      <div className="bg-navy pb-8 pt-4">
+      <div className="bg-white border-t border-navy/5 pb-8 pt-4">
         <div className="container-x px-6">
-          <Link to="/products" className="inline-flex items-center gap-2 font-sub text-sm text-white/80 transition hover:text-gold"><ChevronLeft className="h-4 w-4" /> Back to Products</Link>
+          <Link to="/products" className="inline-flex items-center gap-2 font-sub text-sm text-navy/70 transition hover:text-gold"><ChevronLeft className="h-4 w-4" /> Back to Products</Link>
         </div>
       </div>
     </>

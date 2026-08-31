@@ -40,16 +40,16 @@ export default function RFQ() {
   };
 
   return (
-    <section id="rfq" className="relative overflow-hidden bg-dark py-32">
+    <section id="rfq" className="relative overflow-hidden bg-light-grey py-32">
       <div className="absolute inset-0 grid-bg opacity-20" />
       <div className="absolute left-1/2 top-0 h-96 w-96 -translate-x-1/2 rounded-full bg-gold/10 blur-[120px]" />
       <div className="container-x relative px-6">
         <div className="mx-auto mb-12 max-w-2xl text-center">
           <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-sub text-sm uppercase tracking-[0.3em] text-gold">Request For Quotation</motion.p>
-          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-4 font-heading text-3xl font-black text-white sm:text-4xl xl:text-5xl">
+          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl xl:text-5xl">
             Tell Us About Your Project
           </motion.h2>
-          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mt-4 font-body text-sm text-white/80">
+          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mt-4 font-body text-sm text-body-text">
             Share your requirements and our team will respond with a detailed quotation within 24 hours.
           </motion.p>
         </div>
@@ -70,8 +70,8 @@ export default function RFQ() {
             <Field label="City" value={form.city} onChange={(v) => set('city', v)} />
             <Field label="GST Number" value={form.gst} onChange={(v) => set('gst', v)} />
             <div>
-              <label className="mb-1.5 block font-sub text-xs text-white/80">Category</label>
-              <select value={form.category} onChange={(e) => set('category', e.target.value)} className="w-full rounded-xl border border-white/10 bg-navy/50 px-4 py-3 font-body text-sm text-white outline-none focus:border-gold">
+              <label className="mb-1.5 block font-sub text-xs text-navy/80">Category</label>
+              <select value={form.category} onChange={(e) => set('category', e.target.value)} className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 font-body text-sm text-navy outline-none focus:border-gold">
                 <option value="">Select category</option>
                 {categories.map((c) => <option key={c} value={c}>{c}</option>)}
               </select>
@@ -81,20 +81,22 @@ export default function RFQ() {
             <Field label="Project Budget" value={form.budget} onChange={(v) => set('budget', v)} />
             <Field label="Expected Delivery" value={form.expected_delivery} onChange={(v) => set('expected_delivery', v)} />
             <div>
-              <label className="mb-1.5 block font-sub text-xs text-white/80">Project Type</label>
-              <select value={form.project_type} onChange={(e) => set('project_type', e.target.value)} className="w-full rounded-xl border border-white/10 bg-navy/50 px-4 py-3 font-body text-sm text-white outline-none focus:border-gold">
+              <label className="mb-1.5 block font-sub text-xs text-navy/80">Project Type</label>
+              <select value={form.project_type} onChange={(e) => set('project_type', e.target.value)} className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 font-body text-sm text-navy outline-none focus:border-gold">
                 <option value="">Select</option>
-                <option value="New Project">New Project</option>
-                <option value="Replacement / Upgrade">Replacement / Upgrade</option>
-                <option value="Custom Manufacturing">Custom Manufacturing</option>
-                <option value="Bulk Procurement">Bulk Procurement</option>
+                <option value="New Campus Construction">New Campus Construction</option>
+                <option value="Hostel Renovation">Hostel Renovation</option>
+                <option value="Government / Institutional Tender">Government / Institutional Tender</option>
+                <option value="Export Wholesale">Export Wholesale</option>
+                <option value="Other">Other</option>
               </select>
             </div>
             <div>
-              <label className="mb-1.5 block font-sub text-xs text-white/80">Sample Requirement</label>
-              <select value={form.sample_requirement} onChange={(e) => set('sample_requirement', e.target.value)} className="w-full rounded-xl border border-white/10 bg-navy/50 px-4 py-3 font-body text-sm text-white outline-none focus:border-gold">
+              <label className="mb-1.5 block font-sub text-xs text-navy/80">Sample Requirement</label>
+              <select value={form.sample_requirement} onChange={(e) => set('sample_requirement', e.target.value)} className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 font-body text-sm text-navy outline-none focus:border-gold">
                 <option value="">Select</option>
-                <option value="Need sample">Need sample</option>
+                <option value="Need free sample">Need free sample</option>
+                <option value="Paid Production Sample">Paid Production Sample</option>
                 <option value="No sample needed">No sample needed</option>
                 <option value="Factory visit / trial">Factory visit / trial</option>
               </select>
@@ -104,21 +106,21 @@ export default function RFQ() {
           </div>
 
           <div className="mt-5">
-            <label className="mb-1.5 block font-sub text-xs text-white/80">Modification Requirements</label>
-            <textarea value={form.modification_requirements} onChange={(e) => set('modification_requirements', e.target.value)} rows={3} className="w-full rounded-xl border border-white/10 bg-navy/50 px-4 py-3 font-body text-sm text-white outline-none focus:border-gold" placeholder="Any special measurements, branding, custom cutouts, or manufacturing changes?" />
+            <label className="mb-1.5 block font-sub text-xs text-navy/80">Modification Requirements</label>
+            <textarea value={form.modification_requirements} onChange={(e) => set('modification_requirements', e.target.value)} rows={3} className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 font-body text-sm text-navy outline-none focus:border-gold" placeholder="Any special measurements, branding, custom cutouts, or manufacturing changes?" />
           </div>
 
           <div className="mt-5">
-            <label className="mb-1.5 block font-sub text-xs text-white/80">Message / Requirements</label>
-            <textarea value={form.message} onChange={(e) => set('message', e.target.value)} rows={4} className="w-full rounded-xl border border-white/10 bg-navy/50 px-4 py-3 font-body text-sm text-white outline-none focus:border-gold" placeholder="Describe your project requirements..." />
+            <label className="mb-1.5 block font-sub text-xs text-navy/80">Message / Requirements</label>
+            <textarea value={form.message} onChange={(e) => set('message', e.target.value)} rows={4} className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 font-body text-sm text-navy outline-none focus:border-gold" placeholder="Describe your project requirements..." />
           </div>
 
           {/* Upload placeholders */}
           <div className="mt-5 grid gap-4 sm:grid-cols-3">
             {['Tender PDF', 'Drawing / CAD', 'Reference Images'].map((u) => (
-              <div key={u} className="flex cursor-pointer items-center gap-3 rounded-xl border border-dashed border-white/20 bg-navy/30 p-4 transition hover:border-gold hover:bg-gold/5">
+              <div key={u} className="flex cursor-pointer items-center gap-3 rounded-xl border border-dashed border-gray-300 bg-light-grey p-4 transition hover:border-gold hover:bg-gold/5">
                 <Upload className="h-5 w-5 text-gold" />
-                <span className="font-sub text-xs text-white/85">{u}</span>
+                <span className="font-sub text-xs text-navy/80">{u}</span>
               </div>
             ))}
           </div>
@@ -150,8 +152,8 @@ export default function RFQ() {
 function Field({ label, value, onChange, type = 'text', required }: { label: string; value: string; onChange: (v: string) => void; type?: string; required?: boolean }) {
   return (
     <div>
-      <label className="mb-1.5 block font-sub text-xs text-white/80">{label}</label>
-      <input type={type} value={value} onChange={(e) => onChange(e.target.value)} required={required} className="w-full rounded-xl border border-white/10 bg-navy/50 px-4 py-3 font-body text-sm text-white outline-none transition focus:border-gold" />
+      <label className="mb-1.5 block font-sub text-xs text-navy/80">{label}</label>
+      <input type={type} value={value} onChange={(e) => onChange(e.target.value)} required={required} className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 font-body text-sm text-navy outline-none transition focus:border-gold" />
     </div>
   );
 }

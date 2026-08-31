@@ -3,7 +3,7 @@ import { MapPin, Phone, Mail, MessageCircle, Video, Calendar } from 'lucide-reac
 
 export default function Contact() {
   return (
-    <section id="contact" className="relative overflow-hidden bg-navy py-32">
+    <section id="contact" className="relative overflow-hidden bg-light-grey py-32">
       <div className="absolute inset-0 blueprint-bg opacity-20" />
       <div className="container-x relative px-6">
         <div className="mx-auto mb-16 max-w-2xl text-center">

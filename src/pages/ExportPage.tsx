@@ -10,27 +10,27 @@ export default function ExportPage() {
       <Hero />
       <Export />
 
-      <section className="relative overflow-hidden bg-dark py-20">
+      <section className="relative overflow-hidden bg-white py-20">
         <div className="container-x px-6">
           <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
             <div>
               <SectionBanner title="Export Advantages" tagline="Why choose OPCIEAS for exports" image={IMG.exportContainer} crumb="Export" crumbTo="/export" />
               <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                <div className="rounded-lux glass-navy p-6">
-                  <h4 className="font-heading text-lg text-white">Export Compliance</h4>
-                  <p className="mt-2 text-white/80">End-to-end export documentation, packaging and certification.</p>
+                <div className="rounded-lux border border-navy/10 bg-white p-6 luxury-shadow">
+                  <h4 className="font-heading text-lg text-navy">Export Compliance</h4>
+                  <p className="mt-2 text-navy/70">End-to-end export documentation, packaging and certification.</p>
                 </div>
-                <div className="rounded-lux glass-navy p-6">
-                  <h4 className="font-heading text-lg text-white">Export Packaging</h4>
-                  <p className="mt-2 text-white/80">Custom export-grade packaging for safe international transit.</p>
+                <div className="rounded-lux border border-navy/10 bg-white p-6 luxury-shadow">
+                  <h4 className="font-heading text-lg text-navy">Export Packaging</h4>
+                  <p className="mt-2 text-navy/70">Custom export-grade packaging for safe international transit.</p>
                 </div>
-                <div className="rounded-lux glass-navy p-6">
-                  <h4 className="font-heading text-lg text-white">Global Shipping</h4>
-                  <p className="mt-2 text-white/80">Trusted forwarders and timely shipments to key markets.</p>
+                <div className="rounded-lux border border-navy/10 bg-white p-6 luxury-shadow">
+                  <h4 className="font-heading text-lg text-navy">Global Shipping</h4>
+                  <p className="mt-2 text-navy/70">Trusted forwarders and timely shipments to key markets.</p>
                 </div>
-                <div className="rounded-lux glass-navy p-6">
-                  <h4 className="font-heading text-lg text-white">Quality Assurance</h4>
-                  <p className="mt-2 text-white/80">Stringent QA and export-ready finish standards.</p>
+                <div className="rounded-lux border border-navy/10 bg-white p-6 luxury-shadow">
+                  <h4 className="font-heading text-lg text-navy">Quality Assurance</h4>
+                  <p className="mt-2 text-navy/70">Stringent QA and export-ready finish standards.</p>
                 </div>
               </div>
 
@@ -41,7 +41,7 @@ export default function ExportPage() {
             </div>
 
             <div>
-              <div className="rounded-lux glass-navy p-6">
+              <div className="rounded-lux border border-navy/10 bg-white p-6 luxury-shadow">
                 <InquiryForm />
               </div>
             </div>

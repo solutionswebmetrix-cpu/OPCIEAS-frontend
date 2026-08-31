@@ -50,12 +50,12 @@ export default function SocialServicesPage() {
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="rounded-lux bg-navy p-8 text-white luxury-shadow"
+              className="rounded-lux border border-navy/10 bg-white p-8 text-navy luxury-shadow"
             >
               <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Highlighted Areas</p>
               <div className="mt-6 grid gap-3">
                 {focusAreas.map((area) => (
-                  <div key={area} className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/90">
+                  <div key={area} className="rounded-2xl border border-navy/10 bg-navy/5 px-4 py-3 text-sm text-navy/90">
                     {area}
                   </div>
                 ))}

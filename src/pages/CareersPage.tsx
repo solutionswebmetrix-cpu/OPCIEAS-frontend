@@ -38,7 +38,7 @@ export default function CareersPage() {
     } catch { setStatus('error'); }
   };
 
-  if (loading) return <div className="flex min-h-screen items-center justify-center bg-navy"><div className="h-8 w-8 animate-spin rounded-full border-2 border-gold border-t-transparent" /></div>;
+  if (loading) return <div className="flex min-h-screen items-center justify-center bg-white"><div className="h-8 w-8 animate-spin rounded-full border-2 border-gold border-t-transparent" /></div>;
 
   return (
     <>
@@ -76,30 +76,30 @@ export default function CareersPage() {
                 </div>
 
                 {/* Apply form */}
-                <div className="rounded-lux bg-navy p-8">
+                <div className="rounded-lux bg-white border border-navy/10 p-8">
                   {status === 'success' ? (
                     <div className="flex flex-col items-center justify-center py-12 text-center">
-                      <CheckCircle className="mb-3 h-12 w-12 text-green-400" />
-                      <h3 className="font-heading text-lg font-bold text-white">Application Submitted!</h3>
-                      <p className="mt-2 font-sub text-sm text-white/60">Our HR team will review and contact you.</p>
-                      <button onClick={() => setStatus('idle')} className="mt-4 rounded-full bg-white/10 px-5 py-2 font-sub text-xs text-white hover:bg-white/20">Submit Another</button>
+                      <CheckCircle className="mb-3 h-12 w-12 text-green-500" />
+                      <h3 className="font-heading text-lg font-bold text-navy">Application Submitted!</h3>
+                      <p className="mt-2 font-sub text-sm text-navy/60">Our HR team will review and contact you.</p>
+                      <button onClick={() => setStatus('idle')} className="mt-4 rounded-full bg-navy/5 px-5 py-2 font-sub text-xs text-navy hover:bg-navy/10">Submit Another</button>
                     </div>
                   ) : (
                     <form onSubmit={apply} className="space-y-3">
-                      <h3 className="font-heading text-xl font-bold text-white">Apply for this Position</h3>
-                      <input required value={form.name} onChange={(e) => set('name', e.target.value)} placeholder="Full Name *" className="w-full rounded-xl bg-white/5 px-4 py-2.5 font-sub text-sm text-white placeholder-white/30 outline-none ring-1 ring-white/10 focus:ring-gold" />
-                      <input required type="email" value={form.email} onChange={(e) => set('email', e.target.value)} placeholder="Email *" className="w-full rounded-xl bg-white/5 px-4 py-2.5 font-sub text-sm text-white placeholder-white/30 outline-none ring-1 ring-white/10 focus:ring-gold" />
-                      <input required value={form.phone} onChange={(e) => set('phone', e.target.value)} placeholder="Phone *" className="w-full rounded-xl bg-white/5 px-4 py-2.5 font-sub text-sm text-white placeholder-white/30 outline-none ring-1 ring-white/10 focus:ring-gold" />
-                      <input value={form.resume_url} onChange={(e) => set('resume_url', e.target.value)} placeholder="Resume URL (Google Drive / Dropbox link)" className="w-full rounded-xl bg-white/5 px-4 py-2.5 font-sub text-sm text-white placeholder-white/30 outline-none ring-1 ring-white/10 focus:ring-gold" />
-                      <div className="flex items-center gap-2 rounded-xl bg-white/5 px-4 py-2.5 ring-1 ring-white/10">
+                      <h3 className="font-heading text-xl font-bold text-navy">Apply for this Position</h3>
+                      <input required value={form.name} onChange={(e) => set('name', e.target.value)} placeholder="Full Name *" className="w-full rounded-xl bg-white border border-gray-300 px-4 py-2.5 font-sub text-sm text-navy placeholder-navy/30 outline-none focus:ring-2 focus:ring-gold focus:border-gold" />
+                      <input required type="email" value={form.email} onChange={(e) => set('email', e.target.value)} placeholder="Email *" className="w-full rounded-xl bg-white border border-gray-300 px-4 py-2.5 font-sub text-sm text-navy placeholder-navy/30 outline-none focus:ring-2 focus:ring-gold focus:border-gold" />
+                      <input required value={form.phone} onChange={(e) => set('phone', e.target.value)} placeholder="Phone *" className="w-full rounded-xl bg-white border border-gray-300 px-4 py-2.5 font-sub text-sm text-navy placeholder-navy/30 outline-none focus:ring-2 focus:ring-gold focus:border-gold" />
+                      <input value={form.resume_url} onChange={(e) => set('resume_url', e.target.value)} placeholder="Resume URL (Google Drive / Dropbox link)" className="w-full rounded-xl bg-white border border-gray-300 px-4 py-2.5 font-sub text-sm text-navy placeholder-navy/30 outline-none focus:ring-2 focus:ring-gold focus:border-gold" />
+                      <div className="flex items-center gap-2 rounded-xl bg-navy/5 px-4 py-2.5 border border-navy/10">
                         <Upload className="h-4 w-4 text-gold" />
-                        <span className="font-sub text-xs text-white/50">Upload resume to Google Drive / Dropbox and paste the link above</span>
+                        <span className="font-sub text-xs text-navy/50">Upload resume to Google Drive / Dropbox and paste the link above</span>
                       </div>
-                      <textarea value={form.cover_letter} onChange={(e) => set('cover_letter', e.target.value)} placeholder="Cover Letter" rows={4} className="w-full rounded-xl bg-white/5 px-4 py-2.5 font-sub text-sm text-white placeholder-white/30 outline-none ring-1 ring-white/10 focus:ring-gold" />
+                      <textarea value={form.cover_letter} onChange={(e) => set('cover_letter', e.target.value)} placeholder="Cover Letter" rows={4} className="w-full rounded-xl bg-white border border-gray-300 px-4 py-2.5 font-sub text-sm text-navy placeholder-navy/30 outline-none focus:ring-2 focus:ring-gold focus:border-gold" />
                       <button type="submit" disabled={status === 'loading'} className="btn-gold flex w-full items-center justify-center gap-2 rounded-full px-6 py-3 font-sub text-sm">
                         {status === 'loading' ? <><Loader2 className="h-4 w-4 animate-spin" /> Submitting...</> : <><Send className="h-4 w-4" /> Submit Application</>}
                       </button>
-                      {status === 'error' && <p className="text-center font-sub text-xs text-red-400">Something went wrong. Please try again.</p>}
+                      {status === 'error' && <p className="text-center font-sub text-xs text-red-500">Something went wrong. Please try again.</p>}
                     </form>
                   )}
                 </div>
@@ -114,7 +114,7 @@ export default function CareersPage() {
                 <div className="space-y-4">
                   {jobs.map((j, i) => (
                     <motion.div key={j.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}>
-                      <Link to={`/company/careers/${j.slug}`} className="group flex flex-col gap-3 rounded-lux bg-navy/5 p-6 transition hover:bg-navy/10 sm:flex-row sm:items-center sm:justify-between">
+                      <Link to={`/company/careers/${j.slug}`} className="group flex flex-col gap-3 rounded-lux bg-navy/5 p-6 transition hover:bg-gold/10 sm:flex-row sm:items-center sm:justify-between">
                         <div>
                           <h3 className="font-heading text-lg font-bold text-navy">{j.title}</h3>
                           <div className="mt-2 flex flex-wrap gap-4 font-sub text-xs text-navy/60">

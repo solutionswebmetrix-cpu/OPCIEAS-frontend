@@ -5,7 +5,7 @@ export default function ClientsPage() {
   return (
     <main>
       <Clients />
-      <section className="relative overflow-hidden bg-dark py-20">
+      <section className="relative overflow-hidden bg-light-grey py-20">
         <div className="container-x px-6">
           <h3 className="font-heading text-2xl text-white">Trusted Brands</h3>
           <div className="mt-6 grid grid-cols-3 gap-4 sm:grid-cols-6">

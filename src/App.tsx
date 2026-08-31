@@ -13,6 +13,7 @@ import ProductCategoryPage from './pages/ProductCategoryPage';
 import ProductDetailPage from './pages/ProductDetailPage';
 import IndustryPage from './pages/IndustryPage';
 import CompanyPage from './pages/CompanyPage';
+import CompanyAboutPage from './pages/CompanyAboutPage';
 import ExportPage from './pages/ExportPage';
 import GalleryPage from './pages/GalleryPage';
 import ClientsPage from './pages/ClientsPage';
@@ -34,6 +35,10 @@ import SellerRegisterPage from './pages/SellerRegisterPage';
 import SupplierApplicationPage from './pages/SupplierApplicationPage';
 import PurchaseRequirementPage from './pages/PurchaseRequirementPage';
 import InitiativePage from './pages/InitiativePage';
+import ManufacturingPage from './pages/ManufacturingPage';
+import QualityPage from './pages/QualityPage';
+import AllIndustriesPage from './pages/AllIndustriesPage';
+import GovernmentTendersPage from './pages/GovernmentTendersPage';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -81,9 +86,14 @@ export default function App() {
           <Route path="/gallery" element={<GalleryPage />} />
           <Route path="/clients" element={<ClientsPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/manufacturing" element={<ManufacturingPage />} />
+          <Route path="/quality" element={<QualityPage />} />
+          <Route path="/industries" element={<AllIndustriesPage />} />
           <Route path="/industries/:slug" element={<IndustryPage />} />
+          <Route path="/government-tenders" element={<GovernmentTendersPage />} />
+          <Route path="/company/about" element={<CompanyAboutPage />} />
           <Route path="/company/:page" element={<CompanyPage />} />
-          <Route path="/about" element={<CompanyPage />} />
+          <Route path="/about" element={<CompanyAboutPage />} />
           <Route path="/about/:page" element={<CompanyPage />} />
           <Route path="/careers" element={<CareersPage />} />
           <Route path="/company/careers" element={<CareersPage />} />

@@ -11,14 +11,18 @@ interface Props {
 
 export default function SectionBanner({ title, tagline, image, crumb, crumbTo }: Props) {
   return (
-    <section className="relative min-h-[50vh] overflow-hidden bg-navy pt-32">
+    <section className="relative min-h-[50vh] overflow-hidden bg-white pt-32">
       <div className="pointer-events-none absolute inset-0">
         {image ? (
-          <img src={image} alt={title} className="h-full w-full object-cover opacity-30" loading="lazy" />
+          <>
+            <img src={image} alt={title} className="h-full w-full object-cover opacity-[0.12]" loading="lazy" />
+            <div className="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-white/60" />
+          </>
         ) : (
-          <div className="h-full w-full bg-gradient-to-br from-slate-900 via-slate-800 to-slate-700 opacity-40" />
+          <div className="h-full w-full bg-gradient-to-br from-light-grey via-white to-light-grey-2" />
         )}
-        <div className="absolute inset-0 bg-gradient-to-b from-navy/80 via-navy/70 to-navy" />
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent" />
+        <div className="absolute inset-0 grid-bg opacity-30" />
       </div>
       <div className="container-x relative z-10 flex min-h-[50vh] flex-col justify-center px-6 py-16">
         <Breadcrumbs items={[{ label: crumb, to: crumbTo }]} />
@@ -26,11 +30,12 @@ export default function SectionBanner({ title, tagline, image, crumb, crumbTo }:
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="mt-4 font-heading text-4xl font-black text-white sm:text-5xl xl:text-6xl"
+          className="mt-4 font-heading text-4xl font-black text-navy sm:text-5xl xl:text-6xl"
         >
           {title}
         </motion.h1>
-        {tagline && <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="mt-3 max-w-xl font-sub text-lg text-white/80">{tagline}</motion.p>}
+        {tagline && <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="mt-3 max-w-xl font-sub text-lg text-body-text">{tagline}</motion.p>}
+        <div className="mt-6 h-[3px] w-24 bg-gradient-to-r from-gold to-gold-2 rounded-full" />
       </div>
     </section>
   );
