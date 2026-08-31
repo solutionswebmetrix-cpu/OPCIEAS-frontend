@@ -224,7 +224,7 @@ export default function Hero() {
           {/* Typewriter headline — FULL DARK NAVY with bright white text-shadow for video contrast */}
           <h1
             className="font-heading text-4xl font-black leading-[1.05] sm:text-5xl xl:text-6xl"
-            style={{ color: '#071A35', textShadow: '0 2px 16px rgba(255,255,255,0.92), 0 0 2px rgba(255,255,255,0.8)' }}
+            style={{ color: '#071A35' }}
           >
             <span className="block font-black whitespace-pre">
               {text1 || '\u00A0'}
@@ -232,7 +232,15 @@ export default function Hero() {
                 {showCursorLine1 && <TypewriterCursor key="c1" />}
               </AnimatePresence>
             </span>
-            <span className="block gold-text font-bold whitespace-pre">
+            <span
+              className="mt-2 block max-w-[14ch] text-[1.7rem] font-bold leading-[1.12] whitespace-normal sm:max-w-[18ch] sm:text-[2.3rem] lg:max-w-none lg:whitespace-nowrap lg:text-[2.8rem]"
+              style={{
+                color: '#0B1F3A',
+                fontWeight: 700,
+                textShadow: 'none',
+                opacity: 1,
+              }}
+            >
               {text2 || '\u00A0'}
               <AnimatePresence mode="wait" initial={false}>
                 {showCursorLine2 && <TypewriterCursor key="c2" />}
