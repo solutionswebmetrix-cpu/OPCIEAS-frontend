@@ -5,11 +5,11 @@ import { ArrowUp, Send, CheckCircle2, Loader2 } from 'lucide-react';
 import companyLogo from '../assets/logo/logo.png';
 
 const cols = [
-  { title: 'Company', links: [{ label: 'About', to: '/company/about' }, { label: 'Manufacturing', to: '/company/manufacturing' }, { label: 'Certifications', to: '/company/certifications' }, { label: 'Careers', to: '/company/careers' }, { label: 'Contact', to: '/company/contact' }] },
-  { title: 'Products', links: [{ label: 'Office Furniture', to: '/products/office-furniture' }, { label: 'Educational', to: '/products/educational-furniture' }, { label: 'Hospital', to: '/products/hospital-furniture' }, { label: 'Industrial', to: '/products/industrial-storage' }, { label: 'All Products', to: '/products' }] },
-  { title: 'Industries', links: [{ label: 'Furniture', to: '/furniture' }, { label: 'Technology', to: '/technology' }, { label: 'Agriculture & Fisheries', to: '/agriculture' }, { label: 'Social Services', to: '/social-services' }, { label: 'Government', to: '/industries/government' }, { label: 'Corporate', to: '/industries/corporate' }, { label: 'Healthcare', to: '/industries/healthcare' }, { label: 'Hospitality', to: '/industries/hospitality' }, { label: 'Export', to: '/industries/export' }] },
-  { title: 'Compliance & Legal', links: [{ label: 'Compliance', to: '/compliance' }, { label: 'Terms of Use', to: '/terms-of-use' }, { label: 'Privacy Policy', to: '/privacy-policy' }, { label: 'Disclaimer', to: '/disclaimer' }, { label: 'Sitemap', to: '/' }] },
-  { title: 'Resources', links: [{ label: 'Request Quote', to: '/rfq' }, { label: 'Tender Catalogue', to: '/products' }, { label: 'Export Profile', to: '/industries/export' }, { label: 'Certifications', to: '/company/certifications' }, { label: 'Contact', to: '/company/contact' }] },
+  { title: 'Company', links: [{ label: 'About', to: '/company/about' }, { label: 'Manufacturing', to: '/manufacturing' }, { label: 'Quality & Certifications', to: '/quality' }, { label: 'Contact', to: '/contact' }] },
+  { title: 'Products', links: [{ label: 'Furniture', to: '/furniture' }, { label: 'Technology', to: '/technology' }, { label: 'Agriculture', to: '/agriculture' }, { label: 'All Products', to: '/products' }] },
+  { title: 'Business', links: [{ label: 'Supplier', to: '/supplier' }, { label: 'Buyer', to: '/buyer' }, { label: 'Request Quote', to: '/rfq' }, { label: 'Government Tenders', to: '/government-tenders' }] },
+  { title: 'Community', links: [{ label: 'Social Services', to: '/social-services' }, { label: 'Community Impact', to: '/community-impact' }, { label: 'Export Services', to: '/export' }, { label: 'Gallery', to: '/gallery' }] },
+  { title: 'Legal', links: [{ label: 'Compliance', to: '/compliance' }, { label: 'Terms of Use', to: '/terms-of-use' }, { label: 'Privacy Policy', to: '/privacy-policy' }, { label: 'Disclaimer', to: '/disclaimer' }] },
 ];
 
 export default function Footer() {

@@ -39,6 +39,9 @@ import ManufacturingPage from './pages/ManufacturingPage';
 import QualityPage from './pages/QualityPage';
 import AllIndustriesPage from './pages/AllIndustriesPage';
 import GovernmentTendersPage from './pages/GovernmentTendersPage';
+import SupplierPage from './pages/SupplierPage';
+import BuyerPage from './pages/BuyerPage';
+import CommunityImpactPage from './pages/CommunityImpactPage';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -74,6 +77,9 @@ export default function App() {
           <Route path="/technology" element={<TechnologyPage />} />
           <Route path="/agriculture" element={<AgriculturePage />} />
           <Route path="/social-services" element={<SocialServicesPage />} />
+          <Route path="/community-impact" element={<CommunityImpactPage />} />
+          <Route path="/supplier" element={<SupplierPage />} />
+          <Route path="/buyer" element={<BuyerPage />} />
           <Route path="/products" element={<AllProductsPage />} />
           <Route path="/products/category/:slug" element={<ProductCategoryPage />} />
           <Route path="/products/:slug" element={<ProductCategoryPage />} />

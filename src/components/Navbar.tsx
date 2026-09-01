@@ -6,40 +6,47 @@ import companyLogo from '../assets/logo/logo.png';
 
 const menu = [
   {
-    label: 'Home', items: [
-      { name: 'Overview', to: '/', scrollId: 'overview' },
-      { name: 'Why Choose Us', to: '/', scrollId: 'why-choose-us' },
-      { name: 'Manufacturing', to: '/', scrollId: 'manufacturing' },
-    ],
+    label: 'Home',
+    to: '/',
   },
   {
-    label: 'Company', items: [
+    label: 'Company',
+    items: [
       { name: 'About Us', to: '/company/about' },
       { name: 'Manufacturing', to: '/manufacturing' },
-      { name: 'Quality & Certifications', to: '/quality' },
-      { name: 'All Industries', to: '/industries' },
-      { name: 'Clients', to: '/clients' },
-      { name: 'Contact', to: '/contact' },
+      { name: 'Certifications & Quality', to: '/quality' },
     ],
   },
   {
-    label: 'Products', items: [
-      { name: 'All Categories', to: '/products' },
-      { name: 'Office Furniture', to: '/products/office-furniture' },
-      { name: 'Educational Furniture', to: '/products/educational-furniture' },
-      { name: 'School Furniture', to: '/products/school-furniture' },
-      { name: 'Hospital Furniture', to: '/products/hospital-furniture' },
-      { name: 'Hostel Furniture', to: '/products/hostel-furniture' },
+    label: 'Products',
+    items: [
+      { name: 'Furniture', to: '/furniture' },
+      { name: 'Technology', to: '/technology' },
+      { name: 'Agriculture', to: '/agriculture' },
+      { name: 'All Products', to: '/products' },
     ],
   },
   {
-    label: 'Special', items: [
+    label: 'Business',
+    items: [
+      { name: 'Supplier Onboarding', to: '/supplier' },
+      { name: 'Buyer Registration', to: '/buyer' },
+      { name: 'Request Quote', to: '/rfq' },
+    ],
+  },
+  {
+    label: 'Special',
+    items: [
+      { name: 'Community Impact', to: '/community-impact' },
+      { name: 'Compliance & Governance', to: '/compliance' },
       { name: 'Government Tenders', to: '/government-tenders' },
       { name: 'Export Services', to: '/export' },
-      { name: 'Gallery', to: '/gallery' },
     ],
   },
-  { label: 'Contact', to: '/contact' },
+  {
+    label: 'Contact',
+    to: '/contact',
+  },
 ];
 
 export default function Navbar() {
