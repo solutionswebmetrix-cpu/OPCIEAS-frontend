@@ -5,11 +5,10 @@ import { ArrowUp, Send, CheckCircle2, Loader2 } from 'lucide-react';
 import companyLogo from '../assets/logo/logo.png';
 
 const cols = [
-  { title: 'Company', links: [{ label: 'About', to: '/company/about' }, { label: 'Manufacturing', to: '/manufacturing' }, { label: 'Quality & Certifications', to: '/quality' }, { label: 'Contact', to: '/contact' }] },
-  { title: 'Products', links: [{ label: 'Furniture', to: '/furniture' }, { label: 'Technology', to: '/technology' }, { label: 'Agriculture', to: '/agriculture' }, { label: 'All Products', to: '/products' }] },
-  { title: 'Business', links: [{ label: 'Supplier', to: '/supplier' }, { label: 'Buyer', to: '/buyer' }, { label: 'Request Quote', to: '/rfq' }, { label: 'Government Tenders', to: '/government-tenders' }] },
-  { title: 'Community', links: [{ label: 'Social Services', to: '/social-services' }, { label: 'Community Impact', to: '/community-impact' }, { label: 'Export Services', to: '/export' }, { label: 'Gallery', to: '/gallery' }] },
-  { title: 'Legal', links: [{ label: 'Compliance', to: '/compliance' }, { label: 'Terms of Use', to: '/terms-of-use' }, { label: 'Privacy Policy', to: '/privacy-policy' }, { label: 'Disclaimer', to: '/disclaimer' }] },
+  { title: 'Company', links: [{ label: 'About', to: '/company/about' }, { label: 'Manufacturing', to: '/manufacturing' }, { label: 'Tech Business Promotion', to: '/tech-business-promotion' }, { label: 'Contact', to: '/contact' }] },
+  { title: 'Products', links: [{ label: 'Educational Furniture', to: '/products' }, { label: 'Storage Solutions', to: '/products' }, { label: 'Catalogue', to: '/catalogue' }, { label: 'All Products', to: '/products' }] },
+  { title: 'Business', links: [{ label: 'Membership', to: '/membership' }, { label: 'Payment Instructions', to: '/payment-instructions' }, { label: 'Request Quote', to: '/rfq' }, { label: 'Compliance', to: '/compliance' }] },
+  { title: 'Policies', links: [{ label: 'Enquiry', to: '/contact' }, { label: 'Terms of Use', to: '/terms-of-use' }, { label: 'Privacy Policy', to: '/privacy-policy' }, { label: 'Disclaimer', to: '/disclaimer' }] },
 ];
 
 export default function Footer() {
@@ -70,9 +69,10 @@ export default function Footer() {
               </div>
             </div>
             <p className="mt-5 max-w-sm font-body text-sm leading-relaxed text-body-text">
-              Premium commercial furniture manufacturer since 2000. Government tender specialist, ISO certified, exporting to 20+ countries.
+                OPCIEAS Tech Business Promotion, Social Services Pvt. Ltd. delivers institutional furniture, storage solutions, and business promotion services with a focus on quality, reliability, and transparent engagement.
             </p>
-            <p className="mt-4 font-sub text-sm italic text-gold">"Everyone Says Go Green... We Show How!!!"</p>
+              <p className="mt-4 font-sub text-sm italic text-gold">ISO certification information: available upon final client confirmation and document approval.</p>
+              <p className="mt-2 font-body text-xs text-navy/60">Export credentials: presented on request with relevant documentation and compliance record.</p>
             {/* Social */}
             <div className="mt-6 flex gap-3">
               {['in', 'f', 'X', 'ig', 'yt'].map((s) => (
@@ -98,7 +98,7 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-gray-200 py-8 sm:flex-row">
-          <p className="font-body text-xs text-muted-text">© 2025 OPCIEAS Pvt. Ltd. All rights reserved.</p>
+          <p className="font-body text-xs text-muted-text">© 2025 OPCIEAS Tech Business Promotion, Social Services Pvt. Ltd. All rights reserved.</p>
           <div className="flex gap-6">
             <a href="/privacy-policy" className="font-body text-xs text-muted-text transition hover:text-gold">Privacy Policy</a>
             <a href="/terms-of-use" className="font-body text-xs text-muted-text transition hover:text-gold">Terms</a>

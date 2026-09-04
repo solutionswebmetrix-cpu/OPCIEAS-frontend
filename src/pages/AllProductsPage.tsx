@@ -1,32 +1,67 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Search, Download, MessageCircle, ArrowRight } from 'lucide-react';
+import { Search, Download, MessageCircle, ArrowRight, Grid3X3 } from 'lucide-react';
 import PageMeta from '../components/PageMeta';
 import SectionBanner from '../components/SectionBanner';
 import ProductCard from '../components/ProductCard';
-import { IMG } from '../lib/images';
-import { fetchCategories, fetchProducts, type Category, type Product } from '../lib/data';
+import { CATEGORY_BANNERS, CANONICAL_CATEGORIES } from '../lib/images';
+import { fetchCategories, fetchProducts, type Product, type Category } from '../lib/data';
+
+const fallbackCategories: Pick<Category, 'id' | 'name' | 'slug'>[] = CANONICAL_CATEGORIES.map((category) => ({
+  id: category.id,
+  name: category.name,
+  slug: category.slug,
+}));
 
 export default function AllProductsPage() {
-  const [cats, setCats] = useState<Category[]>([]);
-  const [products, setProducts] = useState<Product[]>([]);
+  const [apiProducts, setApiProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<Pick<Category, 'id' | 'name' | 'slug'>[]>(fallbackCategories);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [activeCat, setActiveCat] = useState<string>('all');
 
   useEffect(() => {
     (async () => {
-      const [c, p] = await Promise.all([fetchCategories(), fetchProducts()]);
-      setCats(c);
-      setProducts(p);
-      setLoading(false);
+      try {
+        const [products, categoryList] = await Promise.all([fetchProducts(), fetchCategories()]);
+        setApiProducts(products);
+        setCategories(categoryList.length ? categoryList.map((category) => ({ id: category.id, name: category.name, slug: category.slug })) : fallbackCategories);
+      } finally {
+        setLoading(false);
+      }
     })();
   }, []);
 
-  let filtered = products;
-  if (activeCat !== 'all') filtered = products.filter((p) => p.category_id === activeCat);
-  if (search) filtered = filtered.filter((p) => p.name.toLowerCase().includes(search.toLowerCase()));
+  const categoryList = useMemo(() => categories.length ? categories : fallbackCategories, [categories]);
+
+  const filtered = useMemo(() => {
+    let out = [...apiProducts];
+
+    if (activeCat !== 'all') {
+      out = out.filter((product) => String(product.category_id ?? '') === activeCat);
+    }
+
+    if (search) {
+      const q = search.toLowerCase();
+      out = out.filter((product) => {
+        const categoryName = categoryList.find((category) => category.id === String(product.category_id ?? ''))?.name ?? '';
+        return product.name.toLowerCase().includes(q) ||
+          (product.short_desc || '').toLowerCase().includes(q) ||
+          categoryName.toLowerCase().includes(q);
+      });
+    }
+
+    return out;
+  }, [apiProducts, activeCat, categoryList, search]);
+
+  const categoryCounts = useMemo(() => {
+    const counts: Record<string, number> = { all: apiProducts.length };
+    for (const category of categoryList) {
+      counts[category.id] = apiProducts.filter((product) => String(product.category_id ?? '') === category.id).length;
+    }
+    return counts;
+  }, [apiProducts, categoryList]);
 
   if (loading) {
     return <div className="flex min-h-screen items-center justify-center bg-white"><div className="h-8 w-8 animate-spin rounded-full border-2 border-gold border-t-transparent" /></div>;
@@ -41,33 +76,34 @@ export default function AllProductsPage() {
         canonical="https://www.opcieascommercialfurniture.com/products"
         schema={{ '@context': 'https://schema.org', '@type': 'ItemList', name: 'OPCIEAS Products', description: 'Product categories and commercial furniture solutions from OPCIEAS.' }}
       />
-      <SectionBanner title="All Products" tagline="1000+ commercial furniture solutions" image={IMG.heroBg} crumb="Products" crumbTo="/products" />
+      <SectionBanner title="All Products" tagline={`${apiProducts.length} commercial furniture solutions`} image={CATEGORY_BANNERS['Office Furniture']} crumb="Products" crumbTo="/products" />
 
-      {/* Category grid */}
       <section className="bg-white py-20">
         <div className="container-x px-6">
           <h2 className="mb-8 font-heading text-2xl font-black text-navy sm:text-3xl">Browse by Category</h2>
           <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
-            {cats.map((c, i) => (
-              <motion.div key={c.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: (i % 4) * 0.08 }}>
-                <Link to={`/products/category/${c.slug}`} className="group relative block overflow-hidden rounded-lux border border-navy/10 bg-white shadow-sm transition-all duration-300 hover:shadow-md">
-                  <div className="relative aspect-[4/3] overflow-hidden">
-                    <img src={c.banner_image || ''} alt={c.name} className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white/95 via-white/30 to-transparent" />
-                  </div>
-                  <div className="p-5">
-                    <h3 className="font-heading text-lg font-bold text-navy">{c.name}</h3>
-                    {c.tagline && <p className="mt-1 font-sub text-xs text-navy/70">{c.tagline}</p>}
-                    <span className="mt-3 inline-flex items-center gap-1 font-sub text-xs text-gold font-medium">View Products <ArrowRight className="h-3 w-3" /></span>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
+            {categoryList.map((category, index) => {
+              const count = categoryCounts[category.id] || 0;
+              return (
+                <motion.div key={category.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: (index % 4) * 0.08 }}>
+                  <Link to={`/products/category/${category.slug}`} className="group relative block overflow-hidden rounded-lux border border-navy/10 bg-white shadow-sm transition-all duration-300 hover:shadow-md">
+                    <div className="relative aspect-[4/3] overflow-hidden">
+                      <img src={CATEGORY_BANNERS[category.name as keyof typeof CATEGORY_BANNERS] || CATEGORY_BANNERS['Office Furniture']} alt={category.name} className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white/95 via-white/30 to-transparent" />
+                    </div>
+                    <div className="p-5">
+                      <h3 className="font-heading text-lg font-bold text-navy">{category.name}</h3>
+                      <p className="mt-1 font-sub text-xs text-navy/70">{count} product{count !== 1 ? 's' : ''}</p>
+                      <span className="mt-3 inline-flex items-center gap-1 font-sub text-xs text-gold font-medium">View Products <ArrowRight className="h-3 w-3" /></span>
+                    </div>
+                  </Link>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* All products with filter */}
       <section className="bg-navy/5 py-20">
         <div className="container-x px-6">
           <div className="mb-8 flex flex-col gap-4 rounded-lux bg-white p-4 sm:flex-row sm:items-center sm:justify-between">
@@ -76,9 +112,20 @@ export default function AllProductsPage() {
               <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search all products..." className="w-full rounded-full bg-navy/5 px-10 py-2.5 font-sub text-sm text-navy outline-none ring-1 ring-navy/10 focus:ring-gold" />
             </div>
             <div className="flex flex-wrap gap-2">
-              <button onClick={() => setActiveCat('all')} className={`rounded-full px-4 py-2 font-sub text-xs transition ${activeCat === 'all' ? 'bg-gold text-navy' : 'bg-gray-100 text-navy hover:bg-gray-200'}`}>All</button>
-              {cats.map((c) => (
-                <button key={c.id} onClick={() => setActiveCat(c.id)} className={`rounded-full px-4 py-2 font-sub text-xs transition ${activeCat === c.id ? 'bg-gold text-navy' : 'bg-gray-100 text-navy hover:bg-gray-200'}`}>{c.name}</button>
+              <button
+                onClick={() => setActiveCat('all')}
+                className={`inline-flex items-center gap-1.5 rounded-full px-4 py-2 font-sub text-xs transition ${activeCat === 'all' ? 'bg-gold text-navy' : 'bg-gray-100 text-navy hover:bg-gray-200'}`}
+              >
+                <Grid3X3 className="h-3.5 w-3.5" /> All Categories ({categoryCounts.all || 0})
+              </button>
+              {categoryList.map((category) => (
+                <button
+                  key={category.id}
+                  onClick={() => setActiveCat(category.id)}
+                  className={`rounded-full px-4 py-2 font-sub text-xs transition ${activeCat === category.id ? 'bg-gold text-navy' : 'bg-gray-100 text-navy hover:bg-gray-200'}`}
+                >
+                  {category.name} ({categoryCounts[category.id] || 0})
+                </button>
               ))}
             </div>
           </div>
@@ -89,7 +136,9 @@ export default function AllProductsPage() {
             <div className="py-20 text-center"><p className="font-sub text-sm text-navy/50">No products found.</p></div>
           ) : (
             <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
-              {filtered.map((p, i) => <ProductCard key={p.id} product={p} index={i} />)}
+              {filtered.map((product, index) => (
+                <ProductCard key={product.id || `${product.slug}-${index}`} product={product} index={index} categorySlug={categoryList.find((category) => category.id === String(product.category_id ?? ''))?.slug} />
+              ))}
             </div>
           )}
 

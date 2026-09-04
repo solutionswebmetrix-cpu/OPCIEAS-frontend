@@ -54,18 +54,29 @@ export default function CompliancePage() {
   return (
     <>
       <PageMeta
-        title="Compliance - OPCIEAS Pvt. Ltd."
-        description="OPCIEAS certifications and compliance documents"
+        title="Compliance - OPCIEAS Tech Business Promotion, Social Services Pvt. Ltd."
+        description="Informational compliance positioning for OPCIEAS: MCA, RBI, FEMA and SEBI applicability notes."
       />
       <SectionBanner
-        title="Compliance & Certifications"
-        tagline="Transparency and adherence to all regulations"
+        title="Compliance"
+        tagline="Informational compliance positioning and documentation guidance"
         image={IMG.heroBg}
         crumb="Compliance"
         crumbTo="/"
       />
       <section className="bg-white py-20">
         <div className="container-x px-6">
+          <div className="mb-10 max-w-4xl rounded-lux border border-navy/10 bg-light-grey p-6">
+            <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Client informational note</p>
+            <h2 className="mt-3 font-heading text-2xl font-black text-navy">Compliance positioning</h2>
+            <div className="mt-4 space-y-4 font-body text-sm leading-relaxed text-navy/75">
+              <p><strong className="text-navy">MCA applicability note:</strong> OPCIEAS operates as a company structure subject to applicable corporate and regulatory compliance requirements under the relevant legal framework. This website is informational and does not replace formal legal, regulatory or statutory advice.</p>
+              <p><strong className="text-navy">No RBI involvement:</strong> This website is not intended to provide or describe any Reserve Bank of India regulatory role, approval or financing service.</p>
+              <p><strong className="text-navy">No FEMA involvement:</strong> The information provided is not a FEMA filing, FEMA advisory, or foreign exchange approval notice.</p>
+              <p><strong className="text-navy">No SEBI involvement:</strong> The site does not represent SEBI regulation, approval, or issuer-related compliance for securities or listed-company activity.</p>
+            </div>
+          </div>
+
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {complianceItems.map((item, i) => {
               const Icon = item.icon;

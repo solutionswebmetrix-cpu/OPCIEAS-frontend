@@ -1,49 +1,55 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Eye, FileText, Download, ArrowUpRight, RotateCw } from 'lucide-react';
-import { IMG } from '../lib/images';
-import { fetchCategories, fetchFeaturedProducts, fetchProducts, type Category, type Product } from '../lib/data';
+import { FileText, Download, RotateCw, ArrowRight } from 'lucide-react';
+import { IMG, CANONICAL_CATEGORIES, PRODUCT_IMAGE_GROUPS, cleanProductName, toKebab, type CanonicalCategoryName } from '../lib/images';
+import { fetchFeaturedProducts, fetchProducts, type Product } from '../lib/data';
 import Product360Viewer from './Product360Viewer';
 
-function ProductCard({ name, img, count, slug, i }: { name: string; img?: string; count?: number; slug: string; i: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [, setT] = useState({ rx: 0, ry: 0 });
-  const onMove = (e: React.MouseEvent) => {
-    const r = ref.current?.getBoundingClientRect();
-    if (!r) return;
-    const rx = -((e.clientY - r.top) / r.height - 0.5) * 10;
-    const ry = ((e.clientX - r.left) / r.width - 0.5) * 10;
-    setT({ rx, ry });
-  };
+function HomeProductCard({ group, product, index, categoryIndex }: { group: typeof PRODUCT_IMAGE_GROUPS[number]; product?: Product; index: number; categoryIndex: number }) {
+  const productSlug = product?.slug || `asset-${toKebab(group.cleanName)}`;
+  const primaryImage = product?.image || group.image;
+  const productName = product?.name || group.cleanName;
+  const productCategory = product?.category_id ? group.category : group.category;
+  void productCategory;
+
   return (
     <motion.div
-      ref={ref}
-      onMouseMove={onMove}
-      onMouseLeave={() => setT({ rx: 0, ry: 0 })}
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
-      transition={{ delay: (i % 3) * 0.1, duration: 0.6 }}
-      className="group relative aspect-[4/5] overflow-hidden rounded-lux border border-navy/10 bg-white luxury-shadow"
+      transition={{ delay: (categoryIndex * 0.03) + (index % 5) * 0.04, duration: 0.45 }}
+      className="group overflow-hidden rounded-lux border border-navy/10 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
     >
-      <Link to={`/products/category/${slug}`}>
-        <img src={img || IMG.heroBg} alt={`${name} by OPCIEAS`} className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white/90 via-white/30 to-transparent" />
-        <div className="absolute inset-0 flex flex-col justify-end p-5">
-          <p className="font-sub text-[10px] uppercase tracking-wider text-gold">{count ? `${count}+ Products` : 'Signature Collection'}</p>
-          <h3 className="mt-1 font-heading text-lg font-bold text-navy">{name}</h3>
-          <div className="relative z-10 mt-3 flex gap-2 opacity-0 transition-all duration-500 group-hover:opacity-100">
-            <button className="flex items-center gap-1 rounded-full bg-navy/10 px-3 py-1.5 font-sub text-xs text-navy backdrop-blur transition hover:bg-gold hover:text-navy">
-              <Eye className="h-3 w-3" /> Quick View
-            </button>
-            <button className="flex items-center gap-1 rounded-full bg-navy/10 px-3 py-1.5 font-sub text-xs text-navy backdrop-blur transition hover:bg-gold hover:text-navy">
-              <Download className="h-3 w-3" /> Catalogue
-            </button>
-          </div>
+      <Link to={`/product/${productSlug}`} className="block">
+        <div className="h-48 sm:h-52 bg-white p-2.5 sm:p-3">
+          <img
+            src={primaryImage}
+            alt={productName}
+            className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
+            loading={categoryIndex === 0 && index < 4 ? 'eager' : 'lazy'}
+          />
         </div>
-        <div className="pointer-events-none absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full glass text-gold opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-          <ArrowUpRight className="h-4 w-4" />
+        <div className="flex min-h-[10rem] flex-col border-t border-navy/10 p-3.5 sm:p-4">
+          <p className="font-sub text-[10px] uppercase tracking-[0.16em] text-gold">{group.category}</p>
+          {product ? (
+            <>
+              <h3 className="mt-1 font-heading text-base font-bold text-navy sm:text-lg leading-tight line-clamp-2">{product.name}</h3>
+              {product.short_desc && <p className="mt-2 line-clamp-2 font-body text-xs leading-relaxed text-navy/70">{product.short_desc}</p>}
+              {product.price_range && <p className="mt-2 font-sub text-xs font-semibold text-navy">{product.price_range}</p>}
+              <span className="mt-auto inline-flex items-center gap-1.5 pt-3.5 font-sub text-xs text-gold">
+                View Details <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+              </span>
+            </>
+          ) : (
+            <>
+              <h3 className="mt-1 font-heading text-base font-bold text-navy sm:text-lg leading-tight line-clamp-2">{group.cleanName}</h3>
+              <p className="mt-2 font-body text-xs text-navy/60">Product information will be updated soon.</p>
+              <span className="mt-auto inline-flex items-center gap-1.5 pt-3.5 font-sub text-xs text-gold">
+                View Details <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+              </span>
+            </>
+          )}
         </div>
       </Link>
     </motion.div>
@@ -84,35 +90,54 @@ function FeaturedProduct({ product, i }: { product: Product; i: number }) {
 }
 
 export default function Products() {
-  const [showcaseItems, setShowcaseItems] = useState<Array<{ name: string; img: string; slug: string; count: number }>>([]);
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     (async () => {
-      const [categories, products] = await Promise.all([fetchCategories(), fetchProducts()]);
-      const countsByCat = products.reduce<Record<string, number>>((acc, product) => {
-        const key = product.category_id || 'all';
-        acc[key] = (acc[key] || 0) + 1;
-        return acc;
-      }, {});
-
-      const items = categories.map((category: Category) => ({
-        name: category.name,
-        img: category.banner_image || category.image || IMG.heroBg,
-        slug: category.slug,
-        count: countsByCat[category.id] || 0,
-      }));
-
-      setShowcaseItems(items);
+      const products = await fetchProducts();
+      setAllProducts(products);
       const featured = (await fetchFeaturedProducts()).slice(0, 3);
       setFeaturedProducts(featured);
     })();
   }, []);
 
+  const productsByCategory = useMemo(() => {
+    const map = new Map<CanonicalCategoryName, { group: typeof PRODUCT_IMAGE_GROUPS[number]; product?: Product }[]>();
+
+    for (const group of PRODUCT_IMAGE_GROUPS) {
+      if (!map.has(group.category)) {
+        map.set(group.category, []);
+      }
+      const arr = map.get(group.category)!;
+      const matchedProduct = allProducts.find(
+        (candidate) => toKebab(cleanProductName(candidate.name)) === toKebab(group.cleanName)
+      );
+      arr.push({ group, product: matchedProduct });
+    }
+
+    for (const [cat, arr] of map.entries()) {
+      arr.sort((a, b) => {
+        const aFeatured = a.product?.featured || a.product?.is_featured ? 1 : 0;
+        const bFeatured = b.product?.featured || b.product?.is_featured ? 1 : 0;
+        if (bFeatured !== aFeatured) return bFeatured - aFeatured;
+        return a.group.cleanName.localeCompare(b.group.cleanName);
+      });
+      map.set(cat, arr.slice(0, 5));
+    }
+
+    return map;
+  }, [allProducts]);
+
+  const categoriesWithProducts = CANONICAL_CATEGORIES.filter((cat) => {
+    const items = productsByCategory.get(cat.name);
+    return items && items.length > 0;
+  });
+
   return (
-    <section id="products" className="relative overflow-hidden bg-white py-32">
+    <section id="products" className="relative overflow-hidden bg-white py-24 sm:py-32">
       <div className="container-x px-6">
-        <div className="mb-16 text-center">
+        <div className="mb-14 sm:mb-16 text-center">
           <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-sub text-sm uppercase tracking-[0.3em] text-gold">Product Showcase</motion.p>
           <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl xl:text-5xl">
             Furniture for Every Commercial Space
@@ -122,14 +147,50 @@ export default function Products() {
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
-          {showcaseItems.map((item, i) => (
-            <ProductCard key={item.slug} name={item.name} img={item.img} count={item.count} slug={item.slug} i={i} />
-          ))}
+        <div className="space-y-14 sm:space-y-20">
+          {categoriesWithProducts.map((cat, catIdx) => {
+            const items = productsByCategory.get(cat.name)!;
+            return (
+              <motion.div
+                key={cat.id}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ delay: Math.min(catIdx * 0.05, 0.25), duration: 0.5 }}
+              >
+                <div className="mb-5 sm:mb-7 flex flex-wrap items-end justify-between gap-3">
+                  <div>
+                    <h3 className="font-heading text-xl font-black text-navy sm:text-2xl">{cat.name}</h3>
+                    <p className="mt-1 font-sub text-xs uppercase tracking-[0.2em] text-navy/40">
+                      {items.length} product{items.length !== 1 ? 's' : ''} displayed
+                    </p>
+                  </div>
+                  <Link
+                    to={`/products/category/${cat.slug}`}
+                    className="inline-flex items-center gap-1.5 rounded-full border border-gold/40 bg-gold/5 px-4 py-2 font-sub text-xs font-semibold text-gold transition-all duration-300 hover:border-gold hover:bg-gold hover:text-navy"
+                  >
+                    View All <ArrowRight className="h-3.5 w-3.5" />
+                  </Link>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3.5 sm:gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+                  {items.map((item, idx) => (
+                    <HomeProductCard
+                      key={item.group.key}
+                      group={item.group}
+                      product={item.product}
+                      index={idx}
+                      categoryIndex={catIdx}
+                    />
+                  ))}
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
 
-      <div className="mt-24">
+      <div className="mt-20 sm:mt-24">
         <div className="container-x mb-12 px-6">
           <motion.h3 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="font-heading text-2xl font-black text-navy sm:text-3xl">
             Featured Products

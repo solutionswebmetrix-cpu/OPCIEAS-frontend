@@ -8,12 +8,15 @@ import Product360Viewer from '../components/Product360Viewer';
 import ProductCard from '../components/ProductCard';
 import InquiryForm from '../components/InquiryForm';
 import { fetchProduct, fetchProducts, type Product } from '../lib/data';
+import { validateProductEssentials } from '../lib/productValidation';
+import { findProductAssetBySlug } from '../lib/productAssetResolver';
 
 export default function ProductDetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const [product, setProduct] = useState<Product | null>(null);
   const [related, setRelated] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const [assetOnly, setAssetOnly] = useState(false);
   const [activeImg, setActiveImg] = useState(0);
   const [viewerOpen, setViewerOpen] = useState(false);
 
@@ -22,11 +25,27 @@ export default function ProductDetailPage() {
       setLoading(true);
       if (!slug) return;
       const p = await fetchProduct(slug);
-      setProduct(p);
+      const asset = p ? null : findProductAssetBySlug(slug);
+      const assetProduct: Product | null = asset ? {
+        id: asset.slug,
+        category_id: asset.folder,
+        name: asset.name,
+        slug: asset.slug,
+        features: [],
+        specs: {},
+        image: asset.image,
+        gallery: [asset.image],
+        created_at: '',
+      } : null;
+      const resolvedProduct = p || assetProduct;
+      setProduct(resolvedProduct);
+      setAssetOnly(!p && !!assetProduct);
       if (p) {
         const all = await fetchProducts(p.category_id || undefined);
         setRelated(all.filter((x) => x.id !== p.id).slice(0, 4));
         setActiveImg(0);
+      } else {
+        setRelated([]);
       }
       setLoading(false);
     })();
@@ -53,15 +72,16 @@ export default function ProductDetailPage() {
   const specs = product.specs || {};
   const features = product.features || [];
   const waText = `Hi, I'm interested in ${encodeURIComponent(product.name)}. Please share details.`;
-  const dimensionValue = specs['Dimensions'] || specs.Dimensions || specs['dimensions'] || (product.dimensions ? JSON.stringify(product.dimensions) : 'Available on request');
-  const materialsValue = specs['Materials Used'] || specs['Material'] || product.materials_used || product.material || 'Available on request';
-  const packagingValue = specs['Packaging Specifications'] || specs['Packaging'] || product.packaging_specifications || 'Available on request';
-  const warrantyText = product.warranty_terms || specs['Warranty'] || '12 Months Warranty on domestic supply.';
-  const weightValue = specs['Weight'] || product.weight || 'Available on request';
-  const variantsValue = specs['Variants'] || (Array.isArray(product.variants) ? product.variants.join(', ') : typeof product.variants === 'string' ? product.variants : 'Available on request');
+  const dimensionValue = assetOnly ? null : specs['Dimensions'] || specs.Dimensions || specs['dimensions'] || (product.dimensions ? JSON.stringify(product.dimensions) : 'Available on request');
+  const materialsValue = assetOnly ? null : specs['Materials Used'] || specs['Material'] || product.materials_used || product.material || 'Available on request';
+  const packagingValue = assetOnly ? null : specs['Packaging Specifications'] || specs['Packaging'] || product.packaging_specifications || 'Available on request';
+  const warrantyText = assetOnly ? null : product.warranty_terms || specs['Warranty'] || '12 Months Warranty on domestic supply.';
+  const weightValue = assetOnly ? null : specs['Weight'] || product.weight || 'Available on request';
+  const variantsValue = assetOnly ? null : specs['Variants'] || (Array.isArray(product.variants) ? product.variants.join(', ') : typeof product.variants === 'string' ? product.variants : 'Available on request');
   const hasExport = !!(product.export_available || /export/i.test(String(specs['Export Available'] || '')));
-  const supplyLabel = product.supply_type === 'IN_HOUSE' ? 'In-House Manufacturing' : product.supply_type === 'PARTNER' ? 'Partner Supply' : 'Direct Manufacturer';
-  const supplyNote = product.supply_type === 'IN_HOUSE' ? 'Manufactured in our own facility with production control and quality assurance.' : 'Supplied through trusted production partners and quality-checked before dispatch.';
+  const supplyLabel = assetOnly ? 'Asset Catalogue Item' : product.supply_type === 'IN_HOUSE' ? 'In-House Manufacturing' : product.supply_type === 'PARTNER' ? 'Partner Supply' : 'Direct Manufacturer';
+  const supplyNote = assetOnly ? null : product.supply_type === 'IN_HOUSE' ? 'Manufactured in our own facility with production control and quality assurance.' : 'Supplied through trusted production partners and quality-checked before dispatch.';
+  const validation = validateProductEssentials(product);
 
   return (
     <>
@@ -140,13 +160,23 @@ export default function ProductDetailPage() {
             <div className="mt-4 inline-flex rounded-full border border-gold/70 bg-gold/10 px-3 py-1.5 font-sub text-xs font-semibold uppercase tracking-[0.2em] text-gold">{supplyLabel}</div>
             {hasExport && (<div className="mt-3 inline-flex rounded-full border border-gold/70 bg-gold/10 px-3 py-1.5 font-sub text-xs font-semibold uppercase tracking-[0.2em] text-gold">Export Specifications & Paid Samples Available.</div>)}
             {product.price_range && <p className="mt-4 font-heading text-xl font-bold gold-text">{product.price_range}</p>}
-            <p className="mt-3 font-body text-sm text-navy/70">{supplyNote}</p>
+            {supplyNote && <p className="mt-3 font-body text-sm text-navy/70">{supplyNote}</p>}
             <div className="mt-4 grid gap-2 text-sm text-navy sm:grid-cols-2">
-              <div><span className="font-sub uppercase tracking-[0.18em] text-navy/60">SKU</span><p className="mt-1 font-medium">{product.sku || 'Available on request'}</p></div>
+              {product.sku && <div><span className="font-sub uppercase tracking-[0.18em] text-navy/60">SKU</span><p className="mt-1 font-medium">{product.sku}</p></div>}
               <div><span className="font-sub uppercase tracking-[0.18em] text-navy/60">Category</span><p className="mt-1 font-medium">{product.subcategory || product.category_id || 'General'}</p></div>
-              <div><span className="font-sub uppercase tracking-[0.18em] text-navy/60">Availability</span><p className="mt-1 font-medium">{product.stock_quantity ? `${product.stock_quantity} units available` : 'Available on request'}</p></div>
-              <div><span className="font-sub uppercase tracking-[0.18em] text-navy/60">Warranty</span><p className="mt-1 font-medium">{warrantyText}</p></div>
+              {!assetOnly && <div><span className="font-sub uppercase tracking-[0.18em] text-navy/60">Availability</span><p className="mt-1 font-medium">{product.stock_quantity ? `${product.stock_quantity} units available` : 'Available on request'}</p></div>}
+              {warrantyText && <div><span className="font-sub uppercase tracking-[0.18em] text-navy/60">Warranty</span><p className="mt-1 font-medium">{warrantyText}</p></div>}
             </div>
+
+            {!assetOnly && !validation.valid && (
+              <div className="mt-6 rounded-lux border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+                <p className="font-semibold">Product publishing checklist</p>
+                <ul className="mt-2 list-disc space-y-1 pl-5">
+                  {validation.missing.map((item) => <li key={item}>{item}</li>)}
+                  {validation.warnings.map((item) => <li key={item}>{item}</li>)}
+                </ul>
+              </div>
+            )}
 
             {/* Actions */}
             <div className="mt-6 flex flex-wrap gap-3">
@@ -162,14 +192,24 @@ export default function ProductDetailPage() {
             {Object.keys(specs).length > 0 && (
               <div className="mt-8">
                 <h3 className="font-heading text-lg font-bold text-navy">Specifications</h3>
-                <dl className="mt-3 divide-y divide-navy/10 rounded-lux bg-light-grey border border-navy/10">
-                  {Object.entries(specs).map(([k, v]) => (
-                    <div key={k} className="flex justify-between px-4 py-3">
-                      <dt className="font-sub text-sm text-navy/70">{k}</dt>
-                      <dd className="font-sub text-sm font-medium text-navy">{v}</dd>
-                    </div>
-                  ))}
-                </dl>
+                <div className="mt-3 overflow-hidden rounded-lux border border-navy/10 bg-light-grey">
+                  <table className="w-full text-left text-sm">
+                    <thead className="bg-navy text-white">
+                      <tr>
+                        <th className="px-4 py-3 font-sub text-xs uppercase tracking-[0.2em]">Specification</th>
+                        <th className="px-4 py-3 font-sub text-xs uppercase tracking-[0.2em]">Details</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {Object.entries(specs).map(([k, v]) => (
+                        <tr key={k} className="border-t border-navy/10 bg-white">
+                          <td className="px-4 py-3 font-sub text-xs uppercase tracking-[0.14em] text-navy/65">{k}</td>
+                          <td className="px-4 py-3 font-body text-sm text-navy/80">{String(v)}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             )}
 
@@ -185,7 +225,7 @@ export default function ProductDetailPage() {
               </div>
             )}
 
-            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+            {!assetOnly && <div className="mt-8 grid gap-4 sm:grid-cols-2">
               <div className="rounded-lux border border-navy/10 bg-white p-5">
                 <p className="font-heading text-sm font-bold text-navy">Applications</p>
                 <p className="mt-2 font-body text-sm text-navy/70">Suitable for institutional, commercial, hospitality and export projects. Specific applications available on request.</p>
@@ -194,7 +234,7 @@ export default function ProductDetailPage() {
                 <p className="font-heading text-sm font-bold text-navy">MOQ & Catalogue</p>
                 <p className="mt-2 font-body text-sm text-navy/70">Minimum order quantities vary by product and project. Download our catalogue or request a quote for exact details.</p>
               </div>
-            </div>
+            </div>}
           </div>
         </div>
 
@@ -202,9 +242,9 @@ export default function ProductDetailPage() {
           <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
             <div className="max-w-3xl">
               <h3 className="font-heading text-xl font-bold text-navy">Product Description</h3>
-              <p className="mt-3 font-body text-sm leading-relaxed text-navy/70">{product.long_desc || product.description || product.short_desc || 'Description available on request.'}</p>
+              <p className="mt-3 font-body text-sm leading-relaxed text-navy/70">{product.long_desc || product.description || product.short_desc || (assetOnly ? 'Product information will be updated soon.' : 'Description available on request.')}</p>
             </div>
-            <div className="rounded-lux border border-navy/10 bg-white p-5">
+            {!assetOnly && <div className="rounded-lux border border-navy/10 bg-white p-5">
               <h3 className="font-heading text-lg font-bold text-navy">Technical Specifications</h3>
               <ul className="mt-4 space-y-3 font-sub text-sm text-navy/70">
                 <li><span className="text-navy/50">Dimensions:</span> {dimensionValue}</li>
@@ -213,11 +253,11 @@ export default function ProductDetailPage() {
                 <li><span className="text-navy/50">Packaging:</span> {packagingValue}</li>
                 <li><span className="text-navy/50">Variants:</span> {variantsValue}</li>
               </ul>
-            </div>
+            </div>}
           </div>
         </div>
 
-        <div className="container-x mt-12 px-6">
+        {!assetOnly && <div className="container-x mt-12 px-6">
           <div className="grid gap-6 lg:grid-cols-2">
             <div className="rounded-lux border border-navy/10 bg-white p-6">
               <h3 className="font-heading text-lg font-bold text-navy">Key Features</h3>
@@ -234,10 +274,10 @@ export default function ProductDetailPage() {
               <p className="mt-4 font-sub text-sm text-gold">High durability and long-life performance.</p>
             </div>
           </div>
-        </div>
+        </div>}
 
         {/* Inquiry form */}
-        <div className="container-x mt-16 px-6">
+        {!assetOnly && <div className="container-x mt-16 px-6">
           <div className="grid gap-6 mb-8">
             <div className="rounded-lux border border-navy/10 bg-white p-6">
               <h3 className="font-heading text-lg font-bold text-navy">Product Quality & Manufacturing</h3>
@@ -273,7 +313,7 @@ export default function ProductDetailPage() {
           <div className="mx-auto max-w-2xl rounded-lux border border-navy/10 bg-white p-8">
             <InquiryForm productName={product.name} />
           </div>
-        </div>
+        </div>}
       </section>
 
       {/* Related products */}

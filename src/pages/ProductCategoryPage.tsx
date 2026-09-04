@@ -1,12 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Search, Download, MessageCircle, Boxes } from 'lucide-react';
+import { Search, Download, MessageCircle, Boxes, ArrowRight } from 'lucide-react';
 import PageMeta from '../components/PageMeta';
 import SectionBanner from '../components/SectionBanner';
 import ProductCard from '../components/ProductCard';
 import InquiryForm from '../components/InquiryForm';
-import { fetchCategory, fetchProducts, type Product, type Category } from '../lib/data';
+import { CATEGORY_BANNERS, CANONICAL_CATEGORIES, type CanonicalCategoryName } from '../lib/images';
+import { fetchCategories, fetchProducts, type Product, type Category } from '../lib/data';
 
 const categoryContent: Record<string, { overview: string; highlights: string[]; specs: Array<{ label: string; value: string }>; gallery: string[]; cta: string[] }> = {
   'office-furniture': {
@@ -97,74 +98,75 @@ const categoryContent: Record<string, { overview: string; highlights: string[]; 
     gallery: ['Apartment letter box clusters', 'Stylish metal / wooden boxes', 'Society and office entrance banks'],
     cta: ['Request Quote', 'Download Catalogue'],
   },
-  'premium-seating': {
-    overview: 'Premium seating solutions for auditoriums, cinemas and stadiums with comfort, durability and superior design.',
-    highlights: ['Auditorium Chairs', 'Cinema Seats', 'Stadium Chairs', 'Premium Comfort', 'Durable Upholstery'],
-    specs: [
-      { label: 'Applications', value: 'Auditoriums, cinema halls and stadiums' },
-      { label: 'Materials', value: 'Steel frames, upholstered seating and weather-resistant finishes' },
-      { label: 'Features', value: 'Ergonomic comfort, cup holders and folding mechanisms' },
-    ],
-    gallery: ['Auditorium seating models', 'Cinema seat layout', 'Stadium chair installations'],
-    cta: ['Request Quote', 'Download Catalogue'],
-  },
-  'play-equipment': {
-    overview: 'Durable play equipment for schools, parks and residential communities built for safety and long-lasting use.',
-    highlights: ['Slides', 'Swings', 'Climbing Frames', 'Play Structures', 'Outdoor Activity Equipment'],
-    specs: [
-      { label: 'Suitability', value: 'Schools, parks, societies and community centres' },
-      { label: 'Materials', value: 'HDPE, steel and UV-protected finishes' },
-      { label: 'Safety', value: 'Child-safe design with durable, weather-resistant construction' },
-    ],
-    gallery: ['Playground equipment', 'School play area installations', 'Outdoor activity structures'],
-    cta: ['Request Quote', 'Download Catalogue'],
-  },
 };
+
+const fallbackCategories: Pick<Category, 'id' | 'name' | 'slug'>[] = CANONICAL_CATEGORIES.map((category) => ({
+  id: category.id,
+  name: category.name,
+  slug: category.slug,
+}));
+
+function resolveCategoryFromSlug(slug: string, categories: Pick<Category, 'id' | 'name' | 'slug'>[]) {
+  const exact = categories.find((category) => category.slug === slug);
+  if (exact) return exact;
+
+  const aliasMap: Record<string, string> = {
+    'letter-box': 'letter-boxes',
+  };
+  const aliased = aliasMap[slug];
+  if (aliased) return categories.find((category) => category.slug === aliased) || fallbackCategories.find((category) => category.slug === aliased) || null;
+
+  return fallbackCategories.find((category) => category.slug === slug) || null;
+}
 
 export default function ProductCategoryPage() {
   const { slug } = useParams<{ slug: string }>();
-  const [cat, setCat] = useState<Category | null>(null);
-  const [products, setProducts] = useState<Product[]>([]);
+  const [apiProducts, setApiProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<Pick<Category, 'id' | 'name' | 'slug'>[]>(fallbackCategories);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [sort, setSort] = useState('newest');
 
-  const loadCategoryData = async () => {
-    if (!slug) return;
+  const loadData = async () => {
     setLoading(true);
-    const [c, ps] = await Promise.all([
-      fetchCategory(slug),
-      fetchProducts(undefined, slug),
-    ]);
-    setCat(c);
-    setProducts(ps);
+    const [allProducts, categoryList] = await Promise.all([fetchProducts(), fetchCategories()]);
+    setApiProducts(allProducts);
+    setCategories(categoryList.length ? categoryList.map((category) => ({ id: category.id, name: category.name, slug: category.slug })) : fallbackCategories);
     setLoading(false);
   };
 
-  useEffect(() => {
-    void loadCategoryData();
-  }, [slug]);
+  useEffect(() => { void loadData(); }, [slug]);
 
   useEffect(() => {
-    const refreshProducts = () => {
-      if (document.visibilityState !== 'hidden') {
-        void loadCategoryData();
-      }
+    const refresh = () => {
+      if (document.visibilityState !== 'hidden') void loadData();
     };
-
-    window.addEventListener('focus', refreshProducts);
-    document.addEventListener('visibilitychange', refreshProducts);
-
+    window.addEventListener('focus', refresh);
+    document.addEventListener('visibilitychange', refresh);
     return () => {
-      window.removeEventListener('focus', refreshProducts);
-      document.removeEventListener('visibilitychange', refreshProducts);
+      window.removeEventListener('focus', refresh);
+      document.removeEventListener('visibilitychange', refresh);
     };
   }, [slug]);
 
-  let filtered = products.filter((p) =>
-    p.name.toLowerCase().includes(search.toLowerCase()) ||
-    (p.short_desc || '').toLowerCase().includes(search.toLowerCase())
-  );
+  const categoryList = useMemo(() => categories.length ? categories : fallbackCategories, [categories]);
+  const cat = useMemo(() => (slug ? resolveCategoryFromSlug(slug, categoryList) : null), [slug, categoryList]);
+
+  const categoryProducts = useMemo(() => {
+    if (!cat) return [] as Product[];
+    return apiProducts.filter((product) => String(product.category_id ?? '') === cat.id);
+  }, [apiProducts, cat]);
+
+  let filtered = [...categoryProducts];
+  if (search) {
+    const q = search.toLowerCase();
+    filtered = filtered.filter((product) => {
+      const categoryName = categoryList.find((category) => category.id === String(product.category_id ?? ''))?.name ?? '';
+      return product.name.toLowerCase().includes(q) ||
+        (product.short_desc || '').toLowerCase().includes(q) ||
+        categoryName.toLowerCase().includes(q);
+    });
+  }
   if (sort === 'name') filtered = [...filtered].sort((a, b) => a.name.localeCompare(b.name));
 
   if (loading) {
@@ -184,26 +186,22 @@ export default function ProductCategoryPage() {
     );
   }
 
-  const content = categoryContent[cat.slug] || categoryContent[cat.name.toLowerCase().replace(/\s+/g, '-')] || null;
+  const bannerImage = CATEGORY_BANNERS[cat.name as CanonicalCategoryName] || categoryProducts[0]?.image || '';
+  const content = categoryContent[cat.slug] || null;
 
   return (
     <>
       <PageMeta
         title={`${cat.name} | OPCIEAS`}
-        description={cat.description || `Premium ${cat.name} products from OPCIEAS for commercial, institutional and export applications.`}
+        description={`Premium ${cat.name} products from OPCIEAS for commercial, institutional and export applications.`}
         keywords={`${cat.name}, commercial furniture, ${cat.name.toLowerCase()}, OPCIEAS`}
         canonical={`https://www.opcieascommercialfurniture.com/products/category/${cat.slug}`}
-        schema={{ '@context': 'https://schema.org', '@type': 'Product', name: cat.name, description: cat.description }}
+        schema={{ '@context': 'https://schema.org', '@type': 'Product', name: cat.name, description: `Premium ${cat.name} from OPCIEAS` }}
       />
-      <SectionBanner title={cat.name} tagline={cat.tagline || ''} image={cat.banner_image || ''} crumb={cat.name} crumbTo={`/products/category/${cat.slug}`} />
+      <SectionBanner title={cat.name} tagline={`${categoryProducts.length} product${categoryProducts.length !== 1 ? 's' : ''}`} image={bannerImage} crumb={cat.name} crumbTo={`/products/category/${cat.slug}`} />
 
       <section className="bg-white py-20">
         <div className="container-x px-6">
-          {cat.description && (
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mx-auto mb-12 max-w-3xl text-center">
-              <p className="font-body text-base text-navy/70">{cat.description}</p>
-            </motion.div>
-          )}
 
           {content && (
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12 grid gap-6 rounded-lux border border-navy/10 bg-navy/5 p-6 lg:grid-cols-[1.2fr_0.8fr]">
@@ -215,6 +213,11 @@ export default function ProductCategoryPage() {
                   {content.highlights.map((item) => (
                     <span key={item} className="rounded-full border border-navy/10 bg-white px-3 py-1.5 font-sub text-xs text-navy/70">{item}</span>
                   ))}
+                </div>
+                <div className="mt-5">
+                  <Link to="/products" className="inline-flex items-center gap-1.5 font-sub text-xs font-semibold text-gold">
+                    <ArrowRight className="h-3.5 w-3.5 rotate-180" /> Back to All Products
+                  </Link>
                 </div>
               </div>
               <div className="rounded-lux bg-white p-5 shadow-sm">
@@ -252,7 +255,6 @@ export default function ProductCategoryPage() {
             </motion.div>
           )}
 
-          {/* Filters + Search */}
           <div className="mb-8 flex flex-col gap-4 rounded-lux bg-navy/5 p-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="relative flex-1 max-w-md">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-navy/40" />
@@ -274,16 +276,20 @@ export default function ProductCategoryPage() {
             <div className="flex flex-col items-center justify-center py-20 text-center">
               <Boxes className="mb-4 h-12 w-12 text-navy/20" />
               <p className="font-sub text-sm text-navy/50">No products found in this category.</p>
+              <Link to="/products" className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-gold px-5 py-2 font-sub text-xs text-navy">
+                Browse All Products <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
             </div>
           ) : (
             <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
-              {filtered.map((p, i) => <ProductCard key={p.id} product={p} index={i} categorySlug={cat.slug} />)}
+              {filtered.map((product, index) => (
+                <ProductCard key={product.id || `${product.slug}-${index}`} product={product} index={index} categorySlug={cat.slug} />
+              ))}
             </div>
           )}
         </div>
       </section>
 
-      {/* Inquiry */}
       <section className="bg-white py-20">
         <div className="container-x px-6">
           <div className="mx-auto max-w-2xl">

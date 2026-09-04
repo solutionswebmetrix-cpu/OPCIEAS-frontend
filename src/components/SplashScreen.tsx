@@ -19,6 +19,15 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
   const [showSweep, setShowSweep] = useState(false);
 
   useEffect(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const hasSessionPlayed = sessionStorage.getItem('opcieas_intro_played') === 'true';
+
+    if (prefersReducedMotion || hasSessionPlayed) {
+      sessionStorage.setItem('opcieas_intro_played', 'true');
+      onComplete();
+      return;
+    }
+
     document.body.style.overflow = 'hidden';
     const logoPreload = document.createElement('link');
     logoPreload.rel = 'preload';
@@ -38,7 +47,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
       window.setTimeout(() => setShowSweep(true), 3200),
       window.setTimeout(() => {
         document.body.style.overflow = '';
-        localStorage.setItem('opcieas_intro', 'played');
+        sessionStorage.setItem('opcieas_intro_played', 'true');
         onComplete();
       }, 5900),
     ];
@@ -52,7 +61,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
 
   const handleSkip = () => {
     document.body.style.overflow = '';
-    localStorage.setItem('opcieas_intro', 'played');
+    sessionStorage.setItem('opcieas_intro_played', 'true');
     onComplete();
   };
 

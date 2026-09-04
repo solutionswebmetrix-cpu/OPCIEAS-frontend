@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, FileText, ChevronDown, Award, Factory, Globe2 } from 'lucide-react';
+import { ArrowRight, FileText, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 
@@ -13,7 +13,7 @@ type Phase =
   | 'PAUSE_RESTART';
 
 const LINE1 = 'Educational Furniture';
-const LINE2 = 'Built for Modern Learning Spaces';
+const LINE2 = 'Institutional Furniture • Storage • Fiberglass';
 const CHAR_DELAY = 80;
 const DELETE_DELAY = 40;
 const PAUSE_AFTER_LINE1 = 1000;
@@ -28,44 +28,9 @@ function TypewriterCursor() {
       animate={{ opacity: [0, 1, 1, 0] }}
       transition={{ duration: 0.85, repeat: Infinity, ease: 'easeInOut' }}
       className="inline-block ml-[2px] align-[0.08em] h-[0.9em] w-[3px] rounded-sm"
-      style={{ backgroundColor: '#071A35' }}
+      style={{ backgroundColor: '#FFFFFF' }}
     />
   );
-}
-
-const stats = [
-  { value: 25, suffix: '+', label: 'Years Experience' },
-  { value: 1, suffix: '', label: 'ISO 9001:2015 Certified' },
-  { value: 500, suffix: '+', label: 'Government Projects' },
-  { value: 1000, suffix: '+', label: 'Bulk Manufacturing' },
-  { value: 20, suffix: '+', label: 'Export Ready' },
-  { value: 50, suffix: '+', label: 'Trusted Brands' },
-  { value: 500, suffix: '+', label: 'Institutional Expertise' },
-  { value: 200, suffix: '+', label: 'Government Tender Specialist' },
-];
-
-function Counter({ value, suffix }: { value: number; suffix: string }) {
-  const [n, setN] = useState(0);
-  const ref = useRef<HTMLSpanElement>(null);
-  useEffect(() => {
-    const io = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) {
-        const start = 0;
-        const dur = 1800;
-        const t0 = performance.now();
-        const tick = (t: number) => {
-          const p = Math.min((t - t0) / dur, 1);
-          setN(Math.floor(start + (value - start) * (1 - Math.pow(1 - p, 3))));
-          if (p < 1) requestAnimationFrame(tick);
-        };
-        requestAnimationFrame(tick);
-        io.disconnect();
-      }
-    });
-    if (ref.current) io.observe(ref.current);
-    return () => io.disconnect();
-  }, [value]);
-  return <span ref={ref}>{n.toLocaleString()}{suffix}</span>;
 }
 
 export default function Hero() {
@@ -169,7 +134,7 @@ export default function Hero() {
   const showCursorLine2 = phase === 'TYPING_LINE2' || phase === 'DELETING_LINE2';
 
   return (
-    <section id="hero" ref={heroRef} className="relative min-h-screen overflow-hidden bg-white">
+    <section id="hero" ref={heroRef} className="relative h-[620px] overflow-hidden bg-white sm:h-[620px] md:h-[640px] lg:h-[clamp(620px,72vh,720px)]">
       {/* Background: banner video — full quality, no blur/filters */}
       <div className="pointer-events-none absolute inset-0">
         <motion.video
@@ -192,39 +157,31 @@ export default function Hero() {
         >
           <source src="/videos/banner.mp4" type="video/mp4" />
         </motion.video>
-        {/* Very subtle fade only at the section edge; keep video clear across the entire banner */}
-        <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white/25 via-white/8 to-transparent" />
-        {/* Very light navy tint behind text only, not a white wash across the right side */}
-        <div className="absolute inset-y-0 left-0 w-[60%] bg-gradient-to-r from-[#071A35]/10 via-[#071A35]/0 to-transparent md:w-[54%] lg:w-[48%]" />
+        <div className="absolute inset-0 bg-[#050B14]/25" />
       </div>
 
       {/* Subtle decorative orbs — very low opacity to not obscure video details */}
       <div className="pointer-events-none absolute left-[15%] top-[20%] h-56 w-56 rounded-full bg-gold/5 blur-[80px] animate-float-slow" />
       <div className="pointer-events-none absolute right-[10%] bottom-[15%] h-64 w-64 rounded-full bg-navy/4 blur-[90px] animate-float" />
 
-      <div className="container-x relative z-10 flex min-h-screen items-center px-6 py-32">
-        {/* Left content with strong localized soft white background behind text block for readability */}
-        <div className="relative max-w-3xl">
-          {/* Minimal transparent readability layer behind text only, without washing out the video */}
-          <div aria-hidden className="pointer-events-none absolute -inset-x-5 -inset-y-6 -z-10 rounded-[1.5rem] bg-white/15" />
-
+      <div className="container-x relative z-10 flex h-full items-center px-6 py-10 sm:py-8 lg:px-10 lg:py-6 xl:px-12">
+        <div className="max-w-3xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.6 }}
-            className="mb-6 inline-flex items-center gap-2 rounded-full border border-gold/45 bg-white/95 px-4 py-2 shadow-md backdrop-blur-md"
+            className="mb-5 inline-flex items-center gap-2 rounded-full border border-gold/60 bg-navy/65 px-4 py-2"
           >
             <span className="h-2 w-2 animate-glow rounded-full bg-gold" />
             <span
-              className="font-sub text-xs tracking-widest"
-              style={{ color: '#071A35' }}
+              className="font-sub text-xs tracking-widest text-white"
             >COMMERCIAL FURNITURE MANUFACTURER SINCE 2000</span>
           </motion.div>
 
-          {/* Typewriter headline — strong dark navy for readability over video */}
+          {/* Typewriter headline — white for readability over video */}
           <h1
             className="font-heading text-4xl font-black leading-[1.05] sm:text-5xl xl:text-6xl"
-            style={{ color: '#061A36', fontWeight: 900, opacity: 1 }}
+            style={{ color: '#FFFFFF', fontWeight: 800, opacity: 1, textShadow: '0 2px 12px rgba(0,0,0,0.45)' }}
           >
             <span className="block font-black whitespace-pre">
               {text1 || '\u00A0'}
@@ -235,9 +192,9 @@ export default function Hero() {
             <span
               className="mt-2 block max-w-[14ch] text-[1.7rem] font-bold leading-[1.12] whitespace-normal sm:max-w-[18ch] sm:text-[2.3rem] lg:max-w-none lg:whitespace-nowrap lg:text-[2.8rem]"
               style={{
-                color: '#061A36',
+                color: '#FFFFFF',
                 fontWeight: 800,
-                textShadow: 'none',
+                textShadow: '0 2px 12px rgba(0,0,0,0.45)',
                 opacity: 1,
               }}
             >
@@ -251,28 +208,28 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.2, duration: 0.6 }}
-            className="mt-4 font-sub text-lg"
-            style={{ color: '#061A36', fontWeight: 650, opacity: 1, textShadow: 'none' }}
+            className="mt-3 font-sub text-lg"
+            style={{ color: '#FFFFFF', fontWeight: 600, lineHeight: 1.5, opacity: 1, textShadow: '0 1px 8px rgba(0,0,0,0.45)' }}
           >
-            Vibrant, durable single-seat and dual-seat desk systems engineered for safety, comfort, and active classrooms.
+            OPCIEAS supplies institutional furniture, educational systems, stainless steel storage, writing pad chairs, play equipment, and special-order fiberglass solutions.
           </motion.p>
 
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.4, duration: 0.6 }}
-            className="mt-5 max-w-[760px] font-body text-base leading-[1.55] sm:text-[1.1rem] lg:text-[1.2rem]"
-            style={{ color: '#061A36', fontWeight: 550, opacity: 1, textShadow: 'none' }}
+            className="mt-3 max-w-[760px] font-body text-base leading-[1.5] sm:text-[1.1rem] lg:text-[1.2rem]"
+            style={{ color: '#FFFFFF', fontWeight: 550, lineHeight: 1.5, opacity: 1, textShadow: '0 1px 8px rgba(0,0,0,0.45)' }}
           >
-            Premium furniture solutions for offices, education, hospitality, healthcare and institutional projects across India and global markets.
+            Built for schools, institutions, corporate environments, government buyers, and export-oriented procurement programs.
           </motion.p>
 
-          <div className="mt-5 flex flex-wrap gap-2">
-            {['25+ Years Experience', 'ISO 9001:2015 Certified', 'Government Tender Specialist', 'Export Ready', 'Trusted by TATA, NOKIA, JW Marriott', 'Bulk Manufacturing', 'Institutional Projects'].map((t) => (
+          <div className="mt-4 flex flex-wrap gap-2">
+            {['KG Furniture', 'Double Slide Play Station', 'Stainless Steel Racks', 'Writing Pad Chairs', 'Educational Furniture', 'Institutional Furniture', 'Storage Solutions', 'Special Order Fiberglass'].map((t) => (
               <span
                 key={t}
-                className="rounded-full border border-navy/20 bg-white/90 px-3 py-1.5 font-sub text-xs font-medium shadow-md backdrop-blur-md"
-                style={{ color: '#061A36', opacity: 1 }}
+                className="rounded-full border border-white/35 bg-navy/55 px-3 py-1.5 font-sub text-xs font-medium"
+                style={{ color: '#FFFFFF', opacity: 1 }}
               >{t}</span>
             ))}
           </div>
@@ -282,7 +239,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.6, duration: 0.6 }}
-            className="relative z-20 mt-8 flex flex-wrap gap-3"
+            className="relative z-20 mt-6 flex flex-wrap gap-3"
           >
             <Link to="/products" className="btn-gold magnetic flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm [&>svg]:text-[#071A35]">
               Explore Catalog <ArrowRight className="h-4 w-4" />
@@ -292,78 +249,8 @@ export default function Hero() {
             </Link>
           </motion.div>
 
-          {/* Stats — glass cards: 82% translucent white per spec; full dark navy labels; gold numbers preserved */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.8, duration: 0.6 }}
-            className="mt-12 grid grid-cols-3 gap-4 sm:grid-cols-5"
-          >
-            {stats.map((s) => (
-              <div
-                key={s.label}
-                className="rounded-xl border px-3 py-3 shadow-md"
-                style={{
-                  backgroundColor: 'rgba(255,255,255,0.82)',
-                  borderColor: 'rgba(7,26,53,0.28)',
-                  backdropFilter: 'blur(14px)',
-                  WebkitBackdropFilter: 'blur(14px)',
-                  boxShadow: '0 6px 22px rgba(7,26,53,0.10), inset 0 1px 0 rgba(255,255,255,0.7)',
-                }}
-              >
-                {/* GOLD STATISTIC NUMBERS — preserved exactly as gold-text brand color */}
-                <p className="font-heading text-2xl font-extrabold gold-text sm:text-3xl">
-                  <Counter value={s.value} suffix={s.suffix} />
-                </p>
-                {/* DARK NAVY STATISTIC LABELS — full #071B3A, larger size (11px→12px), semibold, white edge halo */}
-                <p
-                  className="mt-1 font-sub uppercase tracking-[0.08em]"
-                  style={{
-                    color: '#071A35',
-                    fontSize: '11.5px',
-                    lineHeight: '1.3',
-                    fontWeight: 600,
-                    textShadow: '0 1px 6px rgba(255,255,255,0.95), 0 0 2px rgba(255,255,255,0.9)',
-                  }}
-                >{s.label}</p>
-              </div>
-            ))}
-          </motion.div>
         </div>
       </div>
-
-      {/* Trust badge: 88% translucent white, DARK NAVY text, GOLD icons preserved */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2 }}
-        className="pointer-events-none absolute bottom-24 left-1/2 hidden -translate-x-1/2 lg:block"
-      >
-        <div
-          className="flex items-center gap-3 rounded-full px-5 py-2.5 shadow-md"
-          style={{
-            backgroundColor: 'rgba(255,255,255,0.88)',
-            border: '1px solid rgba(217,173,43,0.45)',
-            backdropFilter: 'blur(14px)',
-            WebkitBackdropFilter: 'blur(14px)',
-            boxShadow: '0 6px 22px rgba(7,26,53,0.10)',
-            outline: '1px solid rgba(255,255,255,0.72)',
-          }}
-        >
-          <Award className="h-4 w-4 text-gold" />
-          <span
-            className="font-sub tracking-wide"
-            style={{
-              color: '#071A35',
-              fontSize: '12.5px',
-              fontWeight: 600,
-              textShadow: '0 1px 6px rgba(255,255,255,0.95), 0 0 2px rgba(255,255,255,0.9)',
-            }}
-          >25 Years of Premium Manufacturing</span>
-          <Factory className="h-4 w-4 text-gold" />
-          <Globe2 className="h-4 w-4 text-gold" />
-        </div>
-      </motion.div>
 
       {/* Scroll indicator — FULL DARK NAVY chevron with white halo for video contrast */}
       <motion.div

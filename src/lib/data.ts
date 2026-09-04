@@ -285,7 +285,14 @@ export async function fetchCategories(): Promise<Category[]> {
 
 export async function fetchCategory(slug: string): Promise<Category | null> {
   const list = await fetchCategories();
-  return list.find((c) => c.slug === slug) || null;
+  const exact = list.find((c) => c.slug === slug);
+  if (exact) return exact;
+
+  const aliases: Record<string, string[]> = {
+    'school-furniture': ['educational-furniture'],
+  };
+  const alias = aliases[slug]?.find((candidate) => list.some((category) => category.slug === candidate));
+  return alias ? list.find((c) => c.slug === alias) || null : null;
 }
 
 export async function fetchProducts(categoryId?: string, categorySlug?: string): Promise<Product[]> {

@@ -52,21 +52,12 @@ export default function HomepageIntro() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="mx-auto max-w-3xl text-center"
         >
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="font-sub text-xs uppercase tracking-[0.4em] text-gold"
-          >
-            OPCIEAS — Direct Manufacturer & Institutional Supply Partner
-          </motion.p>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.15 }}
-            className="mt-4 font-heading text-2xl font-black leading-tight text-navy sm:text-3xl"
+            className="font-heading text-2xl font-black leading-tight text-navy sm:text-3xl"
           >
             Three Divisions. One Standard. Dependable Delivered.
           </motion.h2>

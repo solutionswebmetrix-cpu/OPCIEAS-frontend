@@ -14,16 +14,23 @@ const menu = [
     items: [
       { name: 'About Us', to: '/company/about' },
       { name: 'Manufacturing', to: '/manufacturing' },
+      { name: 'Tech Business Promotion', to: '/tech-business-promotion' },
       { name: 'Certifications & Quality', to: '/quality' },
     ],
   },
   {
     label: 'Products',
+    to: '/products',
     items: [
-      { name: 'Furniture', to: '/furniture' },
-      { name: 'Technology', to: '/technology' },
-      { name: 'Agriculture', to: '/agriculture' },
-      { name: 'All Products', to: '/products' },
+      { name: 'All Categories', to: '/products' },
+      { name: 'Office Furniture', to: '/products/category/office-furniture' },
+      { name: 'Educational Furniture', to: '/products/category/educational-furniture' },
+      { name: 'School Furniture', to: '/products/category/school-furniture' },
+      { name: 'Hospital Furniture', to: '/products/category/hospital-furniture' },
+      { name: 'Hostel Furniture', to: '/products/category/hostel-furniture' },
+      { name: 'Industrial Storage', to: '/products/category/industrial-storage' },
+      { name: 'Bathroom Collection', to: '/products/category/bathroom-collection' },
+      { name: 'Letter Boxes', to: '/products/category/letter-boxes' },
     ],
   },
   {
@@ -31,6 +38,7 @@ const menu = [
     items: [
       { name: 'Supplier Onboarding', to: '/supplier' },
       { name: 'Buyer Registration', to: '/buyer' },
+      { name: 'Membership', to: '/membership' },
       { name: 'Request Quote', to: '/rfq' },
     ],
   },
@@ -117,13 +125,13 @@ export default function Navbar() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ delay: 0.3, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className={`fixed top-0 z-[1000] w-full transition-all duration-500 ${
+        className={`fixed top-0 z-[1000] h-16 w-full transition-all duration-500 lg:h-[68px] ${
           scrolled ? 'bg-white shadow-[0_4px_20px_rgba(0,0,0,0.08)]' : 'bg-white/80 backdrop-blur'
         }`}
       >
-        <div className="container-x flex items-center justify-between px-6 h-full">
-          <Link to="/" className="flex items-center gap-3 h-10">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-gold/40 bg-navy">
+        <div className="container-x flex h-full items-center justify-between px-6 lg:px-8">
+          <Link to="/" className="flex h-11 items-center gap-3">
+            <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-gold/40 bg-navy">
               <img src={companyLogo} alt="OPCIEAS logo" className="h-full w-full object-contain" />
             </div>
             <div className="hidden sm:block">
@@ -133,7 +141,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop menu */}
-          <div className="hidden lg:flex items-center gap-1 h-10">
+          <div className="hidden h-full items-center gap-1 lg:flex">
             {menu.map((m) => (
               <div key={m.label} className="relative flex items-center h-full" onMouseEnter={() => setMega(m.items ? m.label : null)} onMouseLeave={() => setMega((cur) => (cur === m.label ? null : cur))}>
                 {m.to ? (
@@ -170,7 +178,7 @@ export default function Navbar() {
           </div>
 
           {/* Actions */}
-          <div className="hidden lg:flex items-center gap-3 h-10 relative">
+          <div className="relative hidden h-full items-center gap-3 lg:flex">
             <div className="relative">
               <button onClick={() => setLangOpen((s) => !s)} className="inline-flex h-10 items-center gap-1.5 rounded-full border border-border-grey px-3 text-xs font-sub text-navy/70 transition hover:border-gold hover:text-gold"><Globe className="h-3.5 w-3.5" /> EN</button>
               {langOpen && (
@@ -180,7 +188,7 @@ export default function Navbar() {
                 </div>
               )}
             </div>
-            <Link to="/products" className="inline-flex h-10 items-center gap-2 rounded-full border border-navy/20 bg-navy/5 px-4 py-0 font-sub text-sm text-navy hover:border-navy/40 hover:bg-navy/10 transition"><Download className="h-4 w-4" /> Catalogue</Link>
+            <Link to="/catalogue" className="inline-flex h-10 items-center gap-2 rounded-full border border-navy/20 bg-navy/5 px-4 py-0 font-sub text-sm text-navy hover:border-navy/40 hover:bg-navy/10 transition"><Download className="h-4 w-4" /> Catalogue</Link>
             <Link to="/rfq" className="btn-gold inline-flex h-10 items-center justify-center rounded-full px-5 py-0 font-sub text-sm">Request Quote</Link>
           </div>
 
@@ -214,7 +222,7 @@ export default function Navbar() {
                 </div>
               ))}
               <div className="mt-6 flex flex-col gap-3">
-                <Link to="/products" onClick={() => setOpen(false)} className="inline-flex justify-center items-center rounded-full px-4 py-3 font-sub text-sm border border-navy/20 bg-navy/5 text-navy hover:bg-navy/10">Download Catalogue</Link>
+                <Link to="/catalogue" onClick={() => setOpen(false)} className="inline-flex justify-center items-center rounded-full px-4 py-3 font-sub text-sm border border-navy/20 bg-navy/5 text-navy hover:bg-navy/10">Download Catalogue</Link>
                 <Link to="/rfq" onClick={() => setOpen(false)} className="btn-gold rounded-full px-4 py-3 text-center font-sub text-sm">Request Quote</Link>
                 <a href="https://wa.me/919845579049" target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-4 py-3 font-sub text-sm text-white"><MessageCircle className="h-4 w-4" /> WhatsApp</a>
               </div>

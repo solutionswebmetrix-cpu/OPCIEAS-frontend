@@ -5,7 +5,8 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   const backendUrl =
     env.VITE_BACKEND_URL ||
-    env.VITE_API_URL?.replace(/\/api\/?$/, '');
+    env.VITE_API_URL?.replace(/\/api\/?$/, '') ||
+    (mode === 'development' && env.VITE_API_URL?.startsWith('/') ? 'http://localhost:8000' : '');
 
   return {
     base: '/',
@@ -18,6 +19,11 @@ export default defineConfig(({ mode }) => {
       proxy: backendUrl
         ? {
             '/api': {
+              target: backendUrl,
+              changeOrigin: true,
+              secure: false,
+            },
+            '/uploads': {
               target: backendUrl,
               changeOrigin: true,
               secure: false,

@@ -247,11 +247,6 @@
 ::-webkit-scrollbar-track { background: #F7F8FA; }
 ::-webkit-scrollbar-thumb { background: linear-gradient(#D9AD2B, #B8932B); border-radius: 4px; }
 
-/* Marquee */
-@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-.animate-marquee { animation: marquee 30s linear infinite; }
-.animate-marquee-rev { animation: marquee 35s linear infinite reverse; }
-
 /* Float */
 @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-18px); } }
 .animate-float { animation: float 6s ease-in-out infinite; }

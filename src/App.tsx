@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import Cursor from './components/Cursor';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -42,6 +42,12 @@ import GovernmentTendersPage from './pages/GovernmentTendersPage';
 import SupplierPage from './pages/SupplierPage';
 import BuyerPage from './pages/BuyerPage';
 import CommunityImpactPage from './pages/CommunityImpactPage';
+import TechBusinessPromotionPage from './pages/TechBusinessPromotionPage';
+import FurnitureTextilesPage from './pages/FurnitureTextilesPage';
+import MembershipPage from './pages/MembershipPage';
+import CataloguePage from './pages/CataloguePage';
+import PaymentInstructionsPage from './pages/PaymentInstructionsPage';
+import BusinessVerticalPage from './pages/BusinessVerticalPage';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -53,7 +59,7 @@ export default function App() {
   const [skipSplash, setSkipSplash] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem('opcieas_intro') === 'played') {
+    if (sessionStorage.getItem('opcieas_intro_played') === 'true') {
       setSkipSplash(true);
     }
   }, []);
@@ -75,12 +81,19 @@ export default function App() {
           <Route path="/compliance" element={<CompliancePage />} />
           <Route path="/furniture" element={<FurniturePage />} />
           <Route path="/technology" element={<TechnologyPage />} />
+          <Route path="/tech-business-promotion" element={<TechBusinessPromotionPage />} />
+          <Route path="/furniture-textiles" element={<FurnitureTextilesPage />} />
           <Route path="/agriculture" element={<AgriculturePage />} />
           <Route path="/social-services" element={<SocialServicesPage />} />
+          <Route path="/membership" element={<MembershipPage />} />
+          <Route path="/payment-instructions" element={<PaymentInstructionsPage />} />
+          <Route path="/catalogue" element={<CataloguePage />} />
+          <Route path="/presentation" element={<Navigate to="/opcieas-presentation.html" replace />} />
           <Route path="/community-impact" element={<CommunityImpactPage />} />
           <Route path="/supplier" element={<SupplierPage />} />
           <Route path="/buyer" element={<BuyerPage />} />
           <Route path="/products" element={<AllProductsPage />} />
+          <Route path="/products/vertical/:verticalSlug" element={<BusinessVerticalPage />} />
           <Route path="/products/category/:slug" element={<ProductCategoryPage />} />
           <Route path="/products/:slug" element={<ProductCategoryPage />} />
           <Route path="/product/:slug" element={<ProductDetailPage />} />
