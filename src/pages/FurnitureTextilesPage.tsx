@@ -8,7 +8,7 @@ import { IMG } from '../lib/images';
 const pillars = [
   { icon: Building2, title: 'Educational Furniture', desc: 'Classroom, library and learning space products built for daily institutional use.' },
   { icon: Sofa, title: 'Institutional Furniture', desc: 'Office, hospital, hostel and public-sector solutions designed for durability and scale.' },
-  { icon: Warehouse, title: 'Institutional Play Equipment', desc: 'Outdoor and play space products engineered for safety, resilience and child-friendly use.' },
+  { icon: Warehouse, title: 'Institutional Storage', desc: 'Heavy-duty storage and organisational systems for schools, hostels, offices and public spaces.' },
   { icon: FileText, title: 'Textiles', desc: 'Upholstery, furnishing fabrics, curtains and soft furnishings for complete interiors.' },
   { icon: ShieldCheck, title: 'Storage Solutions', desc: 'Heavy-duty metal and steel systems for institutions, warehouses and campuses.' },
   { icon: Ship, title: 'Special Order Fiberglass', desc: 'Corrosion-resistant, weather-ready applications for challenging environments.' },
@@ -25,12 +25,12 @@ export default function FurnitureTextilesPage() {
     <>
       <PageMeta
         title="Furniture & Textiles | OPCIEAS"
-        description="OPCIEAS Furniture & Textiles features educational furniture, institutional furniture, play equipment, textiles, steel furniture, FRP solutions and export-ready quality products."
-        keywords="furniture and textiles, educational furniture, institutional furniture, institutional play equipment, textiles, storage solutions, FRP furniture, steel furniture"
+        description="OPCIEAS Furniture & Textiles features educational furniture, institutional furniture, textiles, steel furniture, FRP solutions and export-ready quality products."
+        keywords="furniture and textiles, educational furniture, institutional furniture, textiles, storage solutions, FRP furniture, steel furniture"
       />
       <SectionBanner
         title="Furniture & Textiles"
-        tagline="Educational Furniture • Institutional Furniture • Institutional Play Equipment • Textiles • Storage Solutions • Special Order Fiberglass • Steel Furniture • FRP Furniture • Writing Pad Chairs • Export Ready Products • Quality Assurance"
+        tagline="Educational Furniture • Institutional Furniture • Textiles • Storage Solutions • Special Order Fiberglass • Steel Furniture • FRP Furniture • Writing Pad Chairs • Export Ready Products • Quality Assurance"
         image={IMG.heroBg}
         crumb="Furniture & Textiles"
         crumbTo="/"

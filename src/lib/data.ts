@@ -171,6 +171,20 @@ function normalizeImageUrl(value: any): string | null {
   return resolveImageAbsolute(raw);
 }
 
+function slugifyText(value: string): string {
+  return value
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    || 'product';
+}
+
+function isPublicProduct(product: Product): boolean {
+  const searchable = `${product.name} ${product.slug}`.toLowerCase();
+  return !/(play equipment|playground|double slide|slide playground|basketball hoop|swing set|seesaw|merry-go-round)/.test(searchable);
+}
+
 function normalizeProduct(raw: any): Product {
   const images: string[] = [];
   if (raw.images && Array.isArray(raw.images)) {
@@ -215,7 +229,7 @@ function normalizeProduct(raw: any): Product {
     category_id,
     subcategory: raw.subcategory ?? raw.sub_category ?? null,
     name: raw.name ?? '',
-    slug: raw.slug ?? '',
+    slug: raw.slug || slugifyText(String(raw.name ?? raw.title ?? `product-${raw.id ?? 'item'}`)),
     sku: raw.sku ?? null,
     short_desc: raw.short_desc ?? raw.short_description ?? null,
     short_description: raw.short_description ?? raw.short_desc ?? null,
@@ -289,22 +303,50 @@ export async function fetchCategory(slug: string): Promise<Category | null> {
   if (exact) return exact;
 
   const aliases: Record<string, string[]> = {
-    'school-furniture': ['educational-furniture'],
+    'office-furniture': ['office', 'commercial-furniture'],
+    'educational-furniture': ['education', 'college-furniture'],
+    'school-furniture': ['school', 'educational-furniture'],
+    'hospital-furniture': ['hospital', 'healthcare-furniture'],
+    'hostel-furniture': ['hostel', 'dormitory-furniture'],
+    'industrial-storage': ['industrial', 'storage-solutions'],
+    'bathroom-collection': ['bathroom', 'bathroom-storage'],
+    'letter-boxes': ['letter-box', 'letterbox', 'mail-boxes'],
   };
-  const alias = aliases[slug]?.find((candidate) => list.some((category) => category.slug === candidate));
-  return alias ? list.find((c) => c.slug === alias) || null : null;
+  const candidates = aliases[slug] ?? [];
+  const alias = candidates.find((candidate) => list.some((category) => category.slug === candidate));
+  if (alias) return list.find((c) => c.slug === alias) || null;
+
+  const names: Record<string, string[]> = {
+    'office-furniture': ['office furniture'],
+    'educational-furniture': ['educational furniture', 'education'],
+    'school-furniture': ['school furniture', 'school'],
+    'hospital-furniture': ['hospital furniture', 'healthcare'],
+    'hostel-furniture': ['hostel furniture', 'hostel'],
+    'industrial-storage': ['industrial storage', 'storage solutions'],
+    'bathroom-collection': ['bathroom collection', 'bathroom storage'],
+    'letter-boxes': ['letter box', 'letter boxes', 'mail box'],
+  };
+  return list.find((category) => names[slug]?.includes(category.name.toLowerCase())) || null;
 }
 
 export async function fetchProducts(categoryId?: string, categorySlug?: string): Promise<Product[]> {
   try {
-    const params: Record<string, any> = { status: 'Published', limit: 500 };
-    if (categoryId) params.category_id = categoryId;
-    if (categorySlug) params.categorySlug = categorySlug;
-    const resp = await apiGet<any>('/products/list.php', params);
-    const items: any[] = unwrap<any[]>(resp) || [];
-    if (Array.isArray(items)) {
-      return items.map(normalizeProduct);
+    const products: Product[] = [];
+    let page = 1;
+    let hasNext = true;
+
+    while (hasNext) {
+      const params: Record<string, any> = { status: 'Published', limit: 500, page };
+      if (categoryId) params.category_id = categoryId;
+      if (categorySlug) params.categorySlug = categorySlug;
+      const resp = await apiGet<any>('/products/list.php', params);
+      const items: any[] = unwrap<any[]>(resp) || [];
+      if (!Array.isArray(items)) break;
+      products.push(...items.map(normalizeProduct));
+      hasNext = !!resp?.pagination?.has_next && items.length > 0;
+      page += 1;
     }
+    return products.filter(isPublicProduct);
   } catch (e) {
     // STEP 13: NO static fallback - products MUST come from PHP API
     console.error('[fetchProducts] API fetch failed:', e);
@@ -315,18 +357,50 @@ export async function fetchProducts(categoryId?: string, categorySlug?: string):
 }
 
 export async function fetchProduct(slug: string): Promise<Product | null> {
+  const normalizedSlug = String(slug || '').trim();
+  if (!normalizedSlug) return null;
+
   try {
-    const resp = await apiGet<any>('/products/get.php', { slug });
+    const resp = await apiGet<any>('/products/get.php', { slug: normalizedSlug });
     const raw = unwrap<any>(resp);
     if (raw && (raw.id || raw.slug)) {
       return normalizeProduct(raw);
     }
+
+    if (/^\d+$/.test(normalizedSlug)) {
+      const byId = await apiGet<any>('/products/get.php', { id: Number(normalizedSlug) });
+      const rawById = unwrap<any>(byId);
+      if (rawById && (rawById.id || rawById.slug)) {
+        return normalizeProduct(rawById);
+      }
+    }
+
+    const products = await fetchProducts();
+    const fallback = products.find((product) => product.slug === normalizedSlug || product.id === normalizedSlug);
+    if (fallback) return fallback;
   } catch (e) {
-    // STEP 13: NO static fallback
-    console.error('[fetchProduct] API fetch failed for slug=' + slug, e);
+    if (/^\d+$/.test(normalizedSlug)) {
+      try {
+        const byId = await apiGet<any>('/products/get.php', { id: Number(normalizedSlug) });
+        const rawById = unwrap<any>(byId);
+        if (rawById && (rawById.id || rawById.slug)) {
+          return normalizeProduct(rawById);
+        }
+      } catch {
+        // fall through to null
+      }
+    }
+    try {
+      const products = await fetchProducts();
+      const fallback = products.find((product) => product.slug === normalizedSlug || product.id === normalizedSlug);
+      if (fallback) return fallback;
+    } catch {
+      // fall through to null
+    }
+    console.error('[fetchProduct] API fetch failed for slug=' + normalizedSlug, e);
     return null;
   }
-  // STEP 13: No mockProducts fallback allowed
+
   return null;
 }
 

@@ -132,7 +132,7 @@ export default function HomePage() {
               <p className="font-sub text-xs uppercase tracking-[0.25em] text-gold">Core business focus</p>
               <ul className="mt-4 space-y-3 font-body text-sm text-navy/75">
                 <li>• Educational furniture and classroom systems</li>
-                <li>• Institutional furniture and play equipment</li>
+                <li>• Commercial furniture for institutions and bulk supply</li>
                 <li>• Storage solutions and steel/rack systems</li>
                 <li>• Special-order fiberglass and custom project requirements</li>
               </ul>
@@ -177,7 +177,7 @@ export default function HomePage() {
               <p className="font-sub text-xs uppercase tracking-[0.35em] text-gold">Catalogue</p>
               <h3 className="mt-3 font-heading text-3xl font-black text-navy">Browse the official OPCIEAS product material</h3>
             </div>
-            <Link to="/catalogue" className="btn-gold inline-flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm">Open catalogue <ArrowRight className="h-4 w-4" /></Link>
+            <Link to="/catalogue" className="btn-gold inline-flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm">Request Full Catalogue <ArrowRight className="h-4 w-4" /></Link>
           </div>
         </div>
       </section>

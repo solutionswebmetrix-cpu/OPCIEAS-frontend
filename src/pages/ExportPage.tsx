@@ -35,7 +35,7 @@ export default function ExportPage() {
               </div>
 
               <div className="mt-8 flex gap-3">
-                <a href="/products" className="btn-ghost inline-flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm">Download Catalogue</a>
+                <a href="/catalogue" className="btn-ghost inline-flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm">Download Catalogue</a>
                 <a href="/rfq" className="btn-gold inline-flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm">Request Quote</a>
               </div>
             </div>

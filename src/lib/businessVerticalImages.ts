@@ -28,7 +28,7 @@ export const BUSINESS_VERTICALS = {
     categorySlugs: ['educational-furniture', 'school-furniture'],
     categoryIds: categorySlugsToIds(['educational-furniture', 'school-furniture']),
     overview: 'Classroom, library, laboratory and activity furniture engineered for schools, colleges, institutes and campuses.',
-    highlights: ['Classroom Dual Desks', 'Student Chairs', 'Library Furniture', 'Laboratory Benches', 'Teacher Tables', 'Play Equipment'],
+    highlights: ['Classroom Dual Desks', 'Student Chairs', 'Library Furniture', 'Laboratory Benches', 'Teacher Tables', 'Classroom Seating'],
   },
   'institutional-furniture': {
     name: 'Institutional Furniture',
@@ -49,8 +49,8 @@ export const BUSINESS_VERTICALS = {
     categorySlugs: ['school-furniture'],
     categoryIds: categorySlugsToIds(['school-furniture']),
     namePatterns: fiberglassNamePatterns,
-    overview: 'FRP / fiberglass, play equipment, and special-order custom products — corrosion-free solutions for outdoor, coastal and custom projects.',
-    highlights: ['FRP / Fiberglass Furniture', 'Outdoor Play Equipment', 'Slides & Swings', 'Custom Molded FRP', 'Special Order Items', 'Coastal / Rustproof'],
+    overview: 'FRP / fiberglass and special-order custom products for outdoor, coastal and project-specific applications.',
+    highlights: ['FRP / Fiberglass Furniture', 'Outdoor Seating', 'Custom Molded FRP', 'Special Order Items', 'Coastal / Rustproof'],
   },
 } as const;
 

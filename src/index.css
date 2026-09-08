@@ -51,6 +51,18 @@
 }
 
 @layer components {
+  .form-input {
+    width: 100%;
+    border-radius: 0.75rem;
+    border: 1px solid rgba(7, 26, 53, 0.12);
+    background: var(--light-grey);
+    padding: 0.75rem 1rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.875rem;
+    color: var(--navy);
+    outline: none;
+  }
+  .form-input:focus { border-color: var(--gold); box-shadow: 0 0 0 2px rgba(217, 173, 43, 0.18); }
   .glass {
     background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(16px);

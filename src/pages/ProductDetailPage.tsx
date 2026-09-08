@@ -27,10 +27,10 @@ export default function ProductDetailPage() {
       const p = await fetchProduct(slug);
       const asset = p ? null : findProductAssetBySlug(slug);
       const assetProduct: Product | null = asset ? {
-        id: asset.slug,
+        id: String(asset.slug || slug),
         category_id: asset.folder,
         name: asset.name,
-        slug: asset.slug,
+        slug: asset.slug || slug,
         features: [],
         specs: {},
         image: asset.image,
@@ -68,7 +68,7 @@ export default function ProductDetailPage() {
     );
   }
 
-  const gallery = product.gallery?.length ? product.gallery : [product.image || ''];
+  const gallery = product.gallery?.length ? product.gallery : (product.image ? [product.image] : []);
   const specs = product.specs || {};
   const features = product.features || [];
   const waText = `Hi, I'm interested in ${encodeURIComponent(product.name)}. Please share details.`;
@@ -105,11 +105,11 @@ export default function ProductDetailPage() {
           {/* Gallery */}
           <div>
             <div className="group relative aspect-square overflow-hidden rounded-lux border border-navy/10">
-              <img
+              {gallery.length ? <img
                 src={gallery[activeImg]}
                 alt={product.name}
                 className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
-              />
+              /> : <div className="h-full w-full bg-navy/5" aria-label="Product image unavailable" />}
               {gallery.length > 1 && (
                 <>
                   <button
@@ -181,7 +181,7 @@ export default function ProductDetailPage() {
             {/* Actions */}
             <div className="mt-6 flex flex-wrap gap-3">
               <Link to="/rfq" className="btn-gold flex items-center gap-2 rounded-full px-5 py-2.5 font-sub text-sm">Request Quote</Link>
-              <a href="/products" className="btn-ghost flex items-center gap-2 rounded-full px-5 py-2.5 font-sub text-sm text-navy"><Download className="h-4 w-4" /> Download Catalogue</a>
+              <Link to="/catalogue" className="btn-ghost flex items-center gap-2 rounded-full px-5 py-2.5 font-sub text-sm text-navy"><Download className="h-4 w-4" /> Download Catalogue</Link>
               <a href={`https://wa.me/919845579049?text=${waText}`} target="_blank" rel="noreferrer" className="flex items-center gap-2 rounded-full bg-[#25D366] px-5 py-2.5 font-sub text-sm text-white"><MessageCircle className="h-4 w-4" /> WhatsApp Inquiry</a>
               <button onClick={() => setViewerOpen(true)} className="btn-ghost flex items-center gap-2 rounded-full px-5 py-2.5 font-sub text-sm"><RotateCw className="h-4 w-4" /> 360° Viewer</button>
               <a href="tel:+919845579049" className="btn-ghost flex items-center gap-2 rounded-full px-5 py-2.5 font-sub text-sm"><Phone className="h-4 w-4" /> Call</a>

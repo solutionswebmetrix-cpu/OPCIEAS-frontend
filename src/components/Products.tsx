@@ -2,16 +2,11 @@ import { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FileText, Download, RotateCw, ArrowRight } from 'lucide-react';
-import { IMG, CANONICAL_CATEGORIES, PRODUCT_IMAGE_GROUPS, cleanProductName, toKebab, type CanonicalCategoryName } from '../lib/images';
-import { fetchFeaturedProducts, fetchProducts, type Product } from '../lib/data';
+import { fetchCategories, fetchFeaturedProducts, fetchProducts, type Category, type Product } from '../lib/data';
 import Product360Viewer from './Product360Viewer';
 
-function HomeProductCard({ group, product, index, categoryIndex }: { group: typeof PRODUCT_IMAGE_GROUPS[number]; product?: Product; index: number; categoryIndex: number }) {
-  const productSlug = product?.slug || `asset-${toKebab(group.cleanName)}`;
-  const primaryImage = product?.image || group.image;
-  const productName = product?.name || group.cleanName;
-  const productCategory = product?.category_id ? group.category : group.category;
-  void productCategory;
+function HomeProductCard({ product, categoryName, index, categoryIndex }: { product: Product; categoryName: string; index: number; categoryIndex: number }) {
+  const productSlug = product.slug || String(product.id);
 
   return (
     <motion.div
@@ -23,33 +18,21 @@ function HomeProductCard({ group, product, index, categoryIndex }: { group: type
     >
       <Link to={`/product/${productSlug}`} className="block">
         <div className="h-48 sm:h-52 bg-white p-2.5 sm:p-3">
-          <img
-            src={primaryImage}
-            alt={productName}
+          {product.image ? <img
+            src={product.image}
+            alt={product.name}
             className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
             loading={categoryIndex === 0 && index < 4 ? 'eager' : 'lazy'}
-          />
+          /> : <div className="h-full w-full bg-navy/5" aria-label="Product image unavailable" />}
         </div>
         <div className="flex min-h-[10rem] flex-col border-t border-navy/10 p-3.5 sm:p-4">
-          <p className="font-sub text-[10px] uppercase tracking-[0.16em] text-gold">{group.category}</p>
-          {product ? (
-            <>
-              <h3 className="mt-1 font-heading text-base font-bold text-navy sm:text-lg leading-tight line-clamp-2">{product.name}</h3>
-              {product.short_desc && <p className="mt-2 line-clamp-2 font-body text-xs leading-relaxed text-navy/70">{product.short_desc}</p>}
-              {product.price_range && <p className="mt-2 font-sub text-xs font-semibold text-navy">{product.price_range}</p>}
-              <span className="mt-auto inline-flex items-center gap-1.5 pt-3.5 font-sub text-xs text-gold">
-                View Details <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-              </span>
-            </>
-          ) : (
-            <>
-              <h3 className="mt-1 font-heading text-base font-bold text-navy sm:text-lg leading-tight line-clamp-2">{group.cleanName}</h3>
-              <p className="mt-2 font-body text-xs text-navy/60">Product information will be updated soon.</p>
-              <span className="mt-auto inline-flex items-center gap-1.5 pt-3.5 font-sub text-xs text-gold">
-                View Details <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-              </span>
-            </>
-          )}
+          <p className="font-sub text-[10px] uppercase tracking-[0.16em] text-gold">{categoryName}</p>
+          <h3 className="mt-1 font-heading text-base font-bold text-navy sm:text-lg leading-tight line-clamp-2">{product.name}</h3>
+          {product.short_desc && <p className="mt-2 line-clamp-2 font-body text-xs leading-relaxed text-navy/70">{product.short_desc}</p>}
+          {product.price_range && <p className="mt-2 font-sub text-xs font-semibold text-navy">{product.price_range}</p>}
+          <span className="mt-auto inline-flex items-center gap-1.5 pt-3.5 font-sub text-xs text-gold">
+            View Details <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+          </span>
         </div>
       </Link>
     </motion.div>
@@ -58,8 +41,8 @@ function HomeProductCard({ group, product, index, categoryIndex }: { group: type
 
 function FeaturedProduct({ product, i }: { product: Product; i: number }) {
   const [viewerOpen, setViewerOpen] = useState(false);
-  const gallery = product.gallery?.length ? product.gallery : [product.image || IMG.heroBg];
-  const primaryImage = product.image || gallery[0] || IMG.heroBg;
+  const gallery = product.gallery?.length ? product.gallery : (product.image ? [product.image] : []);
+  const primaryImage = product.image || gallery[0];
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -69,7 +52,7 @@ function FeaturedProduct({ product, i }: { product: Product; i: number }) {
       className={`relative flex min-h-[70vh] items-center overflow-hidden ${i % 2 === 1 ? 'flex-row-reverse' : ''}`}
     >
       <div className="pointer-events-none absolute inset-0">
-        <img src={primaryImage} alt={product.name} className="h-full w-full object-cover" loading="lazy" />
+        {primaryImage ? <img src={primaryImage} alt={product.name} className="h-full w-full object-cover" loading="lazy" /> : <div className="h-full w-full bg-navy/5" />}
         <div className={`absolute inset-0 ${i % 2 === 1 ? 'bg-gradient-to-l from-white via-white/80 to-transparent' : 'bg-gradient-to-r from-white via-white/80 to-transparent'}`} />
       </div>
       <div className="container-x relative z-10 px-6">
@@ -92,47 +75,26 @@ function FeaturedProduct({ product, i }: { product: Product; i: number }) {
 export default function Products() {
   const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
     (async () => {
-      const products = await fetchProducts();
+      const [products, categoryList, featured] = await Promise.all([fetchProducts(), fetchCategories(), fetchFeaturedProducts()]);
       setAllProducts(products);
-      const featured = (await fetchFeaturedProducts()).slice(0, 3);
-      setFeaturedProducts(featured);
+      setCategories(categoryList);
+      setFeaturedProducts(featured.slice(0, 3));
     })();
   }, []);
 
   const productsByCategory = useMemo(() => {
-    const map = new Map<CanonicalCategoryName, { group: typeof PRODUCT_IMAGE_GROUPS[number]; product?: Product }[]>();
-
-    for (const group of PRODUCT_IMAGE_GROUPS) {
-      if (!map.has(group.category)) {
-        map.set(group.category, []);
-      }
-      const arr = map.get(group.category)!;
-      const matchedProduct = allProducts.find(
-        (candidate) => toKebab(cleanProductName(candidate.name)) === toKebab(group.cleanName)
-      );
-      arr.push({ group, product: matchedProduct });
-    }
-
-    for (const [cat, arr] of map.entries()) {
-      arr.sort((a, b) => {
-        const aFeatured = a.product?.featured || a.product?.is_featured ? 1 : 0;
-        const bFeatured = b.product?.featured || b.product?.is_featured ? 1 : 0;
-        if (bFeatured !== aFeatured) return bFeatured - aFeatured;
-        return a.group.cleanName.localeCompare(b.group.cleanName);
-      });
-      map.set(cat, arr.slice(0, 5));
-    }
-
-    return map;
-  }, [allProducts]);
-
-  const categoriesWithProducts = CANONICAL_CATEGORIES.filter((cat) => {
-    const items = productsByCategory.get(cat.name);
-    return items && items.length > 0;
-  });
+    return categories.map((category) => ({
+      category,
+      products: allProducts
+        .filter((product) => String(product.category_id ?? '') === String(category.id))
+        .sort((a, b) => Number(b.featured || b.is_featured) - Number(a.featured || a.is_featured))
+        .slice(0, 5),
+    })).filter((entry) => entry.products.length > 0);
+  }, [allProducts, categories]);
 
   return (
     <section id="products" className="relative overflow-hidden bg-white py-24 sm:py-32">
@@ -148,11 +110,10 @@ export default function Products() {
         </div>
 
         <div className="space-y-14 sm:space-y-20">
-          {categoriesWithProducts.map((cat, catIdx) => {
-            const items = productsByCategory.get(cat.name)!;
+          {productsByCategory.map(({ category, products }, catIdx) => {
             return (
               <motion.div
-                key={cat.id}
+                key={category.id}
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-80px' }}
@@ -160,13 +121,13 @@ export default function Products() {
               >
                 <div className="mb-5 sm:mb-7 flex flex-wrap items-end justify-between gap-3">
                   <div>
-                    <h3 className="font-heading text-xl font-black text-navy sm:text-2xl">{cat.name}</h3>
+                    <h3 className="font-heading text-xl font-black text-navy sm:text-2xl">{category.name}</h3>
                     <p className="mt-1 font-sub text-xs uppercase tracking-[0.2em] text-navy/40">
-                      {items.length} product{items.length !== 1 ? 's' : ''} displayed
+                      {products.length} product{products.length !== 1 ? 's' : ''} displayed
                     </p>
                   </div>
                   <Link
-                    to={`/products/category/${cat.slug}`}
+                    to={`/products/category/${category.slug}`}
                     className="inline-flex items-center gap-1.5 rounded-full border border-gold/40 bg-gold/5 px-4 py-2 font-sub text-xs font-semibold text-gold transition-all duration-300 hover:border-gold hover:bg-gold hover:text-navy"
                   >
                     View All <ArrowRight className="h-3.5 w-3.5" />
@@ -174,11 +135,11 @@ export default function Products() {
                 </div>
 
                 <div className="grid grid-cols-2 gap-3.5 sm:gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-                  {items.map((item, idx) => (
+                  {products.map((product, idx) => (
                     <HomeProductCard
-                      key={item.group.key}
-                      group={item.group}
-                      product={item.product}
+                      key={product.id || product.slug}
+                      product={product}
+                      categoryName={category.name}
                       index={idx}
                       categoryIndex={catIdx}
                     />

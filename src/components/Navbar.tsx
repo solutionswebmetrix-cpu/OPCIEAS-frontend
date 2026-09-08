@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Download, FileText, Globe, MessageCircle, ChevronDown } from 'lucide-react';
 import companyLogo from '../assets/logo/logo.png';
+import { fetchCategories, fetchProducts, type Category, type Product } from '../lib/data';
 
 const menu = [
   {
@@ -21,17 +22,6 @@ const menu = [
   {
     label: 'Products',
     to: '/products',
-    items: [
-      { name: 'All Categories', to: '/products' },
-      { name: 'Office Furniture', to: '/products/category/office-furniture' },
-      { name: 'Educational Furniture', to: '/products/category/educational-furniture' },
-      { name: 'School Furniture', to: '/products/category/school-furniture' },
-      { name: 'Hospital Furniture', to: '/products/category/hospital-furniture' },
-      { name: 'Hostel Furniture', to: '/products/category/hostel-furniture' },
-      { name: 'Industrial Storage', to: '/products/category/industrial-storage' },
-      { name: 'Bathroom Collection', to: '/products/category/bathroom-collection' },
-      { name: 'Letter Boxes', to: '/products/category/letter-boxes' },
-    ],
   },
   {
     label: 'Business',
@@ -57,14 +47,72 @@ const menu = [
   },
 ];
 
+const fallbackCategorySeed: Category[] = [
+  { id: '1', name: 'Office Furniture', slug: 'office-furniture', description: null, tagline: null, image: null, banner_image: null, icon: null, sort_order: 1, is_featured: false, status: 'active', meta_title: null, meta_description: null, parent_id: null, created_at: undefined, updated_at: undefined },
+  { id: '2', name: 'Educational Furniture', slug: 'educational-furniture', description: null, tagline: null, image: null, banner_image: null, icon: null, sort_order: 2, is_featured: false, status: 'active', meta_title: null, meta_description: null, parent_id: null, created_at: undefined, updated_at: undefined },
+  { id: '3', name: 'School Furniture', slug: 'school-furniture', description: null, tagline: null, image: null, banner_image: null, icon: null, sort_order: 3, is_featured: false, status: 'active', meta_title: null, meta_description: null, parent_id: null, created_at: undefined, updated_at: undefined },
+  { id: '4', name: 'Hospital Furniture', slug: 'hospital-furniture', description: null, tagline: null, image: null, banner_image: null, icon: null, sort_order: 4, is_featured: false, status: 'active', meta_title: null, meta_description: null, parent_id: null, created_at: undefined, updated_at: undefined },
+  { id: '5', name: 'Hostel Furniture', slug: 'hostel-furniture', description: null, tagline: null, image: null, banner_image: null, icon: null, sort_order: 5, is_featured: false, status: 'active', meta_title: null, meta_description: null, parent_id: null, created_at: undefined, updated_at: undefined },
+  { id: '6', name: 'Industrial Storage', slug: 'industrial-storage', description: null, tagline: null, image: null, banner_image: null, icon: null, sort_order: 6, is_featured: false, status: 'active', meta_title: null, meta_description: null, parent_id: null, created_at: undefined, updated_at: undefined },
+  { id: '7', name: 'Bathroom Collection', slug: 'bathroom-collection', description: null, tagline: null, image: null, banner_image: null, icon: null, sort_order: 7, is_featured: false, status: 'active', meta_title: null, meta_description: null, parent_id: null, created_at: undefined, updated_at: undefined },
+  { id: '8', name: 'Letter Boxes', slug: 'letter-boxes', description: null, tagline: null, image: null, banner_image: null, icon: null, sort_order: 8, is_featured: false, status: 'active', meta_title: null, meta_description: null, parent_id: null, created_at: undefined, updated_at: undefined },
+];
+
+function getProductDetailPath(product: Product): string {
+  if (product.slug) return `/product/${product.slug}`;
+  if (product.id) return `/product/${product.id}`;
+  return '/products';
+}
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [mega, setMega] = useState<string | null>(null);
   const [langOpen, setLangOpen] = useState(false);
-  const [activeId, setActiveId] = useState<string>('/')
+  const [activeId, setActiveId] = useState<string>('/');
+  const [categories, setCategories] = useState<Category[]>(fallbackCategorySeed);
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
   const location = useLocation();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    let mounted = true;
+    Promise.all([fetchCategories(), fetchProducts()])
+      .then(([categoryList, productList]) => {
+        if (!mounted) return;
+        const normalizedCategories = [...categoryList].sort((a, b) => (Number(a.sort_order ?? 999) - Number(b.sort_order ?? 999)) || a.name.localeCompare(b.name));
+        setCategories(normalizedCategories.length ? normalizedCategories : fallbackCategorySeed);
+        setAllProducts(productList);
+      })
+      .catch(() => {
+        if (!mounted) return;
+        setCategories(fallbackCategorySeed);
+        setAllProducts([]);
+      });
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const categoryMenuRows = useMemo(() => {
+    const productsByCategory = new Map<string, Product[]>();
+
+    for (const product of allProducts) {
+      const categoryId = String(product.category_id ?? '');
+      if (!categoryId) continue;
+      const current = productsByCategory.get(categoryId) ?? [];
+      current.push(product);
+      productsByCategory.set(categoryId, current);
+    }
+
+    return categories
+      .filter((category) => category && category.name && category.slug)
+      .map((category) => ({
+        category,
+        products: (productsByCategory.get(String(category.id)) ?? []).slice(0, 5),
+      }));
+  }, [categories, allProducts]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -142,39 +190,93 @@ export default function Navbar() {
 
           {/* Desktop menu */}
           <div className="hidden h-full items-center gap-1 lg:flex">
-            {menu.map((m) => (
-              <div key={m.label} className="relative flex items-center h-full" onMouseEnter={() => setMega(m.items ? m.label : null)} onMouseLeave={() => setMega((cur) => (cur === m.label ? null : cur))}>
-                {m.to ? (
-                  <Link to={m.to} className="group relative inline-flex h-full items-center gap-1 px-4 font-sub text-sm font-medium leading-none text-navy/70 transition-colors hover:text-gold">
-                    <span>{m.label}</span>
-                    <span className="absolute bottom-0 left-1/2 h-[1px] w-0 -translate-x-1/2 bg-gold transition-all duration-300 group-hover:w-2/3" />
-                  </Link>
-                ) : (
-                  <span className={`group relative inline-flex h-full items-center gap-1 cursor-pointer px-4 font-sub text-sm font-medium leading-none transition-colors ${m.label === 'Home' && ['overview','why-choose-us','manufacturing'].includes(activeId) ? 'text-gold' : 'text-navy/70'} hover:text-gold`}>
-                    <span>{m.label}</span>
-                    {m.items && <ChevronDown className="h-3 w-3" />}
-                    <span className="absolute bottom-0 left-1/2 h-[1px] w-0 -translate-x-1/2 bg-gold transition-all duration-300 group-hover:w-2/3" />
-                  </span>
-                )}
+            {menu.map((m) => {
+              if (m.label === 'Products') {
+                return (
+                  <div key={m.label} className="relative flex items-center h-full" onMouseEnter={() => setMega('Products')} onMouseLeave={() => setMega((cur) => (cur === 'Products' ? null : cur))}>
+                    <button type="button" onClick={() => navigate('/products')} className="group relative inline-flex h-full items-center gap-1 px-4 font-sub text-sm font-medium leading-none text-navy/70 transition-colors hover:text-gold">
+                      <span>Products</span>
+                      <ChevronDown className="h-3 w-3" />
+                      <span className="absolute bottom-0 left-1/2 h-[1px] w-0 -translate-x-1/2 bg-gold transition-all duration-300 group-hover:w-2/3" />
+                    </button>
 
-                <AnimatePresence>
-                  {m.items && mega === m.label && (
-                    <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }} transition={{ duration: 0.2 }} className="absolute left-1/2 top-full z-20 -translate-x-1/2 pt-3">
-                      <div className="bg-white border border-border-grey rounded-lux p-4 shadow-lg">
-                        <div className="space-y-1">
-                          {m.items.map((item) => (
-                            <button key={item.name} onClick={() => { setMega(null); goTo(item.to, (item as any).scrollId); }} className="group flex w-full items-center gap-3 rounded-xl p-2.5 text-left transition hover:bg-light-grey/50">
-                              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gold/10 text-gold transition group-hover:bg-gold group-hover:text-navy"><FileText className="h-3.5 w-3.5" /></div>
-                              <span className={`font-sub text-sm ${((item as any).scrollId && activeId === (item as any).scrollId) ? 'text-gold' : 'text-navy/70'} group-hover:text-gold`}>{item.name}</span>
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    </motion.div>
+                    <AnimatePresence>
+                      {mega === 'Products' && (
+                        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }} transition={{ duration: 0.2 }} className="absolute left-1/2 top-full z-20 -translate-x-1/2 pt-3">
+                          <div className="w-[min(1080px,70vw)] max-h-[70vh] overflow-y-auto rounded-lux border border-border-grey bg-white p-4 shadow-lg">
+                            <div className="mb-4 flex items-center justify-between gap-3 border-b border-border-grey pb-3">
+                              <p className="font-sub text-xs uppercase tracking-[0.25em] text-gold">Products</p>
+                              <Link to="/products" className="font-sub text-xs font-semibold text-navy/70 hover:text-gold">All Categories</Link>
+                            </div>
+                            <div className="grid gap-4 xl:grid-cols-2">
+                              {categoryMenuRows.map(({ category, products }) => (
+                                <div key={category.id} className="rounded-xl border border-navy/10 bg-light-grey/40 p-3">
+                                  <div className="mb-2 flex items-center justify-between gap-2">
+                                    <Link to={`/products/category/${category.slug}`} onClick={() => setMega(null)} className="font-heading text-sm font-bold text-navy hover:text-gold">
+                                      {category.name}
+                                    </Link>
+                                    <Link to={`/products/category/${category.slug}`} onClick={() => setMega(null)} className="font-sub text-[10px] uppercase tracking-[0.18em] text-navy/50 hover:text-gold">View all</Link>
+                                  </div>
+                                  {products.length ? (
+                                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                                      {products.map((product) => (
+                                        <Link key={product.id || product.slug} to={getProductDetailPath(product)} onClick={() => setMega(null)} className="group flex items-center gap-2 rounded-lg border border-transparent bg-white p-2 transition hover:border-gold/40 hover:bg-gold/5">
+                                          {product.image ? <img src={product.image} alt={product.name} className="h-12 w-12 rounded-md object-cover" loading="lazy" /> : <div className="h-12 w-12 rounded-md bg-navy/10" aria-hidden="true" />}
+                                          <div className="min-w-0 flex-1">
+                                            <p className="truncate font-sub text-[11px] font-semibold text-navy group-hover:text-gold">{product.name}</p>
+                                            {product.short_desc ? <p className="line-clamp-2 font-body text-[10px] text-navy/60">{product.short_desc}</p> : <p className="font-body text-[10px] text-navy/50">{category.name}</p>}
+                                          </div>
+                                        </Link>
+                                      ))}
+                                    </div>
+                                  ) : (
+                                    <p className="font-body text-xs text-navy/50">No products available</p>
+                                  )}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              }
+
+              return (
+                <div key={m.label} className="relative flex items-center h-full" onMouseEnter={() => setMega(m.items ? m.label : null)} onMouseLeave={() => setMega((cur) => (cur === m.label ? null : cur))}>
+                  {m.to ? (
+                    <Link to={m.to} className="group relative inline-flex h-full items-center gap-1 px-4 font-sub text-sm font-medium leading-none text-navy/70 transition-colors hover:text-gold">
+                      <span>{m.label}</span>
+                      <span className="absolute bottom-0 left-1/2 h-[1px] w-0 -translate-x-1/2 bg-gold transition-all duration-300 group-hover:w-2/3" />
+                    </Link>
+                  ) : (
+                    <span className={`group relative inline-flex h-full items-center gap-1 cursor-pointer px-4 font-sub text-sm font-medium leading-none transition-colors ${m.label === 'Home' && ['overview','why-choose-us','manufacturing'].includes(activeId) ? 'text-gold' : 'text-navy/70'} hover:text-gold`}>
+                      <span>{m.label}</span>
+                      {m.items && <ChevronDown className="h-3 w-3" />}
+                      <span className="absolute bottom-0 left-1/2 h-[1px] w-0 -translate-x-1/2 bg-gold transition-all duration-300 group-hover:w-2/3" />
+                    </span>
                   )}
-                </AnimatePresence>
-              </div>
-            ))}
+
+                  <AnimatePresence>
+                    {m.items && mega === m.label && (
+                      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }} transition={{ duration: 0.2 }} className="absolute left-1/2 top-full z-20 -translate-x-1/2 pt-3">
+                        <div className="bg-white border border-border-grey rounded-lux p-4 shadow-lg">
+                          <div className="space-y-1">
+                            {m.items.map((item) => (
+                              <button key={item.name} onClick={() => { setMega(null); goTo(item.to, (item as any).scrollId); }} className="group flex w-full items-center gap-3 rounded-xl p-2.5 text-left transition hover:bg-light-grey/50">
+                                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gold/10 text-gold transition group-hover:bg-gold group-hover:text-navy"><FileText className="h-3.5 w-3.5" /></div>
+                                <span className={`font-sub text-sm ${((item as any).scrollId && activeId === (item as any).scrollId) ? 'text-gold' : 'text-navy/70'} group-hover:text-gold`}>{item.name}</span>
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })}
           </div>
 
           {/* Actions */}
@@ -205,22 +307,54 @@ export default function Navbar() {
           <>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[1001] bg-black/20 lg:hidden" onClick={() => setOpen(false)} />
             <motion.div initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} transition={{ type: 'spring', damping: 30, stiffness: 300 }} className="fixed right-0 top-0 z-[1002] h-full w-[80vw] max-w-sm overflow-y-auto bg-white p-6 pt-20 lg:hidden">
-              {menu.map((m) => (
-                <div key={m.label}>
-                  {m.to ? (
-                    <Link to={m.to} onClick={() => setOpen(false)} className="block border-b border-border-grey py-3 font-sub text-base text-navy/70">{m.label}</Link>
-                  ) : (
-                    <div className="border-b border-border-grey py-3">
-                      <p className="font-sub text-base font-bold text-navy">{m.label}</p>
-                      <div className="mt-2 space-y-1 pl-4">
+              {menu.map((m) => {
+                if (m.label === 'Products') {
+                  return (
+                    <div key={m.label} className="border-b border-border-grey py-3">
+                      <div className="flex items-center justify-between gap-2">
+                        <p className="font-sub text-base font-bold text-navy">{m.label}</p>
+                        <Link to="/products" onClick={() => setOpen(false)} className="font-sub text-xs text-gold">All Categories</Link>
+                      </div>
+                      <div className="mt-3 space-y-3 pl-2">
+                        {categoryMenuRows.map(({ category, products }) => (
+                          <div key={category.id} className="rounded-lg border border-navy/10 bg-light-grey/40 p-2">
+                            <Link to={`/products/category/${category.slug}`} onClick={() => setOpen(false)} className="font-sub text-sm font-semibold text-navy hover:text-gold">{category.name}</Link>
+                            {products.length ? (
+                              <div className="mt-2 space-y-1.5">
+                                {products.map((product) => (
+                                  <Link key={product.id || product.slug} to={getProductDetailPath(product)} onClick={() => setOpen(false)} className="flex items-center gap-2 rounded-md bg-white p-1.5 text-left">
+                                    {product.image ? <img src={product.image} alt={product.name} className="h-8 w-8 rounded object-cover" loading="lazy" /> : <div className="h-8 w-8 rounded bg-navy/10" aria-hidden="true" />}
+                                    <span className="truncate font-sub text-xs text-navy/70">{product.name}</span>
+                                  </Link>
+                                ))}
+                              </div>
+                            ) : (
+                              <p className="mt-2 font-sub text-[11px] text-navy/50">No products available</p>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                }
+
+                return (
+                  <div key={m.label}>
+                    {m.to ? (
+                      <Link to={m.to} onClick={() => setOpen(false)} className="block border-b border-border-grey py-3 font-sub text-base text-navy/70">{m.label}</Link>
+                    ) : (
+                      <div className="border-b border-border-grey py-3">
+                        <p className="font-sub text-base font-bold text-navy">{m.label}</p>
+                        <div className="mt-2 space-y-1 pl-4">
                           {m.items?.map((item) => (
                             <button key={item.name} onClick={() => { setOpen(false); goTo(item.to, (item as any).scrollId); }} className="block w-full text-left py-1.5 font-sub text-sm text-navy/70 hover:text-gold">{item.name}</button>
                           ))}
+                        </div>
                       </div>
-                    </div>
-                  )}
-                </div>
-              ))}
+                    )}
+                  </div>
+                );
+              })}
               <div className="mt-6 flex flex-col gap-3">
                 <Link to="/catalogue" onClick={() => setOpen(false)} className="inline-flex justify-center items-center rounded-full px-4 py-3 font-sub text-sm border border-navy/20 bg-navy/5 text-navy hover:bg-navy/10">Download Catalogue</Link>
                 <Link to="/rfq" onClick={() => setOpen(false)} className="btn-gold rounded-full px-4 py-3 text-center font-sub text-sm">Request Quote</Link>

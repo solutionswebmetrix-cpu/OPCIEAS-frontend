@@ -6,7 +6,7 @@ import companyLogo from '../assets/logo/logo.png';
 
 const cols = [
   { title: 'Company', links: [{ label: 'About', to: '/company/about' }, { label: 'Manufacturing', to: '/manufacturing' }, { label: 'Tech Business Promotion', to: '/tech-business-promotion' }, { label: 'Contact', to: '/contact' }] },
-  { title: 'Products', links: [{ label: 'Educational Furniture', to: '/products' }, { label: 'Storage Solutions', to: '/products' }, { label: 'Catalogue', to: '/catalogue' }, { label: 'All Products', to: '/products' }] },
+  { title: 'Products', links: [{ label: 'Educational Furniture', to: '/products' }, { label: 'Storage Solutions', to: '/products' }, { label: 'Request Full Catalogue', to: '/catalogue' }, { label: 'All Products', to: '/products' }] },
   { title: 'Business', links: [{ label: 'Membership', to: '/membership' }, { label: 'Payment Instructions', to: '/payment-instructions' }, { label: 'Request Quote', to: '/rfq' }, { label: 'Compliance', to: '/compliance' }] },
   { title: 'Policies', links: [{ label: 'Enquiry', to: '/contact' }, { label: 'Terms of Use', to: '/terms-of-use' }, { label: 'Privacy Policy', to: '/privacy-policy' }, { label: 'Disclaimer', to: '/disclaimer' }] },
 ];

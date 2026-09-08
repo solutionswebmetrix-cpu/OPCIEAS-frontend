@@ -34,5 +34,9 @@ export const PRODUCT_ASSETS: ProductAsset[] = Object.entries(productAssetModules
   .map(([path, image]) => createAsset(path, image));
 
 export function findProductAssetBySlug(slug: string): ProductAsset | null {
-  return PRODUCT_ASSETS.find((asset) => asset.slug === slug) || null;
+  const asset = PRODUCT_ASSETS.find((candidate) => candidate.slug === slug);
+  if (!asset) return null;
+  const searchable = `${asset.name} ${asset.folder}`.toLowerCase();
+  if (/(play equipment|playground|double slide|slide playground|basketball hoop|swing set|seesaw|merry-go-round)/.test(searchable)) return null;
+  return asset;
 }

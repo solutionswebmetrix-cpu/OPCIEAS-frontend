@@ -33,14 +33,14 @@ const categoryContent: Record<string, { overview: string; highlights: string[]; 
     cta: ['Request Quote', 'Download Catalogue'],
   },
   'school-furniture': {
-    overview: 'Classroom, activity and playground furniture for schools and kindergartens with safety, ergonomics and heavy-duty durability.',
-    highlights: ['Student Desk', 'Student Chair', 'Dual Desk', 'Teacher Table', 'Teacher Chair', 'Kids / Nursery Furniture', 'Activity Table', 'Play Equipment'],
+    overview: 'Classroom, activity and institutional furniture for schools and kindergartens with safety, ergonomics and heavy-duty durability.',
+    highlights: ['Student Desk', 'Student Chair', 'Dual Desk', 'Teacher Table', 'Teacher Chair', 'Kids / Nursery Furniture', 'Activity Table', 'Classroom Seating'],
     specs: [
       { label: 'Suitability', value: 'Schools, preschools, nursery, coaching centres and activity zones' },
       { label: 'Materials', value: 'Powder-coated steel, HDPE, anti-scratch laminated tops, outdoor UV-stabilized' },
       { label: 'Design', value: 'Safe rounded edges, age-appropriate height, low-maintenance, bulk-ready' },
     ],
-    gallery: ['Classroom layout', 'Play zone and activity area', 'Outdoor playground furniture'],
+    gallery: ['Classroom layout', 'Activity zone and seating', 'Institutional classroom furniture'],
     cta: ['Request Quote', 'Download Catalogue'],
   },
   'hospital-furniture': {
@@ -72,6 +72,7 @@ const categoryContent: Record<string, { overview: string; highlights: string[]; 
       { label: 'Applications', value: 'Warehouses, factories, godowns, retail storage, offices and industrial yards' },
       { label: 'Build', value: 'Mild steel / SS, powder-coated or galvanized finish, boltless / bolted assembly' },
       { label: 'Capacity', value: '200 kg – 2000 kg / shelf depending on model, custom heights and widths available' },
+      { label: 'Customization', value: 'Slight variations in sizes can be considered.' },
     ],
     gallery: ['Warehouse rack aisles', 'Factory storage installation', 'Heavy-duty lockers & cabinets'],
     cta: ['Request Quote', 'Download Catalogue'],
@@ -112,9 +113,31 @@ function resolveCategoryFromSlug(slug: string, categories: Pick<Category, 'id' |
 
   const aliasMap: Record<string, string> = {
     'letter-box': 'letter-boxes',
+    'office': 'office-furniture',
+    'education': 'educational-furniture',
+    'school': 'school-furniture',
+    'hospital': 'hospital-furniture',
+    'hostel': 'hostel-furniture',
+    'industrial': 'industrial-storage',
+    'storage-solutions': 'industrial-storage',
+    'bathroom': 'bathroom-collection',
+    'letterbox': 'letter-boxes',
   };
   const aliased = aliasMap[slug];
   if (aliased) return categories.find((category) => category.slug === aliased) || fallbackCategories.find((category) => category.slug === aliased) || null;
+
+  const nameAliases: Record<string, string[]> = {
+    'office-furniture': ['office furniture'],
+    'educational-furniture': ['educational furniture', 'education'],
+    'school-furniture': ['school furniture', 'school'],
+    'hospital-furniture': ['hospital furniture', 'healthcare'],
+    'hostel-furniture': ['hostel furniture', 'hostel'],
+    'industrial-storage': ['industrial storage', 'storage solutions'],
+    'bathroom-collection': ['bathroom collection', 'bathroom storage'],
+    'letter-boxes': ['letter box', 'letter boxes', 'mail box'],
+  };
+  const matchingName = nameAliases[slug]?.find((name) => categories.some((category) => category.name.toLowerCase() === name));
+  if (matchingName) return categories.find((category) => category.name.toLowerCase() === matchingName) || null;
 
   return fallbackCategories.find((category) => category.slug === slug) || null;
 }
@@ -255,6 +278,12 @@ export default function ProductCategoryPage() {
             </motion.div>
           )}
 
+          {cat.slug === 'hostel-furniture' && (
+            <div className="mb-8 rounded-lux border border-gold/30 bg-gold/5 p-4 text-sm text-navy/80">
+              <strong>Complimentary OPCIEAS brand 'Single Blankets' supplied with hostel orders of 1000 units and above.</strong>
+            </div>
+          )}
+
           <div className="mb-8 flex flex-col gap-4 rounded-lux bg-navy/5 p-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="relative flex-1 max-w-md">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-navy/40" />
@@ -265,7 +294,7 @@ export default function ProductCategoryPage() {
                 <option value="newest">Newest</option>
                 <option value="name">A-Z</option>
               </select>
-              <Link to="/rfq" className="btn-ghost flex items-center gap-2 rounded-full px-4 py-2.5 font-sub text-sm text-navy"><Download className="h-4 w-4" /> Catalogue</Link>
+              <Link to="/catalogue" className="btn-ghost flex items-center gap-2 rounded-full px-4 py-2.5 font-sub text-sm text-navy"><Download className="h-4 w-4" /> Catalogue</Link>
               <a href={`https://wa.me/919845579049?text=I'm%20interested%20in%20${encodeURIComponent(cat.name)}`} target="_blank" rel="noreferrer" className="flex items-center gap-2 rounded-full bg-[#25D366] px-4 py-2.5 font-sub text-sm text-white"><MessageCircle className="h-4 w-4" /> WhatsApp</a>
             </div>
           </div>

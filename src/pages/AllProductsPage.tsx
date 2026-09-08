@@ -143,7 +143,7 @@ export default function AllProductsPage() {
           )}
 
           <div className="mt-12 flex flex-wrap justify-center gap-4">
-            <Link to="/rfq" className="btn-ghost flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm text-navy"><Download className="h-4 w-4" /> Download Catalogue</Link>
+            <Link to="/catalogue" className="btn-ghost flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm text-navy"><Download className="h-4 w-4" /> Download Catalogue</Link>
             <a href="https://wa.me/919845579049" target="_blank" rel="noreferrer" className="flex items-center gap-2 rounded-full bg-[#25D366] px-6 py-3 font-sub text-sm text-white"><MessageCircle className="h-4 w-4" /> WhatsApp Inquiry</a>
           </div>
         </div>

@@ -34,7 +34,7 @@ function getAIResponse(userMessage: string): string {
   }
 
   if (msg.includes('product') || msg.includes('manufacture') || msg.includes('what do you make')) {
-    return 'OPCIEAS manufactures Office Furniture, Educational Furniture, Hospital Furniture, Industrial Storage, Hostel Furniture, Auditorium Chairs, Stadium Chairs, Play Equipment and Commercial Furniture.';
+    return 'OPCIEAS manufactures Office Furniture, Educational Furniture, Hospital Furniture, Industrial Storage, Hostel Furniture, Auditorium Chairs, Stadium Chairs and Commercial Furniture.';
   }
 
   if (msg.includes('export')) {

@@ -12,6 +12,7 @@ interface Props {
 export default function ProductCard({ product, index }: Props) {
   const waText = encodeURIComponent(`Hi, I'm interested in ${product.name}. Please share details.`);
   const supplyLabel = product.supply_type === 'IN_HOUSE' ? 'In-House Manufacturing' : product.supply_type === 'PARTNER' ? 'Partner Supply' : 'Direct Manufacturer';
+  const productRoute = product.slug || String(product.id || 'product');
 
   return (
     <motion.div
@@ -22,7 +23,7 @@ export default function ProductCard({ product, index }: Props) {
     >
       <div className="group relative overflow-hidden rounded-lux border border-navy/10 bg-white shadow-sm hover:shadow-md">
         <Link
-          to={`/product/${product.slug}`}
+          to={`/product/${productRoute}`}
           className="block aspect-[4/5] overflow-hidden"
         >
           {product.image ? (

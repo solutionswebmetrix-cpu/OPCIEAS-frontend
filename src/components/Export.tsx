@@ -130,7 +130,7 @@ export default function Export() {
             <div className="grid w-full gap-3">
               <a href="/contact" className="btn-gold flex items-center justify-center gap-2 rounded-full px-5 py-3 font-sub text-sm">Request Quote</a>
               <a href="https://wa.me/919845579049" target="_blank" rel="noreferrer" className="btn-ghost flex items-center justify-center gap-2 rounded-full px-5 py-3 font-sub text-sm">WhatsApp Inquiry</a>
-              <a href="/products" className="btn-ghost flex items-center justify-center gap-2 rounded-full px-5 py-3 font-sub text-sm">Download Catalogue</a>
+              <a href="/catalogue" className="btn-ghost flex items-center justify-center gap-2 rounded-full px-5 py-3 font-sub text-sm">Download Catalogue</a>
             </div>
           </div>
         </motion.div>

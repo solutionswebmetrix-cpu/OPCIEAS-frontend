@@ -211,7 +211,7 @@ export default function Hero() {
             className="mt-3 font-sub text-lg"
             style={{ color: '#FFFFFF', fontWeight: 600, lineHeight: 1.5, opacity: 1, textShadow: '0 1px 8px rgba(0,0,0,0.45)' }}
           >
-            OPCIEAS supplies institutional furniture, educational systems, stainless steel storage, writing pad chairs, play equipment, and special-order fiberglass solutions.
+            OPCIEAS supplies institutional furniture, educational systems, stainless steel storage, writing pad chairs, and selected export-oriented bulk supply solutions.
           </motion.p>
 
           <motion.p
@@ -225,7 +225,7 @@ export default function Hero() {
           </motion.p>
 
           <div className="mt-4 flex flex-wrap gap-2">
-            {['KG Furniture', 'Double Slide Play Station', 'Stainless Steel Racks', 'Writing Pad Chairs', 'Educational Furniture', 'Institutional Furniture', 'Storage Solutions', 'Special Order Fiberglass'].map((t) => (
+            {['KG Furniture', 'Stainless Steel Racks', 'Writing Pad Chairs', 'Educational Furniture', 'Institutional Furniture', 'Storage Solutions', 'Special Order Fiberglass', 'Bulk Institutional Supply'].map((t) => (
               <span
                 key={t}
                 className="rounded-full border border-white/35 bg-navy/55 px-3 py-1.5 font-sub text-xs font-medium"

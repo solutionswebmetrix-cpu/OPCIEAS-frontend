@@ -1,54 +1,37 @@
-import { useMemo } from 'react';
-import { Download, ExternalLink, FileText, Loader2 } from 'lucide-react';
+import { useState } from 'react';
+import { ArrowRight, FileText, Loader2, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import PageMeta from '../components/PageMeta';
 import SectionBanner from '../components/SectionBanner';
+import { submitContact } from '../lib/data';
 
-const catalogueFiles = [
-  'EDUCATION FIRNITURE CATALOGUE (1)_compressed.pdf',
-  'EDUCATIONAL KID’s SAFETY FURNITURE WITH PLASTIC - CATALOGUE (2)_compressed.pdf',
-  'OFFICE FURNITURE CATALOGUE (1)-compressed.pdf',
-  'OPCIEAS  RACK CATALOGUE-compressed.pdf',
-  'OPCIEAS ALMIRAH CATALOGUE (1)_compressed.pdf',
-  'OPCIEAS OFFICE WORKSTATION CATALOGUE-compressed.pdf',
-  'OPCIEAS STADIUM CHAIRS CATALOGUE_compressed.pdf',
-  'OPCIEAS TABLE CATALOGUE (1) (1).pdf',
-  'Opcieas Textiles Catalogue-compressed.pdf',
-  'Trusted Institutional Furniture Solutions (2)_compressed.pdf',
-];
-
-const catalogueMap = catalogueFiles.map((name, index) => {
-  const slug = name
-    .replace(/\.[^/.]+$/, '')
-    .replace(/[^a-zA-Z0-9]+/g, ' ')
-    .trim();
-
-  return {
-    id: `${slug}-${index}`,
-    name,
-    url: new URL(`../assets/Catalogue/${name}`, import.meta.url).href,
-    category: index < 2 ? 'Educational Furniture' : index < 4 ? 'Storage' : index < 7 ? 'Institutional Furniture' : index < 9 ? 'Textiles' : 'Other Catalogue',
-    description: 'Official OPCIEAS catalogue document for institutional supply and procurement reference.',
-  };
-});
+const categories = ['Educational Furniture', 'Hostel Furniture', 'Storage Solutions', 'Commercial / Institutional Furniture'];
+const initialForm = { name: '', company: '', email: '', phone: '', category: '', product: '', quantity: '', message: '' };
 
 export default function CataloguePage() {
-  const grouped = useMemo(() => {
-    return catalogueMap.reduce<Record<string, typeof catalogueMap>>((acc, item) => {
-      acc[item.category] = acc[item.category] ? [...acc[item.category], item] : [item];
-      return acc;
-    }, {});
-  }, []);
+  const [isRequestOpen, setIsRequestOpen] = useState(false);
+  const [form, setForm] = useState(initialForm);
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [error, setError] = useState('');
+  const update = (key: keyof typeof initialForm, value: string) => setForm((current) => ({ ...current, [key]: value }));
+  const openRequest = (category = '') => { setForm((current) => ({ ...current, category })); setStatus('idle'); setError(''); setIsRequestOpen(true); };
+  const submit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    setStatus('loading');
+    const result = await submitContact({ ...form, subject: 'Full Catalogue Request', type: 'catalogue_request', source: 'catalogue-page', product: form.product, message: `Category / Catalogue Required: ${form.category}\nProduct Requirement: ${form.product}\nQuantity: ${form.quantity}\n${form.message}` });
+    if (result?.success) { setStatus('success'); setForm(initialForm); } else { setStatus('error'); setError(result?.message || 'We could not submit your request. Please try again.'); }
+  };
 
   return (
     <>
       <PageMeta
         title="Catalogue | OPCIEAS"
-        description="Download OPCIEAS catalogues and product reference PDFs for institutional furniture, storage, textiles and related business solutions."
-        keywords="OPCIEAS catalogue, furniture catalogue, PDF catalogue, institutional furniture catalogue, download catalogue"
+        description="Request the complete OPCIEAS product catalogue for detailed product information, specifications and commercial requirements."
+        keywords="OPCIEAS catalogue, furniture catalogue, institutional furniture, request catalogue"
       />
       <SectionBanner
         title="Catalogue"
-        tagline="Official OPCIEAS product catalogues and publication sheets"
+        tagline="Full product catalogues available on request"
         image="/images/hero-bg.jpg"
         crumb="Catalogue"
         crumbTo="/"
@@ -56,43 +39,38 @@ export default function CataloguePage() {
 
       <section className="bg-white py-20">
         <div className="container-x px-6">
-          <div className="mb-8 flex items-center gap-3 rounded-lux border border-gold/30 bg-gold/5 p-4 text-sm text-navy/80">
-            <FileText className="h-5 w-5 text-gold" />
-            All catalogue PDFs are preserved in their original file names and are available for viewing and download.
-          </div>
-
-          {Object.entries(grouped).map(([category, items]) => (
-            <div key={category} className="mb-12">
-              <h2 className="mb-6 font-heading text-2xl font-black text-navy">{category}</h2>
-              <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-                {items.map((item) => (
-                  <article key={item.id} className="rounded-lux border border-navy/10 bg-light-grey p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
-                    <div className="flex h-20 items-center justify-center rounded-xl border border-gold/20 bg-white text-gold">
-                      <FileText className="h-10 w-10" />
-                    </div>
-                    <h3 className="mt-4 font-heading text-lg font-bold text-navy">{item.name}</h3>
-                    <p className="mt-2 font-body text-sm leading-relaxed text-navy/70">{item.description}</p>
-                    <div className="mt-5 flex flex-wrap gap-3">
-                      <a href={item.url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full bg-navy px-4 py-2.5 font-sub text-xs text-white">
-                        <ExternalLink className="h-4 w-4" /> Open Catalogue
-                      </a>
-                      <a href={item.url} download={item.name} className="inline-flex items-center gap-2 rounded-full border border-navy/20 bg-white px-4 py-2.5 font-sub text-xs text-navy">
-                        <Download className="h-4 w-4" /> Download PDF
-                      </a>
-                    </div>
-                  </article>
-                ))}
-              </div>
+          <div className="mb-10 grid gap-6 rounded-lux bg-navy p-7 text-white md:grid-cols-[1fr_auto] md:items-center md:p-10">
+            <div>
+              <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">On-demand catalogue access</p>
+              <h2 className="mt-3 font-heading text-2xl font-black sm:text-3xl">Request OPCIEAS Commercial Furniture Catalogue</h2>
+              <p className="mt-3 max-w-2xl font-body text-sm leading-relaxed text-white/75">Detailed product catalogues are available on request after confirming your product/category requirements.</p>
             </div>
-          ))}
-
-          <div className="mt-8 flex justify-center">
-            <a href="/opcieas-presentation.html" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full border border-navy/20 bg-white px-5 py-3 font-sub text-sm text-navy">
-              Open Presentation <ExternalLink className="h-4 w-4" />
-            </a>
+            <div className="flex flex-wrap gap-3">
+              <button type="button" onClick={() => openRequest()} className="btn-gold inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-sub text-sm"><FileText className="h-4 w-4" /> Request Full Catalogue</button>
+              <Link to="/rfq" className="inline-flex items-center justify-center gap-2 rounded-full border border-white/30 px-6 py-3 font-sub text-sm text-white hover:border-gold hover:text-gold">Request Quotation <ArrowRight className="h-4 w-4" /></Link>
+            </div>
           </div>
+
+          <p className="mx-auto max-w-2xl text-center font-body text-sm leading-relaxed text-navy/65">Tell us which product category and requirements you are considering, and our team will share the relevant catalogue after review.</p>
         </div>
       </section>
+      {isRequestOpen && <div className="fixed inset-0 z-[1100] flex items-center justify-center bg-navy/70 p-4" role="dialog" aria-modal="true" aria-labelledby="catalogue-request-title">
+        <div className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-lux bg-white p-6 shadow-2xl sm:p-8">
+          <div className="flex items-start justify-between gap-4"><div><p className="font-sub text-xs uppercase tracking-[0.25em] text-gold">Catalogue enquiry</p><h2 id="catalogue-request-title" className="mt-2 font-heading text-2xl font-black text-navy">Request Full Catalogue</h2></div><button type="button" onClick={() => setIsRequestOpen(false)} className="text-navy/60 hover:text-navy" aria-label="Close request form"><X className="h-6 w-6" /></button></div>
+          {status === 'success' ? <div className="mt-8 rounded-xl border border-green-200 bg-green-50 p-5 font-body text-sm leading-relaxed text-green-800">Thank you. Your catalogue request has been received. Our team will contact you with the relevant catalogue.</div> : <form onSubmit={submit} className="mt-6 grid gap-4 sm:grid-cols-2">
+            <input required value={form.name} onChange={(event) => update('name', event.target.value)} placeholder="Name *" className="form-input" />
+            <input value={form.company} onChange={(event) => update('company', event.target.value)} placeholder="Company / Organization" className="form-input" />
+            <input required type="email" value={form.email} onChange={(event) => update('email', event.target.value)} placeholder="Email *" className="form-input" />
+            <input value={form.phone} onChange={(event) => update('phone', event.target.value)} placeholder="Phone" className="form-input" />
+            <select required value={form.category} onChange={(event) => update('category', event.target.value)} className="form-input sm:col-span-2"><option value="">Required Category *</option>{categories.map((category) => <option key={category}>{category}</option>)}</select>
+            <input required value={form.product} onChange={(event) => update('product', event.target.value)} placeholder="Product Requirement *" className="form-input sm:col-span-2" />
+            <input required value={form.quantity} onChange={(event) => update('quantity', event.target.value)} placeholder="Quantity *" className="form-input sm:col-span-2" />
+            <textarea required value={form.message} onChange={(event) => update('message', event.target.value)} placeholder="Message *" rows={4} className="form-input sm:col-span-2" />
+            {error && <p className="sm:col-span-2 font-sub text-sm text-red-600">{error}</p>}
+            <button disabled={status === 'loading'} type="submit" className="btn-gold inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-sub text-sm disabled:opacity-60 sm:col-span-2">{status === 'loading' && <Loader2 className="h-4 w-4 animate-spin" />} Request Catalogue</button>
+          </form>}
+        </div>
+      </div>}
     </>
   );
 }
