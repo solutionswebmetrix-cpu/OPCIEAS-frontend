@@ -61,6 +61,8 @@ const categoryContent: Record<string, { overview: string; highlights: string[]; 
       { label: 'Suitability', value: 'Hostels, dormitories, student housing and residential institutions' },
       { label: 'Build', value: 'Powder-coated steel frames with durable bedding textile finishes' },
       { label: 'Storage', value: 'Under-bed clearance, lockers, wardrobes and study units available' },
+      { label: 'Cot Dimensions', value: 'Single: L 1800 × W 750 × H 300–350 mm; Bunker: L 1800 × W 900 × H 1600–1650 mm; Triple: L 1800 × W 900 × H 2600 mm' },
+      { label: 'Accessories', value: 'Rubberized coir, foam and spring mattresses; washable pillows; 200–600 TC cotton bedsheets and pillow covers' },
     ],
     gallery: ['Hostel dormitory setup', 'Bunk beds and storage', 'Student study & wardrobe units'],
     cta: ['Request Quote', 'WhatsApp Inquiry'],
@@ -72,7 +74,7 @@ const categoryContent: Record<string, { overview: string; highlights: string[]; 
       { label: 'Applications', value: 'Warehouses, factories, godowns, retail storage, offices and industrial yards' },
       { label: 'Build', value: 'Mild steel / SS, powder-coated or galvanized finish, boltless / bolted assembly' },
       { label: 'Capacity', value: '200 kg – 2000 kg / shelf depending on model, custom heights and widths available' },
-      { label: 'Customization', value: 'Slight variations in sizes can be considered.' },
+      { label: 'Customization', value: 'Custom dimensions and tailored configurations available upon request.' },
     ],
     gallery: ['Warehouse rack aisles', 'Factory storage installation', 'Heavy-duty lockers & cabinets'],
     cta: ['Request Quote', 'Download Catalogue'],
@@ -84,6 +86,7 @@ const categoryContent: Record<string, { overview: string; highlights: string[]; 
       { label: 'Finish', value: 'Marine grade stainless steel 304, chrome, waterproof laminate / PVC' },
       { label: 'Protection', value: 'Waterproof, rust-resistant and corrosion-proof design' },
       { label: 'Use', value: 'Hotels, hospitals, hostels, apartments, offices and premium bathrooms' },
+      { label: 'Customization', value: 'Custom dimensions and tailored configurations available upon request.' },
     ],
     gallery: ['Bathroom vanity and storage', 'Waterproof mirror display', 'SS rack and accessories'],
     cta: ['Request Quote', 'Download Catalogue'],
@@ -297,6 +300,11 @@ export default function ProductCategoryPage() {
               <Link to="/catalogue" className="btn-ghost flex items-center gap-2 rounded-full px-4 py-2.5 font-sub text-sm text-navy"><Download className="h-4 w-4" /> Catalogue</Link>
               <a href={`https://wa.me/919845579049?text=I'm%20interested%20in%20${encodeURIComponent(cat.name)}`} target="_blank" rel="noreferrer" className="flex items-center gap-2 rounded-full bg-[#25D366] px-4 py-2.5 font-sub text-sm text-white"><MessageCircle className="h-4 w-4" /> WhatsApp</a>
             </div>
+          </div>
+
+          <div className="mb-8 border-l-2 border-gold bg-gold/5 px-4 py-3 font-body text-sm leading-relaxed text-navy/75">
+            For formal quotations, complete category catalogues, or product flyers, please contact info@opcieas.com or click 'Request On-Demand Catalogue'.
+            <Link to="/contact" className="ml-1 font-semibold text-gold underline underline-offset-2">Request On-Demand Catalogue</Link>
           </div>
 
           <p className="mb-6 font-sub text-sm text-navy/50">{filtered.length} product(s) found</p>

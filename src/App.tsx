@@ -95,7 +95,7 @@ export default function App() {
           <Route path="/products" element={<AllProductsPage />} />
           <Route path="/products/vertical/:verticalSlug" element={<BusinessVerticalPage />} />
           <Route path="/products/category/:slug" element={<ProductCategoryPage />} />
-          <Route path="/products/:slug" element={<ProductCategoryPage />} />
+          <Route path="/products/:slug" element={<ProductDetailPage />} />
           <Route path="/product/:slug" element={<ProductDetailPage />} />
           <Route path="/category/:slug" element={<ProductCategoryPage />} />
           <Route path="/service/:slug" element={<InitiativePage />} />

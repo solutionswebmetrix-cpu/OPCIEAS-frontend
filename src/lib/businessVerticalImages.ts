@@ -46,8 +46,8 @@ export const BUSINESS_VERTICALS = {
   },
   'fiberglass-special-order': {
     name: 'Fiberglass / Special Order',
-    categorySlugs: ['school-furniture'],
-    categoryIds: categorySlugsToIds(['school-furniture']),
+    categorySlugs: [],
+    categoryIds: [],
     namePatterns: fiberglassNamePatterns,
     overview: 'FRP / fiberglass and special-order custom products for outdoor, coastal and project-specific applications.',
     highlights: ['FRP / Fiberglass Furniture', 'Outdoor Seating', 'Custom Molded FRP', 'Special Order Items', 'Coastal / Rustproof'],

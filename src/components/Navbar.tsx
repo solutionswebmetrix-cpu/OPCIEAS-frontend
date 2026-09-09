@@ -68,6 +68,9 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [mega, setMega] = useState<string | null>(null);
+  const [productsOpen, setProductsOpen] = useState(false);
+  const [productsPanel, setProductsPanel] = useState(false);
+  const closeProductsPanel = () => setProductsPanel(false);
   const [langOpen, setLangOpen] = useState(false);
   const [activeId, setActiveId] = useState<string>('/');
   const [categories, setCategories] = useState<Category[]>(fallbackCategorySeed);
@@ -80,8 +83,13 @@ export default function Navbar() {
     Promise.all([fetchCategories(), fetchProducts()])
       .then(([categoryList, productList]) => {
         if (!mounted) return;
-        const normalizedCategories = [...categoryList].sort((a, b) => (Number(a.sort_order ?? 999) - Number(b.sort_order ?? 999)) || a.name.localeCompare(b.name));
-        setCategories(normalizedCategories.length ? normalizedCategories : fallbackCategorySeed);
+        const liveBySlug = new Map(categoryList.map((category) => [category.slug, category]));
+        const normalizedCategories = fallbackCategorySeed.map((fallback) => {
+          const live = liveBySlug.get(fallback.slug);
+          return live ? { ...fallback, ...live, name: fallback.slug === 'letter-boxes' ? 'Letter Boxes' : live.name } : fallback;
+        });
+        const extraCategories = categoryList.filter((category) => !fallbackCategorySeed.some((fallback) => fallback.slug === category.slug));
+        setCategories([...normalizedCategories, ...extraCategories].sort((a, b) => (Number(a.sort_order ?? 999) - Number(b.sort_order ?? 999)) || a.name.localeCompare(b.name)));
         setAllProducts(productList);
       })
       .catch(() => {
@@ -193,38 +201,43 @@ export default function Navbar() {
             {menu.map((m) => {
               if (m.label === 'Products') {
                 return (
-                  <div key={m.label} className="relative flex items-center h-full" onMouseEnter={() => setMega('Products')} onMouseLeave={() => setMega((cur) => (cur === 'Products' ? null : cur))}>
-                    <button type="button" onClick={() => navigate('/products')} className="group relative inline-flex h-full items-center gap-1 px-4 font-sub text-sm font-medium leading-none text-navy/70 transition-colors hover:text-gold">
+                  <div key={m.label} className="relative flex items-center h-full" onMouseEnter={() => setProductsPanel(true)} onMouseLeave={() => setProductsPanel(false)}>
+                    <button type="button" onClick={() => { setProductsPanel((value) => !value); navigate('/products'); }} className="group relative inline-flex h-full items-center gap-1 px-4 font-sub text-sm font-medium leading-none text-navy/70 transition-colors hover:text-gold">
                       <span>Products</span>
                       <ChevronDown className="h-3 w-3" />
                       <span className="absolute bottom-0 left-1/2 h-[1px] w-0 -translate-x-1/2 bg-gold transition-all duration-300 group-hover:w-2/3" />
                     </button>
 
                     <AnimatePresence>
-                      {mega === 'Products' && (
-                        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }} transition={{ duration: 0.2 }} className="absolute left-1/2 top-full z-20 -translate-x-1/2 pt-3">
-                          <div className="w-[min(1080px,70vw)] max-h-[70vh] overflow-y-auto rounded-lux border border-border-grey bg-white p-4 shadow-lg">
+                      {productsPanel && (
+                        <motion.div initial={{ opacity: 0, x: '-50%', y: 4 }} animate={{ opacity: 1, x: '-50%', y: 0 }} exit={{ opacity: 0, x: '-50%', y: 4 }} transition={{ duration: 0.2 }} className="pointer-events-auto fixed left-[50vw] top-[68px] z-[1100] box-border w-[calc(100vw-32px)] max-w-[1200px]">
+                          <div className="box-border max-h-[calc(100vh-92px)] overflow-x-hidden overflow-y-auto rounded-lux border border-border-grey bg-white p-4 shadow-lg">
                             <div className="mb-4 flex items-center justify-between gap-3 border-b border-border-grey pb-3">
                               <p className="font-sub text-xs uppercase tracking-[0.25em] text-gold">Products</p>
-                              <Link to="/products" className="font-sub text-xs font-semibold text-navy/70 hover:text-gold">All Categories</Link>
+                              <Link to="/products" onClick={closeProductsPanel} className="font-sub text-xs font-semibold text-navy/70 hover:text-gold">All Categories</Link>
                             </div>
-                            <div className="grid gap-4 xl:grid-cols-2">
+                              <Link to="/furniture" onClick={closeProductsPanel} className={`mb-4 block rounded-xl border p-4 transition ${location.pathname === '/furniture' ? 'border-gold bg-gold/10' : 'border-gold/40 bg-gold/5 hover:bg-gold/10'}`}>
+                              <p className="font-heading text-base font-bold text-navy">Commercial Furniture</p>
+                              <p className="mt-1 font-body text-xs text-navy/70">Commercial &amp; Institutional Bulk Supply</p>
+                              <span className="mt-2 inline-block font-sub text-[10px] uppercase tracking-[0.18em] text-gold">Explore Commercial Furniture →</span>
+                            </Link>
+                            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                               {categoryMenuRows.map(({ category, products }) => (
                                 <div key={category.id} className="rounded-xl border border-navy/10 bg-light-grey/40 p-3">
                                   <div className="mb-2 flex items-center justify-between gap-2">
-                                    <Link to={`/products/category/${category.slug}`} onClick={() => setMega(null)} className="font-heading text-sm font-bold text-navy hover:text-gold">
+                                    <Link to={`/products/category/${category.slug}`} onClick={closeProductsPanel} className="font-heading text-sm font-bold text-navy hover:text-gold">
                                       {category.name}
                                     </Link>
-                                    <Link to={`/products/category/${category.slug}`} onClick={() => setMega(null)} className="font-sub text-[10px] uppercase tracking-[0.18em] text-navy/50 hover:text-gold">View all</Link>
+                                    <Link to={`/products/category/${category.slug}`} onClick={closeProductsPanel} className="font-sub text-[10px] uppercase tracking-[0.18em] text-navy/50 hover:text-gold">View all</Link>
                                   </div>
                                   {products.length ? (
-                                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                                    <div className="grid grid-cols-1 gap-2">
                                       {products.map((product) => (
-                                        <Link key={product.id || product.slug} to={getProductDetailPath(product)} onClick={() => setMega(null)} className="group flex items-center gap-2 rounded-lg border border-transparent bg-white p-2 transition hover:border-gold/40 hover:bg-gold/5">
+                                        <Link key={product.id || product.slug} to={getProductDetailPath(product)} onClick={closeProductsPanel} className="group flex min-w-0 items-center gap-2 rounded-lg border border-transparent bg-white p-2 transition hover:border-gold/40 hover:bg-gold/5">
                                           {product.image ? <img src={product.image} alt={product.name} className="h-12 w-12 rounded-md object-cover" loading="lazy" /> : <div className="h-12 w-12 rounded-md bg-navy/10" aria-hidden="true" />}
                                           <div className="min-w-0 flex-1">
-                                            <p className="truncate font-sub text-[11px] font-semibold text-navy group-hover:text-gold">{product.name}</p>
-                                            {product.short_desc ? <p className="line-clamp-2 font-body text-[10px] text-navy/60">{product.short_desc}</p> : <p className="font-body text-[10px] text-navy/50">{category.name}</p>}
+                                            <p className="break-words font-sub text-[11px] font-semibold text-navy group-hover:text-gold">{product.name}</p>
+                                            {product.short_desc ? <p className="break-words font-body text-[10px] text-navy/60">{product.short_desc}</p> : <p className="break-words font-body text-[10px] text-navy/50">{category.name}</p>}
                                           </div>
                                         </Link>
                                       ))}
@@ -244,7 +257,7 @@ export default function Navbar() {
               }
 
               return (
-                <div key={m.label} className="relative flex items-center h-full" onMouseEnter={() => setMega(m.items ? m.label : null)} onMouseLeave={() => setMega((cur) => (cur === m.label ? null : cur))}>
+                <div key={m.label} className="relative flex items-center h-full" onMouseEnter={() => { closeProductsPanel(); setMega(m.items ? m.label : null); }} onMouseLeave={() => setMega((cur) => (cur === m.label ? null : cur))}>
                   {m.to ? (
                     <Link to={m.to} className="group relative inline-flex h-full items-center gap-1 px-4 font-sub text-sm font-medium leading-none text-navy/70 transition-colors hover:text-gold">
                       <span>{m.label}</span>
@@ -312,10 +325,15 @@ export default function Navbar() {
                   return (
                     <div key={m.label} className="border-b border-border-grey py-3">
                       <div className="flex items-center justify-between gap-2">
-                        <p className="font-sub text-base font-bold text-navy">{m.label}</p>
+                        <button type="button" onClick={() => setProductsOpen((value) => !value)} className="font-sub text-base font-bold text-navy">{m.label}</button>
+                        <ChevronDown className={`h-4 w-4 text-gold transition-transform ${productsOpen ? 'rotate-180' : ''}`} />
                         <Link to="/products" onClick={() => setOpen(false)} className="font-sub text-xs text-gold">All Categories</Link>
                       </div>
-                      <div className="mt-3 space-y-3 pl-2">
+                      {productsOpen && <div className="mt-3 space-y-3 pl-2">
+                        <Link to="/furniture" onClick={() => setOpen(false)} className={`block rounded-lg border p-3 ${location.pathname === '/furniture' ? 'border-gold bg-gold/10' : 'border-gold/40 bg-gold/5'}`}>
+                          <p className="font-sub text-sm font-bold text-navy">Commercial Furniture</p>
+                          <p className="mt-1 font-body text-xs text-navy/70">Commercial &amp; Institutional Bulk Supply</p>
+                        </Link>
                         {categoryMenuRows.map(({ category, products }) => (
                           <div key={category.id} className="rounded-lg border border-navy/10 bg-light-grey/40 p-2">
                             <Link to={`/products/category/${category.slug}`} onClick={() => setOpen(false)} className="font-sub text-sm font-semibold text-navy hover:text-gold">{category.name}</Link>
@@ -333,7 +351,7 @@ export default function Navbar() {
                             )}
                           </div>
                         ))}
-                      </div>
+                      </div>}
                     </div>
                   );
                 }

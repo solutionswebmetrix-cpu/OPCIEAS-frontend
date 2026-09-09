@@ -12,8 +12,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getBusinessVerticalImages, type BusinessVerticalKey, findLocalProductImage } from '../lib/businessVerticalImages';
-import { fetchFeaturedProducts, type Product } from '../lib/data';
+import { getBusinessVerticalImages, type BusinessVerticalKey } from '../lib/businessVerticalImages';
 
 function BusinessVerticalImage({ title, category }: { title: string; category: BusinessVerticalKey }) {
   const images = getBusinessVerticalImages(category);
@@ -51,49 +50,6 @@ function BusinessVerticalImage({ title, category }: { title: string; category: B
         </div>
       )}
     </div>
-  );
-}
-
-function FeaturedProductsSection() {
-  const [products, setProducts] = useState<Product[]>([]);
-
-  useEffect(() => {
-    void fetchFeaturedProducts().then((featured) => {
-      setProducts(featured.filter((product) => product.slug && findLocalProductImage(product.name)));
-    });
-  }, []);
-
-  const visibleProducts = products.slice(0, 4);
-  if (visibleProducts.length === 0) return null;
-
-  return (
-    <section className="bg-white py-18 sm:py-24">
-      <div className="container-x px-6">
-        <div className="mb-8 text-center">
-          <p className="font-sub text-xs uppercase tracking-[0.35em] text-gold">Featured products</p>
-          <h2 className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl">Product categories already in the catalogue</h2>
-        </div>
-
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-          {visibleProducts.map((product) => {
-            const image = findLocalProductImage(product.name);
-            if (!image) return null;
-            return (
-              <Link key={product.id} to={`/product/${product.slug}`} className="group overflow-hidden rounded-lux border border-navy/10 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-                <div className="h-56 overflow-hidden rounded-t-lux bg-light-grey">
-                  <img src={image} alt={product.name} loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                </div>
-                <div className="flex min-h-40 flex-col p-5">
-                  <h3 className="font-heading text-xl font-bold text-navy">{product.name}</h3>
-                  {product.short_desc && <p className="mt-2 line-clamp-3 font-body text-sm leading-relaxed text-navy/70">{product.short_desc}</p>}
-                  <span className="mt-auto inline-flex items-center gap-2 pt-5 font-sub text-sm text-gold">View details <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" /></span>
-                </div>
-              </Link>
-            );
-          })}
-        </div>
-      </div>
-    </section>
   );
 }
 
@@ -167,8 +123,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      <FeaturedProductsSection />
 
       <section className="bg-light-grey py-18 sm:py-24">
         <div className="container-x px-6">

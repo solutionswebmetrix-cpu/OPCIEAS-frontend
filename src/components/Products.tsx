@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FileText, Download, RotateCw, ArrowRight } from 'lucide-react';
-import { fetchCategories, fetchFeaturedProducts, fetchProducts, type Category, type Product } from '../lib/data';
+import { fetchCategories, fetchProducts, type Category, type Product } from '../lib/data';
 import Product360Viewer from './Product360Viewer';
 
 function HomeProductCard({ product, categoryName, index, categoryIndex }: { product: Product; categoryName: string; index: number; categoryIndex: number }) {
@@ -74,15 +74,13 @@ function FeaturedProduct({ product, i }: { product: Product; i: number }) {
 
 export default function Products() {
   const [allProducts, setAllProducts] = useState<Product[]>([]);
-  const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
     (async () => {
-      const [products, categoryList, featured] = await Promise.all([fetchProducts(), fetchCategories(), fetchFeaturedProducts()]);
+      const [products, categoryList] = await Promise.all([fetchProducts(), fetchCategories()]);
       setAllProducts(products);
       setCategories(categoryList);
-      setFeaturedProducts(featured.slice(0, 3));
     })();
   }, []);
 
@@ -151,16 +149,6 @@ export default function Products() {
         </div>
       </div>
 
-      <div className="mt-20 sm:mt-24">
-        <div className="container-x mb-12 px-6">
-          <motion.h3 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="font-heading text-2xl font-black text-navy sm:text-3xl">
-            Featured Products
-          </motion.h3>
-        </div>
-        {featuredProducts.map((product, i) => (
-          <FeaturedProduct key={product.id} product={product} i={i} />
-        ))}
-      </div>
     </section>
   );
 }

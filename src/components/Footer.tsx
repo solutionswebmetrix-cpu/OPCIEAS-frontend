@@ -71,6 +71,11 @@ export default function Footer() {
             <p className="mt-5 max-w-sm font-body text-sm leading-relaxed text-body-text">
                 OPCIEAS Tech Business Promotion, Social Services Pvt. Ltd. delivers institutional furniture, storage solutions, and business promotion services with a focus on quality, reliability, and transparent engagement.
             </p>
+              <div className="mt-5 space-y-1.5 font-body text-xs leading-relaxed text-navy/70">
+                <p>Precision-engineered to replace substandard institutional furniture.</p>
+                <p>EPR-registered for compliant and eco-friendly manufacturing.</p>
+                <p>Built for reliable domestic and international institutional deployment.</p>
+              </div>
               <p className="mt-4 font-sub text-sm italic text-gold">ISO certification information: available upon final client confirmation and document approval.</p>
               <p className="mt-2 font-body text-xs text-navy/60">Export credentials: presented on request with relevant documentation and compliance record.</p>
             {/* Social */}
