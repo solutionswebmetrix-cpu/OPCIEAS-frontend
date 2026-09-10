@@ -181,16 +181,22 @@ export default function Navbar() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ delay: 0.3, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className={`fixed top-0 z-[1000] h-16 w-full transition-all duration-500 lg:h-[68px] ${
+        className={`fixed top-0 z-[1000] h-[84px] w-full transition-all duration-500 lg:h-24 ${
           scrolled ? 'bg-white shadow-[0_4px_20px_rgba(0,0,0,0.08)]' : 'bg-white/80 backdrop-blur'
         }`}
       >
         <div className="container-x flex h-full items-center justify-between px-6 lg:px-8">
-          <Link to="/" className="flex h-11 min-w-0 items-center gap-2">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-gold/40 bg-navy lg:h-11 lg:w-11">
-              <img src={companyLogo} alt="OPCIEAS emblem" className="h-full w-full object-contain" />
-            </div>
-            <span className="whitespace-nowrap text-lg font-bold leading-none text-navy lg:text-xl" style={{ fontFamily: '"Times New Roman", Times, serif' }}>OPCIEAS</span>
+          <Link to="/" className="flex h-full shrink-0 items-center gap-0">
+            <img src={companyLogo} alt="OPCIEAS approved emblem" className="h-18 w-18 shrink-0 object-contain sm:h-[72px] sm:w-[72px] lg:h-20 lg:w-20" />
+            <span className="flex shrink-0 flex-col items-center justify-center text-center text-[#123c35]">
+              <span className="whitespace-nowrap text-[30px] font-bold leading-none sm:text-[34px] lg:text-[38px]" style={{ fontFamily: '"Times New Roman", Times, serif' }}>OPCIEAS</span>
+              <span className="whitespace-nowrap text-[16px] leading-[1.1] sm:text-[18.6px] lg:text-[21px]" style={{ fontFamily: '"Times New Roman", Times, serif' }}>Private Limited</span>
+              <span className="mt-1.5 flex items-center justify-center gap-1.5 text-[6px] font-semibold leading-none tracking-[0.1em] sm:gap-2 sm:text-[7px] sm:tracking-[0.12em] lg:text-[8px]">
+                <span className="h-px w-5 shrink-0 bg-gold sm:w-7 lg:w-9" aria-hidden="true" />
+                <span className="whitespace-nowrap">HAND CRAFTED SINCE 1999</span>
+                <span className="h-px w-5 shrink-0 bg-gold sm:w-7 lg:w-9" aria-hidden="true" />
+              </span>
+            </span>
           </Link>
 
           {/* Desktop menu */}
