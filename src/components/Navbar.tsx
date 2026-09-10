@@ -186,14 +186,11 @@ export default function Navbar() {
         }`}
       >
         <div className="container-x flex h-full items-center justify-between px-6 lg:px-8">
-          <Link to="/" className="flex h-11 items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-gold/40 bg-navy">
-              <img src={companyLogo} alt="OPCIEAS logo" className="h-full w-full object-contain" />
+          <Link to="/" className="flex h-11 min-w-0 items-center gap-2">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-gold/40 bg-navy lg:h-11 lg:w-11">
+              <img src={companyLogo} alt="OPCIEAS emblem" className="h-full w-full object-contain" />
             </div>
-            <div className="hidden sm:block">
-              <p className="font-heading text-lg font-extrabold tracking-widest text-navy">OPCIEAS</p>
-              <p className="font-sub text-[10px] tracking-[0.2em] text-gold">PVT. LTD.</p>
-            </div>
+            <span className="whitespace-nowrap text-lg font-bold leading-none text-navy lg:text-xl" style={{ fontFamily: '"Times New Roman", Times, serif' }}>OPCIEAS</span>
           </Link>
 
           {/* Desktop menu */}

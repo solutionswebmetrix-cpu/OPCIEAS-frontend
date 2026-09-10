@@ -64,7 +64,7 @@ export default function Footer() {
                 <img src={companyLogo} alt="OPCIEAS logo" className="h-full w-full object-contain" />
               </div>
               <div>
-                <p className="font-heading text-xl font-extrabold tracking-widest text-navy">OPCIEAS</p>
+                <p className="font-times text-xl font-bold tracking-widest text-navy">OPCIEAS</p>
                 <p className="font-sub text-[10px] tracking-[0.2em] text-gold">PVT. LTD.</p>
               </div>
             </div>
