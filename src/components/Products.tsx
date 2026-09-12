@@ -2,11 +2,12 @@ import { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FileText, Download, RotateCw, ArrowRight } from 'lucide-react';
-import { fetchCategories, fetchProducts, type Category, type Product } from '../lib/data';
+import { fetchCategories, fetchProducts, resolveProductImage, type Category, type Product } from '../lib/data';
 import Product360Viewer from './Product360Viewer';
 
 function HomeProductCard({ product, categoryName, index, categoryIndex }: { product: Product; categoryName: string; index: number; categoryIndex: number }) {
   const productSlug = product.slug || String(product.id);
+  const image = resolveProductImage(product.image);
 
   return (
     <motion.div
@@ -18,8 +19,8 @@ function HomeProductCard({ product, categoryName, index, categoryIndex }: { prod
     >
       <Link to={`/product/${productSlug}`} className="block">
         <div className="h-48 sm:h-52 bg-white p-2.5 sm:p-3">
-          {product.image ? <img
-            src={product.image}
+          {image ? <img
+            src={image}
             alt={product.name}
             className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
             loading={categoryIndex === 0 && index < 4 ? 'eager' : 'lazy'}
@@ -42,7 +43,8 @@ function HomeProductCard({ product, categoryName, index, categoryIndex }: { prod
 function FeaturedProduct({ product, i }: { product: Product; i: number }) {
   const [viewerOpen, setViewerOpen] = useState(false);
   const gallery = product.gallery?.length ? product.gallery : (product.image ? [product.image] : []);
-  const primaryImage = product.image || gallery[0];
+  const primaryImage = resolveProductImage(product.image) || resolveProductImage(gallery[0] || null);
+  const resolvedGallery = gallery.map((image) => resolveProductImage(image)).filter((image): image is string => Boolean(image));
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -67,7 +69,7 @@ function FeaturedProduct({ product, i }: { product: Product; i: number }) {
           </div>
         </div>
       </div>
-      <Product360Viewer images={gallery} productName={product.name} open={viewerOpen} onClose={() => setViewerOpen(false)} />
+      <Product360Viewer images={resolvedGallery} productName={product.name} open={viewerOpen} onClose={() => setViewerOpen(false)} />
     </motion.div>
   );
 }

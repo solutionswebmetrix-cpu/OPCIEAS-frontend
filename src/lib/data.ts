@@ -141,24 +141,31 @@ function toNumber(value: any): number | null {
   return null;
 }
 
-const BACKEND_BASE =
+const BACKEND_BASE = (
   (import.meta as any).env?.VITE_BACKEND_URL ||
   (import.meta as any).env?.VITE_API_URL?.replace(/\/api\/?$/, '') ||
-  '';
+  ((import.meta as any).env?.PROD ? 'https://api.opcieas.com' : '')
+).replace(/\/$/, '');
 
-function resolveImageAbsolute(value: string | null): string | null {
+export function resolveProductImage(value: string | null): string | null {
   if (!value) return null;
-  if (value.startsWith('http://') || value.startsWith('https://') || value.startsWith('data:') || value.startsWith('blob:')) {
-    return value;
+  const normalized = value.trim();
+  if (!normalized) return null;
+  if (/^(https?:|data:|blob:)/i.test(normalized)) {
+    return normalized;
   }
-  if (value.startsWith(BACKEND_BASE)) return value;
-  if (value.startsWith('/uploads/') || value.startsWith('/assets/') || value.startsWith('/')) {
-    return BACKEND_BASE + value;
+  if (BACKEND_BASE && normalized.startsWith(BACKEND_BASE)) return normalized;
+
+  let path = normalized.replace(/^\/+/, '');
+  if (!path.includes('/')) {
+    path = `uploads/products/${path}`;
   }
-  if (value.startsWith('uploads/') || value.startsWith('assets/')) {
-    return `${BACKEND_BASE}/${value}`;
+
+  if (BACKEND_BASE) {
+    return `${BACKEND_BASE}/${path}`;
   }
-  return value;
+
+  return `/${path}`;
 }
 
 function normalizeImageUrl(value: any): string | null {
@@ -168,7 +175,7 @@ function normalizeImageUrl(value: any): string | null {
   else if (typeof value === 'object') {
     raw = value.image_url || value.image_path || value.url || null;
   }
-  return resolveImageAbsolute(raw);
+  return resolveProductImage(raw);
 }
 
 function slugifyText(value: string): string {

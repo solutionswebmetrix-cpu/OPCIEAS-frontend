@@ -7,7 +7,7 @@ import Breadcrumbs from '../components/Breadcrumbs';
 import Product360Viewer from '../components/Product360Viewer';
 import ProductCard from '../components/ProductCard';
 import InquiryForm from '../components/InquiryForm';
-import { fetchProduct, fetchProducts, type Product } from '../lib/data';
+import { fetchProduct, fetchProducts, resolveProductImage, type Product } from '../lib/data';
 import { validateProductEssentials } from '../lib/productValidation';
 import { findProductAssetBySlug } from '../lib/productAssetResolver';
 
@@ -69,6 +69,7 @@ export default function ProductDetailPage() {
   }
 
   const gallery = product.gallery?.length ? product.gallery : (product.image ? [product.image] : []);
+  const resolvedGallery = gallery.map((image) => resolveProductImage(image)).filter((image): image is string => Boolean(image));
   const specs = product.specs || {};
   const features = product.features || [];
   const waText = `Hi, I'm interested in ${encodeURIComponent(product.name)}. Please share details.`;
@@ -105,22 +106,22 @@ export default function ProductDetailPage() {
           {/* Gallery */}
           <div>
             <div className="group relative aspect-square overflow-hidden rounded-lux border border-navy/10">
-              {gallery.length ? <img
-                src={gallery[activeImg]}
+              {resolvedGallery.length ? <img
+                src={resolvedGallery[activeImg]}
                 alt={product.name}
                 className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
               /> : <div className="h-full w-full bg-navy/5" aria-label="Product image unavailable" />}
-              {gallery.length > 1 && (
+              {resolvedGallery.length > 1 && (
                 <>
                   <button
-                    onClick={() => setActiveImg((i) => (i - 1 + gallery.length) % gallery.length)}
+                    onClick={() => setActiveImg((i) => (i - 1 + resolvedGallery.length) % resolvedGallery.length)}
                     aria-label="Previous image"
                     className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-white/90 border border-navy/10 p-2 text-navy shadow-sm opacity-0 transition hover:bg-gold hover:text-navy group-hover:opacity-100 focus:opacity-100"
                   >
                     <ChevronLeft className="h-5 w-5" />
                   </button>
                   <button
-                    onClick={() => setActiveImg((i) => (i + 1) % gallery.length)}
+                    onClick={() => setActiveImg((i) => (i + 1) % resolvedGallery.length)}
                     aria-label="Next image"
                     className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-white/90 border border-navy/10 p-2 text-navy shadow-sm opacity-0 transition hover:bg-gold hover:text-navy group-hover:opacity-100 focus:opacity-100"
                   >
@@ -129,15 +130,15 @@ export default function ProductDetailPage() {
                 </>
               )}
               <div className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-white/90 border border-navy/10 px-3 py-1 font-sub text-[11px] text-navy shadow-sm opacity-0 transition group-hover:opacity-100">
-                {activeImg + 1} / {gallery.length}
+                {activeImg + 1} / {resolvedGallery.length}
               </div>
               <button onClick={() => setViewerOpen(true)} className="absolute bottom-4 right-4 flex items-center gap-2 rounded-full bg-white border border-navy/10 px-4 py-2 font-sub text-xs text-navy shadow-sm transition hover:bg-gold hover:text-navy">
                 <RotateCw className="h-4 w-4" /> 360° View
               </button>
             </div>
-            {gallery.length > 1 && (
+            {resolvedGallery.length > 1 && (
               <div className="mt-4 flex flex-wrap gap-3">
-                {gallery.map((img, i) => (
+                {resolvedGallery.map((img, i) => (
                   <button
                     key={i}
                     onClick={() => setActiveImg(i)}

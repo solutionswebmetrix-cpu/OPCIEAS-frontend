@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Eye, ArrowUpRight } from 'lucide-react';
-import type { Product } from '../lib/data';
+import { resolveProductImage, type Product } from '../lib/data';
 
 interface Props {
   product: Product;
@@ -10,6 +10,7 @@ interface Props {
 }
 
 export default function ProductCard({ product, index }: Props) {
+  const image = resolveProductImage(product.image);
   const waText = encodeURIComponent(`Hi, I'm interested in ${product.name}. Please share details.`);
   const supplyLabel = product.supply_type === 'IN_HOUSE' ? 'In-House Manufacturing' : product.supply_type === 'PARTNER' ? 'Partner Supply' : 'Direct Manufacturer';
   const productRoute = product.slug || String(product.id || 'product');
@@ -26,8 +27,8 @@ export default function ProductCard({ product, index }: Props) {
           to={`/product/${productRoute}`}
           className="block aspect-[4/5] overflow-hidden"
         >
-          {product.image ? (
-            <img src={product.image} alt={product.name} className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
+          {image ? (
+            <img src={image} alt={product.name} className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
           ) : (
             <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-slate-200 to-slate-300" />
           )}
