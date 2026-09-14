@@ -7,38 +7,51 @@ import SectionBanner from '../components/SectionBanner';
 import { fetchCategories, fetchProducts, type Category, type Product } from '../lib/data';
 import { CATEGORY_BANNERS } from '../lib/images';
 
-const bulkGroups = [
+type BulkGroup = {
+  title: string;
+  description: string;
+  categories: string[];
+  terms: string[];
+};
+
+const bulkGroups: BulkGroup[] = [
   {
-    title: 'Classroom & Academic Seating',
-    description: 'Ergonomic desks, single and dual benches, fixed-lecture hall seating, and integrated writing-pad chairs for schools and universities.',
-    categories: ['educational furniture', 'school furniture'],
-    terms: ['desk', 'bench', 'student', 'classroom', 'lecture', 'writing pad', 'academic', 'chair', 'seating'],
+    title: 'Auditorium Chairs',
+    description: 'Heavy-use auditorium seating with durable chair structures and public-space seating layouts.',
+    categories: ['educational furniture', 'school furniture', 'office furniture'],
+    terms: ['auditorium', 'chair', 'seat'],
   },
   {
-    title: 'Laboratory & Specialized Furniture',
-    description: 'Chemical-, electrical-, and thermal-resistant workstations, rotatable stools, and modular record storage units designed for industrial and educational labs.',
-    categories: ['educational furniture', 'school furniture', 'office furniture', 'industrial storage'],
-    terms: ['laboratory', 'lab', 'stool', 'workstation', 'record', 'specialized'],
+    title: 'Cine Chairs',
+    description: 'Comfortable, durable cinema and theater seating designed for repeated commercial seating use.',
+    categories: ['office furniture', 'educational furniture', 'industrial storage'],
+    terms: ['cine', 'cinema', 'movie', 'theatre', 'theater', 'chair'],
+  },
+  {
+    title: 'Stadium Chairs',
+    description: 'Outdoor and spectator seating solutions shaped for stadium, training, and public-viewing environments.',
+    categories: ['office furniture', 'educational furniture', 'industrial storage'],
+    terms: ['stadium', 'stadium chair', 'seating'],
+  },
+  {
+    title: 'Commercial Furniture',
+    description: 'We can supply any product if specifications and drawing layouts are shared, with or without images. Request Bulk Quote.',
+    categories: ['office furniture', 'educational furniture', 'school furniture', 'hostel furniture', 'industrial storage'],
+    terms: ['desk', 'storage', 'cabinet', 'chair', 'table', 'bench', 'workstation'],
   },
   {
     title: 'Hostel & Residential Accommodation',
     description: 'Heavy-duty single, bunker, and triple cots, paired with marine-grade stainless steel hardware and waterproof amenities.',
     categories: ['hostel furniture'],
-    terms: ['cot', 'bunker', 'hostel', 'bed', 'mattress', 'pillow', 'bedsheet'],
+    terms: ['single cot', 'bunker cot', 'triple cot', 'cot', 'bunk bed', 'hostel', 'bed', 'mattress', 'pillow', 'bedsheet'],
   },
   {
-    title: 'Institutional & Office Storage',
-    description: 'Steel and fiberglass cupboards, anti-corrosive filing cabinets, and secure locker systems for students, staff, and industrial facilities.',
-    categories: ['office furniture', 'industrial storage', 'hospital furniture', 'bathroom collection', 'letter box'],
-    terms: ['storage', 'rack', 'locker', 'cupboard', 'cabinet', 'filing', 'shelf', 'letter box'],
+    title: 'Industrial Storage & SS Detachable Wire Racks',
+    description: 'Medium-duty SS detachable wire racks with a loading capacity of 200 Kg per level and size H72" × W36" × D18".',
+    categories: ['industrial storage'],
+    terms: ['ss detachable wire rack', 'detachable wire rack', 'wire rack', 'storage', 'rack'],
   },
-  {
-    title: 'Auditorium & Library Infrastructure',
-    description: 'Sturdy high-capacity library racks, auditorium rows, and heavy-use public space seating.',
-    categories: ['educational furniture', 'school furniture', 'office furniture'],
-    terms: ['auditorium', 'library', 'cinema', 'stadium', 'lecture', 'public space', 'seating'],
-  },
-] as const;
+];
 
 const bulkSupplyBenefits = [
   ['Faster Delivery', 'Streamlined manufacturing ensures rapid fulfillment for orders in the hundreds or thousands.'],
@@ -63,7 +76,8 @@ const infrastructure = [
 
 function matchesProduct(product: Product, group: typeof bulkGroups[number], categoryName: string) {
   const searchable = product.name.toLowerCase();
-  return group.categories.includes(categoryName.toLowerCase()) && group.terms.some((term) => {
+  const categoryMatch = group.categories.some((name) => name.toLowerCase() === categoryName.toLowerCase());
+  return categoryMatch && group.terms.some((term) => {
     const escapedTerm = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     return new RegExp(`\\b${escapedTerm}\\b`, 'i').test(searchable);
   });
@@ -160,7 +174,15 @@ export default function FurniturePage() {
             {productsByGroup.map(({ group, products: matchingProducts }) => (
               <section key={group.title}>
                 <h3 className="font-heading text-2xl font-bold text-navy">{group.title}</h3>
-                <p className="mt-3 max-w-3xl font-body text-base leading-7 text-navy/70">{group.description}</p>
+                <div className="mt-3 max-w-3xl">
+                  <p className="font-body text-base leading-7 text-navy/70">{group.description}</p>
+                  {group.title === 'Commercial Furniture' && (
+                    <div className="mt-4 flex flex-wrap gap-3">
+                      <Link to="/rfq" className="btn-gold inline-flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm">Request Bulk Quote</Link>
+                      <Link to="/rfq" className="btn-ghost inline-flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm text-navy">Request Custom Requirement</Link>
+                    </div>
+                  )}
+                </div>
                 {matchingProducts.length > 0 ? (
                   <div className="mt-7 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
                     {matchingProducts.map((product, index) => <ProductCard key={product.id} product={product} index={index} />)}

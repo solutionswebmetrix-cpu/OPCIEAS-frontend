@@ -1,13 +1,18 @@
 import { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FileText, Download, RotateCw, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { fetchCategories, fetchProducts, resolveProductImage, type Category, type Product } from '../lib/data';
-import Product360Viewer from './Product360Viewer';
+import { HOMEPAGE_SHOWCASE_CATALOG, type ProductAsset } from '../lib/productAssetResolver';
+
+function isViteAssetUrl(value?: string | null): boolean {
+  if (!value) return false;
+  return /^\/src\/assets\//i.test(value) || /^\/assets\//i.test(value);
+}
 
 function HomeProductCard({ product, categoryName, index, categoryIndex }: { product: Product; categoryName: string; index: number; categoryIndex: number }) {
   const productSlug = product.slug || String(product.id);
-  const image = resolveProductImage(product.image);
+  const image = isViteAssetUrl(product.image) ? product.image : resolveProductImage(product.image);
 
   return (
     <motion.div
@@ -40,61 +45,160 @@ function HomeProductCard({ product, categoryName, index, categoryIndex }: { prod
   );
 }
 
-function FeaturedProduct({ product, i }: { product: Product; i: number }) {
-  const [viewerOpen, setViewerOpen] = useState(false);
-  const gallery = product.gallery?.length ? product.gallery : (product.image ? [product.image] : []);
-  const primaryImage = resolveProductImage(product.image) || resolveProductImage(gallery[0] || null);
-  const resolvedGallery = gallery.map((image) => resolveProductImage(image)).filter((image): image is string => Boolean(image));
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true, margin: '-200px' }}
-      transition={{ duration: 0.8 }}
-      className={`relative flex min-h-[70vh] items-center overflow-hidden ${i % 2 === 1 ? 'flex-row-reverse' : ''}`}
-    >
-      <div className="pointer-events-none absolute inset-0">
-        {primaryImage ? <img src={primaryImage} alt={product.name} className="h-full w-full object-cover" loading="lazy" /> : <div className="h-full w-full bg-navy/5" />}
-        <div className={`absolute inset-0 ${i % 2 === 1 ? 'bg-gradient-to-l from-white via-white/80 to-transparent' : 'bg-gradient-to-r from-white via-white/80 to-transparent'}`} />
-      </div>
-      <div className="container-x relative z-10 px-6">
-        <div className={`max-w-lg ${i % 2 === 1 ? 'ml-auto text-right' : ''}`}>
-          <span className="inline-block rounded-full bg-gold/20 px-3 py-1 font-sub text-xs font-semibold text-gold-3">Featured</span>
-          <h3 className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl xl:text-5xl">{product.name}</h3>
-          <p className="mt-3 font-body text-sm text-navy/70">{product.short_desc || product.long_desc || 'Premium product from OPCIEAS.'}</p>
-          <div className={`relative z-10 mt-6 flex flex-wrap gap-3 ${i % 2 === 1 ? 'justify-end' : ''}`}>
-            <button onClick={() => setViewerOpen(true)} className="btn-ghost flex items-center gap-2 rounded-full px-5 py-2.5 font-sub text-sm text-navy"><RotateCw className="h-4 w-4" /> 360° View</button>
-            <Link to="/rfq" className="btn-ghost flex items-center gap-2 rounded-full px-5 py-2.5 font-sub text-sm text-navy"><FileText className="h-4 w-4" /> Request Quote</Link>
-            <a href={primaryImage} download className="btn-gold flex items-center gap-2 rounded-full px-5 py-2.5 font-sub text-sm"><Download className="h-4 w-4" /> Download PDF</a>
-          </div>
-        </div>
-      </div>
-      <Product360Viewer images={resolvedGallery} productName={product.name} open={viewerOpen} onClose={() => setViewerOpen(false)} />
-    </motion.div>
-  );
+function assetToProduct(category: Category, asset: ProductAsset): Product {
+  return {
+    id: asset.slug || asset.fileName || asset.path,
+    seller_id: undefined,
+    category_id: String(category.id),
+    subcategory: asset.folder,
+    name: asset.name,
+    slug: asset.slug,
+    sku: null,
+    short_desc: null,
+    short_description: asset.folder,
+    long_desc: null,
+    description: asset.folder,
+    key_features: [],
+    features: [],
+    supply_type: null,
+    specs: {},
+    specifications: {},
+    dimensions: null,
+    material: null,
+    materials_used: null,
+    color: null,
+    warranty_months: null,
+    warranty_terms: null,
+    packaging_specifications: null,
+    export_available: false,
+    export_badge: null,
+    weight: null,
+    variants: null,
+    tags: null,
+    min_order_quantity: 1,
+    max_order_quantity: null,
+    unit: undefined,
+    price: null,
+    discount_price: null,
+    discount_percentage: null,
+    tax_percentage: 0,
+    stock_quantity: undefined,
+    availability_status: undefined,
+    is_approved: true,
+    approved_at: null,
+    approved_by: null,
+    featured: false,
+    is_featured: false,
+    is_new_arrival: false,
+    is_best_seller: false,
+    rating: undefined,
+    total_reviews: undefined,
+    total_views: undefined,
+    total_orders: undefined,
+    status: 'Published',
+    meta_title: null,
+    meta_description: null,
+    image: asset.image,
+    gallery: [asset.image],
+    images: [],
+    price_range: null,
+    created_at: new Date().toISOString(),
+    updated_at: undefined,
+  };
 }
 
 export default function Products() {
   const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<boolean>(false);
 
   useEffect(() => {
     (async () => {
-      const [products, categoryList] = await Promise.all([fetchProducts(), fetchCategories()]);
-      setAllProducts(products);
-      setCategories(categoryList);
+      try {
+        setLoading(true);
+        setError(false);
+        const categoryList = await fetchCategories();
+        setCategories(categoryList);
+      } catch (e) {
+        console.error('Categories API error:', e);
+        setError(true);
+        setCategories([]);
+      }
+
+      try {
+        const products = await fetchProducts();
+        setAllProducts(products);
+      } catch (e) {
+        console.error('Products API error:', e);
+        setError(true);
+        setAllProducts([]);
+      } finally {
+        setLoading(false);
+      }
     })();
   }, []);
 
   const productsByCategory = useMemo(() => {
-    return categories.map((category) => ({
-      category,
-      products: allProducts
+    return categories.map((category) => {
+      const apiCategoryProducts = allProducts
         .filter((product) => String(product.category_id ?? '') === String(category.id))
-        .sort((a, b) => Number(b.featured || b.is_featured) - Number(a.featured || a.is_featured))
-        .slice(0, 5),
-    })).filter((entry) => entry.products.length > 0);
+        .sort((a, b) => Number(b.featured || b.is_featured) - Number(a.featured || a.is_featured));
+
+      const products: Product[] = [...apiCategoryProducts];
+      const usedSlugs = new Set(products.map((product) => product.slug || String(product.id)));
+      const assetPool = HOMEPAGE_SHOWCASE_CATALOG[category.name] ?? [];
+      const assetByName = new Map<string, ProductAsset>();
+      for (const asset of assetPool) {
+        assetByName.set(asset.name.trim().toLowerCase(), asset);
+      }
+
+      for (const asset of assetPool) {
+        if (products.length >= 5) break;
+        if (usedSlugs.has(asset.slug)) continue;
+        products.push(assetToProduct(category, asset));
+        usedSlugs.add(asset.slug);
+      }
+
+      const finalProducts: Product[] = products.slice(0, 5).map((product) => {
+        const matchName = (product.name || '').trim().toLowerCase();
+        const matched = assetByName.get(matchName);
+        if (matched) {
+          return {
+            ...product,
+            image: matched.image,
+            gallery: [matched.image],
+            __showcaseAssetOverride: true,
+          } as Product & { __showcaseAssetOverride?: boolean };
+        }
+        return product;
+      });
+
+      return {
+        category,
+        products: finalProducts,
+      };
+    }).filter((entry) => entry.products.length > 0);
   }, [allProducts, categories]);
+
+  if (loading) {
+    return (
+      <section id="products" className="relative overflow-hidden bg-white py-24 sm:py-32">
+        <div className="container-x px-6">
+          <div className="mb-14 sm:mb-16 text-center">
+            <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-sub text-sm uppercase tracking-[0.3em] text-gold">Product Showcase</motion.p>
+            <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl xl:text-5xl">
+              Furniture for Every Commercial Space
+            </motion.h2>
+            <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mx-auto mt-4 max-w-xl font-body text-sm text-navy/60">
+              From office interiors and educational campuses to hospitals, hospitality and industrial storage — 1000+ furniture products engineered for durability and style.
+            </motion.p>
+          </div>
+          <div className="font-sub text-sm uppercase tracking-[0.2em] text-gold">Loading products...</div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="products" className="relative overflow-hidden bg-white py-24 sm:py-32">
@@ -148,6 +252,9 @@ export default function Products() {
               </motion.div>
             );
           })}
+          {productsByCategory.length === 0 && !loading && !error && (
+            <div className="font-sub text-sm uppercase tracking-[0.2em] text-gold">No products available.</div>
+          )}
         </div>
       </div>
 

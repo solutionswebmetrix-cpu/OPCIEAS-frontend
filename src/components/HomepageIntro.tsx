@@ -70,6 +70,15 @@ export default function HomepageIntro() {
           >
             OPCIEAS operates through Tech Business Promotion, Furniture & Textiles, and Social Services — delivering excellence across every domain with shared values of trust, quality, and sustainable prosperity.
           </motion.p>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.25 }}
+            className="mt-4 font-sub text-xs uppercase tracking-[0.2em] text-gold"
+          >
+            MOQ fixed at 500 units – bulk orders only, applicable across all categories.
+          </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

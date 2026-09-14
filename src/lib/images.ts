@@ -13,12 +13,12 @@ export const CANONICAL_CATEGORIES = [
 export type CanonicalCategoryName = typeof CANONICAL_CATEGORIES[number]['name'];
 
 const STRICT_RAW_NAME_OVERRIDE: Record<string, CanonicalCategoryName> = {
-  'Adjustable Height Table': 'Office Furniture',
+  'Adjustable Height Table': 'Hospital Furniture',
   'Adjustable Wood-Top Workshop Table': 'Office Furniture',
   'Beige Seat Tripod Workshop Stool': 'Office Furniture',
   'Bisleri Counter Corner': 'Office Furniture',
   'Black Furniture in a Minimal Classroom': 'School Furniture',
-  'Black Office Pedestal with Key': 'Office Furniture',
+  'Black Office Pedestal with Key': 'Letter Box',
   'Blank Classroom Notice Board': 'Educational Furniture',
   'Blue Backdrop School Desk Chair': 'School Furniture',
   'Blue Chair in a Workshop Setting': 'Industrial Storage',
@@ -31,7 +31,7 @@ const STRICT_RAW_NAME_OVERRIDE: Record<string, CanonicalCategoryName> = {
   'Blue and White Worksite Benches': 'Industrial Storage',
   'Bright Twin Slide Playground': 'School Furniture',
   'Burgundy Classroom Chair with Writing Tablet': 'School Furniture',
-  'Chrome Three-Seat Waiting Bench': 'Office Furniture',
+  'Chrome Three-Seat Waiting Bench': 'Hospital Furniture',
   'Chrome Wire Shelving on Terracotta Floor': 'Industrial Storage',
   'Colorful Kindergarten Classroom Furniture': 'School Furniture',
   'Colorful Outdoor Student Desk and Bench': 'School Furniture',
@@ -42,9 +42,9 @@ const STRICT_RAW_NAME_OVERRIDE: Record<string, CanonicalCategoryName> = {
   'Colourful Outdoor School Desk Set': 'School Furniture',
   'Colourful Stools on Blue Background': 'School Furniture',
   'Colourful Tiered Shelf Against Patterned Tapestry': 'Educational Furniture',
-  'Cream Storage Cabinet with Open Doors': 'Hostel Furniture',
-  'Cream Utility Hopper on Casters': 'Industrial Storage',
-  'Cream Workshop Cabinet with Open Doors': 'Industrial Storage',
+  'Cream Storage Cabinet with Open Doors': 'Bathroom Collection',
+  'Cream Utility Hopper on Casters': 'Hospital Furniture',
+  'Cream Workshop Cabinet with Open Doors': 'Bathroom Collection',
   'Decorative Tile Plumbing Fixture': 'Bathroom Collection',
   'Empty wooden shelf against blue tarp': 'Industrial Storage',
   'Floral Cups on a Pink Classroom Desk': 'School Furniture',
@@ -56,17 +56,17 @@ const STRICT_RAW_NAME_OVERRIDE: Record<string, CanonicalCategoryName> = {
   'Lavender Wall with Minimal Pedestal Table': 'Office Furniture',
   'Light Wood Office Desk Set': 'Office Furniture',
   'Light-Wood Modular Workstation Cabinet': 'Office Furniture',
-  'Lightwood Rolling Utility Cart': 'Office Furniture',
+  'Lightwood Rolling Utility Cart': 'Hospital Furniture',
   'Maroon Tablet-Arm Chair on Concrete': 'Educational Furniture',
-  'Metal Frame Bed in a Minimal Room': 'Hostel Furniture',
+  'Metal Frame Bed in a Minimal Room': 'Hospital Furniture',
   'Metal Storage Cabinet Interior': 'Office Furniture',
   'Minimal Desk and Bench Set': 'School Furniture',
   'Minimal Mint Corner with Table and Chair': 'School Furniture',
   'Minimalist Desk and Chair Corner': 'Office Furniture',
   'Minimalist Table and Chair on Blue Backdrop': 'School Furniture',
   'Minimalist Taupe Metal Locker': 'Hostel Furniture',
-  'Mobile Beechwood Storage Cabinet': 'Hostel Furniture',
-  'Mobile filing cabinet with key lock': 'Office Furniture',
+  'Mobile Beechwood Storage Cabinet': 'Bathroom Collection',
+  'Mobile filing cabinet with key lock': 'Letter Box',
   'Modern Beige Desk with Black Trim': 'Office Furniture',
   'Modern Table with Colourful Chairs': 'School Furniture',
   'Modern White-Tier Shelving Unit': 'Industrial Storage',
@@ -76,7 +76,7 @@ const STRICT_RAW_NAME_OVERRIDE: Record<string, CanonicalCategoryName> = {
   'Naval blue wooden desk on tiled floor': 'School Furniture',
   'Nine-Compartment Steel Locker Cabinet': 'Industrial Storage',
   'Open Wardrobe by the Pillar': 'Hostel Furniture',
-  'Open White Key Cabinet on Blue Tabletop': 'Office Furniture',
+  'Open White Key Cabinet on Blue Tabletop': 'Letter Box',
   'Orange Desk and Bench Set': 'School Furniture',
   'Orange Motorcycle Graphic Chair': 'School Furniture',
   'Orange and Yellow Outdoor School Desk Set': 'School Furniture',
@@ -91,7 +91,7 @@ const STRICT_RAW_NAME_OVERRIDE: Record<string, CanonicalCategoryName> = {
   'Rolling wooden cubby cabinet': 'Hostel Furniture',
   'Round Stool': 'Industrial Storage',
   'Rows of Burgundy Seats in a Bright Classroom': 'School Furniture',
-  'Silver Key Safe with Open Door': 'Office Furniture',
+  'Silver Key Safe with Open Door': 'Letter Box',
   'Simple outdoor wooden utility desk': 'Industrial Storage',
   'Single Beige Student Desk Chair': 'School Furniture',
   'Single Wooden School Desk and Bench': 'School Furniture',
@@ -101,14 +101,14 @@ const STRICT_RAW_NAME_OVERRIDE: Record<string, CanonicalCategoryName> = {
   'Softly Lit Cabinet Display Room': 'Office Furniture',
   'Striped Basketball Hoop Under Blue Skies': 'School Furniture',
   'Tall 18-Compartment Gray Metal Locker Cabinet': 'Industrial Storage',
-  'Two-Compartment Silver Metal Locker': 'Hostel Furniture',
+  'Two-Compartment Silver Metal Locker': 'Letter Box',
   'Wall-Mounted Letter Box': 'Letter Box',
   'Warm Wooden Storage Bench in Modern Lobby': 'Office Furniture',
   'Warm Wooden Wardrobes by the Window': 'Hostel Furniture',
-  'White Industrial Chair Against Mint Wall': 'Industrial Storage',
+  'White Industrial Chair Against Mint Wall': 'Hospital Furniture',
   'White Lecture Chair with Writing Tablet': 'Educational Furniture',
   'White Metal Wardrobe with Open Doors': 'Hostel Furniture',
-  'White Rolling Tool Cabinet with Green Shelves': 'Industrial Storage',
+  'White Rolling Tool Cabinet with Green Shelves': 'Bathroom Collection',
   'Wooden Storage Bed with Open Drawers': 'Hostel Furniture',
   'Wooden Study Cabinet with Desk': 'Hostel Furniture',
   'Woodgrain Classroom Desk and Bench Set': 'School Furniture',
@@ -336,7 +336,20 @@ export interface ProductImageGroup {
 }
 
 function isBlacklisted(path: string): boolean {
-  return /[\\/]logo[\\/]/i.test(path) || /[\\/]client[\\/]/i.test(path);
+  const normalized = path.toLowerCase();
+  return (
+    /[\\/]logo[\\/]/i.test(path) ||
+    /[\\/]client[\\/]/i.test(path) ||
+    /[\\/]trusted[\\/]/i.test(path) ||
+    /trustedby/i.test(normalized) ||
+    /trusted/i.test(normalized) ||
+    /clientlogos?/i.test(normalized) ||
+    /client[-_ ]?logo/i.test(normalized) ||
+    /tata/i.test(normalized) ||
+    /marriott/i.test(normalized) ||
+    /educational institutions/i.test(normalized) ||
+    /company[-_ ]?logos?/i.test(normalized)
+  );
 }
 
 function buildProductImageGroups(): ProductImageGroup[] {

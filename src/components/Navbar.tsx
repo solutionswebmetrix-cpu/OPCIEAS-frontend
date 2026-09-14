@@ -4,7 +4,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Download, FileText, Globe, MessageCircle, ChevronDown } from 'lucide-react';
 import companyLogo from '../assets/logo/logo.png';
 import opcIeasTextWordmark from '../assets/logo/OPCIEAS_approved_text_wordmark.png';
-import { fetchCategories, fetchProducts, type Category, type Product } from '../lib/data';
+import { fetchCategories, fetchProducts, resolveProductImage, type Category, type Product } from '../lib/data';
+import { HOMEPAGE_SHOWCASE_CATALOG, type ProductAsset } from '../lib/productAssetResolver';
 
 const menu = [
   {
@@ -12,7 +13,7 @@ const menu = [
     to: '/',
   },
   {
-    label: 'Company',
+    label: 'Company', 
     items: [
       { name: 'About Us', to: '/company/about' },
       { name: 'Manufacturing', to: '/manufacturing' },
@@ -64,6 +65,39 @@ function getProductDetailPath(product: Product): string {
   if (product.slug) return `/product/${product.slug}`;
   if (product.id) return `/product/${product.id}`;
   return '/products';
+}
+
+function isViteAssetUrl(value?: string | null): boolean {
+  return !!value && (/^\/src\/assets\//i.test(value) || /^\/assets\//i.test(value));
+}
+
+function resolveNavbarImage(image?: string | null): string | null {
+  if (!image) return null;
+  return isViteAssetUrl(image) ? image : resolveProductImage(image);
+}
+
+type PreviewProduct = {
+  name: string;
+  slug?: string;
+  image: string;
+  short_desc?: string | null;
+  href: string;
+  fromAsset: boolean;
+};
+
+function assetToPreview(asset: ProductAsset, _categorySlug: string): PreviewProduct {
+  return {
+    name: asset.name,
+    slug: asset.slug,
+    image: asset.image,
+    short_desc: asset.category,
+    href: `/product/${asset.slug}`,
+    fromAsset: true,
+  };
+}
+
+function normalizeKeyName(name: string): string {
+  return (name || '').trim().toLowerCase().replace(/\s+/g, ' ');
 }
 
 export default function Navbar() {
@@ -118,11 +152,64 @@ export default function Navbar() {
 
     return categories
       .filter((category) => category && category.name && category.slug)
-      .map((category) => ({
-        category,
-        products: (productsByCategory.get(String(category.id)) ?? []).slice(0, 5),
-      }));
+      .map((category) => {
+        const showcaseAssets: ProductAsset[] =
+          HOMEPAGE_SHOWCASE_CATALOG[category.name] ??
+          HOMEPAGE_SHOWCASE_CATALOG[category.name.endsWith(' Box') ? `${category.name}es` : category.name.replace(/Boxes$/, ' Box')] ??
+          [];
+        const showcaseByName = new Map<string, ProductAsset>();
+        for (const asset of showcaseAssets) showcaseByName.set(normalizeKeyName(asset.name), asset);
+
+        const apiProducts = (productsByCategory.get(String(category.id)) ?? []).slice(0, 5);
+        const merged: PreviewProduct[] = [];
+        const usedAssetKeys = new Set<string>();
+
+        for (const product of apiProducts) {
+          const key = normalizeKeyName(product.name || '');
+          const matched = showcaseByName.get(key);
+          let image: string | null = product.image ? resolveNavbarImage(product.image) : null;
+          if (matched) {
+            image = matched.image;
+            usedAssetKeys.add(key);
+          }
+          merged.push({
+            name: product.name,
+            slug: product.slug || String(product.id),
+            image: image || '',
+            short_desc: product.short_desc || category.name,
+            href: getProductDetailPath(product),
+            fromAsset: false,
+          });
+        }
+
+        for (const asset of showcaseAssets) {
+          if (merged.length >= 5) break;
+          const key = normalizeKeyName(asset.name);
+          if (usedAssetKeys.has(key)) continue;
+          usedAssetKeys.add(key);
+          merged.push(assetToPreview(asset, category.slug));
+        }
+
+        const previewImages: string[] = showcaseAssets.slice(0, 3).map((asset) => asset.image);
+
+        return {
+          category,
+          products: merged.slice(0, 5),
+          previewImages,
+          previewAssets: showcaseAssets.slice(0, 3),
+        };
+      });
   }, [categories, allProducts]);
+
+  const commercialFurniturePreviews = useMemo(() => {
+    const firstCategories = ['Office Furniture', 'Educational Furniture', 'Hostel Furniture'];
+    const previews: string[] = [];
+    for (const name of firstCategories) {
+      const assetList = HOMEPAGE_SHOWCASE_CATALOG[name];
+      if (assetList && assetList.length) previews.push(assetList[0].image);
+    }
+    return previews;
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -232,12 +319,23 @@ export default function Navbar() {
                               <Link to="/products" onClick={closeProductsPanel} className="font-sub text-xs font-semibold text-navy/70 hover:text-gold">All Categories</Link>
                             </div>
                               <Link to="/furniture" onClick={closeProductsPanel} className={`mb-4 block rounded-xl border p-4 transition ${location.pathname === '/furniture' ? 'border-gold bg-gold/10' : 'border-gold/40 bg-gold/5 hover:bg-gold/10'}`}>
-                              <p className="font-heading text-base font-bold text-navy">Commercial Furniture</p>
-                              <p className="mt-1 font-body text-xs text-navy/70">Commercial &amp; Institutional Bulk Supply</p>
-                              <span className="mt-2 inline-block font-sub text-[10px] uppercase tracking-[0.18em] text-gold">Explore Commercial Furniture →</span>
-                            </Link>
+                                <div className="flex flex-col gap-3 md:flex-row md:items-center">
+                                  <div className="md:flex-1">
+                                    <p className="font-heading text-base font-bold text-navy">Commercial Furniture</p>
+                                    <p className="mt-1 font-body text-xs text-navy/70">Commercial &amp; Institutional Bulk Supply</p>
+                                    <span className="mt-2 inline-block font-sub text-[10px] uppercase tracking-[0.18em] text-gold">Explore Commercial Furniture →</span>
+                                  </div>
+                                  {commercialFurniturePreviews.length > 0 && (
+                                    <div className="flex gap-2" aria-hidden="true">
+                                      {commercialFurniturePreviews.map((src, idx) => (
+                                        <img key={`com-${idx}`} src={src} alt="Commercial furniture preview" className="h-14 w-14 rounded-md border border-white/60 object-contain bg-white shadow-sm sm:h-16 sm:w-16" loading="lazy" />
+                                      ))}
+                                    </div>
+                                  )}
+                                </div>
+                              </Link>
                             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                              {categoryMenuRows.map(({ category, products }) => (
+                              {categoryMenuRows.map(({ category, products, previewImages }) => (
                                 <div key={category.id} className="rounded-xl border border-navy/10 bg-light-grey/40 p-3">
                                   <div className="mb-2 flex items-center justify-between gap-2">
                                     <Link to={`/products/category/${category.slug}`} onClick={closeProductsPanel} className="font-heading text-sm font-bold text-navy hover:text-gold">
@@ -245,17 +343,35 @@ export default function Navbar() {
                                     </Link>
                                     <Link to={`/products/category/${category.slug}`} onClick={closeProductsPanel} className="font-sub text-[10px] uppercase tracking-[0.18em] text-navy/50 hover:text-gold">View all</Link>
                                   </div>
+                                  {previewImages && previewImages.length > 0 && (
+                                    <Link to={`/products/category/${category.slug}`} onClick={closeProductsPanel} className="mb-2 block" aria-label={`${category.name} preview images`}>
+                                      <div className="grid grid-cols-3 gap-1.5">
+                                        {previewImages.map((src, idx) => (
+                                          <img
+                                            key={`preview-${category.id}-${idx}`}
+                                            src={src}
+                                            alt={`${category.name} preview ${idx + 1}`}
+                                                            className="h-14 w-full rounded-md border border-white/60 object-contain bg-white shadow-sm sm:h-16"
+                                                            loading="lazy"
+                                                          />
+                                                        ))}
+                                      </div>
+                                    </Link>
+                                  )}
                                   {products.length ? (
                                     <div className="grid grid-cols-1 gap-2">
-                                      {products.map((product) => (
-                                        <Link key={product.id || product.slug} to={getProductDetailPath(product)} onClick={closeProductsPanel} className="group flex min-w-0 items-center gap-2 rounded-lg border border-transparent bg-white p-2 transition hover:border-gold/40 hover:bg-gold/5">
-                                          {product.image ? <img src={product.image} alt={product.name} className="h-12 w-12 rounded-md object-cover" loading="lazy" /> : <div className="h-12 w-12 rounded-md bg-navy/10" aria-hidden="true" />}
-                                          <div className="min-w-0 flex-1">
-                                            <p className="break-words font-sub text-[11px] font-semibold text-navy group-hover:text-gold">{product.name}</p>
-                                            {product.short_desc ? <p className="break-words font-body text-[10px] text-navy/60">{product.short_desc}</p> : <p className="break-words font-body text-[10px] text-navy/50">{category.name}</p>}
-                                          </div>
-                                        </Link>
-                                      ))}
+                                      {products.map((product, idx) => {
+                                        const resolved = resolveNavbarImage(product.image);
+                                        return (
+                                          <Link key={`${product.slug || product.name}-${idx}`} to={product.href} onClick={closeProductsPanel} className="group flex min-w-0 items-center gap-2 rounded-lg border border-transparent bg-white p-2 transition hover:border-gold/40 hover:bg-gold/5">
+                                            {resolved ? <img src={resolved} alt={product.name} className="h-12 w-12 rounded-md object-contain bg-white" loading="lazy" /> : <div className="h-12 w-12 rounded-md bg-navy/10" aria-hidden="true" />}
+                                            <div className="min-w-0 flex-1">
+                                              <p className="break-words font-sub text-[11px] font-semibold text-navy group-hover:text-gold">{product.name}</p>
+                                              {product.short_desc ? <p className="break-words font-body text-[10px] text-navy/60">{product.short_desc}</p> : <p className="break-words font-body text-[10px] text-navy/50">{category.name}</p>}
+                                            </div>
+                                          </Link>
+                                        );
+                                      })}
                                     </div>
                                   ) : (
                                     <p className="font-body text-xs text-navy/50">No products available</p>
@@ -349,17 +465,33 @@ export default function Navbar() {
                           <p className="font-sub text-sm font-bold text-navy">Commercial Furniture</p>
                           <p className="mt-1 font-body text-xs text-navy/70">Commercial &amp; Institutional Bulk Supply</p>
                         </Link>
-                        {categoryMenuRows.map(({ category, products }) => (
+                        {categoryMenuRows.map(({ category, products, previewImages }) => (
                           <div key={category.id} className="rounded-lg border border-navy/10 bg-light-grey/40 p-2">
                             <Link to={`/products/category/${category.slug}`} onClick={() => setOpen(false)} className="font-sub text-sm font-semibold text-navy hover:text-gold">{category.name}</Link>
+                            {previewImages && previewImages.length > 0 && (
+                              <div className="mt-2 grid grid-cols-3 gap-1.5">
+                                {previewImages.map((src, idx) => (
+                                  <img
+                                    key={`mobile-preview-${category.id}-${idx}`}
+                                    src={src}
+                                    alt={`${category.name} preview ${idx + 1}`}
+                                    className="h-10 w-full rounded border border-white/60 object-contain bg-white shadow-sm"
+                                    loading="lazy"
+                                  />
+                                ))}
+                              </div>
+                            )}
                             {products.length ? (
                               <div className="mt-2 space-y-1.5">
-                                {products.map((product) => (
-                                  <Link key={product.id || product.slug} to={getProductDetailPath(product)} onClick={() => setOpen(false)} className="flex items-center gap-2 rounded-md bg-white p-1.5 text-left">
-                                    {product.image ? <img src={product.image} alt={product.name} className="h-8 w-8 rounded object-cover" loading="lazy" /> : <div className="h-8 w-8 rounded bg-navy/10" aria-hidden="true" />}
-                                    <span className="truncate font-sub text-xs text-navy/70">{product.name}</span>
-                                  </Link>
-                                ))}
+                                {products.map((product, idx) => {
+                                  const resolved = resolveNavbarImage(product.image);
+                                  return (
+                                    <Link key={`${product.slug || product.name}-${idx}`} to={product.href} onClick={() => setOpen(false)} className="flex items-center gap-2 rounded-md bg-white p-1.5 text-left">
+                                      {resolved ? <img src={resolved} alt={product.name} className="h-8 w-8 rounded object-contain bg-white" loading="lazy" /> : <div className="h-8 w-8 rounded bg-navy/10" aria-hidden="true" />}
+                                      <span className="truncate font-sub text-xs text-navy/70">{product.name}</span>
+                                    </Link>
+                                  );
+                                })}
                               </div>
                             ) : (
                               <p className="mt-2 font-sub text-[11px] text-navy/50">No products available</p>

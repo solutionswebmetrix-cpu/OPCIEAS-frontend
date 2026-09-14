@@ -1,4 +1,5 @@
 import {
+  CANONICAL_CATEGORIES,
   IMG,
   SCHOOL_FURNITURE_IMAGES,
 } from './images';
@@ -144,17 +145,41 @@ function toNumber(value: any): number | null {
 const BACKEND_BASE = (
   (import.meta as any).env?.VITE_BACKEND_URL ||
   (import.meta as any).env?.VITE_API_URL?.replace(/\/api\/?$/, '') ||
-  ((import.meta as any).env?.PROD ? 'https://api.opcieas.com' : '')
+  (import.meta as any).env?.VITE_API_BASE_URL?.replace(/\/api\/?$/, '') ||
+  ((import.meta as any).env?.PROD ? 'https://api.opcieas.com' : 'http://127.0.0.1:8000')
 ).replace(/\/$/, '');
 
-export function resolveProductImage(value: string | null): string | null {
+export function resolveProductImage(value?: string | null): string | null {
   if (!value) return null;
   const normalized = value.trim();
   if (!normalized) return null;
+
   if (/^(https?:|data:|blob:)/i.test(normalized)) {
     return normalized;
   }
+
   if (BACKEND_BASE && normalized.startsWith(BACKEND_BASE)) return normalized;
+
+  if (/^\/src\/assets\//i.test(normalized)) {
+    return normalized;
+  }
+  if (/^src\/assets\//i.test(normalized)) {
+    return `/${normalized}`;
+  }
+  if (/^\.\.\/assets\//i.test(normalized) || /^\.\/assets\//i.test(normalized)) {
+    return normalized;
+  }
+  if (/^\/assets\//i.test(normalized)) {
+    return normalized;
+  }
+  if (/^assets\//i.test(normalized)) {
+    return `/${normalized}`;
+  }
+
+  if (/^uploads\//i.test(normalized) || /^\/uploads\//i.test(normalized)) {
+    const clean = normalized.replace(/^\/+/, '');
+    return BACKEND_BASE ? `${BACKEND_BASE}/${clean}` : `/${clean}`;
+  }
 
   let path = normalized.replace(/^\/+/, '');
   if (!path.includes('/')) {
@@ -298,10 +323,44 @@ export async function fetchCategories(): Promise<Category[]> {
       return items.map(normalizeCategory);
     }
   } catch {
-    console.warn('[fetchCategories] API unavailable, returning empty array');
-    return [];
+    console.warn('[fetchCategories] API unavailable, returning canonical frontend category fallback');
+    return CANONICAL_CATEGORIES.map((category) => ({
+      id: String(category.id),
+      parent_id: null,
+      name: category.name,
+      slug: category.slug,
+      description: null,
+      tagline: null,
+      image: null,
+      banner_image: null,
+      icon: null,
+      sort_order: Number(category.id),
+      is_featured: false,
+      status: 'active',
+      meta_title: null,
+      meta_description: null,
+      created_at: undefined,
+      updated_at: undefined,
+    }));
   }
-  return [];
+  return CANONICAL_CATEGORIES.map((category) => ({
+    id: String(category.id),
+    parent_id: null,
+    name: category.name,
+    slug: category.slug,
+    description: null,
+    tagline: null,
+    image: null,
+    banner_image: null,
+    icon: null,
+    sort_order: Number(category.id),
+    is_featured: false,
+    status: 'active',
+    meta_title: null,
+    meta_description: null,
+    created_at: undefined,
+    updated_at: undefined,
+  }));
 }
 
 export async function fetchCategory(slug: string): Promise<Category | null> {
@@ -345,7 +404,11 @@ export async function fetchProducts(categoryId?: string, categorySlug?: string):
     while (hasNext) {
       const params: Record<string, any> = { status: 'Published', limit: 500, page };
       if (categoryId) params.category_id = categoryId;
-      if (categorySlug) params.categorySlug = categorySlug;
+      if (categorySlug) {
+        params.categorySlug = categorySlug;
+        params.category_slug = categorySlug;
+        params.category = categorySlug;
+      }
       const resp = await apiGet<any>('/products/list.php', params);
       const items: any[] = unwrap<any[]>(resp) || [];
       if (!Array.isArray(items)) break;
@@ -355,12 +418,9 @@ export async function fetchProducts(categoryId?: string, categorySlug?: string):
     }
     return products.filter(isPublicProduct);
   } catch (e) {
-    // STEP 13: NO static fallback - products MUST come from PHP API
-    console.error('[fetchProducts] API fetch failed:', e);
-    return [];
+    console.error('Products API error:', e);
+    throw e;
   }
-  // STEP 13: No mockProducts fallback allowed
-  return [];
 }
 
 export async function fetchProduct(slug: string): Promise<Product | null> {

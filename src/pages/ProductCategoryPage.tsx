@@ -22,14 +22,15 @@ const categoryContent: Record<string, { overview: string; highlights: string[]; 
     cta: ['Request Quote', 'Download Catalogue'],
   },
   'educational-furniture': {
-    overview: 'Library, laboratory, reading and training furniture engineered for colleges and institutes with ergonomic and tender-compliant quality.',
-    highlights: ['Library Table', 'Library Rack', 'Reading Table', 'Laboratory Bench', 'Lecture Podium', 'Training Desk', 'Training Chair', 'College Furniture'],
+    overview: 'Educational Furniture follows a clear audience-based flow: KG Classes → Primary → High School → Colleges & Higher Education.',
+    highlights: ['KG Classes', 'Primary', 'High School', 'Colleges & Higher Education'],
     specs: [
-      { label: 'Applications', value: 'Colleges, universities, libraries, R&D labs and training institutes' },
-      { label: 'Materials', value: 'Mild steel + engineered wood / chemical-resistant resin tops as required' },
-      { label: 'Design', value: 'Heavy-duty frame, scratch-resistant surfaces, bulk-supply ready' },
+      { label: 'KG Classes', value: 'Kids desks and individual seating for KG classes.' },
+      { label: 'Primary', value: 'Single-seat and dual-seat desk/chair units for primary learning.' },
+      { label: 'High School', value: 'Single-seat and dual-seat desk/chair units for high school classrooms.' },
+      { label: 'College & Higher Education', value: 'Lecture seating with writing pads and integrated cup/bag holders for college and higher education.' },
     ],
-    gallery: ['Library reading zones', 'Laboratory workbenches', 'Lecture hall and training rooms'],
+    gallery: ['KG classroom seating', 'Primary desk/chair units', 'High school desk/chair units', 'College lecture seating with writing pad and cup/bag holders'],
     cta: ['Request Quote', 'Download Catalogue'],
   },
   'school-furniture': {
@@ -56,7 +57,7 @@ const categoryContent: Record<string, { overview: string; highlights: string[]; 
   },
   'hostel-furniture': {
     overview: 'Robust and durable hostel furniture for student accommodation, dormitories and institutional living spaces.',
-    highlights: ['Single Cot', 'Two Tier Bunk Bed', 'Three Tier Steel Cot', 'Wardrobe', 'Hostel Locker', 'Study Table', 'Hostel Chair', 'Commercial Mattress'],
+    highlights: ['Single Cots', 'Bunker Cots', 'Triple Cots', 'Wardrobe', 'Hostel Locker', 'Study Table', 'Hostel Chair', 'Commercial Mattress'],
     specs: [
       { label: 'Suitability', value: 'Hostels, dormitories, student housing and residential institutions' },
       { label: 'Build', value: 'Powder-coated steel frames with durable bedding textile finishes' },
@@ -64,16 +65,17 @@ const categoryContent: Record<string, { overview: string; highlights: string[]; 
       { label: 'Cot Dimensions', value: 'Single: L 1800 × W 750 × H 300–350 mm; Bunker: L 1800 × W 900 × H 1600–1650 mm; Triple: L 1800 × W 900 × H 2600 mm' },
       { label: 'Accessories', value: 'Rubberized coir, foam and spring mattresses; washable pillows; 200–600 TC cotton bedsheets and pillow covers' },
     ],
-    gallery: ['Hostel dormitory setup', 'Bunk beds and storage', 'Student study & wardrobe units'],
+    gallery: ['Hostel dormitory setup', 'Bunker cots and storage', 'Student study & wardrobe units'],
     cta: ['Request Quote', 'WhatsApp Inquiry'],
   },
   'industrial-storage': {
     overview: 'Heavy-duty warehouse and industrial storage racks, shelves, lockers and cabinets with high load capacity and export finish.',
-    highlights: ['Warehouse Rack', 'Industrial Rack', 'Heavy-Duty Rack', 'Slotted Angle Rack', 'Pallet Rack', 'Long Span Shelving', 'SS Wire Rack', 'Steel Locker'],
+    highlights: ['Warehouse Rack', 'Industrial Rack', 'Heavy-Duty Rack', 'Slotted Angle Rack', 'Pallet Rack', 'Long Span Shelving', 'SS Detachable Wire Racks', 'SS Wire Rack', 'Steel Locker'],
     specs: [
       { label: 'Applications', value: 'Warehouses, factories, godowns, retail storage, offices and industrial yards' },
       { label: 'Build', value: 'Mild steel / SS, powder-coated or galvanized finish, boltless / bolted assembly' },
       { label: 'Capacity', value: '200 kg – 2000 kg / shelf depending on model, custom heights and widths available' },
+      { label: 'SS Detachable Wire Racks', value: 'Medium Duty • Loading Capacity 200 Kg per Level • Size H72" × W36" × D18"' },
       { label: 'Customization', value: 'Custom dimensions and tailored configurations available upon request.' },
     ],
     gallery: ['Warehouse rack aisles', 'Factory storage installation', 'Heavy-duty lockers & cabinets'],
@@ -155,10 +157,38 @@ export default function ProductCategoryPage() {
 
   const loadData = async () => {
     setLoading(true);
-    const [allProducts, categoryList] = await Promise.all([fetchProducts(), fetchCategories()]);
-    setApiProducts(allProducts);
-    setCategories(categoryList.length ? categoryList.map((category) => ({ id: category.id, name: category.name, slug: category.slug })) : fallbackCategories);
-    setLoading(false);
+    try {
+      const categoryList = await fetchCategories();
+      const normalizedCategoryList = categoryList.length
+        ? categoryList.map((category) => ({ id: category.id, name: category.name, slug: category.slug }))
+        : fallbackCategories;
+      setCategories(normalizedCategoryList);
+
+      const catFromRoute = slug ? resolveCategoryFromSlug(slug, normalizedCategoryList) : null;
+      console.log('Selected category:', slug);
+      console.log('Selected category ID:', catFromRoute?.id ?? 'none');
+      console.log('Selected category slug:', catFromRoute?.slug ?? 'none');
+
+      if (!catFromRoute) {
+        setApiProducts([]);
+        setLoading(false);
+        return;
+      }
+
+      const selectedProducts = await fetchProducts(catFromRoute.id, catFromRoute.slug);
+      const apiUrl = `/products/list.php?category_id=${encodeURIComponent(catFromRoute.id)}&categorySlug=${encodeURIComponent(catFromRoute.slug)}`;
+      console.log('API URL:', apiUrl);
+      console.log('Total products:', selectedProducts.length);
+      console.log('Filtered products:', selectedProducts.length);
+
+      setApiProducts(selectedProducts);
+      setLoading(false);
+    } catch (error) {
+      console.error('[ProductCategoryPage] Product/category fetch failed:', error);
+      setApiProducts([]);
+      setCategories(fallbackCategories);
+      setLoading(false);
+    }
   };
 
   useEffect(() => { void loadData(); }, [slug]);
@@ -180,7 +210,7 @@ export default function ProductCategoryPage() {
 
   const categoryProducts = useMemo(() => {
     if (!cat) return [] as Product[];
-    return apiProducts.filter((product) => String(product.category_id ?? '') === cat.id);
+    return apiProducts;
   }, [apiProducts, cat]);
 
   let filtered = [...categoryProducts];

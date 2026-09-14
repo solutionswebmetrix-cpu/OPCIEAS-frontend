@@ -47,7 +47,7 @@ export const BUSINESS_VERTICALS = {
   'fiberglass-special-order': {
     name: 'Fiberglass / Special Order',
     categorySlugs: [],
-    categoryIds: [],
+    categoryIds: [] as string[],
     namePatterns: fiberglassNamePatterns,
     overview: 'FRP / fiberglass and special-order custom products for outdoor, coastal and project-specific applications.',
     highlights: ['FRP / Fiberglass Furniture', 'Outdoor Seating', 'Custom Molded FRP', 'Special Order Items', 'Coastal / Rustproof'],
@@ -70,5 +70,6 @@ export function findLocalProductImage(productName: string): string | null {
 
 export function verticalCategoriesSummary(verticalSlug: BusinessVerticalSlug): CanonicalCategoryName[] {
   const v = BUSINESS_VERTICALS[verticalSlug];
-  return CANONICAL_CATEGORIES.filter((c) => v.categoryIds.includes(c.id)).map((c) => c.name as CanonicalCategoryName);
+  const categoryIds = new Set<string>(v.categoryIds);
+  return CANONICAL_CATEGORIES.filter((c) => categoryIds.has(c.id)).map((c) => c.name as CanonicalCategoryName);
 }

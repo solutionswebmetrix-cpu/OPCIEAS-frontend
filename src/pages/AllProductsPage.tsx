@@ -27,6 +27,10 @@ export default function AllProductsPage() {
         const [products, categoryList] = await Promise.all([fetchProducts(), fetchCategories()]);
         setApiProducts(products);
         setCategories(categoryList.length ? categoryList.map((category) => ({ id: category.id, name: category.name, slug: category.slug })) : fallbackCategories);
+      } catch (error) {
+        console.error('[AllProductsPage] Product fetch failed:', error);
+        setApiProducts([]);
+        setCategories(fallbackCategories);
       } finally {
         setLoading(false);
       }

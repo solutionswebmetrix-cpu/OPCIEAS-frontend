@@ -69,7 +69,10 @@ export default function ProductDetailPage() {
   }
 
   const gallery = product.gallery?.length ? product.gallery : (product.image ? [product.image] : []);
-  const resolvedGallery = gallery.map((image) => resolveProductImage(image)).filter((image): image is string => Boolean(image));
+  const isViteAsset = (v?: string | null): boolean => !!v && (/^\/src\/assets\//i.test(v) || /^\/assets\//i.test(v));
+  const resolvedGallery = gallery
+    .map((image) => (assetOnly || isViteAsset(image) ? image : resolveProductImage(image)))
+    .filter((image): image is string => Boolean(image));
   const specs = product.specs || {};
   const features = product.features || [];
   const waText = `Hi, I'm interested in ${encodeURIComponent(product.name)}. Please share details.`;
