@@ -84,6 +84,7 @@ export default function App() {
           <Route path="/tech-business-promotion" element={<TechBusinessPromotionPage />} />
           <Route path="/furniture-textiles" element={<FurnitureTextilesPage />} />
           <Route path="/agriculture" element={<AgriculturePage />} />
+          <Route path="/social-service" element={<SocialServicesPage />} />
           <Route path="/social-services" element={<SocialServicesPage />} />
           <Route path="/membership" element={<MembershipPage />} />
           <Route path="/payment-instructions" element={<PaymentInstructionsPage />} />

@@ -257,7 +257,7 @@ export default function ThreeDivisions() {
         icon={Heart}
         image={IMG.gallery[4]?.src || IMG.heroBg}
         accent="from-[#34D399] via-[#059669] to-[#047857]"
-        linkTo="/social-services"
+        linkTo="/social-service"
         pillars={SOCIAL_PILLARS}
         index={2}
       />

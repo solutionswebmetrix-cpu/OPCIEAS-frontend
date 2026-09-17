@@ -30,7 +30,7 @@ const divisions = [
     narration:
       'Community partnerships for rural development, solar adoption, aquaculture, and sustainable prosperity.',
     accent: 'from-[#34D399] via-[#059669] to-[#047857]',
-    to: '/social-services',
+    to: '/social-service',
   },
 ];
 

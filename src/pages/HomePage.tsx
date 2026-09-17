@@ -97,6 +97,27 @@ export default function HomePage() {
         </div>
       </section>
 
+      <section className="bg-white py-18 sm:py-24">
+        <div className="container-x px-6">
+          <div className="rounded-lux border border-navy/10 bg-light-grey p-8 shadow-sm lg:p-10">
+            <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+              <div>
+                <p className="font-sub text-xs uppercase tracking-[0.35em] text-gold">Social Service / Social Impact</p>
+                <h2 className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl">Heavenly Earth – A Vision for Rural Prosperity</h2>
+                <p className="mt-4 max-w-2xl font-body text-base leading-relaxed text-navy/75">
+                  Rural Development is rooted in self-reliance, unity, and responsible stewardship of land, water, education, and community life. The goal is to strengthen villages through shared effort, practical leadership, and a vision that protects the vulnerable while creating lasting dignity.
+                </p>
+              </div>
+              <div className="flex justify-center lg:justify-end">
+                <Link to="/social-service" className="btn-gold inline-flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm">
+                  Explore Social Service <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="bg-light-grey py-18 sm:py-24">
         <div className="container-x px-6">
           <div className="mb-8 text-center">

@@ -37,7 +37,7 @@ const menu = [
   {
     label: 'Special',
     items: [
-      { name: 'Social Service', to: '/social-services' },
+      { name: 'Social Service', to: '/social-service' },
       { name: 'Community Impact', to: '/community-impact' },
       { name: 'Compliance & Governance', to: '/compliance' },
       { name: 'Government Tenders', to: '/government-tenders' },

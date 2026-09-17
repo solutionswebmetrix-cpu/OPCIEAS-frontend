@@ -406,10 +406,10 @@ export default function CommunityImpactPage() {
                 Contact Us <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
-                to="/social-services"
+                to="/social-service"
                 className="btn-white-ghost flex items-center gap-2 rounded-full px-8 py-3 font-sub text-sm"
               >
-                Explore Social Services
+                Explore Social Service
               </Link>
             </div>
           </motion.div>
