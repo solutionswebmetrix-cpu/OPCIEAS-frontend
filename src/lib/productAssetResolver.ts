@@ -55,13 +55,6 @@ export const PRODUCT_ASSETS: ProductAsset[] = Object.entries(productAssetModules
   .map(([path, image]) => createAsset(path, image));
 
 const SHOWCASE_CURATION: Record<string, string[]> = {
-  'Office Furniture': [
-    'Warm Wooden Storage Bench in Modern Lobby',
-    'Minimalist Desk and Chair Corner',
-    'Softly Lit Cabinet Display Room',
-    'Silver Key Safe with Open Door',
-    'Open White Key Cabinet on Blue Tabletop',
-  ],
   'Educational Furniture': [
     'Maroon Tablet-Arm Chair on Concrete',
     'Blue Lecture Chair with Writing Tablet',
@@ -75,13 +68,6 @@ const SHOWCASE_CURATION: Record<string, string[]> = {
     "Colourful Children's Table and Chair Set",
     'Orange Desk and Bench Set',
     'Woodgrain Classroom Desk and Bench Set',
-  ],
-  'Hospital Furniture': [
-    'Chrome Three-Seat Waiting Bench',
-    'Metal Frame Bed in a Minimal Room',
-    'White Industrial Chair Against Mint Wall',
-    'Adjustable Height Table',
-    'Lightwood Rolling Utility Cart',
   ],
   'Hostel Furniture': [
     'Warm Wooden Wardrobes by the Window',

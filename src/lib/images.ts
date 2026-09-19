@@ -1,9 +1,7 @@
 
 export const CANONICAL_CATEGORIES = [
-  { id: '1', slug: 'office-furniture',       name: 'Office Furniture'       },
   { id: '2', slug: 'educational-furniture',  name: 'Educational Furniture'  },
   { id: '3', slug: 'school-furniture',       name: 'School Furniture'       },
-  { id: '4', slug: 'hospital-furniture',     name: 'Hospital Furniture'     },
   { id: '5', slug: 'hostel-furniture',       name: 'Hostel Furniture'       },
   { id: '6', slug: 'industrial-storage',     name: 'Industrial Storage'     },
   { id: '7', slug: 'bathroom-collection',    name: 'Bathroom Collection'    },
@@ -13,10 +11,10 @@ export const CANONICAL_CATEGORIES = [
 export type CanonicalCategoryName = typeof CANONICAL_CATEGORIES[number]['name'];
 
 const STRICT_RAW_NAME_OVERRIDE: Record<string, CanonicalCategoryName> = {
-  'Adjustable Height Table': 'Hospital Furniture',
-  'Adjustable Wood-Top Workshop Table': 'Office Furniture',
-  'Beige Seat Tripod Workshop Stool': 'Office Furniture',
-  'Bisleri Counter Corner': 'Office Furniture',
+  'Adjustable Height Table': 'Industrial Storage',
+  'Adjustable Wood-Top Workshop Table': 'Industrial Storage',
+  'Beige Seat Tripod Workshop Stool': 'Industrial Storage',
+  'Bisleri Counter Corner': 'Industrial Storage',
   'Black Furniture in a Minimal Classroom': 'School Furniture',
   'Black Office Pedestal with Key': 'Letter Box',
   'Blank Classroom Notice Board': 'Educational Furniture',
@@ -31,7 +29,7 @@ const STRICT_RAW_NAME_OVERRIDE: Record<string, CanonicalCategoryName> = {
   'Blue and White Worksite Benches': 'Industrial Storage',
   'Bright Twin Slide Playground': 'School Furniture',
   'Burgundy Classroom Chair with Writing Tablet': 'School Furniture',
-  'Chrome Three-Seat Waiting Bench': 'Hospital Furniture',
+  'Chrome Three-Seat Waiting Bench': 'Educational Furniture',
   'Chrome Wire Shelving on Terracotta Floor': 'Industrial Storage',
   'Colorful Kindergarten Classroom Furniture': 'School Furniture',
   'Colorful Outdoor Student Desk and Bench': 'School Furniture',
@@ -43,34 +41,34 @@ const STRICT_RAW_NAME_OVERRIDE: Record<string, CanonicalCategoryName> = {
   'Colourful Stools on Blue Background': 'School Furniture',
   'Colourful Tiered Shelf Against Patterned Tapestry': 'Educational Furniture',
   'Cream Storage Cabinet with Open Doors': 'Bathroom Collection',
-  'Cream Utility Hopper on Casters': 'Hospital Furniture',
+  'Cream Utility Hopper on Casters': 'Industrial Storage',
   'Cream Workshop Cabinet with Open Doors': 'Bathroom Collection',
   'Decorative Tile Plumbing Fixture': 'Bathroom Collection',
   'Empty wooden shelf against blue tarp': 'Industrial Storage',
   'Floral Cups on a Pink Classroom Desk': 'School Furniture',
-  'Gray Adjustable Drafting Table': 'Office Furniture',
+  'Gray Adjustable Drafting Table': 'Educational Furniture',
   'Green Stool on Outdoor Ground': 'School Furniture',
   'Green and White Outdoor Student Desk': 'School Furniture',
   'Industrial Cafeteria Table and Stools': 'Industrial Storage',
-  'Ivory Tusk Display Cabinet Decor': 'Office Furniture',
-  'Lavender Wall with Minimal Pedestal Table': 'Office Furniture',
-  'Light Wood Office Desk Set': 'Office Furniture',
-  'Light-Wood Modular Workstation Cabinet': 'Office Furniture',
-  'Lightwood Rolling Utility Cart': 'Hospital Furniture',
+  'Ivory Tusk Display Cabinet Decor': 'Hostel Furniture',
+  'Lavender Wall with Minimal Pedestal Table': 'Educational Furniture',
+  'Light Wood Office Desk Set': 'Educational Furniture',
+  'Light-Wood Modular Workstation Cabinet': 'Industrial Storage',
+  'Lightwood Rolling Utility Cart': 'Industrial Storage',
   'Maroon Tablet-Arm Chair on Concrete': 'Educational Furniture',
-  'Metal Frame Bed in a Minimal Room': 'Hospital Furniture',
-  'Metal Storage Cabinet Interior': 'Office Furniture',
+  'Metal Frame Bed in a Minimal Room': 'Hostel Furniture',
+  'Metal Storage Cabinet Interior': 'Industrial Storage',
   'Minimal Desk and Bench Set': 'School Furniture',
   'Minimal Mint Corner with Table and Chair': 'School Furniture',
-  'Minimalist Desk and Chair Corner': 'Office Furniture',
+  'Minimalist Desk and Chair Corner': 'Educational Furniture',
   'Minimalist Table and Chair on Blue Backdrop': 'School Furniture',
   'Minimalist Taupe Metal Locker': 'Hostel Furniture',
   'Mobile Beechwood Storage Cabinet': 'Bathroom Collection',
   'Mobile filing cabinet with key lock': 'Letter Box',
-  'Modern Beige Desk with Black Trim': 'Office Furniture',
+  'Modern Beige Desk with Black Trim': 'Educational Furniture',
   'Modern Table with Colourful Chairs': 'School Furniture',
   'Modern White-Tier Shelving Unit': 'Industrial Storage',
-  'Modern Wooden Cubicles in Office Lab': 'Office Furniture',
+  'Modern Wooden Cubicles in Office Lab': 'Educational Furniture',
   'Multicolour Children’s Table Set': 'School Furniture',
   'Multicoloured Playground Against a Weathered Wall': 'School Furniture',
   'Naval blue wooden desk on tiled floor': 'School Furniture',
@@ -98,14 +96,14 @@ const STRICT_RAW_NAME_OVERRIDE: Record<string, CanonicalCategoryName> = {
   'Six-Compartment Steel Locker': 'Industrial Storage',
   'Six-Door Steel Locker Cabinet': 'Industrial Storage',
   'Sky Blue Apollo Rack Outdoors': 'Industrial Storage',
-  'Softly Lit Cabinet Display Room': 'Office Furniture',
+  'Softly Lit Cabinet Display Room': 'Hostel Furniture',
   'Striped Basketball Hoop Under Blue Skies': 'School Furniture',
   'Tall 18-Compartment Gray Metal Locker Cabinet': 'Industrial Storage',
   'Two-Compartment Silver Metal Locker': 'Letter Box',
   'Wall-Mounted Letter Box': 'Letter Box',
-  'Warm Wooden Storage Bench in Modern Lobby': 'Office Furniture',
+  'Warm Wooden Storage Bench in Modern Lobby': 'Hostel Furniture',
   'Warm Wooden Wardrobes by the Window': 'Hostel Furniture',
-  'White Industrial Chair Against Mint Wall': 'Hospital Furniture',
+  'White Industrial Chair Against Mint Wall': 'Industrial Storage',
   'White Lecture Chair with Writing Tablet': 'Educational Furniture',
   'White Metal Wardrobe with Open Doors': 'Hostel Furniture',
   'White Rolling Tool Cabinet with Green Shelves': 'Bathroom Collection',
@@ -135,27 +133,26 @@ function lookupStrictOverride(rawName: string): CanonicalCategoryName | null {
 }
 
 const CATEGORY_KEYWORDS: Record<CanonicalCategoryName, string[]> = {
-  'Office Furniture': [
-    'office desk','executive desk','ceo desk','computer table','office table',
-    'manager table','conference table','meeting table','reception table',
-    'office chair','executive chair','visitor chair','workstation','cubicle',
-    'office sofa','office cabinet','mobile pedestal','mobile filing','pedestal',
-    'filing cabinet','storage cabinet','bookshelf','office rack','office cupboard',
-    'office locker','office','desk','executive','workstation','cabinet','pedestal',
-    'locker','reception','cubicle','drafting table','modular workstation',
-    'minimal desk','minimalist desk','minimalist table','minimal table',
-    'modern desk','naval blue wooden desk','rolling utility cart','lobby bench',
-    'storage bench','corner study desk','study nook','peach study set',
-    'pastel study nook','workshop table','workshop stool','waiting bench',
-    'cafeteria table','key cabinet','key safe','display cabinet','ivory tusk',
-    'lavender pedestal table','wood top workshop table','beige seat tripod',
-  ],
   'Educational Furniture': [
     'library table','library chair','library rack','reading table','reading chair',
     'laboratory table','laboratory stool','lab bench','science table',
     'lecture stand','podium','training desk','training chair','college furniture',
     'lecture chair','writing tablet','tablet arm','tablet-arm','blue pipe fitting',
     'notice board','step bench','blue desk training','training room',
+    'office desk','executive desk','computer table','office table',
+    'manager table','conference table','meeting table','reception table',
+    'office chair','executive chair','visitor chair','workstation','cubicle',
+    'office sofa','office cabinet','mobile pedestal','mobile filing','pedestal',
+    'filing cabinet','storage cabinet','bookshelf','office rack','office cupboard',
+    'office locker','office','desk','executive','cabinet',
+    'locker','reception','drafting table','modular workstation',
+    'minimal desk','minimalist desk','minimalist table','minimal table',
+    'modern desk','naval blue wooden desk','waiting bench',
+    'cafeteria table','key cabinet','key safe','display cabinet','ivory tusk',
+    'lavender pedestal table','light wood office desk','modern beige desk',
+    'modern wooden cubicles','minimalist desk and chair corner',
+    'gray adjustable drafting table','lavender wall','light wood',
+    'lightwood modular workstation','wood top workshop table','beige seat tripod',
   ],
   'School Furniture': [
     'student desk','dual desk','single desk','desk bench','student chair',
@@ -177,13 +174,6 @@ const CATEGORY_KEYWORDS: Record<CanonicalCategoryName, string[]> = {
     'yellow platform table','modern table with colourful chairs','minimal mint corner',
     'multicolour children table set','simple outdoor wooden utility desk',
   ],
-  'Hospital Furniture': [
-    'hospital bed','patient bed','icu bed','fowler bed','semi fowler',
-    'over bed table','bedside locker','hospital chair','doctor table',
-    'doctor chair','medicine cabinet','hospital rack','hospital stool',
-    'examination table','crash cart','hospital trolley','hospital','medical',
-    'clinic','patient','semi-fowler','overbed',
-  ],
   'Hostel Furniture': [
     'hostel bed','bunk bed','metal bed','steel bed','hostel locker','wardrobe',
     'cupboard','hostel table','study table','hostel chair','hostel rack',
@@ -191,8 +181,12 @@ const CATEGORY_KEYWORDS: Record<CanonicalCategoryName, string[]> = {
     'wooden storage bed','wooden study cabinet','warm wooden wardrobes',
     'open wardrobe by the pillar','white metal wardrobe','rolling wooden cubby',
     'mobile beechwood storage cabinet','cream storage cabinet','cream workshop',
-    'cream utility hopper','softly lit cabinet display room','open white key cabinet',
-    'blue work jacket inside open steel locker',
+    'softly lit cabinet display room','open white key cabinet',
+    'blue work jacket inside open steel locker','storage bench',
+    'lobby bench','warm wooden storage bench','corner study desk','study nook',
+    'peach study set','pastel study nook','hospital bed','patient bed',
+    'doctor table','doctor chair','medicine cabinet','hospital trolley',
+    'white industrial chair','waiting area seating','examination table',
   ],
   'Industrial Storage': [
     'industrial rack','warehouse rack','heavy duty rack','steel rack','storage rack',
@@ -205,6 +199,11 @@ const CATEGORY_KEYWORDS: Record<CanonicalCategoryName, string[]> = {
     'two compartment silver metal locker','minimalist taupe metal locker',
     'metal storage cabinet interior','empty wooden shelf','apollo rack',
     'heavy-duty rack','warehouse','galvanized rack','slotted angle',
+    'rolling utility cart','utility hopper','workshop table','workshop stool',
+    'bisleri counter corner','adjustable height table','adjustable workshop',
+    'lightwood rolling utility cart','cream utility hopper',
+    'industrial cafeteria table','wood-top workshop table','workshop bench',
+    'chrome three-seat waiting bench','adjustable drafting table',
   ],
   'Bathroom Collection': [
     'bathroom cabinet','vanity','mirror cabinet','wash basin cabinet',
@@ -268,7 +267,7 @@ export function detectCategoryByName(rawName: string): CanonicalCategoryName {
   });
   scored.sort((a, b) => b.score - a.score);
   const best = scored[0];
-  return best && best.score > 0 ? best.name : 'Office Furniture';
+  return best && best.score > 0 ? best.name : 'Educational Furniture';
 }
 
 export function resolveCategoryByPath(path: string, fallback: CanonicalCategoryName): CanonicalCategoryName {
@@ -282,19 +281,18 @@ export function resolveCategoryByPath(path: string, fallback: CanonicalCategoryN
   const segments = lower.split('/');
   const folder = segments[segments.length - 2] ?? '';
   const folderCat = detectCategoryByName(folder);
-  if (folderCat === 'Office Furniture') return fallback;
-  return folderCat;
+  return folderCat || fallback;
 }
 
 const folderNameToCategory: Record<string, CanonicalCategoryName> = {
-  'office': 'Office Furniture',
-  'office furniture': 'Office Furniture',
+  'office': 'Educational Furniture',
+  'office furniture': 'Educational Furniture',
   'educational': 'Educational Furniture',
   'educational furniture': 'Educational Furniture',
   'school': 'School Furniture',
   'school furniture': 'School Furniture',
-  'hospital': 'Hospital Furniture',
-  'hospital furniture': 'Hospital Furniture',
+  'hospital': 'Hostel Furniture',
+  'hospital furniture': 'Hostel Furniture',
   'hostel': 'Hostel Furniture',
   'hostel furniture': 'Hostel Furniture',
   'industrial': 'Industrial Storage',
@@ -322,7 +320,6 @@ export function detectCategory(path: string, rawName: string): CanonicalCategory
   const directFolder = segments[segments.length - 2] ?? '';
   if (folderNameToCategory[directFolder]) return folderNameToCategory[directFolder];
   const nameCat = detectCategoryByName(rawName);
-  if (nameCat !== 'Office Furniture') return nameCat;
   return resolveCategoryByPath(path, nameCat);
 }
 
@@ -441,16 +438,14 @@ function getBannerOrDefault(preferredNames: string[], fallback: string): string 
 
 const firstImg = PRODUCT_IMAGE_GROUPS[0]?.image || Object.values(bannerAssetModules)[0] || '';
 
-const OfficeFurnitureImg      = getBannerOrDefault(['Office Furniture'], firstImg);
 const EducationalFurnitureImg = getBannerOrDefault(['Educational Furniture'], firstImg);
 const SchoolFurnitureImg      = getBannerOrDefault(['School Furniture'], firstImg);
-const HospitalFurnitureImg    = getBannerOrDefault(['Hospital Furniture'], firstImg);
 const HostelFurnitureImg      = getBannerOrDefault(['Hostel Furniture'], firstImg);
 const IndustrialStorageImg    = getBannerOrDefault(['Industrial Storage','Warehouse Racks','SS Wire Racks'], firstImg);
 const BathroomStorageImg     = getBannerOrDefault(['Bathroom Storage'], firstImg);
 const LetterBoxesImg          = getBannerOrDefault(['Letter Boxes'], firstImg);
 const AuditoriumChairsImg     = getBannerOrDefault(['Auditorium Chairs'], firstImg);
-const HotelFurnitureImg       = getBannerOrDefault(['Hotel Furniture'], OfficeFurnitureImg);
+const HotelFurnitureImg       = getBannerOrDefault(['Hotel Furniture'], EducationalFurnitureImg);
 void AuditoriumChairsImg;
 
 function imagesByCategory(category: CanonicalCategoryName): { image: string; gallery: string[] }[] {
@@ -460,10 +455,8 @@ function imagesByCategory(category: CanonicalCategoryName): { image: string; gal
   }));
 }
 
-const OFFICE_POOL = imagesByCategory('Office Furniture');
 const EDUCATIONAL_POOL = imagesByCategory('Educational Furniture');
 const SCHOOL_POOL = imagesByCategory('School Furniture');
-const HOSPITAL_POOL = imagesByCategory('Hospital Furniture');
 const HOSTEL_POOL = imagesByCategory('Hostel Furniture');
 const INDUSTRIAL_POOL = imagesByCategory('Industrial Storage');
 const BATHROOM_POOL = imagesByCategory('Bathroom Collection');
@@ -509,20 +502,16 @@ class UniqueImagePool {
 
 const UNIQUE = new UniqueImagePool();
 
-const REAL_OFFICE_COUNT = OFFICE_POOL.length;
 const REAL_EDUCATIONAL_COUNT = EDUCATIONAL_POOL.length;
 const REAL_SCHOOL_COUNT = SCHOOL_POOL.length;
-const REAL_HOSPITAL_COUNT = HOSPITAL_POOL.length;
 const REAL_HOSTEL_COUNT = HOSTEL_POOL.length;
 const REAL_INDUSTRIAL_COUNT = INDUSTRIAL_POOL.length;
 const REAL_BATHROOM_COUNT = BATHROOM_POOL.length;
 const REAL_LETTERBOX_COUNT = LETTERBOX_POOL.length;
 
 export const PRODUCT_ASSETS: Record<CanonicalCategoryName, { img: string; count: number }> = {
-  'Office Furniture':      { img: OFFICE_POOL[0]?.image || OfficeFurnitureImg,      count: REAL_OFFICE_COUNT },
   'Educational Furniture': { img: EDUCATIONAL_POOL[0]?.image || EducationalFurnitureImg, count: REAL_EDUCATIONAL_COUNT },
   'School Furniture':      { img: SCHOOL_POOL[0]?.image || SchoolFurnitureImg,      count: REAL_SCHOOL_COUNT },
-  'Hospital Furniture':    { img: HOSTEL_POOL[0]?.image || HospitalFurnitureImg,    count: REAL_HOSPITAL_COUNT },
   'Hostel Furniture':      { img: HOSTEL_POOL[0]?.image || HostelFurnitureImg,      count: REAL_HOSTEL_COUNT },
   'Industrial Storage':    { img: INDUSTRIAL_POOL[0]?.image || IndustrialStorageImg, count: REAL_INDUSTRIAL_COUNT },
   'Bathroom Collection':   { img: BATHROOM_POOL[0]?.image || BathroomStorageImg,   count: REAL_BATHROOM_COUNT },
@@ -530,11 +519,9 @@ export const PRODUCT_ASSETS: Record<CanonicalCategoryName, { img: string; count:
 };
 
 const INDUSTRIAL_POOL_COPY = [...INDUSTRIAL_POOL];
-const OFFICE_POOL_COPY = [...OFFICE_POOL];
 const SCHOOL_POOL_COPY = [...SCHOOL_POOL];
 const EDUCATIONAL_POOL_COPY = [...EDUCATIONAL_POOL];
 const HOSTEL_POOL_COPY = [...HOSTEL_POOL];
-const HOSPITAL_POOL_COPY = [...HOSPITAL_POOL];
 
 export const SCHOOL_FURNITURE_IMAGES: Record<string, { image: string; gallery: string[] }> = {
   'library-table':        { image: UNIQUE.take(EDUCATIONAL_POOL_COPY) || SchoolFurnitureImg,      gallery: UNIQUE.takeN(EDUCATIONAL_POOL_COPY, 3) },
@@ -557,49 +544,45 @@ export const PRODUCT_SHOWCASE_ITEMS = CANONICAL_CATEGORIES.map((c) => ({
 }));
 
 const heroBg        = UNIQUE.take(INDUSTRIAL_POOL_COPY) || IndustrialStorageImg;
-const heroProduct   = UNIQUE.take(OFFICE_POOL_COPY)     || OfficeFurnitureImg;
+const heroProduct   = UNIQUE.take(EDUCATIONAL_POOL_COPY) || EducationalFurnitureImg;
 const aboutFactory  = UNIQUE.take(INDUSTRIAL_POOL_COPY) || IndustrialStorageImg;
 const manufacturingBg = UNIQUE.take(INDUSTRIAL_POOL_COPY) || IndustrialStorageImg;
 
-const feat1 = { name: 'Executive Office Workstation', spec: 'Engineered wood • Powder-coated steel • Cable management', img: UNIQUE.take(OFFICE_POOL_COPY)     || OfficeFurnitureImg,      tag: 'Best Seller'   };
+const feat1 = { name: 'Executive Office Workstation', spec: 'Engineered wood • Powder-coated steel • Cable management', img: UNIQUE.take(EDUCATIONAL_POOL_COPY) || EducationalFurnitureImg, tag: 'Best Seller'   };
 const feat2 = { name: 'Institutional Student Desk',   spec: 'Tubular steel frame • Anti-scratch laminate • Stackable',        img: UNIQUE.take(SCHOOL_POOL_COPY)     || SchoolFurnitureImg,       tag: 'Tender Ready'  };
 const feat3 = { name: 'Heavy-Duty Warehouse Rack',    spec: 'Load capacity 2000kg/level • Boltless assembly • Galvanized',    img: UNIQUE.take(INDUSTRIAL_POOL_COPY) || IndustrialStorageImg,    tag: 'Export Grade'  };
 
 const imgEducation    = UNIQUE.take(EDUCATIONAL_POOL_COPY) || EducationalFurnitureImg;
-const imgGovernment   = UNIQUE.take(OFFICE_POOL_COPY)      || OfficeFurnitureImg;
-const imgCorporate    = UNIQUE.take(OFFICE_POOL_COPY)      || OfficeFurnitureImg;
-const imgHealthcare   = HOSPITAL_POOL_COPY.length
-                          ? UNIQUE.take(HOSPITAL_POOL_COPY)
-                          : (UNIQUE.take(HOSTEL_POOL_COPY)   || HospitalFurnitureImg);
-const imgHospitality  = UNIQUE.take(OFFICE_POOL_COPY)      || HotelFurnitureImg;
-const imgRetail       = UNIQUE.take(OFFICE_POOL_COPY)      || OfficeFurnitureImg;
+const imgGovernment   = UNIQUE.take(EDUCATIONAL_POOL_COPY) || EducationalFurnitureImg;
+const imgCorporate    = UNIQUE.take(EDUCATIONAL_POOL_COPY) || EducationalFurnitureImg;
+const imgHealthcare   = UNIQUE.take(HOSTEL_POOL_COPY)      || HostelFurnitureImg;
+const imgHospitality  = UNIQUE.take(EDUCATIONAL_POOL_COPY) || HotelFurnitureImg;
+const imgRetail       = UNIQUE.take(EDUCATIONAL_POOL_COPY) || EducationalFurnitureImg;
 const imgWarehouses   = UNIQUE.take(INDUSTRIAL_POOL_COPY)  || IndustrialStorageImg;
 const imgFactories    = UNIQUE.take(INDUSTRIAL_POOL_COPY)  || IndustrialStorageImg;
 const imgInfrastructure = UNIQUE.take(INDUSTRIAL_POOL_COPY) || IndustrialStorageImg;
-const imgDefence      = UNIQUE.take(OFFICE_POOL_COPY)      || OfficeFurnitureImg;
-const imgAirports     = UNIQUE.take(OFFICE_POOL_COPY)      || OfficeFurnitureImg;
+const imgDefence      = UNIQUE.take(EDUCATIONAL_POOL_COPY) || EducationalFurnitureImg;
+const imgAirports     = UNIQUE.take(EDUCATIONAL_POOL_COPY) || EducationalFurnitureImg;
 const imgMetroRail    = UNIQUE.take(EDUCATIONAL_POOL_COPY) || EducationalFurnitureImg;
-const imgSmartCities  = UNIQUE.take(OFFICE_POOL_COPY)      || OfficeFurnitureImg;
+const imgSmartCities  = UNIQUE.take(EDUCATIONAL_POOL_COPY) || EducationalFurnitureImg;
 const imgExports      = UNIQUE.take(INDUSTRIAL_POOL_COPY)  || IndustrialStorageImg;
 
 const gal1 = { src: UNIQUE.take(INDUSTRIAL_POOL_COPY)  || IndustrialStorageImg,    cat: 'Factory',     h: 'tall'   };
-const gal2 = { src: UNIQUE.take(OFFICE_POOL_COPY)      || OfficeFurnitureImg,      cat: 'Office',      h: 'medium' };
+const gal2 = { src: UNIQUE.take(EDUCATIONAL_POOL_COPY) || EducationalFurnitureImg, cat: 'Office',      h: 'medium' };
 const gal3 = { src: UNIQUE.take(EDUCATIONAL_POOL_COPY) || EducationalFurnitureImg, cat: 'Educational', h: 'short'  };
 const gal4 = { src: UNIQUE.take(SCHOOL_POOL_COPY)      || SchoolFurnitureImg,      cat: 'Educational', h: 'tall'   };
-const gal5 = { src: HOSPITAL_POOL_COPY.length
-                 ? UNIQUE.take(HOSPITAL_POOL_COPY)
-                 : UNIQUE.take(HOSTEL_POOL_COPY)         || HospitalFurnitureImg,    cat: 'Hospital',    h: 'medium' };
-const gal6 = { src: UNIQUE.take(OFFICE_POOL_COPY)      || HotelFurnitureImg,       cat: 'Hotel',       h: 'short'  };
+const gal5 = { src: UNIQUE.take(HOSTEL_POOL_COPY)      || HostelFurnitureImg,      cat: 'Hospital',    h: 'medium' };
+const gal6 = { src: UNIQUE.take(EDUCATIONAL_POOL_COPY) || HotelFurnitureImg,       cat: 'Hotel',       h: 'short'  };
 const gal7 = { src: UNIQUE.take(INDUSTRIAL_POOL_COPY)  || IndustrialStorageImg,    cat: 'Warehouse',   h: 'medium' };
 const gal8 = { src: UNIQUE.take(INDUSTRIAL_POOL_COPY)  || IndustrialStorageImg,    cat: 'Industrial',  h: 'tall'   };
 const gal9 = { src: UNIQUE.take(EDUCATIONAL_POOL_COPY) || EducationalFurnitureImg, cat: 'Library',     h: 'short'  };
-const gal10 = { src: UNIQUE.take(OFFICE_POOL_COPY)     || OfficeFurnitureImg,      cat: 'Auditorium',  h: 'medium' };
+const gal10 = { src: UNIQUE.take(EDUCATIONAL_POOL_COPY) || EducationalFurnitureImg, cat: 'Auditorium', h: 'medium' };
 
 const exportContainer = UNIQUE.take(INDUSTRIAL_POOL_COPY) || IndustrialStorageImg;
-const exportGlobe     = UNIQUE.take(OFFICE_POOL_COPY)     || OfficeFurnitureImg;
+const exportGlobe     = UNIQUE.take(EDUCATIONAL_POOL_COPY) || EducationalFurnitureImg;
 
 const testim1 = UNIQUE.take(INDUSTRIAL_POOL_COPY)  || IndustrialStorageImg;
-const testim2 = UNIQUE.take(OFFICE_POOL_COPY)      || OfficeFurnitureImg;
+const testim2 = UNIQUE.take(EDUCATIONAL_POOL_COPY) || EducationalFurnitureImg;
 const testim3 = UNIQUE.take(EDUCATIONAL_POOL_COPY) || EducationalFurnitureImg;
 const testim4 = UNIQUE.take(INDUSTRIAL_POOL_COPY)  || IndustrialStorageImg;
 
@@ -638,10 +621,8 @@ export const IMG = {
 };
 
 export const CATEGORY_BANNERS: Record<CanonicalCategoryName, string> = {
-  'Office Furniture':      OfficeFurnitureImg,
   'Educational Furniture': EducationalFurnitureImg,
   'School Furniture':      SchoolFurnitureImg,
-  'Hospital Furniture':    HospitalFurnitureImg,
   'Hostel Furniture':      HostelFurnitureImg,
   'Industrial Storage':    IndustrialStorageImg,
   'Bathroom Collection':   BathroomStorageImg,

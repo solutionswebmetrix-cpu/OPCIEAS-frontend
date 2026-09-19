@@ -1,7 +1,11 @@
-const envApiBase =
+const configuredApiBase =
   (import.meta as any).env?.VITE_API_URL ||
   (import.meta as any).env?.VITE_API_BASE_URL ||
   '';
+const isLocalApi = /:\/\/(localhost|127\.0\.0\.1)(:\d+)?/i.test(configuredApiBase);
+const envApiBase = (import.meta as any).env?.PROD && isLocalApi
+  ? 'https://api.opcieas.com/api'
+  : configuredApiBase || ((import.meta as any).env?.PROD ? 'https://api.opcieas.com/api' : '');
 
 export const API_BASE_URL: string = envApiBase.replace(/\/$/, '');
 

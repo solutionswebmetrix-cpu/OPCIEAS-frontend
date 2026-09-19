@@ -18,17 +18,20 @@ export default function AllProductsPage() {
   const [apiProducts, setApiProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Pick<Category, 'id' | 'name' | 'slug'>[]>(fallbackCategories);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [search, setSearch] = useState('');
   const [activeCat, setActiveCat] = useState<string>('all');
 
   useEffect(() => {
     (async () => {
       try {
+        setLoadError(false);
         const [products, categoryList] = await Promise.all([fetchProducts(), fetchCategories()]);
         setApiProducts(products);
         setCategories(categoryList.length ? categoryList.map((category) => ({ id: category.id, name: category.name, slug: category.slug })) : fallbackCategories);
       } catch (error) {
         console.error('[AllProductsPage] Product fetch failed:', error);
+        setLoadError(true);
         setApiProducts([]);
         setCategories(fallbackCategories);
       } finally {
@@ -80,7 +83,7 @@ export default function AllProductsPage() {
         canonical="https://www.opcieascommercialfurniture.com/products"
         schema={{ '@context': 'https://schema.org', '@type': 'ItemList', name: 'OPCIEAS Products', description: 'Product categories and commercial furniture solutions from OPCIEAS.' }}
       />
-      <SectionBanner title="All Products" tagline={`${apiProducts.length} commercial furniture solutions`} image={CATEGORY_BANNERS['Office Furniture']} crumb="Products" crumbTo="/products" />
+      <SectionBanner title="All Products" tagline={loadError ? 'Unable to load products' : `${apiProducts.length} commercial furniture solutions`} image={CATEGORY_BANNERS['Educational Furniture']} crumb="Products" crumbTo="/products" />
 
       <section className="bg-white py-20">
         <div className="container-x px-6">
@@ -92,12 +95,12 @@ export default function AllProductsPage() {
                 <motion.div key={category.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: (index % 4) * 0.08 }}>
                   <Link to={`/products/category/${category.slug}`} className="group relative block overflow-hidden rounded-lux border border-navy/10 bg-white shadow-sm transition-all duration-300 hover:shadow-md">
                     <div className="relative aspect-[4/3] overflow-hidden">
-                      <img src={CATEGORY_BANNERS[category.name as keyof typeof CATEGORY_BANNERS] || CATEGORY_BANNERS['Office Furniture']} alt={category.name} className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
+                      <img src={CATEGORY_BANNERS[category.name as keyof typeof CATEGORY_BANNERS] || CATEGORY_BANNERS['Educational Furniture']} alt={category.name} className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
                       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white/95 via-white/30 to-transparent" />
                     </div>
                     <div className="p-5">
                       <h3 className="font-heading text-lg font-bold text-navy">{category.name}</h3>
-                      <p className="mt-1 font-sub text-xs text-navy/70">{count} product{count !== 1 ? 's' : ''}</p>
+                      <p className="mt-1 font-sub text-xs text-navy/70">{loadError ? 'Unable to load products' : `${count} product${count !== 1 ? 's' : ''}`}</p>
                       <span className="mt-3 inline-flex items-center gap-1 font-sub text-xs text-gold font-medium">View Products <ArrowRight className="h-3 w-3" /></span>
                     </div>
                   </Link>
@@ -134,10 +137,12 @@ export default function AllProductsPage() {
             </div>
           </div>
 
-          <p className="mb-6 font-sub text-sm text-navy/50">{filtered.length} product(s)</p>
+          <p className="mb-6 font-sub text-sm text-navy/50">{loadError ? 'Unable to load products. Please try again.' : `${filtered.length} product(s)`}</p>
 
-          {filtered.length === 0 ? (
-            <div className="py-20 text-center"><p className="font-sub text-sm text-navy/50">No products found.</p></div>
+          {loadError ? (
+            <div className="py-20 text-center"><p className="font-sub text-sm text-navy/50">Unable to load products. Please try again.</p></div>
+          ) : filtered.length === 0 ? (
+            <div className="py-20 text-center"><p className="font-sub text-sm text-navy/50">No products available.</p></div>
           ) : (
             <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
               {filtered.map((product, index) => (

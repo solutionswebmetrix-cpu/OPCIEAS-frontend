@@ -13,11 +13,11 @@ const timeline = [
 ];
 
 const galleryImages = [
-  IMG.products['Office Furniture'].img,
+  IMG.products['Educational Furniture'].img,
   IMG.products['Industrial Storage'].img,
   IMG.products['Educational Furniture'].img,
   IMG.products['Industrial Storage'].img,
-  IMG.products['Hospital Furniture'].img,
+  IMG.products['Hostel Furniture'].img,
 ];
 
 export default function About() {

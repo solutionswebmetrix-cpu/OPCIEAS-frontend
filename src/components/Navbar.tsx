@@ -37,7 +37,9 @@ const menu = [
   {
     label: 'Special',
     items: [
-      { name: 'Social Service', to: '/social-service' },
+      { name: 'Social Services — Rural Development', to: '/social-service' },
+      { name: 'Social Services — Affluent Aged Dignity Living', to: '/community-impact' },
+      { name: 'Agriculture — Fisheries & Aquaculture', to: '/fisheries-aquaculture' },
       { name: 'Community Impact', to: '/community-impact' },
       { name: 'Compliance & Governance', to: '/compliance' },
       { name: 'Government Tenders', to: '/government-tenders' },
@@ -51,10 +53,8 @@ const menu = [
 ];
 
 const fallbackCategorySeed: Category[] = [
-  { id: '1', name: 'Office Furniture', slug: 'office-furniture', description: null, tagline: null, image: null, banner_image: null, icon: null, sort_order: 1, is_featured: false, status: 'active', meta_title: null, meta_description: null, parent_id: null, created_at: undefined, updated_at: undefined },
   { id: '2', name: 'Educational Furniture', slug: 'educational-furniture', description: null, tagline: null, image: null, banner_image: null, icon: null, sort_order: 2, is_featured: false, status: 'active', meta_title: null, meta_description: null, parent_id: null, created_at: undefined, updated_at: undefined },
   { id: '3', name: 'School Furniture', slug: 'school-furniture', description: null, tagline: null, image: null, banner_image: null, icon: null, sort_order: 3, is_featured: false, status: 'active', meta_title: null, meta_description: null, parent_id: null, created_at: undefined, updated_at: undefined },
-  { id: '4', name: 'Hospital Furniture', slug: 'hospital-furniture', description: null, tagline: null, image: null, banner_image: null, icon: null, sort_order: 4, is_featured: false, status: 'active', meta_title: null, meta_description: null, parent_id: null, created_at: undefined, updated_at: undefined },
   { id: '5', name: 'Hostel Furniture', slug: 'hostel-furniture', description: null, tagline: null, image: null, banner_image: null, icon: null, sort_order: 5, is_featured: false, status: 'active', meta_title: null, meta_description: null, parent_id: null, created_at: undefined, updated_at: undefined },
   { id: '6', name: 'Industrial Storage', slug: 'industrial-storage', description: null, tagline: null, image: null, banner_image: null, icon: null, sort_order: 6, is_featured: false, status: 'active', meta_title: null, meta_description: null, parent_id: null, created_at: undefined, updated_at: undefined },
   { id: '7', name: 'Bathroom Collection', slug: 'bathroom-collection', description: null, tagline: null, image: null, banner_image: null, icon: null, sort_order: 7, is_featured: false, status: 'active', meta_title: null, meta_description: null, parent_id: null, created_at: undefined, updated_at: undefined },
@@ -202,7 +202,7 @@ export default function Navbar() {
   }, [categories, allProducts]);
 
   const commercialFurniturePreviews = useMemo(() => {
-    const firstCategories = ['Office Furniture', 'Educational Furniture', 'Hostel Furniture'];
+    const firstCategories = ['Educational Furniture', 'Hostel Furniture', 'Industrial Storage'];
     const previews: string[] = [];
     for (const name of firstCategories) {
       const assetList = HOMEPAGE_SHOWCASE_CATALOG[name];
@@ -404,13 +404,51 @@ export default function Navbar() {
 
                   <AnimatePresence>
                     {m.items && mega === m.label && (
-                      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }} transition={{ duration: 0.2 }} className="absolute left-1/2 top-full z-20 -translate-x-1/2 pt-3">
-                        <div className="bg-white border border-border-grey rounded-lux p-4 shadow-lg">
-                          <div className="space-y-1">
+                      <motion.div
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 8 }}
+                        transition={{ duration: 0.2 }}
+                        className={`absolute left-1/2 top-full z-30 -translate-x-1/2 pt-3 ${
+                          m.label === 'Special' ? 'w-[min(380px,calc(100vw-32px))]' : ''
+                        }`}
+                      >
+                        <div
+                          className={`bg-white border border-border-grey rounded-lux shadow-lg ${
+                            m.label === 'Special'
+                              ? 'p-3 w-full max-h-[calc(100dvh-100px)] lg:max-h-[calc(100vh-110px)] overflow-y-auto'
+                              : 'p-4'
+                          }`}
+                        >
+                          <div className={m.label === 'Special' ? 'space-y-1.5' : 'space-y-1'}>
                             {m.items.map((item) => (
-                              <button key={item.name} onClick={() => { setMega(null); goTo(item.to, (item as any).scrollId); }} className="group flex w-full items-center gap-3 rounded-xl p-2.5 text-left transition hover:bg-light-grey/50">
-                                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gold/10 text-gold transition group-hover:bg-gold group-hover:text-navy"><FileText className="h-3.5 w-3.5" /></div>
-                                <span className={`font-sub text-sm ${((item as any).scrollId && activeId === (item as any).scrollId) ? 'text-gold' : 'text-navy/70'} group-hover:text-gold`}>{item.name}</span>
+                              <button
+                                key={item.name}
+                                onClick={() => { setMega(null); goTo(item.to, (item as any).scrollId); }}
+                                className={`group flex w-full rounded-xl text-left transition hover:bg-light-grey/50 ${
+                                  m.label === 'Special'
+                                    ? 'items-start gap-3 py-3 px-4'
+                                    : 'items-center gap-3 p-2.5'
+                                }`}
+                              >
+                                <div
+                                  className={`flex items-center justify-center rounded-lg bg-gold/10 text-gold transition group-hover:bg-gold group-hover:text-navy ${
+                                    m.label === 'Special' ? 'mt-0.5 h-8 w-8 flex-shrink-0' : 'h-8 w-8'
+                                  }`}
+                                >
+                                  <FileText className="h-3.5 w-3.5" />
+                                </div>
+                                <span
+                                  className={`font-sub text-sm ${
+                                    ((item as any).scrollId && activeId === (item as any).scrollId)
+                                      ? 'text-gold'
+                                      : 'text-navy/70'
+                                  } group-hover:text-gold ${
+                                    m.label === 'Special' ? 'leading-[1.4] flex-1' : ''
+                                  }`}
+                                >
+                                  {item.name}
+                                </span>
                               </button>
                             ))}
                           </div>

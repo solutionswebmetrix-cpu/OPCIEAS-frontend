@@ -26,6 +26,7 @@ import FurniturePage from './pages/FurniturePage';
 import TechnologyPage from './pages/TechnologyPage';
 import AgriculturePage from './pages/AgriculturePage';
 import SocialServicesPage from './pages/SocialServicesPage';
+import FisheriesAquaculturePage from './pages/FisheriesAquaculturePage';
 import NotFoundPage from './pages/NotFoundPage';
 import CareersPage from './pages/CareersPage';
 import BuyerRegisterPage from './pages/BuyerRegisterPage';
@@ -84,6 +85,7 @@ export default function App() {
           <Route path="/tech-business-promotion" element={<TechBusinessPromotionPage />} />
           <Route path="/furniture-textiles" element={<FurnitureTextilesPage />} />
           <Route path="/agriculture" element={<AgriculturePage />} />
+          <Route path="/fisheries-aquaculture" element={<FisheriesAquaculturePage />} />
           <Route path="/social-service" element={<SocialServicesPage />} />
           <Route path="/social-services" element={<SocialServicesPage />} />
           <Route path="/membership" element={<MembershipPage />} />

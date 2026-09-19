@@ -65,8 +65,8 @@ const SOCIAL_PILLARS = [
   { icon: Users, title: 'Self Help', desc: 'SHG formation, savings discipline, micro-enterprise enablement, and financial literacy that empower women and grassroots collectives.' },
   { icon: Leaf, title: 'Village Development', desc: 'Participatory planning for rural infrastructure, water and sanitation, community buildings, and livelihood support systems.' },
   { icon: Sun, title: 'Solar Adoption', desc: 'Rooftop solar, off-grid systems, street lighting, and solar-powered community centres for clean energy access everywhere.' },
-  { icon: Fish, title: 'Aquaculture', desc: 'Inland fish farming, pond management, quality seed supply, feed technology, and training for farmer-producer groups.' },
-  { icon: Fish, title: 'Fisheries', desc: 'Coastal fisheries, safe harvest practices, cold chain linkages, and market access for fishing communities.' },
+  { icon: Fish, title: 'Aquaculture', desc: 'Inland fish farming, pond management, quality seed supply, feed technology, and training for farmer-producer groups.', to: '/fisheries-aquaculture' },
+  { icon: Fish, title: 'Fisheries', desc: 'Coastal fisheries, safe harvest practices, cold chain linkages, and market access for fishing communities.', to: '/fisheries-aquaculture' },
   { icon: Heart, title: 'Elder Lifestyle', desc: 'Dignified living, wellness programmes, companionship, accessible infrastructure, and age-friendly community design.' },
   { icon: TreePine, title: 'Sustainable Prosperity', desc: 'Every outcome must be socially equitable, economically viable, and ecologically regenerative — today, tomorrow, and for the next generation.' },
 ];
@@ -85,7 +85,7 @@ interface DivisionProps {
   image: string;
   accent: string;
   linkTo: string;
-  pillars: Array<{ icon: any; title: string; desc: string }>;
+  pillars: Array<{ icon: any; title: string; desc: string; to?: string }>;
   index: number;
   narrationScopeClass?: string;
 }
@@ -184,21 +184,29 @@ function DivisionSection({
             <div className="mt-8 grid gap-5 sm:grid-cols-2">
               {pillars.map((p, i) => {
                 const PI = p.icon as any;
+                const PillarWrapper: React.ElementType = p.to ? Link : 'div';
+                const wrapperProps = p.to ? { to: p.to, className: 'block group' } : { className: 'block' };
                 return (
-                  <motion.div
-                    key={p.title}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.05 * i }}
-                    className="rounded-lux border border-navy/10 bg-white p-6 shadow-sm transition-all duration-300 hover:border-gold/30 hover:shadow-md"
-                  >
-                    <div className={`inline-flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br ${accent} text-white shadow-sm`}>
-                      <PI className="h-5 w-5" strokeWidth={1.75} />
-                    </div>
-                    <h4 className="mt-4 font-heading text-base font-bold text-navy">{p.title}</h4>
-                    <p className="mt-2 font-body text-sm leading-relaxed text-navy/70">{p.desc}</p>
-                  </motion.div>
+                  <PillarWrapper key={p.title} {...wrapperProps}>
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.05 * i }}
+                      className={`rounded-lux border border-navy/10 bg-white p-6 shadow-sm transition-all duration-300 hover:border-gold/30 hover:shadow-md ${p.to ? 'h-full' : ''}`}
+                    >
+                      <div className={`inline-flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br ${accent} text-white shadow-sm`}>
+                        <PI className="h-5 w-5" strokeWidth={1.75} />
+                      </div>
+                      <h4 className="mt-4 font-heading text-base font-bold text-navy">{p.title}</h4>
+                      <p className="mt-2 font-body text-sm leading-relaxed text-navy/70">{p.desc}</p>
+                      {p.to && (
+                        <p className="mt-4 font-sub text-[11px] uppercase tracking-[0.2em] text-gold transition group-hover:translate-x-0.5">
+                          View Details →
+                        </p>
+                      )}
+                    </motion.div>
+                  </PillarWrapper>
                 );
               })}
             </div>
@@ -239,7 +247,7 @@ export default function ThreeDivisions() {
         tagline="Institutional Furniture • FRP • Steel • Textiles • Bundled Furnishing Solutions • Export Ready"
         narration={`OPCIEAS Furniture & Textiles division is a premium manufacturing force built on institutional-grade quality, certified materials, and turnkey delivery. We are the trusted source for Institutional Furniture — desks, benches, storage, seating, and interiors built for schools, colleges, hospitals, offices, hostels, and public buildings that see heavy daily use. Our FRP Furniture range addresses outdoor, coastal, and high-moisture environments where steel and wood cannot deliver the same corrosion-free lifespan. Our Steel Furniture line — racks, lockers, cabinets, workbenches, storage systems — is fabricated from heavy-gauge steel, precision welded, and powder-coated to exacting standards. Our Textiles practice coordinates premium upholstery, furnishing fabrics, curtains, mattress systems, and soft furnishing accessories into cohesive interior packages. Our Bundled Furnishing Solutions simplify procurement for large projects: one partner, one specification, one delivery, one installation, one invoice, and one point of accountability. Above all, we are committed to Eliminating Substandard Products from the supply chain. No ungraded steel, no untested boards, no short-cuts on hardware or finish. Every piece leaving our facility is Export Ready — metric-sized, ISPM-15 packaged, documented for customs, and finished to international quality benchmarks.`}
         icon={Building2}
-        image={IMG.products['Office Furniture'].img}
+        image={IMG.products['Educational Furniture'].img}
         accent="from-[#D4AF37] via-[#B8932B] to-[#8B6F1E]"
         linkTo="/furniture"
         pillars={FURNITURE_PILLARS}

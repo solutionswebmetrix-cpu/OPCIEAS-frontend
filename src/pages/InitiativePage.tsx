@@ -20,7 +20,7 @@ const initiatives: Record<string, { title: string; tagline: string; intro: strin
       { label: 'Explore Industries', to: '/industries/government' },
       { label: 'Company Profile', to: '/company/about' },
     ],
-    image: '/src/assets/Office Furniture.png',
+    image: '/src/assets/Educational Furniture.png',
   },
   'agriculture-aquaculture': {
     title: 'Agriculture & Aquaculture',

@@ -31,6 +31,7 @@ export default function CommunityImpactPage() {
       title: 'Aquaculture & Fisheries',
       desc: 'Supporting coastal and inland communities with technical guidance, quality inputs, market linkages, and sustainable harvesting practices—protecting livelihoods and ecosystems.',
       stats: '2,000+ farmers trained',
+      to: '/fisheries-aquaculture',
     },
     {
       icon: Heart,
@@ -191,25 +192,35 @@ export default function CommunityImpactPage() {
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {initiatives.map((init, i) => {
               const Icon = init.icon;
+              const Wrapper: React.ElementType = (init as any).to ? Link : 'div';
+              const wrapProps = (init as any).to
+                ? { to: (init as any).to, className: 'block group h-full' }
+                : { className: 'block h-full' };
               return (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className="group relative overflow-hidden rounded-lux border border-border-grey bg-gradient-to-br from-white to-blue-50/30 p-8 transition-all duration-300 hover:border-gold hover:shadow-lg"
-                >
-                  <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-gold/5 transition-all group-hover:bg-gold/10" />
-                  <div className="relative z-10">
-                    <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-gold/15 text-gold transition-all group-hover:bg-gold/25">
-                      <Icon className="h-6 w-6" />
+                <Wrapper key={i} {...wrapProps}>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1 }}
+                    className="group relative h-full overflow-hidden rounded-lux border border-border-grey bg-gradient-to-br from-white to-blue-50/30 p-8 transition-all duration-300 hover:border-gold hover:shadow-lg"
+                  >
+                    <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-gold/5 transition-all group-hover:bg-gold/10" />
+                    <div className="relative z-10">
+                      <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-gold/15 text-gold transition-all group-hover:bg-gold/25">
+                        <Icon className="h-6 w-6" />
+                      </div>
+                      <h3 className="font-heading text-lg font-bold text-navy">{init.title}</h3>
+                      <p className="mt-3 font-body text-sm text-navy/70 leading-relaxed">{init.desc}</p>
+                      <p className="mt-4 font-sub text-xs font-semibold text-gold uppercase">{init.stats}</p>
+                      {(init as any).to && (
+                        <p className="mt-5 font-sub text-[11px] uppercase tracking-[0.2em] text-gold transition group-hover:translate-x-0.5">
+                          Explore Fisheries & Aquaculture →
+                        </p>
+                      )}
                     </div>
-                    <h3 className="font-heading text-lg font-bold text-navy">{init.title}</h3>
-                    <p className="mt-3 font-body text-sm text-navy/70 leading-relaxed">{init.desc}</p>
-                    <p className="mt-4 font-sub text-xs font-semibold text-gold uppercase">{init.stats}</p>
-                  </div>
-                </motion.div>
+                  </motion.div>
+                </Wrapper>
               );
             })}
           </div>

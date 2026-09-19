@@ -7,7 +7,8 @@ import SectionBanner from '../components/SectionBanner';
 import ProductCard from '../components/ProductCard';
 import InquiryForm from '../components/InquiryForm';
 import { CATEGORY_BANNERS, CANONICAL_CATEGORIES, type CanonicalCategoryName } from '../lib/images';
-import { fetchCategories, fetchProducts, type Product, type Category } from '../lib/data';
+import { fetchCategories, fetchProducts, resolveProductImage, type Product, type Category } from '../lib/data';
+import { HOMEPAGE_SHOWCASE_CATALOG, type ProductAsset } from '../lib/productAssetResolver';
 
 const categoryContent: Record<string, { overview: string; highlights: string[]; specs: Array<{ label: string; value: string }>; gallery: string[]; cta: string[] }> = {
   'office-furniture': {
@@ -147,29 +148,115 @@ function resolveCategoryFromSlug(slug: string, categories: Pick<Category, 'id' |
   return fallbackCategories.find((category) => category.slug === slug) || null;
 }
 
+function isViteAssetUrl(value?: string | null): boolean {
+  if (!value) return false;
+  return /^\/src\/assets\//i.test(value) || /^\/assets\//i.test(value);
+}
+
+function assetToProduct(category: Pick<Category, 'id' | 'name' | 'slug'>, asset: ProductAsset): Product {
+  return {
+    id: asset.slug || asset.fileName || asset.path,
+    seller_id: undefined,
+    category_id: String(category.id),
+    subcategory: asset.folder,
+    name: asset.name,
+    slug: asset.slug,
+    sku: null,
+    short_desc: asset.folder,
+    short_description: asset.folder,
+    long_desc: null,
+    description: asset.folder,
+    key_features: [],
+    features: [],
+    supply_type: null,
+    specs: {},
+    specifications: {},
+    dimensions: null,
+    material: null,
+    materials_used: null,
+    color: null,
+    warranty_months: null,
+    warranty_terms: null,
+    packaging_specifications: null,
+    export_available: false,
+    export_badge: null,
+    weight: null,
+    variants: null,
+    tags: null,
+    min_order_quantity: 1,
+    max_order_quantity: null,
+    unit: undefined,
+    price: null,
+    discount_price: null,
+    discount_percentage: null,
+    tax_percentage: 0,
+    stock_quantity: undefined,
+    availability_status: undefined,
+    is_approved: true,
+    approved_at: null,
+    approved_by: null,
+    featured: false,
+    is_featured: false,
+    is_new_arrival: false,
+    is_best_seller: false,
+    rating: undefined,
+    total_reviews: undefined,
+    total_views: undefined,
+    total_orders: undefined,
+    status: 'Published',
+    meta_title: null,
+    meta_description: null,
+    image: asset.image,
+    gallery: [asset.image],
+    images: [],
+    price_range: null,
+  } as Product;
+}
+
 export default function ProductCategoryPage() {
   const { slug } = useParams<{ slug: string }>();
   const [apiProducts, setApiProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Pick<Category, 'id' | 'name' | 'slug'>[]>(fallbackCategories);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [search, setSearch] = useState('');
   const [sort, setSort] = useState('newest');
 
   const loadData = async () => {
     setLoading(true);
+    setLoadError(false);
     try {
       const categoryList = await fetchCategories();
       const normalizedCategoryList = categoryList.length
         ? categoryList.map((category) => ({ id: category.id, name: category.name, slug: category.slug }))
         : fallbackCategories;
       setCategories(normalizedCategoryList);
+      // #region debug-point B-D:resolve-category
+      console.log('[DEBUG-CPE][B] ProductCategoryPage categories loaded', {
+        categoryListSource: categoryList.length ? 'API' : 'CANONICAL-FALLBACK',
+        categoryListCount: normalizedCategoryList.length,
+        categoryList: normalizedCategoryList.map((c) => ({ id: c.id, slug: c.slug, name: c.name })),
+      });
+      // #endregion
 
       const catFromRoute = slug ? resolveCategoryFromSlug(slug, normalizedCategoryList) : null;
       console.log('Selected category:', slug);
       console.log('Selected category ID:', catFromRoute?.id ?? 'none');
       console.log('Selected category slug:', catFromRoute?.slug ?? 'none');
+      // #region debug-point C:catFromRoute-resolved
+      console.log('[DEBUG-CPE][C] Category from route resolved', {
+        rawSlug: slug ?? 'none',
+        resolvedId: catFromRoute?.id ?? 'NULL',
+        resolvedName: catFromRoute?.name ?? 'NULL',
+        resolvedSlug: catFromRoute?.slug ?? 'NULL',
+        isResolved: !!catFromRoute,
+      });
+      // #endregion
 
       if (!catFromRoute) {
+        // #region debug-point C:cat-null
+        console.warn('[DEBUG-CPE][C] Category NOT FOUND — setting empty products');
+        // #endregion
         setApiProducts([]);
         setLoading(false);
         return;
@@ -180,11 +267,21 @@ export default function ProductCategoryPage() {
       console.log('API URL:', apiUrl);
       console.log('Total products:', selectedProducts.length);
       console.log('Filtered products:', selectedProducts.length);
+      // #region debug-point D:filtered-api-products
+      console.log('[DEBUG-CPE][D] Products from filtered API call', {
+        categoryId: catFromRoute.id,
+        categoryName: catFromRoute.name,
+        categorySlug: catFromRoute.slug,
+        productCount: selectedProducts.length,
+        products: selectedProducts.map((p) => ({ id: p.id, name: p.name, slug: p.slug, cat_id: p.category_id, hasImage: !!p.image })),
+      });
+      // #endregion
 
       setApiProducts(selectedProducts);
       setLoading(false);
     } catch (error) {
       console.error('[ProductCategoryPage] Product/category fetch failed:', error);
+      setLoadError(true);
       setApiProducts([]);
       setCategories(fallbackCategories);
       setLoading(false);
@@ -237,6 +334,16 @@ export default function ProductCategoryPage() {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center bg-white px-6 text-center">
         <p className="font-heading text-2xl font-bold text-navy">Category not found</p>
+        <Link to="/products" className="mt-4 rounded-full bg-gold px-6 py-2 font-sub text-sm text-navy">View All Products</Link>
+      </div>
+    );
+  }
+
+  if (loadError) {
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center bg-white px-6 text-center">
+        <p className="font-heading text-2xl font-bold text-navy">Unable to load products</p>
+        <p className="mt-2 font-body text-sm text-navy/60">Please try again shortly.</p>
         <Link to="/products" className="mt-4 rounded-full bg-gold px-6 py-2 font-sub text-sm text-navy">View All Products</Link>
       </div>
     );

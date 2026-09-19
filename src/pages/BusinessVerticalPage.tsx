@@ -103,7 +103,7 @@ export default function BusinessVerticalPage() {
       <SectionBanner
         title={vertical.name}
         tagline={`${verticalProducts.length} product${verticalProducts.length !== 1 ? 's' : ''} • ${categoryNames.join(' + ')}`}
-        image={bannerImage || CATEGORY_BANNERS['Office Furniture']}
+        image={bannerImage || CATEGORY_BANNERS['Educational Furniture']}
         crumb={vertical.name}
         crumbTo={`/products/vertical/${slugKey}`}
       />

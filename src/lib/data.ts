@@ -142,12 +142,16 @@ function toNumber(value: any): number | null {
   return null;
 }
 
-const BACKEND_BASE = (
+const configuredBackendBase = (
   (import.meta as any).env?.VITE_BACKEND_URL ||
   (import.meta as any).env?.VITE_API_URL?.replace(/\/api\/?$/, '') ||
   (import.meta as any).env?.VITE_API_BASE_URL?.replace(/\/api\/?$/, '') ||
-  ((import.meta as any).env?.PROD ? 'https://api.opcieas.com' : 'http://127.0.0.1:8000')
+  ''
 ).replace(/\/$/, '');
+const isLocalBackend = /:\/\/(localhost|127\.0\.0\.1)(:\d+)?/i.test(configuredBackendBase);
+const BACKEND_BASE = ((import.meta as any).env?.PROD && isLocalBackend
+  ? 'https://api.opcieas.com'
+  : configuredBackendBase || ((import.meta as any).env?.PROD ? 'https://api.opcieas.com' : 'http://127.0.0.1:8000')).replace(/\/$/, '');
 
 export function resolveProductImage(value?: string | null): string | null {
   if (!value) return null;
@@ -315,16 +319,27 @@ function normalizeProduct(raw: any): Product {
   };
 }
 
+const HIDDEN_CATEGORY_SLUGS = new Set(['office-furniture', 'hospital-furniture']);
+const HIDDEN_CATEGORY_NAMES = new Set(['Office Furniture', 'Hospital Furniture']);
+
+function isCategoryVisible(category: { slug?: string; name?: string }): boolean {
+  const slug = (category.slug ?? '').trim().toLowerCase();
+  const name = (category.name ?? '').trim();
+  if (HIDDEN_CATEGORY_SLUGS.has(slug)) return false;
+  if (HIDDEN_CATEGORY_NAMES.has(name)) return false;
+  return true;
+}
+
 export async function fetchCategories(): Promise<Category[]> {
   try {
     const resp = await apiGet<any>('/categories/list.php');
     const items: any[] = unwrap<any[]>(resp) || [];
     if (Array.isArray(items)) {
-      return items.map(normalizeCategory);
+      return items.map(normalizeCategory).filter(isCategoryVisible);
     }
   } catch {
     console.warn('[fetchCategories] API unavailable, returning canonical frontend category fallback');
-    return CANONICAL_CATEGORIES.map((category) => ({
+    return CANONICAL_CATEGORIES.filter((c) => isCategoryVisible({ slug: c.slug, name: c.name })).map((category) => ({
       id: String(category.id),
       parent_id: null,
       name: category.name,
@@ -343,7 +358,7 @@ export async function fetchCategories(): Promise<Category[]> {
       updated_at: undefined,
     }));
   }
-  return CANONICAL_CATEGORIES.map((category) => ({
+  return CANONICAL_CATEGORIES.filter((c) => isCategoryVisible({ slug: c.slug, name: c.name })).map((category) => ({
     id: String(category.id),
     parent_id: null,
     name: category.name,
@@ -369,10 +384,8 @@ export async function fetchCategory(slug: string): Promise<Category | null> {
   if (exact) return exact;
 
   const aliases: Record<string, string[]> = {
-    'office-furniture': ['office', 'commercial-furniture'],
     'educational-furniture': ['education', 'college-furniture'],
     'school-furniture': ['school', 'educational-furniture'],
-    'hospital-furniture': ['hospital', 'healthcare-furniture'],
     'hostel-furniture': ['hostel', 'dormitory-furniture'],
     'industrial-storage': ['industrial', 'storage-solutions'],
     'bathroom-collection': ['bathroom', 'bathroom-storage'],
@@ -383,10 +396,8 @@ export async function fetchCategory(slug: string): Promise<Category | null> {
   if (alias) return list.find((c) => c.slug === alias) || null;
 
   const names: Record<string, string[]> = {
-    'office-furniture': ['office furniture'],
     'educational-furniture': ['educational furniture', 'education'],
     'school-furniture': ['school furniture', 'school'],
-    'hospital-furniture': ['hospital furniture', 'healthcare'],
     'hostel-furniture': ['hostel furniture', 'hostel'],
     'industrial-storage': ['industrial storage', 'storage solutions'],
     'bathroom-collection': ['bathroom collection', 'bathroom storage'],
@@ -403,21 +414,54 @@ export async function fetchProducts(categoryId?: string, categorySlug?: string):
 
     while (hasNext) {
       const params: Record<string, any> = { status: 'Published', limit: 500, page };
-      if (categoryId) params.category_id = categoryId;
       if (categorySlug) {
-        params.categorySlug = categorySlug;
         params.category_slug = categorySlug;
-        params.category = categorySlug;
+      } else if (categoryId) {
+        params.category_id = categoryId;
       }
+      // #region debug-point A:fetchProducts-request
+      console.log('[DEBUG-CPE][A] fetchProducts() request', {
+        categoryId: categoryId ?? 'none',
+        categorySlug: categorySlug ?? 'none',
+        params,
+        page,
+      });
+      // #endregion
       const resp = await apiGet<any>('/products/list.php', params);
       const items: any[] = unwrap<any[]>(resp) || [];
+      // #region debug-point A:fetchProducts-response
+      console.log('[DEBUG-CPE][A] fetchProducts() response page=' + page, {
+        rawRespSuccess: resp?.success,
+        rawRespKeys: resp ? Object.keys(resp) : null,
+        itemsCount: Array.isArray(items) ? items.length : 'NOT-ARRAY',
+        pagination: resp?.pagination,
+      });
+      // #endregion
       if (!Array.isArray(items)) break;
       products.push(...items.map(normalizeProduct));
       hasNext = !!resp?.pagination?.has_next && items.length > 0;
       page += 1;
     }
-    return products.filter(isPublicProduct);
+    const publicProducts = products.filter(isPublicProduct);
+    // #region debug-point A:fetchProducts-final
+    console.log('[DEBUG-CPE][A] fetchProducts() FINAL result', {
+      requestedCategoryId: categoryId ?? 'none',
+      requestedCategorySlug: categorySlug ?? 'none',
+      totalBeforePublicFilter: products.length,
+      totalAfterPublicFilter: publicProducts.length,
+      sampleCategoryIds: products.slice(0, 5).map((p) => p.category_id),
+      sampleSlugs: publicProducts.slice(0, 5).map((p) => ({ slug: p.slug, name: p.name })),
+    });
+    // #endregion
+    return publicProducts;
   } catch (e) {
+    // #region debug-point A:fetchProducts-error
+    console.error('[DEBUG-CPE][A] fetchProducts() ERROR:', {
+      categoryId: categoryId ?? 'none',
+      categorySlug: categorySlug ?? 'none',
+      error: e instanceof Error ? { name: e.name, message: e.message, stack: e.stack } : String(e),
+    });
+    // #endregion
     console.error('Products API error:', e);
     throw e;
   }

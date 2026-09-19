@@ -112,7 +112,7 @@ export default function FurniturePage() {
       <SectionBanner
         title="Commercial & Institutional Furniture Built for Scale"
         tagline="High-volume furniture for institutions, commercial projects, and large-scale contractors"
-        image={CATEGORY_BANNERS['Office Furniture']}
+        image={CATEGORY_BANNERS['Educational Furniture']}
         crumb="Commercial Furniture"
         crumbTo="/furniture"
       />

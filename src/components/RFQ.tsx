@@ -4,8 +4,8 @@ import { Upload, Send, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 import { submitRFQ } from '../lib/data';
 
 const categories = [
-  'Office Furniture', 'Educational Furniture', 'School Furniture', 'Hostel Furniture',
-  'Hotel Furniture', 'Hospital Furniture', 'Industrial Furniture', 'Storage Systems',
+  'Educational Furniture', 'School Furniture', 'Hostel Furniture',
+  'Hotel Furniture', 'Industrial Furniture', 'Storage Systems',
   'Steel Furniture', 'Warehouse Racks', 'Library Furniture', 'Auditorium Chairs',
 ];
 
