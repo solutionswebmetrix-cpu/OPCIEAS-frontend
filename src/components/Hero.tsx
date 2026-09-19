@@ -166,7 +166,7 @@ export default function Hero() {
 
       <div className="container-x relative z-10 flex h-full w-full max-w-full items-center px-5 py-10 sm:py-8 lg:px-10 lg:py-6 xl:px-12">
         <div className="w-full min-w-0 max-w-3xl">
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.6 }}
@@ -176,7 +176,7 @@ export default function Hero() {
             <span
               className="font-sub text-xs tracking-widest text-white"
             >COMMERCIAL FURNITURE MANUFACTURER SINCE 2000</span>
-          </motion.div>
+          </motion.div> */}
 
           {/* Typewriter headline — white for readability over video */}
           <h1

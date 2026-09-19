@@ -12,6 +12,18 @@ export interface ProductAsset {
   category: string;
 }
 
+function normalizeAssetLookup(value: string): string {
+  return value
+    .toLowerCase()
+    .trim()
+    .replace(/[_-]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .replace(/\.(png|jpe?g|webp|avif)$/gi, '')
+    .replace(/[^a-z0-9\s/]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 function isForbiddenAssetPath(path: string): boolean {
   const normalized = path.toLowerCase();
   return (
@@ -130,26 +142,54 @@ builtCatalog['Letter Boxes'] = builtCatalog['Letter Box'] ?? [];
 export const HOMEPAGE_SHOWCASE_CATALOG: Record<string, ProductAsset[]> = builtCatalog;
 
 export function findProductAssetByName(name: string, category?: string): ProductAsset | null {
-  const targetName = cleanProductName(name || '').toLowerCase();
-  const targetCategory = category ? category.trim().toLowerCase() : '';
+  const targetName = normalizeAssetLookup(cleanProductName(name || ''));
+  const targetCategory = category ? normalizeAssetLookup(category) : '';
 
   const exact = PRODUCT_ASSETS.find((asset) => {
-    const sameName = asset.name.toLowerCase() === targetName;
-    const sameCategory = !targetCategory || asset.category.toLowerCase() === targetCategory;
-    return sameName && sameCategory;
+    const assetName = normalizeAssetLookup(asset.name);
+    const assetFileName = normalizeAssetLookup(asset.fileName);
+    const folderName = normalizeAssetLookup(asset.folder);
+    const sameName = assetName === targetName || assetFileName === targetName || assetName.includes(targetName) || targetName.includes(assetName);
+    const sameFolder = !targetCategory || folderName === targetCategory || asset.category.toLowerCase() === targetCategory || normalizeAssetLookup(asset.category) === targetCategory;
+    return sameName && sameFolder;
   });
   if (exact) return exact;
 
   const partial = PRODUCT_ASSETS.find((asset) => {
-    const sameName = asset.name.toLowerCase().includes(targetName) || targetName.includes(asset.name.toLowerCase());
-    const sameCategory = !targetCategory || asset.category.toLowerCase() === targetCategory;
+    const assetName = normalizeAssetLookup(asset.name);
+    const assetFileName = normalizeAssetLookup(asset.fileName);
+    const folderName = normalizeAssetLookup(asset.folder);
+    const sameName =
+      assetName.includes(targetName) ||
+      targetName.includes(assetName) ||
+      assetFileName.includes(targetName) ||
+      targetName.includes(assetFileName) ||
+      `${folderName} ${assetFileName}`.includes(targetName) ||
+      targetName.includes(`${folderName} ${assetFileName}`);
+    const sameCategory = !targetCategory || folderName === targetCategory || normalizeAssetLookup(asset.category) === targetCategory || normalizeAssetLookup(asset.category).includes(targetCategory) || targetCategory.includes(normalizeAssetLookup(asset.category));
     return sameName && sameCategory;
   });
   return partial ?? null;
 }
 
 export function findProductAssetBySlug(slug: string): ProductAsset | null {
-  const asset = PRODUCT_ASSETS.find((candidate) => candidate.slug === slug);
+  const target = normalizeAssetLookup(slug || '');
+  if (!target) return null;
+
+  const asset = PRODUCT_ASSETS.find((candidate) => {
+    const values = [
+      candidate.slug,
+      candidate.fileName,
+      candidate.name,
+      candidate.folder,
+      `${candidate.folder} ${candidate.fileName}`,
+    ];
+    return values.some((value) => {
+      const normalizedValue = normalizeAssetLookup(value);
+      return normalizedValue === target || normalizedValue.includes(target) || target.includes(normalizedValue);
+    });
+  });
+
   if (!asset) return null;
   const searchable = `${asset.name} ${asset.folder}`.toLowerCase();
   if (/(play equipment|playground|double slide|slide playground|basketball hoop|swing set|seesaw|merry-go-round)/.test(searchable)) return null;

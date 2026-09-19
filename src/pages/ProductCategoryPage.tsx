@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Search, Download, MessageCircle, Boxes, ArrowRight } from 'lucide-react';
 import PageMeta from '../components/PageMeta';
@@ -7,7 +7,7 @@ import SectionBanner from '../components/SectionBanner';
 import ProductCard from '../components/ProductCard';
 import InquiryForm from '../components/InquiryForm';
 import { CATEGORY_BANNERS, CANONICAL_CATEGORIES, type CanonicalCategoryName } from '../lib/images';
-import { fetchCategories, fetchProducts, resolveProductImage, type Product, type Category } from '../lib/data';
+import { fetchCategories, fetchProducts, resolveProductImage, resolveCategoryFromSlug, normalizeCategorySlug, normalizeCategoryName, type Product, type Category } from '../lib/data';
 import { HOMEPAGE_SHOWCASE_CATALOG, type ProductAsset } from '../lib/productAssetResolver';
 
 const categoryContent: Record<string, { overview: string; highlights: string[]; specs: Array<{ label: string; value: string }>; gallery: string[]; cta: string[] }> = {
@@ -58,7 +58,7 @@ const categoryContent: Record<string, { overview: string; highlights: string[]; 
   },
   'hostel-furniture': {
     overview: 'Robust and durable hostel furniture for student accommodation, dormitories and institutional living spaces.',
-    highlights: ['Single Cots', 'Bunker Cots', 'Triple Cots', 'Wardrobe', 'Hostel Locker', 'Study Table', 'Hostel Chair', 'Commercial Mattress'],
+    highlights: ['Hostel Cots' , 'Single Cots', 'Bunker Cots', 'Triple Cots', 'Wardrobe', 'Hostel Locker', 'Study Table', 'Hostel Chair', 'Commercial Mattress'],
     specs: [
       { label: 'Suitability', value: 'Hostels, dormitories, student housing and residential institutions' },
       { label: 'Build', value: 'Powder-coated steel frames with durable bedding textile finishes' },
@@ -113,39 +113,30 @@ const fallbackCategories: Pick<Category, 'id' | 'name' | 'slug'>[] = CANONICAL_C
   slug: category.slug,
 }));
 
-function resolveCategoryFromSlug(slug: string, categories: Pick<Category, 'id' | 'name' | 'slug'>[]) {
-  const exact = categories.find((category) => category.slug === slug);
-  if (exact) return exact;
+function normalizeCategoryValue(value: unknown): string {
+  return String(value ?? '')
+    .trim()
+    .toLowerCase()
+    .replace(/&/g, 'and')
+    .replace(/[_\s]+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
 
-  const aliasMap: Record<string, string> = {
-    'letter-box': 'letter-boxes',
-    'office': 'office-furniture',
-    'education': 'educational-furniture',
-    'school': 'school-furniture',
-    'hospital': 'hospital-furniture',
-    'hostel': 'hostel-furniture',
-    'industrial': 'industrial-storage',
-    'storage-solutions': 'industrial-storage',
-    'bathroom': 'bathroom-collection',
-    'letterbox': 'letter-boxes',
-  };
-  const aliased = aliasMap[slug];
-  if (aliased) return categories.find((category) => category.slug === aliased) || fallbackCategories.find((category) => category.slug === aliased) || null;
+function productBelongsToCategory(product: Product, category: Pick<Category, 'id' | 'name' | 'slug'>): boolean {
+  const productCategoryId = String(product.category_id ?? '').trim();
+  const categoryId = String(category.id ?? '').trim();
+  const categorySlug = normalizeCategoryValue(category.slug ?? '');
+  const categoryName = normalizeCategoryValue(category.name ?? '');
 
-  const nameAliases: Record<string, string[]> = {
-    'office-furniture': ['office furniture'],
-    'educational-furniture': ['educational furniture', 'education'],
-    'school-furniture': ['school furniture', 'school'],
-    'hospital-furniture': ['hospital furniture', 'healthcare'],
-    'hostel-furniture': ['hostel furniture', 'hostel'],
-    'industrial-storage': ['industrial storage', 'storage solutions'],
-    'bathroom-collection': ['bathroom collection', 'bathroom storage'],
-    'letter-boxes': ['letter box', 'letter boxes', 'mail box'],
-  };
-  const matchingName = nameAliases[slug]?.find((name) => categories.some((category) => category.name.toLowerCase() === name));
-  if (matchingName) return categories.find((category) => category.name.toLowerCase() === matchingName) || null;
+  const productCategorySlug = normalizeCategoryValue((product as any).category_slug ?? (product as any).categorySlug ?? (product as any).category?.slug ?? '');
+  const productCategoryName = normalizeCategoryValue((product as any).category_name ?? (product as any).categoryName ?? (product as any).category?.name ?? '');
 
-  return fallbackCategories.find((category) => category.slug === slug) || null;
+  return (
+    (!!productCategoryId && !!categoryId && productCategoryId === categoryId) ||
+    (!!productCategorySlug && !!categorySlug && (productCategorySlug === categorySlug || productCategorySlug.includes(categorySlug) || categorySlug.includes(productCategorySlug))) ||
+    (!!productCategoryName && !!categoryName && (productCategoryName === categoryName || productCategoryName.includes(categoryName) || categoryName.includes(productCategoryName)))
+  );
 }
 
 function isViteAssetUrl(value?: string | null): boolean {
@@ -215,72 +206,57 @@ function assetToProduct(category: Pick<Category, 'id' | 'name' | 'slug'>, asset:
 
 export default function ProductCategoryPage() {
   const { slug } = useParams<{ slug: string }>();
+  const [searchParams] = useSearchParams();
   const [apiProducts, setApiProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Pick<Category, 'id' | 'name' | 'slug'>[]>(fallbackCategories);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
   const [search, setSearch] = useState('');
   const [sort, setSort] = useState('newest');
+  const requestedSubcategory = (searchParams.get('subcategory') ?? '').trim();
 
   const loadData = async () => {
     setLoading(true);
     setLoadError(false);
+
     try {
-      const categoryList = await fetchCategories();
+      const categoryList = await fetchCategories().catch(() => fallbackCategories);
       const normalizedCategoryList = categoryList.length
         ? categoryList.map((category) => ({ id: category.id, name: category.name, slug: category.slug }))
         : fallbackCategories;
       setCategories(normalizedCategoryList);
-      // #region debug-point B-D:resolve-category
-      console.log('[DEBUG-CPE][B] ProductCategoryPage categories loaded', {
-        categoryListSource: categoryList.length ? 'API' : 'CANONICAL-FALLBACK',
-        categoryListCount: normalizedCategoryList.length,
-        categoryList: normalizedCategoryList.map((c) => ({ id: c.id, slug: c.slug, name: c.name })),
-      });
-      // #endregion
 
       const catFromRoute = slug ? resolveCategoryFromSlug(slug, normalizedCategoryList) : null;
-      console.log('Selected category:', slug);
-      console.log('Selected category ID:', catFromRoute?.id ?? 'none');
-      console.log('Selected category slug:', catFromRoute?.slug ?? 'none');
-      // #region debug-point C:catFromRoute-resolved
-      console.log('[DEBUG-CPE][C] Category from route resolved', {
-        rawSlug: slug ?? 'none',
-        resolvedId: catFromRoute?.id ?? 'NULL',
-        resolvedName: catFromRoute?.name ?? 'NULL',
-        resolvedSlug: catFromRoute?.slug ?? 'NULL',
-        isResolved: !!catFromRoute,
-      });
-      // #endregion
-
       if (!catFromRoute) {
-        // #region debug-point C:cat-null
-        console.warn('[DEBUG-CPE][C] Category NOT FOUND — setting empty products');
-        // #endregion
         setApiProducts([]);
         setLoading(false);
         return;
       }
 
-      const selectedProducts = await fetchProducts(catFromRoute.id, catFromRoute.slug);
-      const apiUrl = `/products/list.php?category_id=${encodeURIComponent(catFromRoute.id)}&categorySlug=${encodeURIComponent(catFromRoute.slug)}`;
-      console.log('API URL:', apiUrl);
-      console.log('Total products:', selectedProducts.length);
-      console.log('Filtered products:', selectedProducts.length);
-      // #region debug-point D:filtered-api-products
-      console.log('[DEBUG-CPE][D] Products from filtered API call', {
-        categoryId: catFromRoute.id,
-        categoryName: catFromRoute.name,
-        categorySlug: catFromRoute.slug,
-        productCount: selectedProducts.length,
-        products: selectedProducts.map((p) => ({ id: p.id, name: p.name, slug: p.slug, cat_id: p.category_id, hasImage: !!p.image })),
-      });
-      // #endregion
+      let selectedProducts: Product[] = [];
+      try {
+        const categoryFilteredProducts = await fetchProducts(catFromRoute.id, catFromRoute.slug);
+        if (Array.isArray(categoryFilteredProducts) && categoryFilteredProducts.length > 0) {
+          selectedProducts = categoryFilteredProducts;
+        }
+      } catch (categoryError) {
+        console.error('[CategoryPage] category-specific fetch failed, falling back to full product list:', categoryError);
+      }
+
+      if (selectedProducts.length === 0) {
+        try {
+          const allProducts = await fetchProducts();
+          selectedProducts = allProducts.filter((product) => productBelongsToCategory(product, catFromRoute));
+        } catch (loadError) {
+          console.error('[CategoryPage] full product list fetch failed:', loadError);
+          selectedProducts = [];
+        }
+      }
 
       setApiProducts(selectedProducts);
       setLoading(false);
     } catch (error) {
-      console.error('[ProductCategoryPage] Product/category fetch failed:', error);
+      console.error('[CategoryPage] product loading failed:', error);
       setLoadError(true);
       setApiProducts([]);
       setCategories(fallbackCategories);
@@ -307,8 +283,17 @@ export default function ProductCategoryPage() {
 
   const categoryProducts = useMemo(() => {
     if (!cat) return [] as Product[];
-    return apiProducts;
-  }, [apiProducts, cat]);
+    let products = [...apiProducts];
+    if (requestedSubcategory) {
+      const subcategoryKey = normalizeCategorySlug(requestedSubcategory);
+      products = products.filter((product) => {
+        const productSubcategory = normalizeCategorySlug(product.subcategory ?? product.short_desc ?? product.description ?? '');
+        const productTags = Array.isArray(product.tags) ? product.tags.map((tag) => normalizeCategorySlug(String(tag))).join(' ') : normalizeCategorySlug(String(product.tags ?? ''));
+        return !productSubcategory || productSubcategory.includes(subcategoryKey) || productTags.includes(subcategoryKey) || normalizeCategoryName(product.subcategory ?? product.short_desc ?? product.description ?? '').toLowerCase() === requestedSubcategory.toLowerCase();
+      });
+    }
+    return products;
+  }, [apiProducts, cat, requestedSubcategory]);
 
   let filtered = [...categoryProducts];
   if (search) {
@@ -339,7 +324,7 @@ export default function ProductCategoryPage() {
     );
   }
 
-  if (loadError) {
+  if (loadError && apiProducts.length === 0) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center bg-white px-6 text-center">
         <p className="font-heading text-2xl font-bold text-navy">Unable to load products</p>

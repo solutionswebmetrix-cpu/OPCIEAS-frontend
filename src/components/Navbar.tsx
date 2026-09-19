@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Download, FileText, Globe, MessageCircle, ChevronDown } from 'lucide-react';
 import companyLogo from '../assets/logo/logo.png';
 import opcIeasTextWordmark from '../assets/logo/OPCIEAS_approved_text_wordmark.png';
-import { fetchCategories, fetchProducts, resolveProductImage, type Category, type Product } from '../lib/data';
+import { fetchCategories, fetchProducts, resolveProductImage, resolveCategoryFromSlug, normalizeCategorySlug, normalizeCategoryName, canonicalizeCategory, type Category, type Product } from '../lib/data';
 import { HOMEPAGE_SHOWCASE_CATALOG, type ProductAsset } from '../lib/productAssetResolver';
 
 const menu = [
@@ -85,19 +85,41 @@ type PreviewProduct = {
   fromAsset: boolean;
 };
 
-function assetToPreview(asset: ProductAsset, _categorySlug: string): PreviewProduct {
-  return {
-    name: asset.name,
-    slug: asset.slug,
-    image: asset.image,
-    short_desc: asset.category,
-    href: `/product/${asset.slug}`,
-    fromAsset: true,
-  };
+function normalizeSubcategoryValue(value: unknown): string {
+  if (value == null) return '';
+  if (typeof value === 'string') return value;
+  if (Array.isArray(value)) {
+    return value.map((item) => normalizeSubcategoryValue(item)).filter(Boolean).join(' ');
+  }
+  if (typeof value === 'object') {
+    return Object.values(value as Record<string, unknown>).map((item) => normalizeSubcategoryValue(item)).filter(Boolean).join(' ');
+  }
+  return String(value);
 }
 
-function normalizeKeyName(name: string): string {
-  return (name || '').trim().toLowerCase().replace(/\s+/g, ' ');
+function normalizeSubcategoryLabel(value?: string | null): string {
+  return normalizeCategoryName(value || '').replace(/\s*\/\s*/g, ' / ');
+}
+
+function getCategoryRoute(category: Pick<Category, 'id' | 'name' | 'slug'>): string {
+  const resolved = resolveCategoryFromSlug(category.slug || category.name, [category]);
+  return `/products/category/${resolved?.slug || normalizeCategorySlug(category.slug || category.name || 'products')}`;
+}
+
+function getSubcategoryRoute(category: Pick<Category, 'id' | 'name' | 'slug'>, subcategory: string | null): string {
+  const path = getCategoryRoute(category);
+  if (!subcategory) return path;
+  return `${path}?subcategory=${encodeURIComponent(normalizeCategorySlug(subcategory) || normalizeCategoryName(subcategory))}`;
+}
+
+function productMatchesCategory(product: Product, category: Pick<Category, 'id' | 'name' | 'slug'>): boolean {
+  const categoryId = String(category.id ?? '');
+  const productCategoryId = String(product.category_id ?? '');
+  if (categoryId && productCategoryId && categoryId === productCategoryId) return true;
+  if (category.slug && normalizeCategorySlug(product.category_id ?? '') === normalizeCategorySlug(category.slug)) return true;
+  const categoryName = normalizeCategoryName(category.name).toLowerCase();
+  const productCategoryName = normalizeCategoryName((product as any).category_name ?? (product as any).category ?? '').toLowerCase();
+  return !!categoryName && !!productCategoryName && categoryName === productCategoryName;
 }
 
 export default function Navbar() {
@@ -140,65 +162,58 @@ export default function Navbar() {
   }, []);
 
   const categoryMenuRows = useMemo(() => {
-    const productsByCategory = new Map<string, Product[]>();
+    const activeCategories = categories
+      .map((category) => canonicalizeCategory(category) ?? category)
+      .filter((category): category is Category => !!category && !!category.name && !!category.slug && !['office-furniture', 'hospital-furniture'].includes(normalizeCategorySlug(category.slug)));
 
-    for (const product of allProducts) {
-      const categoryId = String(product.category_id ?? '');
-      if (!categoryId) continue;
-      const current = productsByCategory.get(categoryId) ?? [];
-      current.push(product);
-      productsByCategory.set(categoryId, current);
-    }
+    return activeCategories.map((category) => {
+      const categoryProducts = allProducts.filter((product) => productMatchesCategory(product, category));
+      const subcategoryGroups = new Map<string, Product[]>();
 
-    return categories
-      .filter((category) => category && category.name && category.slug)
-      .map((category) => {
-        const showcaseAssets: ProductAsset[] =
-          HOMEPAGE_SHOWCASE_CATALOG[category.name] ??
-          HOMEPAGE_SHOWCASE_CATALOG[category.name.endsWith(' Box') ? `${category.name}es` : category.name.replace(/Boxes$/, ' Box')] ??
-          [];
-        const showcaseByName = new Map<string, ProductAsset>();
-        for (const asset of showcaseAssets) showcaseByName.set(normalizeKeyName(asset.name), asset);
+      for (const product of categoryProducts) {
+        const rawSubcategory = normalizeSubcategoryValue(product.subcategory ?? product.short_desc ?? product.description ?? product.tags ?? category.name);
+        const displayName = normalizeSubcategoryLabel(rawSubcategory) || category.name;
+        if (displayName.toLowerCase() === category.name.toLowerCase()) continue;
+        const key = normalizeCategorySlug(displayName) || 'general';
+        const existing = subcategoryGroups.get(key) ?? [];
+        existing.push(product);
+        subcategoryGroups.set(key, existing);
+      }
 
-        const apiProducts = (productsByCategory.get(String(category.id)) ?? []).slice(0, 5);
-        const merged: PreviewProduct[] = [];
-        const usedAssetKeys = new Set<string>();
+      const subcategories = Array.from(subcategoryGroups.entries())
+        .map(([key, products]) => {
+          const label = normalizeSubcategoryLabel(products[0]?.subcategory ?? products[0]?.short_desc ?? products[0]?.description ?? products[0]?.name ?? key.replace(/-/g, ' '));
+          return { key, label, products: products.slice(0, 2) };
+        })
+        .filter((item) => item.label && item.label.toLowerCase() !== category.name.toLowerCase())
+        .slice(0, 4);
 
-        for (const product of apiProducts) {
-          const key = normalizeKeyName(product.name || '');
-          const matched = showcaseByName.get(key);
-          let image: string | null = product.image ? resolveNavbarImage(product.image) : null;
-          if (matched) {
-            image = matched.image;
-            usedAssetKeys.add(key);
-          }
-          merged.push({
-            name: product.name,
-            slug: product.slug || String(product.id),
-            image: image || '',
-            short_desc: product.short_desc || category.name,
-            href: getProductDetailPath(product),
-            fromAsset: false,
-          });
-        }
+      const previewProducts = subcategories.length ? subcategories.flatMap((group) => group.products).slice(0, 5) : categoryProducts.slice(0, 5);
+      const fallbackAssets: ProductAsset[] =
+        HOMEPAGE_SHOWCASE_CATALOG[category.name] ??
+        HOMEPAGE_SHOWCASE_CATALOG[category.name.endsWith(' Box') ? `${category.name}es` : category.name.replace(/Boxes$/, ' Box')] ??
+        [];
+      const mergedProducts: PreviewProduct[] = [...previewProducts].slice(0, 5).map((product) => ({
+        name: product.name,
+        slug: product.slug || String(product.id),
+        image: resolveNavbarImage(product.image) || '',
+        short_desc: product.subcategory || product.short_desc || category.name,
+        href: getProductDetailPath(product),
+        fromAsset: false,
+      }));
 
-        for (const asset of showcaseAssets) {
-          if (merged.length >= 5) break;
-          const key = normalizeKeyName(asset.name);
-          if (usedAssetKeys.has(key)) continue;
-          usedAssetKeys.add(key);
-          merged.push(assetToPreview(asset, category.slug));
-        }
+      const previewImages = mergedProducts.map((product) => product.image).filter(Boolean).slice(0, 3);
+      if (previewImages.length === 0 && fallbackAssets.length) {
+        fallbackAssets.slice(0, 3).forEach((asset) => previewImages.push(asset.image));
+      }
 
-        const previewImages: string[] = showcaseAssets.slice(0, 3).map((asset) => asset.image);
-
-        return {
-          category,
-          products: merged.slice(0, 5),
-          previewImages,
-          previewAssets: showcaseAssets.slice(0, 3),
-        };
-      });
+      return {
+        category,
+        products: mergedProducts,
+        subcategories,
+        previewImages,
+      };
+    });
   }, [categories, allProducts]);
 
   const commercialFurniturePreviews = useMemo(() => {
@@ -335,30 +350,53 @@ export default function Navbar() {
                                 </div>
                               </Link>
                             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                              {categoryMenuRows.map(({ category, products, previewImages }) => (
+                              {categoryMenuRows.map(({ category, products, subcategories, previewImages }) => (
                                 <div key={category.id} className="rounded-xl border border-navy/10 bg-light-grey/40 p-3">
                                   <div className="mb-2 flex items-center justify-between gap-2">
-                                    <Link to={`/products/category/${category.slug}`} onClick={closeProductsPanel} className="font-heading text-sm font-bold text-navy hover:text-gold">
+                                    <Link to={getCategoryRoute(category)} onClick={closeProductsPanel} className="font-heading text-sm font-bold text-navy hover:text-gold">
                                       {category.name}
                                     </Link>
-                                    <Link to={`/products/category/${category.slug}`} onClick={closeProductsPanel} className="font-sub text-[10px] uppercase tracking-[0.18em] text-navy/50 hover:text-gold">View all</Link>
+                                    <Link to={getCategoryRoute(category)} onClick={closeProductsPanel} className="font-sub text-[10px] uppercase tracking-[0.18em] text-navy/50 hover:text-gold">View all</Link>
                                   </div>
                                   {previewImages && previewImages.length > 0 && (
-                                    <Link to={`/products/category/${category.slug}`} onClick={closeProductsPanel} className="mb-2 block" aria-label={`${category.name} preview images`}>
+                                    <Link to={getCategoryRoute(category)} onClick={closeProductsPanel} className="mb-3 block" aria-label={`${category.name} preview images`}>
                                       <div className="grid grid-cols-3 gap-1.5">
                                         {previewImages.map((src, idx) => (
                                           <img
                                             key={`preview-${category.id}-${idx}`}
                                             src={src}
                                             alt={`${category.name} preview ${idx + 1}`}
-                                                            className="h-14 w-full rounded-md border border-white/60 object-contain bg-white shadow-sm sm:h-16"
-                                                            loading="lazy"
-                                                          />
-                                                        ))}
+                                            className="h-14 w-full rounded-md border border-white/60 object-contain bg-white shadow-sm sm:h-16"
+                                            loading="lazy"
+                                          />
+                                        ))}
                                       </div>
                                     </Link>
                                   )}
-                                  {products.length ? (
+                                  {subcategories.length > 0 ? (
+                                    <div className="space-y-3">
+                                      {subcategories.map((subcategory) => (
+                                        <div key={`${category.id}-${subcategory.key}`} className="rounded-lg border border-navy/10 bg-white p-2">
+                                          <Link to={getSubcategoryRoute(category, subcategory.label)} onClick={closeProductsPanel} className="mb-2 block font-sub text-[10px] font-semibold uppercase tracking-[0.16em] text-navy/70 hover:text-gold">
+                                            {subcategory.label}
+                                          </Link>
+                                          <div className="space-y-2">
+                                            {subcategory.products.map((product, idx) => {
+                                              const resolved = resolveNavbarImage(product.image);
+                                              return (
+                                                <Link key={`${product.slug || product.name}-${idx}`} to={getProductDetailPath(product)} onClick={closeProductsPanel} className="group flex min-w-0 items-center gap-2 rounded-md border border-transparent bg-light-grey/60 p-1.5 transition hover:border-gold/40 hover:bg-gold/5">
+                                                  {resolved ? <img src={resolved} alt={product.name} className="h-10 w-10 rounded-md object-cover bg-white" loading="lazy" /> : <div className="h-10 w-10 rounded-md bg-navy/10" aria-hidden="true" />}
+                                                  <div className="min-w-0 flex-1">
+                                                    <p className="break-words font-sub text-[10px] font-semibold text-navy group-hover:text-gold">{product.name}</p>
+                                                  </div>
+                                                </Link>
+                                              );
+                                            })}
+                                          </div>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  ) : products.length ? (
                                     <div className="grid grid-cols-1 gap-2">
                                       {products.map((product, idx) => {
                                         const resolved = resolveNavbarImage(product.image);
@@ -503,9 +541,9 @@ export default function Navbar() {
                           <p className="font-sub text-sm font-bold text-navy">Commercial Furniture</p>
                           <p className="mt-1 font-body text-xs text-navy/70">Commercial &amp; Institutional Bulk Supply</p>
                         </Link>
-                        {categoryMenuRows.map(({ category, products, previewImages }) => (
+                        {categoryMenuRows.map(({ category, products, subcategories, previewImages }) => (
                           <div key={category.id} className="rounded-lg border border-navy/10 bg-light-grey/40 p-2">
-                            <Link to={`/products/category/${category.slug}`} onClick={() => setOpen(false)} className="font-sub text-sm font-semibold text-navy hover:text-gold">{category.name}</Link>
+                            <Link to={getCategoryRoute(category)} onClick={() => setOpen(false)} className="font-sub text-sm font-semibold text-navy hover:text-gold">{category.name}</Link>
                             {previewImages && previewImages.length > 0 && (
                               <div className="mt-2 grid grid-cols-3 gap-1.5">
                                 {previewImages.map((src, idx) => (
@@ -519,7 +557,26 @@ export default function Navbar() {
                                 ))}
                               </div>
                             )}
-                            {products.length ? (
+                            {subcategories.length > 0 ? (
+                              <div className="mt-2 space-y-2">
+                                {subcategories.map((subcategory) => (
+                                  <div key={`${category.id}-${subcategory.key}`} className="rounded-md bg-white p-2">
+                                    <Link to={getSubcategoryRoute(category, subcategory.label)} onClick={() => setOpen(false)} className="font-sub text-[10px] uppercase tracking-[0.14em] text-navy/70">{subcategory.label}</Link>
+                                    <div className="mt-1 space-y-1.5">
+                                      {subcategory.products.map((product, idx) => {
+                                        const resolved = resolveNavbarImage(product.image);
+                                        return (
+                                          <Link key={`${product.slug || product.name}-${idx}`} to={getProductDetailPath(product)} onClick={() => setOpen(false)} className="flex items-center gap-2 rounded-md bg-light-grey/60 p-1.5 text-left">
+                                            {resolved ? <img src={resolved} alt={product.name} className="h-8 w-8 rounded object-cover bg-white" loading="lazy" /> : <div className="h-8 w-8 rounded bg-navy/10" aria-hidden="true" />}
+                                            <span className="truncate font-sub text-xs text-navy/70">{product.name}</span>
+                                          </Link>
+                                        );
+                                      })}
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            ) : products.length ? (
                               <div className="mt-2 space-y-1.5">
                                 {products.map((product, idx) => {
                                   const resolved = resolveNavbarImage(product.image);

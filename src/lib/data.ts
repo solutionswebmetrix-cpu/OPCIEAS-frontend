@@ -4,6 +4,7 @@ import {
   SCHOOL_FURNITURE_IMAGES,
 } from './images';
 import { apiGet, apiPost, apiFormData } from './api';
+import { findProductAssetBySlug, findProductAssetByName } from './productAssetResolver';
 import type {
   Category,
   Product,
@@ -131,6 +132,143 @@ function normalizeCategory(raw: any): Category {
   };
 }
 
+export function normalizeCategoryName(value?: string | null): string {
+  return String(value ?? '')
+    .replace(/[_-]+/g, ' ')
+    .replace(/\s*\/\s*/g, ' / ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+export function normalizeCategorySlug(value?: string | null): string {
+  return normalizeCategoryName(value)
+    .toLowerCase()
+    .replace(/&/g, 'and')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+export function canonicalizeCategory(category?: Partial<Category> | null): Category | null {
+  if (!category) return null;
+  const baseCategory = normalizeCategory(category as any);
+  const directCanonical = CANONICAL_CATEGORIES.find((candidate) => {
+    const sameId = !!category.id && String(candidate.id) === String(category.id);
+    const sameSlug = !!(category.slug || category.name) && normalizeCategorySlug(candidate.slug) === normalizeCategorySlug(category.slug ?? category.name ?? '');
+    const sameName = !!(category.name || category.slug) && normalizeCategoryName(candidate.name).toLowerCase() === normalizeCategoryName(category.name ?? category.slug ?? '').toLowerCase();
+    const normalizedName = normalizeCategoryName(category.name ?? category.slug ?? '').toLowerCase();
+    const aliasMatch =
+      normalizedName.includes('letter box') ||
+      normalizedName.includes('letterbox') ||
+      normalizedName.includes('mail box') ||
+      normalizedName.includes('mailbox');
+    return sameId || sameSlug || sameName || (aliasMatch && candidate.slug === 'letter-boxes');
+  });
+  if (!directCanonical) {
+    const canonicalName = (() => {
+      const raw = normalizeCategoryName(category.name ?? category.slug ?? '').toLowerCase();
+      const aliasMap: Record<string, string> = {
+        education: 'Educational Furniture',
+        'educational furniture': 'Educational Furniture',
+        school: 'School Furniture',
+        'school furniture': 'School Furniture',
+        hostel: 'Hostel Furniture',
+        'hostel furniture': 'Hostel Furniture',
+        industrial: 'Industrial Storage',
+        'industrial storage': 'Industrial Storage',
+        'storage solutions': 'Industrial Storage',
+        bathroom: 'Bathroom Collection',
+        'bathroom collection': 'Bathroom Collection',
+        'bathroom storage': 'Bathroom Collection',
+        'letter box': 'Letter Box',
+        'letter box / letter boxes': 'Letter Box',
+        'letter boxes': 'Letter Box',
+        'letter-box': 'Letter Box',
+        'letterbox': 'Letter Box',
+      };
+      return aliasMap[raw] ?? null;
+    })();
+    const fallbackCanonical = canonicalName ? CANONICAL_CATEGORIES.find((candidate) => candidate.name === canonicalName) : null;
+    if (fallbackCanonical) {
+      return {
+        ...baseCategory,
+        id: String(fallbackCanonical.id),
+        name: fallbackCanonical.name,
+        slug: fallbackCanonical.slug,
+      };
+    }
+    return baseCategory;
+  }
+
+  return {
+    ...baseCategory,
+    id: String(directCanonical.id),
+    name: directCanonical.name,
+    slug: directCanonical.slug,
+  };
+}
+
+export function resolveCategoryFromSlug(slugOrName: string | null | undefined, sourceCategories: Array<Pick<Category, 'id' | 'name' | 'slug'>> = CANONICAL_CATEGORIES as any): Pick<Category, 'id' | 'name' | 'slug'> | null {
+  const raw = (slugOrName ?? '').trim();
+  if (!raw) return null;
+  const normalized = normalizeCategorySlug(raw);
+
+  const candidateList = sourceCategories.map((category) => ({
+    id: String(category.id),
+    name: category.name,
+    slug: category.slug,
+  }));
+
+  const direct = candidateList.find((category) => normalizeCategorySlug(category.slug) === normalized || normalizeCategorySlug(category.name) === normalized);
+  if (direct) return direct;
+
+  const aliasMap: Record<string, string> = {
+    'letter-box': 'letter-boxes',
+    'letterbox': 'letter-boxes',
+    'letter-boxes': 'letter-boxes',
+    'mail-box': 'letter-boxes',
+    'mailbox': 'letter-boxes',
+    'office': 'office-furniture',
+    'educational': 'educational-furniture',
+    'school': 'school-furniture',
+    'hostel': 'hostel-furniture',
+    'industrial': 'industrial-storage',
+    'bathroom': 'bathroom-collection',
+    'storage-solutions': 'industrial-storage',
+  };
+
+  const aliased = aliasMap[normalized];
+  if (aliased) {
+    return candidateList.find((category) => normalizeCategorySlug(category.slug) === aliased) || null;
+  }
+
+  const nameAliasMap: Record<string, string> = {
+    'office furniture': 'office-furniture',
+    'educational furniture': 'educational-furniture',
+    'school furniture': 'school-furniture',
+    'hostel furniture': 'hostel-furniture',
+    'industrial storage': 'industrial-storage',
+    'bathroom collection': 'bathroom-collection',
+    'letter box': 'letter-boxes',
+    'letter boxes': 'letter-boxes',
+  };
+
+  const mappedName = nameAliasMap[normalizeCategoryName(raw).toLowerCase()];
+  if (mappedName) {
+    return candidateList.find((category) => normalizeCategorySlug(category.slug) === mappedName) || null;
+  }
+
+  return candidateList.find((category) => normalizeCategorySlug(category.slug) === normalized || normalizeCategoryName(category.name).toLowerCase().includes(normalizeCategoryName(raw).toLowerCase())) || null;
+}
+
+export function isCategoryVisible(category: { slug?: string; name?: string }): boolean {
+  const slug = (category.slug ?? '').trim().toLowerCase();
+  const name = (category.name ?? '').trim();
+  if (slug === 'office-furniture' || slug === 'hospital-furniture') return false;
+  if (name === 'Office Furniture' || name === 'Hospital Furniture') return false;
+  if (name.toLowerCase().includes('office furniture') || name.toLowerCase().includes('hospital furniture')) return false;
+  return true;
+}
+
 function toNumber(value: any): number | null {
   if (typeof value === 'number') return value;
   if (typeof value === 'string') {
@@ -153,26 +291,51 @@ const BACKEND_BASE = ((import.meta as any).env?.PROD && isLocalBackend
   ? 'https://api.opcieas.com'
   : configuredBackendBase || ((import.meta as any).env?.PROD ? 'https://api.opcieas.com' : 'http://127.0.0.1:8000')).replace(/\/$/, '');
 
-export function resolveProductImage(value?: string | null): string | null {
+export function resolveProductImage(value?: string | { image?: string | null; images?: any[]; gallery?: any[]; slug?: string; name?: string; category?: string; category_name?: string } | null): string | null {
   if (!value) return null;
-  const normalized = value.trim();
+
+  if (typeof value === 'object' && !Array.isArray(value)) {
+    const candidates = [
+      value.image,
+      ...(Array.isArray(value.images) ? value.images : []),
+      ...(Array.isArray(value.gallery) ? value.gallery : []),
+    ];
+
+    const localByName = value.name ? findProductAssetByName(String(value.name), (value.category ?? value.category_name ?? undefined)) : null;
+    if (localByName?.image) return localByName.image;
+
+    for (const candidate of candidates) {
+      const resolved = resolveProductImage(candidate as any);
+      if (resolved) return resolved;
+    }
+
+    if (value.slug) {
+      const match = findProductAssetBySlug(String(value.slug));
+      if (match?.image) return match.image;
+    }
+
+    if (value.name) {
+      const byName = findProductAssetByName(String(value.name), (value.category ?? value.category_name ?? undefined));
+      if (byName?.image) return byName.image;
+    }
+    return null;
+  }
+
+  const normalized = String(value).trim();
   if (!normalized) return null;
 
   if (/^(https?:|data:|blob:)/i.test(normalized)) {
     return normalized;
   }
 
+  if (/^\/src\/assets\//i.test(normalized) || /^src\/assets\//i.test(normalized) || /^\.\.\/assets\//i.test(normalized) || /^\.\/assets\//i.test(normalized)) {
+    const fallbackName = normalized.split('/').pop()?.replace(/\.[^.]+$/, '') || normalized;
+    const resolvedFallback = findProductAssetByName(fallbackName);
+    return resolvedFallback?.image ?? null;
+  }
+
   if (BACKEND_BASE && normalized.startsWith(BACKEND_BASE)) return normalized;
 
-  if (/^\/src\/assets\//i.test(normalized)) {
-    return normalized;
-  }
-  if (/^src\/assets\//i.test(normalized)) {
-    return `/${normalized}`;
-  }
-  if (/^\.\.\/assets\//i.test(normalized) || /^\.\/assets\//i.test(normalized)) {
-    return normalized;
-  }
   if (/^\/assets\//i.test(normalized)) {
     return normalized;
   }
@@ -319,23 +482,14 @@ function normalizeProduct(raw: any): Product {
   };
 }
 
-const HIDDEN_CATEGORY_SLUGS = new Set(['office-furniture', 'hospital-furniture']);
-const HIDDEN_CATEGORY_NAMES = new Set(['Office Furniture', 'Hospital Furniture']);
-
-function isCategoryVisible(category: { slug?: string; name?: string }): boolean {
-  const slug = (category.slug ?? '').trim().toLowerCase();
-  const name = (category.name ?? '').trim();
-  if (HIDDEN_CATEGORY_SLUGS.has(slug)) return false;
-  if (HIDDEN_CATEGORY_NAMES.has(name)) return false;
-  return true;
-}
-
 export async function fetchCategories(): Promise<Category[]> {
   try {
     const resp = await apiGet<any>('/categories/list.php');
     const items: any[] = unwrap<any[]>(resp) || [];
     if (Array.isArray(items)) {
-      return items.map(normalizeCategory).filter(isCategoryVisible);
+      return items
+        .map((item) => canonicalizeCategory(normalizeCategory(item)))
+        .filter((category): category is Category => !!category && isCategoryVisible(category));
     }
   } catch {
     console.warn('[fetchCategories] API unavailable, returning canonical frontend category fallback');
@@ -419,49 +573,16 @@ export async function fetchProducts(categoryId?: string, categorySlug?: string):
       } else if (categoryId) {
         params.category_id = categoryId;
       }
-      // #region debug-point A:fetchProducts-request
-      console.log('[DEBUG-CPE][A] fetchProducts() request', {
-        categoryId: categoryId ?? 'none',
-        categorySlug: categorySlug ?? 'none',
-        params,
-        page,
-      });
-      // #endregion
       const resp = await apiGet<any>('/products/list.php', params);
       const items: any[] = unwrap<any[]>(resp) || [];
-      // #region debug-point A:fetchProducts-response
-      console.log('[DEBUG-CPE][A] fetchProducts() response page=' + page, {
-        rawRespSuccess: resp?.success,
-        rawRespKeys: resp ? Object.keys(resp) : null,
-        itemsCount: Array.isArray(items) ? items.length : 'NOT-ARRAY',
-        pagination: resp?.pagination,
-      });
-      // #endregion
       if (!Array.isArray(items)) break;
       products.push(...items.map(normalizeProduct));
       hasNext = !!resp?.pagination?.has_next && items.length > 0;
       page += 1;
     }
     const publicProducts = products.filter(isPublicProduct);
-    // #region debug-point A:fetchProducts-final
-    console.log('[DEBUG-CPE][A] fetchProducts() FINAL result', {
-      requestedCategoryId: categoryId ?? 'none',
-      requestedCategorySlug: categorySlug ?? 'none',
-      totalBeforePublicFilter: products.length,
-      totalAfterPublicFilter: publicProducts.length,
-      sampleCategoryIds: products.slice(0, 5).map((p) => p.category_id),
-      sampleSlugs: publicProducts.slice(0, 5).map((p) => ({ slug: p.slug, name: p.name })),
-    });
-    // #endregion
     return publicProducts;
   } catch (e) {
-    // #region debug-point A:fetchProducts-error
-    console.error('[DEBUG-CPE][A] fetchProducts() ERROR:', {
-      categoryId: categoryId ?? 'none',
-      categorySlug: categorySlug ?? 'none',
-      error: e instanceof Error ? { name: e.name, message: e.message, stack: e.stack } : String(e),
-    });
-    // #endregion
     console.error('Products API error:', e);
     throw e;
   }
