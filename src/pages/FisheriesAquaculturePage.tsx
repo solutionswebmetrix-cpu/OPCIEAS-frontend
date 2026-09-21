@@ -29,51 +29,40 @@ import {
 import { Link } from 'react-router-dom';
 import PageMeta from '../components/PageMeta';
 
-const HERO_IMAGE =
-  'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1920&q=80';
-const LAND_IMAGE =
-  'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1600&q=80';
-const POND_IMAGE =
-  'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1600&q=80';
-const COMMUNITY_IMAGE =
-  'https://images.unsplash.com/photo-1523741543316-beb7fc7023d8?auto=format&fit=crop&w=1600&q=80';
-const GROWTH_IMAGE =
-  'https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1600&q=80';
-
 const STEPS = [
   {
     num: '01',
     icon: ShieldCheck,
     title: 'Obtain Necessary Licensing',
-    desc: 'Secure applicable permits and regulatory approvals before commencing any aquaculture operation.',
+    desc: 'Secure standard permits and regulatory approvals to ensure full operational compliance.',
     accent: 'from-[#1e3a8a] via-[#0B2745] to-[#071A35]',
   },
   {
     num: '02',
     icon: Mountain,
     title: 'Prepare Suitable Land',
-    desc: 'Develop unused or low-yield land into properly designed fish ponds or tank facilities with adequate drainage.',
+    desc: 'Develop unused or low-yield land into properly designed fish ponds or tank facilities.',
     accent: 'from-[#047857] via-[#059669] to-[#34D399]',
   },
   {
     num: '03',
     icon: Droplets,
     title: 'Establish Water Facilities',
-    desc: 'Secure reliable water sources and maintain appropriate water-quality monitoring throughout the rearing cycle.',
+    desc: 'Secure reliable, clean water sources and maintain quality monitoring for optimal stock health.',
     accent: 'from-[#0369a1] via-[#0284c7] to-[#38bdf8]',
   },
   {
     num: '04',
     icon: Utensils,
     title: 'Implement Planned Feeding Systems',
-    desc: 'Follow structured feeding schedules to support healthy growth, reduce waste, and maintain pond ecology.',
+    desc: 'Follow structured feeding schedules to maximize growth rates and reduce operational waste.',
     accent: 'from-[#b45309] via-[#d97706] to-[#f59e0b]',
   },
   {
     num: '05',
     icon: Truck,
     title: 'Manage Harvesting & Marketing',
-    desc: 'Plan harvest timing, secure advance local orders where appropriate, and establish direct channels to buyers.',
+    desc: 'Time harvests effectively, secure advance local orders, and build direct channels to local and regional buyers.',
     accent: 'from-[#D4AF37] via-[#B8932B] to-[#8B6F1E]',
   },
 ];
@@ -159,12 +148,6 @@ export default function FisheriesAquaculturePage() {
          ============================================================ */}
       <header className="relative isolate overflow-hidden bg-navy pt-32">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(217,173,43,0.2),_transparent_40%),linear-gradient(90deg,rgba(7,26,53,0.98),rgba(7,26,53,0.7),rgba(7,26,53,0.45))]" />
-        <img
-          src={HERO_IMAGE}
-          alt="Freshwater aquaculture ponds supporting rural livelihood and fisheries production"
-          className="absolute inset-0 -z-10 h-full w-full object-cover opacity-70"
-          loading="eager"
-        />
         <div className="container-x relative z-10 px-6 pb-14 pt-12 sm:pb-16 lg:pb-20 lg:pt-16">
           <motion.div
             initial={{ opacity: 0, y: 28 }}
@@ -196,9 +179,7 @@ export default function FisheriesAquaculturePage() {
             </h1>
 
             <p className="mt-7 max-w-3xl font-body text-base leading-relaxed text-white/85 sm:text-lg">
-              Live fish farming and aquaculture can provide nutrition, local employment and an
-              additional livelihood opportunity when operated with proper planning, licensing,
-              land preparation, water management and expert guidance.
+              Live fish farming and aquaculture offer a healthy, reliable, and modern source of nutrition. Unlike processed foods, fresh fish production creates valuable local employment while delivering dependable quality to consumers. With standard licensing, proper land preparation, reliable water sources, and expert guidance, establishing and managing an aquaculture farm is straightforward and highly effective.
             </p>
 
             <div className="mt-9 flex flex-wrap items-center gap-4">
@@ -268,14 +249,6 @@ export default function FisheriesAquaculturePage() {
               className="order-first lg:order-none"
             >
               <div className="relative overflow-hidden rounded-lux border border-navy/10 shadow-sm">
-                <div className="aspect-[5/4] w-full overflow-hidden bg-navy/5">
-                  <img
-                    src={LAND_IMAGE}
-                    alt="Green rural fields representing land that can be developed into fish farming ponds"
-                    className="h-full w-full object-cover"
-                    loading="lazy"
-                  />
-                </div>
                 <div className="grid grid-cols-2 gap-px bg-border-grey">
                   {[
                     { icon: Sprout, label: 'Barren / Low-Yield Land → Productive Ponds' },
@@ -310,14 +283,6 @@ export default function FisheriesAquaculturePage() {
           <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-start">
             <div className="order-last lg:order-none">
               <div className="relative overflow-hidden rounded-lux border border-navy/10 bg-white shadow-sm">
-                <div className="aspect-[4/3] w-full overflow-hidden">
-                  <img
-                    src={POND_IMAGE}
-                    alt="Planned aquaculture ponds demonstrating responsible fisheries water management"
-                    className="h-full w-full object-cover"
-                    loading="lazy"
-                  />
-                </div>
                 <div className="p-6 sm:p-7">
                   <div className="flex items-center gap-3">
                     <FileText className="h-5 w-5 text-gold" />
@@ -590,17 +555,6 @@ export default function FisheriesAquaculturePage() {
       <section className="bg-[#edf3ed] py-12 sm:py-16">
         <div className="container-x px-6">
           <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
-            <div className="relative overflow-hidden rounded-lux border border-navy/10 shadow-sm">
-              <div className="aspect-[4/3] w-full overflow-hidden bg-navy/5">
-                <img
-                  src={COMMUNITY_IMAGE}
-                  alt="Community members working together representing cooperative land development effort"
-                  className="h-full w-full object-cover"
-                  loading="lazy"
-                />
-              </div>
-            </div>
-
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -722,15 +676,7 @@ export default function FisheriesAquaculturePage() {
               viewport={{ once: true, margin: '-80px' }}
               className="relative"
             >
-              <div className="overflow-hidden rounded-lux border border-navy/10 shadow-sm">
-                <div className="aspect-[4/3] w-full overflow-hidden">
-                  <img
-                    src={GROWTH_IMAGE}
-                    alt="Rural community celebrating growth and cultural heritage reflecting ancestral wisdom"
-                    className="h-full w-full object-cover"
-                    loading="lazy"
-                  />
-                </div>
+              <div className="overflow-hidden rounded-lux border border-navy/10 bg-light-grey shadow-sm">
                 <div className="p-6 sm:p-7">
                   <p className="font-body text-[15px] leading-relaxed text-navy/80">
                     Modern livelihood opportunity, rooted in the wisdom and practices passed
