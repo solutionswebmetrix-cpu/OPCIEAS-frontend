@@ -134,7 +134,7 @@ export default function Hero() {
   const showCursorLine2 = phase === 'TYPING_LINE2' || phase === 'DELETING_LINE2';
 
   return (
-    <section id="hero" ref={heroRef} className="relative h-[620px] overflow-hidden bg-white sm:h-[620px] md:h-[640px] lg:h-[clamp(620px,72vh,720px)]">
+    <section id="hero" ref={heroRef} className="relative h-[clamp(540px,78svh,620px)] overflow-hidden bg-white sm:h-[620px] md:h-[640px] lg:h-[clamp(620px,72vh,720px)]">
       {/* Background: banner video — full quality, no blur/filters */}
       <div className="pointer-events-none absolute inset-0">
         <motion.video
@@ -164,7 +164,7 @@ export default function Hero() {
       <div className="pointer-events-none absolute left-[15%] top-[20%] h-56 w-56 rounded-full bg-gold/5 blur-[80px] animate-float-slow" />
       <div className="pointer-events-none absolute right-[10%] bottom-[15%] h-64 w-64 rounded-full bg-navy/4 blur-[90px] animate-float" />
 
-      <div className="container-x relative z-10 flex h-full w-full max-w-full items-center px-5 py-10 sm:py-8 lg:px-10 lg:py-6 xl:px-12">
+      <div className="container-x relative z-10 flex h-full w-full max-w-full items-center px-4 py-8 sm:px-5 sm:py-8 lg:px-10 lg:py-6 xl:px-12">
         <div className="w-full min-w-0 max-w-3xl">
           {/* <motion.div
             initial={{ opacity: 0, y: 20 }}

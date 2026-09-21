@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import PageMeta from '../components/PageMeta';
 import ProductCard from '../components/ProductCard';
 import SectionBanner from '../components/SectionBanner';
+import CommercialFurnitureShowcase from '../components/CommercialFurnitureShowcase';
 import { fetchCategories, fetchProducts, type Category, type Product } from '../lib/data';
 import { CATEGORY_BANNERS } from '../lib/images';
 
@@ -130,6 +131,8 @@ export default function FurniturePage() {
             </p>
           </div>
         </section>
+
+        <CommercialFurnitureShowcase />
 
         <section className="bg-light-grey px-6 py-16 sm:py-20">
           <div className="container-x">

@@ -296,20 +296,19 @@ export default function Navbar() {
             className="inline-flex h-full shrink-0 items-center"
           >
             <div className="flex items-center gap-[4px] sm:gap-[6px] lg:gap-[8px]">
-              {/* Approved emblem — keep the original client emblem unchanged */}
               <img
                 src={companyLogo}
                 alt="OPCIEAS approved emblem"
-                className="h-[58px] w-[58px] shrink-0 object-contain sm:h-[64px] sm:w-[64px] lg:h-[70px] lg:w-[70px]"
+                className="h-[56px] w-[56px] shrink-0 object-contain sm:h-[62px] sm:w-[62px] lg:h-[68px] lg:w-[68px]"
               />
 
-              {/* Exact text artwork from the client reference image.
-                  Do not recreate the lettering with another font. */}
-              <img
-                src={opcIeasTextWordmark}
-                alt="OPCIEAS Private Limited - Hand Crafted Since 1999"
-                className="block h-[58px] w-auto shrink-0 object-contain sm:h-[64px] lg:h-[70px]"
-              />
+              <div className="flex flex-col leading-none">
+                <img
+                  src={opcIeasTextWordmark}
+                  alt="OPCIEAS approved wordmark"
+                  className="block h-[46px] w-auto shrink-0 object-contain sm:h-[54px] lg:h-[62px]"
+                />
+              </div>
             </div>
           </Link>
 

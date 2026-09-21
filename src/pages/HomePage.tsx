@@ -8,6 +8,7 @@ import Products from '../components/Products';
 import Industries from '../components/Industries';
 import Clients from '../components/Clients';
 import Testimonials from '../components/Testimonials';
+import HomepageFurnitureSequence from '../components/HomepageFurnitureSequence';
 import { motion } from 'framer-motion';
 import { ArrowRight, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -64,7 +65,10 @@ export default function HomePage() {
       {/* 1. HERO */}
       <Hero />
 
-      {/* 2. SHORT OPCIEAS INTRODUCTION */}
+      {/* 2. PRODUCT-FOCUSED OPENING SEQUENCE */}
+      <HomepageFurnitureSequence />
+
+      {/* 3. SHORT OPCIEAS INTRODUCTION */}
       <HomepageIntro />
 
       <section className="bg-white py-18 sm:py-24">
