@@ -225,7 +225,7 @@ export default function Navbar() {
     }
     return previews;
   }, []);
-
+  
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener('scroll', onScroll);

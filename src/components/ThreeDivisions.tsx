@@ -144,27 +144,27 @@ function DivisionSection({
       </div>
 
       {/* Narration + Pillars */}
-      <div className="container-x px-6 py-20 text-navy sm:py-24">
-        <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+      <div className="container-x mx-auto w-full px-6 py-20 text-navy sm:py-24">
+        <div className="grid gap-10 lg:grid-cols-2 lg:items-stretch">
           {/* Narration */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: 0 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className={narrationScopeClass}
+            className={`${narrationScopeClass || ''} flex h-full flex-col`}
           >
             <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Narration</p>
             <h3 className="furniture-section-heading mt-3 font-heading text-2xl font-black text-navy sm:text-3xl">
               About the Division
             </h3>
-            <div className="mt-6 h-[2px] w-16 bg-gradient-to-r from-gold to-gold-2" />
-            <p className="furniture-section-copy mt-8 font-body text-[15px] leading-[1.95] text-body-text whitespace-pre-line">
-              {narration}
-            </p>
+            <div className="mt-5 h-[2px] w-16 bg-gradient-to-r from-gold to-gold-2" />
+            <div className="furniture-section-copy mt-6 space-y-4 font-body text-[15px] leading-[1.8] text-body-text">
+              {narration.split('\n\n').map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+            </div>
             <Link
               to={linkTo}
-              className="mt-10 inline-flex items-center gap-2 rounded-full btn-gold px-6 py-3 font-sub text-sm"
+              className="mt-6 inline-flex items-center gap-2 self-start rounded-full btn-gold px-6 py-3 font-sub text-sm"
             >
               Learn More <ArrowRight className="h-4 w-4" />
             </Link>
@@ -230,7 +230,9 @@ export default function ThreeDivisions() {
         tag="Division 01"
         name="Tech Business Promotion"
         tagline="Portal Governance • Industrial Promotion • Transparency • Trust • Compliance • Networking • Export Promotion • Quality Standards"
-        narration={`OPCIEAS Tech Business Promotion division builds the connective tissue between industry, governance, and markets. We design digital platforms and institutional frameworks anchored in Portal Governance — access-controlled, auditable, and rule-based environments where stakeholders interact with confidence. Our Industrial Promotion programmes surface verified manufacturers, showcase capacity, and create procurement pathways that are fair, competitive, and efficient. Transparency is not an afterthought; it is engineered into every workflow. Trust is earned through documented compliance, consistent delivery, and accountability at every touchpoint. We ensure Compliance with MCA, GST, data protection, export-import regulations, and sector-specific statutory requirements. Our Business Networking ecosystems bring together buyers, sellers, financiers, and sector experts around shared standards and verified credentials. Export Promotion platforms enable Indian manufacturers to reach international buyers with IEC-linked profiles, export-ready documentation, and global quality alignment. Every platform, every portal, every promotion programme is built to elevate and enforce Quality Standards that India can stand behind.`}
+        narration={`OPCIEAS Tech Business Promotion division builds the connective tissue between industry, governance, and markets. We design digital platforms and institutional frameworks anchored in Portal Governance — access-controlled, auditable, and rule-based environments where stakeholders interact with confidence. Our Industrial Promotion programmes surface verified manufacturers, showcase capacity, and create procurement pathways that are fair, competitive, and efficient.
+
+      Transparency is not an afterthought; it is engineered into every workflow. Trust is earned through documented compliance, consistent delivery, and accountability at every touchpoint. We ensure Compliance with MCA, GST, data protection, export-import regulations, and sector-specific statutory requirements. Our Business Networking ecosystems bring together buyers, sellers, financiers, and sector experts around shared standards and verified credentials. Export Promotion platforms enable Indian manufacturers to reach international buyers with IEC-linked profiles, export-ready documentation, and global quality alignment. Every platform, every portal, every promotion programme is built to elevate and enforce Quality Standards that India can stand behind.`}
         icon={Cpu}
         image={IMG.heroBg}
         accent="from-[#4A90E2] via-[#2563EB] to-[#1E3A8A]"

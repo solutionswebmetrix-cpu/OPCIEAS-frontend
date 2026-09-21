@@ -87,7 +87,7 @@ export default function HomepageFurnitureSequence() {
 
   return (
     <section id="homepage-furniture-sequence" className="relative overflow-hidden border-b border-navy/10 bg-light-grey py-12 sm:py-16 lg:py-20">
-      <div className="container-x w-full px-4 sm:px-6">
+      <div className="container-x w-full px-6">
         <div className="grid min-w-0 gap-8 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:items-center lg:gap-10">
           <div className="min-w-0 max-w-xl">
             <motion.div
@@ -98,8 +98,8 @@ export default function HomepageFurnitureSequence() {
             >
               <img src={companyLogo} alt="OPCIEAS emblem" className="h-14 w-14 object-contain sm:h-16 sm:w-16" />
               <div>
-                <p className="font-sub text-xs uppercase tracking-[0.28em] text-gold">OPCIEAS Commercial Furniture</p>
-                <p className="mt-1 font-sub text-[0.65rem] uppercase tracking-[0.18em] text-navy/60">HAND CRAFTED SINCE 1999</p>
+                <p className="font-sub text-xs text-gold">OPCIEAS Commercial Furniture</p>
+                <p className="mt-1 font-sub text-xs text-navy/60">Hand crafted since 1999</p>
               </div>
             </motion.div>
             <p className="mt-8 font-sub text-xs uppercase tracking-[0.3em] text-gold">Educational Furniture</p>
@@ -110,7 +110,7 @@ export default function HomepageFurnitureSequence() {
             )}
             <div className="mt-7 flex flex-wrap items-center gap-4">
               <Link to="/furniture" className="btn-gold inline-flex items-center gap-2 rounded-full px-5 py-3 font-sub text-sm">Explore Commercial Furniture <ArrowRight className="h-4 w-4" /></Link>
-              <span className="font-sub text-[0.65rem] uppercase tracking-[0.16em] text-navy/60">An ISO 9001:2015 Certified Company</span>
+              <span className="font-sub text-xs text-navy/60">An ISO 9001:2015 Certified Company</span>
             </div>
           </div>
 
@@ -147,15 +147,19 @@ export default function HomepageFurnitureSequence() {
                 </div>
               </motion.div>
             </AnimatePresence>
-            <div className="absolute bottom-5 left-5 flex gap-2 sm:left-8 sm:bottom-7">
+            <div className="absolute bottom-4 left-4 flex gap-1 sm:bottom-6 sm:left-7" role="tablist" aria-label="Educational furniture scenes">
               {scenes.map((scene, index) => (
                 <button
                   key={scene.id}
                   type="button"
+                  role="tab"
+                  aria-selected={index === sceneIndex}
                   aria-label={`View ${scene.label}`}
                   onClick={() => setSceneIndex(index)}
-                  className={`h-2.5 w-2.5 rounded-full transition-all ${index === sceneIndex ? 'bg-gold ring-4 ring-gold/15' : 'bg-navy/20 hover:bg-navy/40'}`}
-                />
+                  className="flex h-6 w-6 items-center justify-center rounded-full"
+                >
+                  <span className={`h-2.5 w-2.5 rounded-full transition-all ${index === sceneIndex ? 'bg-gold ring-4 ring-gold/15' : 'bg-navy/20 hover:bg-navy/40'}`} />
+                </button>
               ))}
             </div>
           </div>

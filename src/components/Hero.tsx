@@ -157,14 +157,14 @@ export default function Hero() {
         >
           <source src="/videos/banner.mp4" type="video/mp4" />
         </motion.video>
-        <div className="absolute inset-0 bg-[#050B14]/25" />
+        <div className="absolute inset-0 bg-[#050B14]/45" />
       </div>
 
       {/* Subtle decorative orbs — very low opacity to not obscure video details */}
       <div className="pointer-events-none absolute left-[15%] top-[20%] h-56 w-56 rounded-full bg-gold/5 blur-[80px] animate-float-slow" />
       <div className="pointer-events-none absolute right-[10%] bottom-[15%] h-64 w-64 rounded-full bg-navy/4 blur-[90px] animate-float" />
 
-      <div className="container-x relative z-10 flex h-full w-full max-w-full items-center px-4 py-8 sm:px-5 sm:py-8 lg:px-10 lg:py-6 xl:px-12">
+      <div className="container-x relative z-10 flex h-full w-full max-w-full items-center px-6 py-8 sm:py-8 lg:px-8 lg:py-6 xl:px-8">
         <div className="w-full min-w-0 max-w-3xl">
           {/* <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -231,10 +231,10 @@ export default function Hero() {
             transition={{ delay: 1.6, duration: 0.6 }}
             className="relative z-20 mt-6 flex w-full max-w-full flex-col items-stretch gap-3 sm:flex-row sm:items-center"
           >
-            <Link to="/products" className="btn-gold magnetic flex w-full max-w-full items-center justify-center gap-2 rounded-full px-6 py-3 font-sub text-sm sm:w-auto [&>svg]:text-[#071A35]">
+            <Link to="/products" className="btn-ghost magnetic flex w-full max-w-full items-center justify-center gap-2 rounded-full px-6 py-3 font-sub text-sm sm:w-auto [&>svg]:text-[#071A35]">
               Explore Catalog <ArrowRight className="h-4 w-4" />
             </Link>
-            <Link to="/rfq" className="btn-ghost magnetic flex w-full max-w-full items-center justify-center gap-2 rounded-full px-6 py-3 font-sub text-sm sm:w-auto [color:#071A35] [&>svg]:text-[#071A35] hover:[color:var(--gold)] hover:[&>svg]:text-[var(--gold)]">
+            <Link to="/rfq" className="btn-gold magnetic flex w-full max-w-full items-center justify-center gap-2 rounded-full px-6 py-3 font-sub text-sm sm:w-auto [&>svg]:text-[#071A35]">
               <FileText className="h-4 w-4" /> Request Bulk Quote
             </Link>
           </motion.div>

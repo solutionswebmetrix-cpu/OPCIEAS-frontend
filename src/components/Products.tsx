@@ -10,7 +10,7 @@ function isViteAssetUrl(value?: string | null): boolean {
   return /^\/src\/assets\//i.test(value) || /^\/assets\//i.test(value);
 }
 
-function HomeProductCard({ product, categoryName, index, categoryIndex }: { product: Product; categoryName: string; index: number; categoryIndex: number }) {
+function HomeProductCard({ product, index, categoryIndex }: { product: Product; index: number; categoryIndex: number }) {
   const productSlug = product.slug || String(product.id);
   const image = isViteAssetUrl(product.image) ? product.image : resolveProductImage(product.image);
 
@@ -32,11 +32,10 @@ function HomeProductCard({ product, categoryName, index, categoryIndex }: { prod
           /> : <div className="h-full w-full bg-navy/5" aria-label="Product image unavailable" />}
         </div>
         <div className="flex min-h-[10rem] flex-col border-t border-navy/10 p-3.5 sm:p-4">
-          <p className="font-sub text-[10px] uppercase tracking-[0.16em] text-gold">{categoryName}</p>
           <h3 className="mt-1 font-heading text-base font-bold text-navy sm:text-lg leading-tight line-clamp-2">{product.name}</h3>
           {product.short_desc && <p className="mt-2 line-clamp-2 font-body text-xs leading-relaxed text-navy/70">{product.short_desc}</p>}
           {product.price_range && <p className="mt-2 font-sub text-xs font-semibold text-navy">{product.price_range}</p>}
-          <span className="mt-auto inline-flex items-center gap-1.5 pt-3.5 font-sub text-xs text-gold">
+          <span className="mt-auto inline-flex items-center gap-1.5 pb-2 pt-4 font-sub text-sm font-semibold text-gold">
             View Details <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
           </span>
         </div>
@@ -112,6 +111,7 @@ export default function Products() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<boolean>(false);
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -181,6 +181,11 @@ export default function Products() {
     }).filter((entry) => entry.products.length > 0);
   }, [allProducts, categories]);
 
+  const visibleProductGroups = useMemo(() => {
+    if (!selectedCategoryId) return productsByCategory.slice(0, 1);
+    return productsByCategory.filter(({ category }) => String(category.id) === selectedCategoryId);
+  }, [productsByCategory, selectedCategoryId]);
+
   if (loading) {
     return (
       <section id="products" className="relative overflow-hidden bg-white py-24 sm:py-32">
@@ -213,8 +218,29 @@ export default function Products() {
           </motion.p>
         </div>
 
+        <div className="mb-8 rounded-xl border border-navy/10 bg-light-grey/70 p-2">
+          <div className="flex flex-wrap items-center justify-center gap-2" role="tablist" aria-label="Product categories">
+            {productsByCategory.map(({ category }) => {
+              const categoryId = String(category.id);
+              const selected = (selectedCategoryId || String(productsByCategory[0]?.category.id)) === categoryId;
+              return (
+                <button
+                  key={categoryId}
+                  type="button"
+                  role="tab"
+                  aria-selected={selected}
+                  onClick={() => setSelectedCategoryId(categoryId)}
+                  className={`rounded-full border px-4 py-2 font-sub text-xs transition ${selected ? 'border-gold bg-gold text-navy' : 'border-transparent bg-transparent text-navy/70 hover:border-gold/50 hover:text-gold'}`}
+                >
+                  {category.name}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
         <div className="space-y-14 sm:space-y-20">
-          {productsByCategory.map(({ category, products }, catIdx) => {
+          {visibleProductGroups.map(({ category, products }, catIdx) => {
             return (
               <motion.div
                 key={category.id}
@@ -223,12 +249,9 @@ export default function Products() {
                 viewport={{ once: true, margin: '-80px' }}
                 transition={{ delay: Math.min(catIdx * 0.05, 0.25), duration: 0.5 }}
               >
-                <div className="mb-5 sm:mb-7 flex flex-wrap items-end justify-between gap-3">
+                <div className="mb-5 flex flex-wrap items-center justify-between gap-3 sm:mb-7">
                   <div>
                     <h3 className="font-heading text-xl font-black text-navy sm:text-2xl">{category.name}</h3>
-                    <p className="mt-1 font-sub text-xs uppercase tracking-[0.2em] text-navy/40">
-                      {products.length} product{products.length !== 1 ? 's' : ''} displayed
-                    </p>
                   </div>
                   <Link
                     to={`/products/category/${category.slug}`}
@@ -243,7 +266,6 @@ export default function Products() {
                     <HomeProductCard
                       key={product.id || product.slug}
                       product={product}
-                      categoryName={category.name}
                       index={idx}
                       categoryIndex={catIdx}
                     />
@@ -252,7 +274,7 @@ export default function Products() {
               </motion.div>
             );
           })}
-          {productsByCategory.length === 0 && !loading && !error && (
+          {visibleProductGroups.length === 0 && !loading && !error && (
             <div className="font-sub text-sm uppercase tracking-[0.2em] text-gold">No products available.</div>
           )}
         </div>
