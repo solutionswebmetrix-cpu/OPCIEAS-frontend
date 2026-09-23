@@ -22,6 +22,19 @@ import {
 } from 'lucide-react';
 import PageMeta from '../components/PageMeta';
 import ruralDevelopmentPdf from '../assets/pdf/WEB - RURAL.pdf';
+import heroSocialImage from '../assets/Social/inner introduction page.jpg';
+import socialImage113 from '../assets/Social/113.jpg';
+import socialImage114 from '../assets/Social/114.jpg';
+import socialImage117 from '../assets/Social/117.jpg';
+import socialImage118 from '../assets/Social/118.jpg';
+import socialImage119 from '../assets/Social/119.jpg';
+import socialImage120 from '../assets/Social/120.jpg';
+import socialImage122 from '../assets/Social/122.jpg';
+import socialImage123 from '../assets/Social/123.jpg';
+import socialImage124 from '../assets/Social/124.jpg';
+import socialImage125 from '../assets/Social/125.jpg';
+import socialImage133 from '../assets/Social/133.jpg';
+import socialImage141 from '../assets/Social/141.jpg';
 
 const modelIdeas = [
   'shared effort',
@@ -95,6 +108,39 @@ const leadershipPillars = [
   'Empowering through understanding',
 ];
 
+const heavenlyEarthVisuals = [
+  { src: heroSocialImage, alt: 'Heavenly Earth vision cover image for rural prosperity and community development', caption: 'Heavenly Earth – Rural Development Vision' },
+  { src: socialImage113, alt: 'Fresh produce and market agriculture representing productive rural livelihoods', caption: 'Rural Livelihoods – Agriculture and Shared Prosperity' },
+  { src: socialImage114, alt: 'Green wheat field highlighting sustainable land use and agricultural productivity', caption: 'Agriculture and Land Productivity – Heavenly Earth' },
+  { src: socialImage117, alt: 'Rural landscape with farmland and natural beauty supporting community growth', caption: 'Village Prosperity Model – Heavenly Earth' },
+  { src: socialImage118, alt: 'Cattle in a rural enclosure showing livestock and livelihood strength in village economies', caption: 'Livestock and Community Enterprise – Rural Development' },
+  { src: socialImage119, alt: 'Rolling rural farmland and village surroundings reflecting long-term rural stewardship', caption: 'Rural Landscape – Stewardship and Growth' },
+  { src: socialImage120, alt: 'Hilly rural land and cultivated fields showing the living landscape of village development', caption: 'Heavenly Earth – Village Growth and Renewal' },
+  { src: socialImage122, alt: 'Agricultural countryside with open fields and natural terrain for rural development planning', caption: 'Rural Development in Practice – Land and Community' },
+  { src: socialImage123, alt: 'Green countryside representing the agricultural foundation of rural prosperity', caption: 'Sustainable Rural Future – Heavenly Earth' },
+  { src: socialImage124, alt: 'Village field environment illustrating community-led farming and resilient village life', caption: 'Community Farming and Rural Stability' },
+  { src: socialImage125, alt: 'Rural landscape and cultivated fields showing the balance of nature, work, and dignity', caption: 'Village Life – Shared Effort and Renewal' },
+  { src: socialImage133, alt: 'Open rural terrain and greenery supporting the Heavenly Earth vision for inclusive growth', caption: 'Land, Hope and Rural Transformation' },
+  { src: socialImage141, alt: 'Greener countryside view representing long-term prosperity and village well-being', caption: 'Heavenly Earth – A Vision for Greener Rural Prosperity' },
+];
+
+function SocialVisualCard({ src, alt, caption, priority = false }: { src: string; alt: string; caption: string; priority?: boolean }) {
+  return (
+    <figure className="overflow-hidden rounded-lux border border-navy/10 bg-white shadow-sm">
+      <img
+        src={src}
+        alt={alt}
+        loading={priority ? 'eager' : 'lazy'}
+        decoding="async"
+        className="h-72 w-full object-cover transition duration-500 hover:scale-[1.02]"
+      />
+      <figcaption className="border-t border-navy/10 bg-light-grey px-4 py-3 font-body text-sm leading-relaxed text-navy/75">
+        {caption}
+      </figcaption>
+    </figure>
+  );
+}
+
 function SectionTitle({ eyebrow, title }: { eyebrow: string; title: string }) {
   return (
     <div className="max-w-3xl">
@@ -118,9 +164,11 @@ export default function SocialServicesPage() {
       <header className="relative isolate overflow-hidden bg-navy">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(217,173,43,0.18),_transparent_35%),linear-gradient(90deg,rgba(7,26,53,0.95),rgba(7,26,53,0.6),rgba(7,26,53,0.35))]" />
         <img
-          src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1600&q=80"
-          alt="Rural landscape and green farming fields"
+          src={heroSocialImage}
+          alt="Heavenly Earth rural development cover image showing a prosperous agricultural landscape"
           className="absolute inset-0 -z-10 h-full w-full object-cover opacity-80"
+          loading="eager"
+          decoding="async"
         />
         <div className="container-x relative z-10 px-6 pb-12 pt-32 sm:px-10 lg:pb-16 lg:pt-36">
           <motion.div
@@ -345,6 +393,17 @@ export default function SocialServicesPage() {
                     </div>
                   )}
                 </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-[#f7f4ea] py-12 sm:py-16">
+          <div className="container-x px-6">
+            <SectionTitle eyebrow="Heavenly Earth Visuals" title="Rural prosperity through land, community and stewardship" />
+            <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+              {heavenlyEarthVisuals.map((visual, index) => (
+                <SocialVisualCard key={`${visual.caption}-${index}`} src={visual.src} alt={visual.alt} caption={visual.caption} priority={index === 0} />
               ))}
             </div>
           </div>
