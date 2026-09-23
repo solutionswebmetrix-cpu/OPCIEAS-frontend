@@ -205,6 +205,40 @@ export default function HomePage() {
       {/* 9. TESTIMONIALS (compact - only 2-3) */}
       <Testimonials />
 
+      <section className="bg-white py-18 sm:py-24">
+        <div className="container-x px-6">
+          <div className="mx-auto max-w-4xl text-center">
+            <p className="font-sub text-xs uppercase tracking-[0.35em] text-gold">International Buyer / Export Supply</p>
+            <h2 className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl">Global procurement support with clearly defined export workflows</h2>
+            <p className="mt-4 font-body text-base leading-relaxed text-navy/75">
+              OPCIEAS supports international bulk procurement through documented product information, export-ready communication, and procurement coordination. Where final details require client confirmation, the information is clearly marked as pending approval rather than assumed.
+            </p>
+          </div>
+
+          <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+            {[
+              { title: 'Export Supply', text: 'Bulk furniture supply coordination for institutional and commercial projects with product-specific approval steps.' },
+              { title: 'Countries Served', text: 'Countries served — to be finalized by OPCIEAS based on active export project records and buyer approval.' },
+              { title: 'Compliance Standards', text: 'Product documentation, manufacturing records, and export readiness reviewed case by case with client approval.' },
+              { title: 'Lead Times & Logistics', text: 'Lead times and logistics support are confirmed per order, shipment scope, and destination requirements.' },
+            ].map((item) => (
+              <div key={item.title} className="rounded-lux border border-navy/10 bg-light-grey p-6 shadow-sm">
+                <p className="font-sub text-xs uppercase tracking-[0.22em] text-gold">{item.title}</p>
+                <p className="mt-3 font-body text-sm leading-relaxed text-navy/75">{item.text}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-10 flex flex-col items-center justify-center gap-4 rounded-lux border border-gold/30 bg-gold/5 p-8 text-center">
+            <p className="font-sub text-xs uppercase tracking-[0.25em] text-gold">Request Information</p>
+            <h3 className="font-heading text-2xl font-black text-navy">Request International Bulk Supply Information</h3>
+            <Link to="/rfq" className="btn-gold inline-flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm">
+              Request Export Information <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* 10. FINAL B2B CTA */}
       <section className="relative overflow-hidden bg-light-grey py-20 sm:py-32">
         <div className="pointer-events-none absolute inset-0">

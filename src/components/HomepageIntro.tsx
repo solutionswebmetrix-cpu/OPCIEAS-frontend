@@ -10,25 +10,25 @@ const divisions = [
     name: 'Tech Business Promotion',
     tagline: 'Portal Governance • Industrial Promotion • Export Connectivity',
     narration:
-      'Digital portals, governance frameworks, and industrial promotion platforms connecting manufacturers, buyers, and regulators.',
+      'Digital platforms, governance frameworks, and industrial promotion pathways connecting manufacturers, buyers, and regulators.',
     accent: 'from-[#4A90E2] via-[#2563EB] to-[#1E40AF]',
     to: '/technology',
   },
   {
     icon: Building2,
-    name: 'Furniture & Textiles',
-    tagline: 'Institutional • FRP • Steel • Textiles • Bundled Solutions',
+    name: 'Furniture',
+    tagline: 'Institutional • Commercial • Educational • Storage',
     narration:
-      'Premium institutional furniture and bundled furnishing solutions — engineered for quality, certified for export.',
+      'Institutional and commercial furniture solutions built for schools, campuses, hostels, storage needs, and bulk procurement.',
     accent: 'from-[#D4AF37] via-[#B8932B] to-[#8B6F1E]',
     to: '/furniture',
   },
   {
     icon: Heart,
-    name: 'Social Services',
-    tagline: 'Self Help • Village Development • Solar • Aquaculture • Fisheries',
+    name: 'Rural Development / Agriculture & Fisheries',
+    tagline: 'Community Growth • Sustainability • Aquaculture',
     narration:
-      'Community partnerships for rural development, solar adoption, aquaculture, and sustainable prosperity.',
+      'Community development initiatives supporting rural livelihoods, sustainable agriculture, and fisheries growth.',
     accent: 'from-[#34D399] via-[#059669] to-[#047857]',
     to: '/social-service',
   },
@@ -59,7 +59,7 @@ export default function HomepageIntro() {
             transition={{ delay: 0.15 }}
               className="font-heading text-3xl font-black leading-tight text-navy sm:text-4xl"
           >
-            Three Divisions. One Standard. Dependable Delivered.
+            OPCIEAS Pvt. Ltd. supports dependable growth across furniture, community development, and business initiatives.
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -68,7 +68,7 @@ export default function HomepageIntro() {
             transition={{ delay: 0.2 }}
             className="mt-4 font-body text-sm leading-relaxed text-navy/70"
           >
-            OPCIEAS operates through Tech Business Promotion, Furniture & Textiles, and Social Services — delivering excellence across every domain with shared values of trust, quality, and sustainable prosperity.
+            The company’s business categories are presented separately from the legal identity: Furniture, Rural Development, and Agriculture / Fisheries remain clearly distinct from OPCIEAS Pvt. Ltd. while operating under one quality-focused enterprise.
           </motion.p>
           <motion.p
             initial={{ opacity: 0, y: 20 }}

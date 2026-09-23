@@ -292,7 +292,7 @@ export default function Navbar() {
         <div className="container-x flex h-full items-center justify-between px-6 lg:px-8">
           <Link
             to="/"
-            aria-label="OPCIEAS Private Limited"
+            aria-label="OPCIEAS Pvt. Ltd."
             className="inline-flex h-full shrink-0 items-center"
           >
             <div className="flex items-center gap-[4px] sm:gap-[6px] lg:gap-[8px]">

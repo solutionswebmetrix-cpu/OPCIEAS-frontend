@@ -65,14 +65,21 @@ export default function Footer() {
               </div>
               <div>
                 <p className="font-times text-xl font-bold tracking-widest text-navy">OPCIEAS</p>
-                <p className="font-sub text-[10px] tracking-[0.2em] text-gold">PVT. LTD.</p>
+                <p className="font-sub text-[10px] tracking-[0.2em] text-gold">Pvt. Ltd.</p>
               </div>
             </div>
+            <div className="mt-4 flex flex-wrap gap-2 font-sub text-[10px] uppercase tracking-[0.18em] text-gold">
+              <span>Furniture</span>
+              <span className="text-navy/40">•</span>
+              <span>Rural Development</span>
+              <span className="text-navy/40">•</span>
+              <span>Agriculture / Fisheries</span>
+            </div>
             <p className="mt-5 max-w-sm font-body text-sm leading-relaxed text-body-text">
-              OPCIEAS Tech Business Promotion, Social Services Pvt. Ltd. delivers institutional furniture, storage solutions, and business promotion services with a focus on quality, reliability, and transparent engagement.
+              OPCIEAS Pvt. Ltd. supports institutional furniture supply, rural development initiatives, and business promotion services with a focus on quality, reliability, and transparent engagement.
             </p>
             <div className="mt-5 space-y-1.5 font-body text-xs leading-relaxed text-navy/70">
-              <p>OPCIEAS Tech Business Promotion, Social Services Pvt. Ltd.</p>
+              <p>OPCIEAS Pvt. Ltd.</p>
               <p>Contact: info@opcieas.com</p>
               <p>www.opcieas.com</p>
               <p>+91 9845579049</p>
