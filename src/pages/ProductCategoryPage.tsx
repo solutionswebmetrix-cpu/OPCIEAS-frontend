@@ -7,8 +7,8 @@ import SectionBanner from '../components/SectionBanner';
 import ProductCard from '../components/ProductCard';
 import InquiryForm from '../components/InquiryForm';
 import { CATEGORY_BANNERS, CANONICAL_CATEGORIES, type CanonicalCategoryName } from '../lib/images';
-import { fetchCategories, fetchProducts, resolveProductImage, resolveCategoryFromSlug, normalizeCategorySlug, normalizeCategoryName, type Product, type Category } from '../lib/data';
-import { HOMEPAGE_SHOWCASE_CATALOG, type ProductAsset } from '../lib/productAssetResolver';
+import { fetchCategories, fetchProducts, resolveCategoryFromSlug, normalizeCategorySlug, normalizeCategoryName, type Product, type Category } from '../lib/data';
+import { getEducationalAssets } from '../lib/productAssetResolver';
 
 const categoryContent: Record<string, { overview: string; highlights: string[]; specs: Array<{ label: string; value: string }>; gallery: string[]; cta: string[] }> = {
   'office-furniture': {
@@ -137,71 +137,6 @@ function productBelongsToCategory(product: Product, category: Pick<Category, 'id
     (!!productCategorySlug && !!categorySlug && (productCategorySlug === categorySlug || productCategorySlug.includes(categorySlug) || categorySlug.includes(productCategorySlug))) ||
     (!!productCategoryName && !!categoryName && (productCategoryName === categoryName || productCategoryName.includes(categoryName) || categoryName.includes(productCategoryName)))
   );
-}
-
-function isViteAssetUrl(value?: string | null): boolean {
-  if (!value) return false;
-  return /^\/src\/assets\//i.test(value) || /^\/assets\//i.test(value);
-}
-
-function assetToProduct(category: Pick<Category, 'id' | 'name' | 'slug'>, asset: ProductAsset): Product {
-  return {
-    id: asset.slug || asset.fileName || asset.path,
-    seller_id: undefined,
-    category_id: String(category.id),
-    subcategory: asset.folder,
-    name: asset.name,
-    slug: asset.slug,
-    sku: null,
-    short_desc: asset.folder,
-    short_description: asset.folder,
-    long_desc: null,
-    description: asset.folder,
-    key_features: [],
-    features: [],
-    supply_type: null,
-    specs: {},
-    specifications: {},
-    dimensions: null,
-    material: null,
-    materials_used: null,
-    color: null,
-    warranty_months: null,
-    warranty_terms: null,
-    packaging_specifications: null,
-    export_available: false,
-    export_badge: null,
-    weight: null,
-    variants: null,
-    tags: null,
-    min_order_quantity: 1,
-    max_order_quantity: null,
-    unit: undefined,
-    price: null,
-    discount_price: null,
-    discount_percentage: null,
-    tax_percentage: 0,
-    stock_quantity: undefined,
-    availability_status: undefined,
-    is_approved: true,
-    approved_at: null,
-    approved_by: null,
-    featured: false,
-    is_featured: false,
-    is_new_arrival: false,
-    is_best_seller: false,
-    rating: undefined,
-    total_reviews: undefined,
-    total_views: undefined,
-    total_orders: undefined,
-    status: 'Published',
-    meta_title: null,
-    meta_description: null,
-    image: asset.image,
-    gallery: [asset.image],
-    images: [],
-    price_range: null,
-  } as Product;
 }
 
 export default function ProductCategoryPage() {
@@ -337,6 +272,33 @@ export default function ProductCategoryPage() {
   const bannerImage = CATEGORY_BANNERS[cat.name as CanonicalCategoryName] || categoryProducts[0]?.image || '';
   const content = categoryContent[cat.slug] || null;
 
+  const educationalCards = [
+    {
+      name: 'KG Classes',
+      description: 'Safe • Durable • Colourful',
+      image: getEducationalAssets('KG Classes', 1)[0]?.image ?? '',
+      to: '/products/category/educational-furniture?subcategory=kg-classes',
+    },
+    {
+      name: 'Primary',
+      description: 'Smart • Strong • Ergonomic',
+      image: getEducationalAssets('Primary', 1)[0]?.image ?? '',
+      to: '/products/category/educational-furniture?subcategory=primary',
+    },
+    {
+      name: 'High School',
+      description: 'Smart • Strong • Ergonomic',
+      image: getEducationalAssets('High School', 1)[0]?.image ?? '',
+      to: '/products/category/educational-furniture?subcategory=high-school',
+    },
+    {
+      name: 'Colleges & Higher Education',
+      description: 'Durable Institutional Solutions',
+      image: getEducationalAssets('Colleges & Higher Education', 1)[0]?.image ?? '',
+      to: '/products/category/educational-furniture?subcategory=colleges-higher-education',
+    },
+  ];
+
   return (
     <>
       <PageMeta
@@ -378,6 +340,34 @@ export default function ProductCategoryPage() {
                     </div>
                   ))}
                 </div>
+              </div>
+            </motion.div>
+          )}
+
+          {cat.slug === 'educational-furniture' && (
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
+              <div className="mb-6 flex items-center justify-between gap-4">
+                <div>
+                  <p className="font-sub text-xs uppercase tracking-[0.35em] text-gold">Educational Furniture</p>
+                  <h3 className="mt-2 font-heading text-2xl font-black text-navy">KG Classes → Primary → High School → Colleges & Higher Education</h3>
+                </div>
+              </div>
+              <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+                {educationalCards.map((card) => (
+                  <Link key={card.name} to={card.to} className="group overflow-hidden rounded-lux border border-navy/10 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-md">
+                    <div className="relative h-56 overflow-hidden">
+                      <img src={card.image} alt={card.name} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+                    </div>
+                    <div className="p-5">
+                      <p className="font-sub text-[10px] uppercase tracking-[0.26em] text-gold">Academic Stage</p>
+                      <h4 className="mt-3 font-heading text-xl font-black text-navy">{card.name}</h4>
+                      <p className="mt-2 font-body text-sm text-navy/70">{card.description}</p>
+                      <span className="mt-4 inline-flex items-center gap-2 font-sub text-xs font-semibold uppercase tracking-[0.18em] text-gold">
+                        Explore Products <ArrowRight className="h-3.5 w-3.5" />
+                      </span>
+                    </div>
+                  </Link>
+                ))}
               </div>
             </motion.div>
           )}

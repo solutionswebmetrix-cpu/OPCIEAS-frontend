@@ -1,259 +1,182 @@
-import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, FileText, ChevronDown } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { ArrowLeft, ArrowRight, ChevronDown } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useEffect, useRef, useState } from 'react';
 
-type Phase =
-  | 'TYPING_LINE1'
-  | 'PAUSE_LINE1'
-  | 'TYPING_LINE2'
-  | 'PAUSE_LINE2'
-  | 'DELETING_LINE2'
-  | 'DELETING_LINE1'
-  | 'PAUSE_RESTART';
+const bannerAssets = Object.entries(
+  import.meta.glob('../assets/banner/*.{png,jpg,jpeg,webp,avif}', { eager: true, import: 'default' }) as Record<string, string>,
+)
+  .sort(([pathA], [pathB]) => pathA.localeCompare(pathB, undefined, { numeric: true }))
+  .map(([path, image]) => ({ path, image }));
 
-const LINE1 = 'Commercial & Institutional Furniture';
-const LINE2 = 'Built for 500+ Unit Bulk Orders';
-const CHAR_DELAY = 80;
-const DELETE_DELAY = 40;
-const PAUSE_AFTER_LINE1 = 1000;
-const PAUSE_AFTER_LINE2 = 2000;
-const PAUSE_BEFORE_RESTART = 500;
-
-function TypewriterCursor() {
-  return (
-    <motion.span
-      aria-hidden
-      initial={{ opacity: 0 }}
-      animate={{ opacity: [0, 1, 1, 0] }}
-      transition={{ duration: 0.85, repeat: Infinity, ease: 'easeInOut' }}
-      className="inline-block ml-[2px] align-[0.08em] h-[0.9em] w-[3px] rounded-sm"
-      style={{ backgroundColor: '#FFFFFF' }}
-    />
-  );
-}
+const heroMessages = [
+  {
+    title: 'Commercial & Institutional Furniture',
+    subtitle: 'Built for 500+ Unit Bulk Orders',
+  },
+  {
+    title: 'Premium Educational & Institutional Furniture',
+    subtitle: 'Manufacturing Since 1999',
+  },
+  {
+    title: 'Furniture Solutions for',
+    subtitle: 'Government • Institutional • Export Markets',
+  },
+];
 
 export default function Hero() {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [phase, setPhase] = useState<Phase>('TYPING_LINE1');
-  const [text1, setText1] = useState('');
-  const [text2, setText2] = useState('');
-  const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
-
-  const clearAllTimers = () => {
-    timersRef.current.forEach((t) => clearTimeout(t));
-    timersRef.current = [];
-  };
-
-  const addTimer = (fn: () => void, delay: number) => {
-    const id = setTimeout(fn, delay);
-    timersRef.current.push(id);
-    return id;
-  };
+  const [messageIndex, setMessageIndex] = useState(0);
+  const [productIndex, setProductIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [loadedPaths, setLoadedPaths] = useState<Set<string>>(() => new Set(bannerAssets[0] ? [bannerAssets[0].path] : []));
+  const slides = bannerAssets.map((asset, index) => ({
+    asset,
+    label: `OPCIEAS furniture banner ${index + 1}`,
+  }));
+  const activeSlide = slides[productIndex] ?? slides[0];
 
   useEffect(() => {
-    clearAllTimers();
+    const timer = window.setInterval(() => {
+      setMessageIndex((current) => (current + 1) % heroMessages.length);
+    }, 4800);
 
-    switch (phase) {
-      case 'TYPING_LINE1': {
-        if (text1.length < LINE1.length) {
-          addTimer(() => {
-            setText1(LINE1.slice(0, text1.length + 1));
-          }, CHAR_DELAY);
-        } else {
-          setPhase('PAUSE_LINE1');
-        }
-        break;
-      }
-      case 'PAUSE_LINE1': {
-        addTimer(() => setPhase('TYPING_LINE2'), PAUSE_AFTER_LINE1);
-        break;
-      }
-      case 'TYPING_LINE2': {
-        if (text2.length < LINE2.length) {
-          addTimer(() => {
-            setText2(LINE2.slice(0, text2.length + 1));
-          }, CHAR_DELAY);
-        } else {
-          setPhase('PAUSE_LINE2');
-        }
-        break;
-      }
-      case 'PAUSE_LINE2': {
-        addTimer(() => setPhase('DELETING_LINE2'), PAUSE_AFTER_LINE2);
-        break;
-      }
-      case 'DELETING_LINE2': {
-        if (text2.length > 0) {
-          addTimer(() => {
-            setText2(LINE2.slice(0, text2.length - 1));
-          }, DELETE_DELAY);
-        } else {
-          setPhase('DELETING_LINE1');
-        }
-        break;
-      }
-      case 'DELETING_LINE1': {
-        if (text1.length > 0) {
-          addTimer(() => {
-            setText1(LINE1.slice(0, text1.length - 1));
-          }, DELETE_DELAY);
-        } else {
-          setPhase('PAUSE_RESTART');
-        }
-        break;
-      }
-      case 'PAUSE_RESTART': {
-        addTimer(() => setPhase('TYPING_LINE1'), PAUSE_BEFORE_RESTART);
-        break;
-      }
-    }
-
-    return clearAllTimers;
-  }, [phase, text1, text2]);
-
-  useEffect(() => {
-    const updateObjectPosition = () => {
-      if (!videoRef.current) return;
-      const w = window.innerWidth;
-      if (w >= 1024) {
-        videoRef.current.style.objectPosition = '50% 40%';
-      } else if (w >= 640) {
-        videoRef.current.style.objectPosition = '55% center';
-      } else {
-        videoRef.current.style.objectPosition = '60% center';
-      }
-    };
-    updateObjectPosition();
-    window.addEventListener('resize', updateObjectPosition);
-    return () => window.removeEventListener('resize', updateObjectPosition);
+    return () => window.clearInterval(timer);
   }, []);
 
-  const showCursorLine1 = phase === 'TYPING_LINE1' || phase === 'DELETING_LINE1';
-  const showCursorLine2 = phase === 'TYPING_LINE2' || phase === 'DELETING_LINE2';
+  useEffect(() => {
+    let cancelled = false;
+    bannerAssets.forEach(({ path, image }) => {
+      const preload = new Image();
+      preload.onload = () => {
+        if (cancelled) return;
+        setLoadedPaths((current) => {
+          if (current.has(path)) return current;
+          const next = new Set(current);
+          next.add(path);
+          return next;
+        });
+      };
+      preload.src = image;
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isPaused || slides.length < 2) return;
+    const timer = window.setInterval(() => {
+      setProductIndex((current) => {
+        const next = (current + 1) % slides.length;
+        return loadedPaths.has(slides[next].asset.path) ? next : current;
+      });
+    }, 4200);
+    return () => window.clearInterval(timer);
+  }, [isPaused, loadedPaths, slides.length]);
+
+  const moveProduct = (direction: number) => {
+    setProductIndex((current) => {
+      const next = (current + direction + slides.length) % slides.length;
+      return loadedPaths.has(slides[next].asset.path) ? next : current;
+    });
+  };
+
+  const activeMessage = heroMessages[messageIndex];
 
   return (
-    <section id="hero" ref={heroRef} className="relative h-[clamp(540px,78svh,620px)] overflow-hidden bg-white sm:h-[620px] md:h-[640px] lg:h-[clamp(620px,72vh,720px)]">
-      {/* Background: banner video — full quality, no blur/filters */}
-      <div className="pointer-events-none absolute inset-0">
-        <motion.video
-          ref={videoRef}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.5, ease: 'easeInOut' }}
-          className="absolute inset-0 h-full w-full object-cover"
-          style={{
-            filter: 'none',
-            imageRendering: 'auto',
-            opacity: 1,
-            transform: 'none',
-          }}
-        >
-          <source src="/videos/banner.mp4" type="video/mp4" />
-        </motion.video>
-        <div className="absolute inset-0 bg-[#050B14]/45" />
+    <section
+      id="hero"
+      className="relative isolate overflow-hidden bg-[#091827]"
+      style={{
+        minHeight: 'min(760px, calc(100vh - 82px))',
+      }}
+    >
+      <div
+        className="absolute inset-0 z-0"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+      >
+        <div className="absolute inset-0 overflow-hidden bg-[#091827]">
+          <AnimatePresence initial={false} mode="sync">
+            <motion.img
+              key={activeSlide?.asset.path}
+              src={activeSlide?.asset.image}
+              alt={activeSlide?.label}
+              onLoad={() => setLoadedPaths((current) => new Set(current).add(activeSlide.asset.path))}
+              initial={{ opacity: 0, scale: 1.04, x: 18 }}
+              animate={{ opacity: 1, scale: 1, x: 0 }}
+              exit={{ opacity: 0, scale: 0.98, x: -18 }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
+              className="absolute inset-0 h-full w-full object-cover object-center"
+            />
+          </AnimatePresence>
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,15,26,0.86)_0%,rgba(8,15,26,0.55)_35%,rgba(8,15,26,0.12)_72%,rgba(8,15,26,0.2)_100%)]" />
+          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-navy/75 to-transparent" />
+        </div>
+
+        <button type="button" aria-label="Previous product" onClick={() => moveProduct(-1)} className="absolute left-4 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-navy shadow-md transition hover:bg-gold sm:left-7">
+          <ArrowLeft className="h-4 w-4" />
+        </button>
+        <button type="button" aria-label="Next product" onClick={() => moveProduct(1)} className="absolute right-4 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-navy shadow-md transition hover:bg-gold sm:right-7">
+          <ArrowRight className="h-4 w-4" />
+        </button>
       </div>
 
-      {/* Subtle decorative orbs — very low opacity to not obscure video details */}
-      <div className="pointer-events-none absolute left-[15%] top-[20%] h-56 w-56 rounded-full bg-gold/5 blur-[80px] animate-float-slow" />
-      <div className="pointer-events-none absolute right-[10%] bottom-[15%] h-64 w-64 rounded-full bg-navy/4 blur-[90px] animate-float" />
+      <div className="container-x relative z-10 flex min-h-[min(760px,calc(100vh-82px))] w-full items-start px-6 py-10 pb-36 sm:py-12 sm:pb-40 lg:py-14 lg:pb-44">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: 'easeOut' }}
+          className="w-full max-w-[560px]">
+          <p className="font-sub text-xs uppercase tracking-[0.35em] text-gold">OPCIEAS Pvt. Ltd.</p>
 
-      <div className="container-x relative z-10 flex h-full w-full max-w-full items-center px-6 py-8 sm:py-8 lg:px-8 lg:py-6 xl:px-8">
-        <div className="w-full min-w-0 max-w-3xl">
-          {/* <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            className="mb-5 inline-flex items-center gap-2 rounded-full border border-gold/60 bg-navy/65 px-4 py-2"
-          >
-            <span className="h-2 w-2 animate-glow rounded-full bg-gold" />
-            <span
-              className="font-sub text-xs tracking-widest text-white"
-            >COMMERCIAL FURNITURE MANUFACTURER SINCE 2000</span>
-          </motion.div> */}
-
-          {/* Typewriter headline — white for readability over video */}
-          <h1
-            className="w-full max-w-full break-words font-heading text-[clamp(2rem,9vw,2.25rem)] font-black leading-[1.05] sm:text-5xl xl:text-6xl"
-            style={{ color: '#FFFFFF', fontWeight: 800, opacity: 1, textShadow: '0 2px 12px rgba(0,0,0,0.45)' }}
-          >
-            <span className="block break-words font-black whitespace-normal sm:whitespace-pre">
-              {text1 || '\u00A0'}
-              <AnimatePresence mode="wait" initial={false}>
-                {showCursorLine1 && <TypewriterCursor key="c1" />}
-              </AnimatePresence>
-            </span>
-            <span
-              className="mt-2 block max-w-[14ch] text-[1.7rem] font-bold leading-[1.12] whitespace-normal sm:max-w-[18ch] sm:text-[2.3rem] lg:max-w-none lg:whitespace-nowrap lg:text-[2.8rem]"
-              style={{
-                color: '#FFFFFF',
-                fontWeight: 800,
-                textShadow: '0 2px 12px rgba(0,0,0,0.45)',
-                opacity: 1,
-              }}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={`${activeMessage.title}-${activeMessage.subtitle}`}
+              initial={{ opacity: 0, y: 22, filter: 'blur(4px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              exit={{ opacity: 0, y: -18, filter: 'blur(3px)' }}
+              transition={{ duration: 0.75, ease: 'easeOut' }}
+              className="mt-5"
             >
-              {text2 || '\u00A0'}
-              <AnimatePresence mode="wait" initial={false}>
-                {showCursorLine2 && <TypewriterCursor key="c2" />}
-              </AnimatePresence>
-            </span>
-          </h1>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.2, duration: 0.6 }}
-            className="mt-3 w-full max-w-full break-words font-sub text-lg"
-            style={{ color: '#FFFFFF', fontWeight: 600, lineHeight: 1.5, opacity: 1, textShadow: '0 1px 8px rgba(0,0,0,0.45)' }}
-          >
+              <h1 className="max-w-[560px] font-heading text-[clamp(36px,4vw,64px)] font-black leading-[0.98] text-white sm:leading-[1.02]">
+                {activeMessage.title}
+                <span className="mt-2 block text-[clamp(24px,2.2vw,38px)] font-semibold leading-[1.06] text-white/90">
+                  {activeMessage.subtitle}
+                </span>
+              </h1>
+            </motion.div>
+          </AnimatePresence>
+
+          <p className="mt-5 max-w-xl font-sub text-xs uppercase tracking-[0.18em] text-white/80 sm:text-sm">
             National Tender Supply • Institutional Projects • Export Supply
-          </motion.p>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.4, duration: 0.6 }}
-            className="mt-3 w-full max-w-[760px] break-words font-body text-base leading-[1.5] sm:text-[1.1rem] lg:text-[1.2rem]"
-            style={{ color: '#FFFFFF', fontWeight: 550, lineHeight: 1.5, opacity: 1, textShadow: '0 1px 8px rgba(0,0,0,0.45)' }}
-          >
+          </p>
+          <p className="mt-5 max-w-xl font-body text-sm leading-relaxed text-white/85 sm:text-base">
             Minimum Order Quantity: 500+ Units. Commercial and institutional supply for government buyers, contractors, education, healthcare and export procurement programs.
-          </motion.p>
+          </p>
 
-          {/* Buttons — always clickable, z-20. btn-gold already #071A35 text, btn-ghost already var(--navy). Enforce icons. */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.6, duration: 0.6 }}
-            className="relative z-20 mt-6 flex w-full max-w-full flex-col items-stretch gap-3 sm:flex-row sm:items-center"
-          >
-            <Link to="/products" className="btn-ghost magnetic flex w-full max-w-full items-center justify-center gap-2 rounded-full px-6 py-3 font-sub text-sm sm:w-auto [&>svg]:text-[#071A35]">
+          <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+            <Link to="/catalogue" className="btn-gold inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-sub text-sm font-semibold">
               Explore Catalog <ArrowRight className="h-4 w-4" />
             </Link>
-            <Link to="/rfq" className="btn-gold magnetic flex w-full max-w-full items-center justify-center gap-2 rounded-full px-6 py-3 font-sub text-sm sm:w-auto [&>svg]:text-[#071A35]">
-              <FileText className="h-4 w-4" /> Request Bulk Quote
+            <Link to="/rfq" className="btn-ghost inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-sub text-sm font-semibold text-white">
+              Request Bulk Quote
             </Link>
-          </motion.div>
+          </div>
+        </motion.div>
 
-        </div>
       </div>
 
-      {/* Scroll indicator — FULL DARK NAVY chevron with white halo for video contrast */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2.2 }}
-        className="absolute bottom-8 left-1/2 z-20 -translate-x-1/2"
+        transition={{ delay: 0.3 }}
+        className="absolute bottom-6 left-1/2 z-20 -translate-x-1/2"
       >
-        <Link to="/company/about" className="block rounded-full bg-white/90 p-2 shadow-md backdrop-blur-md ring-1 ring-navy/20">
-          <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 1.8, repeat: Infinity }}>
-            <ChevronDown className="h-5 w-5" style={{ color: '#071A35' }} />
-          </motion.div>
-        </Link>
+        <a href="#introduction" className="flex h-10 w-10 items-center justify-center rounded-full bg-white/90 ring-1 ring-navy/10 shadow-md">
+          <ChevronDown className="h-4 w-4 text-navy" />
+        </a>
       </motion.div>
     </section>
   );

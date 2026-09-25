@@ -3,74 +3,53 @@ import { ArrowRight } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import companyLogo from '../assets/logo/logo.png';
-import { findProductAssetByName, type ProductAsset } from '../lib/productAssetResolver';
+import { getEducationalAssets, type ProductAsset } from '../lib/productAssetResolver';
 
 type SequenceScene = {
   id: string;
   label: string;
   subtitle: string;
-  statement?: string;
+  heading: string;
+  route: string;
   assets: ProductAsset[];
 };
 
-function resolveAssets(names: string[], category?: string) {
-  return names
-    .map((name) => findProductAssetByName(name, category) ?? findProductAssetByName(name))
-    .filter((asset): asset is ProductAsset => !!asset)
-    .slice(0, 3);
+function resolveAssets(category: string) {
+  return getEducationalAssets(category, 3);
 }
 
 const scenes: SequenceScene[] = [
   {
-    id: 'kg',
+    id: 'kg-classes',
     label: 'KG Classes',
-    subtitle: 'Accessible classroom furniture for early learning environments',
-    statement: 'Fiberglass inbuilt colour furniture with SS racks not only make a statement but also improve the ambiance of classrooms.',
-    assets: resolveAssets([
-      'Colorful Kindergarten Classroom Furniture',
-      "Colourful Children's Table and Chair Set",
-      'Chrome Wire Shelving on Terracotta Floor',
-    ], 'School Furniture'),
+    subtitle: 'Safe • Durable • Colourful',
+    heading: 'Designed for Young Minds',
+    route: '/products/category/educational-furniture?subcategory=kg-classes',
+    assets: resolveAssets('KG Classes'),
   },
   {
     id: 'primary',
-    label: 'Primary School',
-    subtitle: 'Desks, chairs and benches for everyday classroom use',
-    assets: resolveAssets([
-      'Minimal Desk and Bench Set',
-      'Woodgrain Classroom Desk and Bench Set',
-      'Single Wooden School Desk and Bench',
-    ], 'School Furniture'),
+    label: 'Primary',
+    subtitle: 'Smart • Strong • Ergonomic',
+    heading: 'Built for Better Learning',
+    route: '/products/category/educational-furniture?subcategory=primary',
+    assets: resolveAssets('Primary'),
   },
   {
     id: 'high-school',
     label: 'High School',
-    subtitle: 'Structured furniture for focused academic spaces',
-    assets: resolveAssets([
-      'Blue Desk Training Room',
-      'White Lecture Chair with Writing Tablet',
-      'Gray Adjustable Drafting Table',
-    ], 'Educational Furniture'),
+    subtitle: 'Smart • Strong • Ergonomic',
+    heading: 'Built for Better Learning',
+    route: '/products/category/educational-furniture?subcategory=high-school',
+    assets: resolveAssets('High School'),
   },
   {
-    id: 'junior-college',
-    label: 'Junior College',
-    subtitle: 'Attractive desk and bench settings for higher learning',
-    assets: resolveAssets([
-      'Modern Beige Desk with Black Trim',
-      'Light Wood Office Desk Set',
-      'Minimalist Desk and Chair Corner',
-    ], 'Educational Furniture'),
-  },
-  {
-    id: 'university-pg',
-    label: 'Senior University / PG',
-    subtitle: 'Writing pad chairs with distinct blue and red variants',
-    assets: resolveAssets([
-      'Maroon Tablet-Arm Chair on Concrete',
-      'Blue Lecture Chair with Writing Tablet',
-      'Red Chair with Writing Tablet',
-    ], 'Educational Furniture'),
+    id: 'colleges-higher-education',
+    label: 'Colleges & Higher Education',
+    subtitle: 'Durable Institutional Solutions',
+    heading: 'Professional Seating for Higher Education',
+    route: '/products/category/educational-furniture?subcategory=colleges-higher-education',
+    assets: resolveAssets('Colleges & Higher Education'),
   },
 ];
 
@@ -98,19 +77,19 @@ export default function HomepageFurnitureSequence() {
             >
               <img src={companyLogo} alt="OPCIEAS emblem" className="h-14 w-14 object-contain sm:h-16 sm:w-16" />
               <div>
-                <p className="font-sub text-xs text-gold">OPCIEAS Commercial Furniture</p>
-                <p className="mt-1 font-sub text-xs text-navy/60">Hand crafted since 1999</p>
+                <p className="font-sub text-xs text-gold">OPCIEAS Pvt. Ltd.</p>
+                <p className="mt-1 font-sub text-xs text-navy/60">Premium furniture manufacturer since 1999</p>
               </div>
             </motion.div>
-            <p className="mt-8 font-sub text-xs uppercase tracking-[0.3em] text-gold">Educational Furniture</p>
-            <h2 className="mt-3 font-heading text-3xl font-black text-navy sm:text-4xl">Furniture that grows with the learning environment</h2>
-            <p className="mt-4 font-body text-base leading-7 text-navy/70">A focused product sequence for classrooms, colleges and higher-education spaces, using approved OPCIEAS product visuals.</p>
-            {activeScene.statement && (
-              <p className="mt-6 border-l-4 border-gold bg-white px-5 py-4 font-body text-sm leading-6 text-navy/80">{activeScene.statement}</p>
-            )}
+            <p className="mt-8 font-sub text-xs uppercase tracking-[0.3em] text-gold">Educational Journey</p>
+            <h2 className="mt-3 font-heading text-3xl font-black text-navy sm:text-4xl">Furniture That Builds Better Learning Spaces</h2>
+            <p className="mt-4 font-body text-base leading-7 text-navy/70">Premium Educational &amp; Institutional Furniture Manufacturing Since 1999</p>
+            <div className="mt-6 border-l-4 border-gold bg-white px-5 py-4 font-heading text-xl font-black leading-relaxed text-navy sm:text-2xl">
+              {activeScene.heading}
+            </div>
             <div className="mt-7 flex flex-wrap items-center gap-4">
-              <Link to="/furniture" className="btn-gold inline-flex items-center gap-2 rounded-full px-5 py-3 font-sub text-sm">Explore Commercial Furniture <ArrowRight className="h-4 w-4" /></Link>
-              <span className="font-sub text-xs text-navy/60">An ISO 9001:2015 Certified Company</span>
+              <Link to={activeScene.route} className="btn-gold inline-flex items-center gap-2 rounded-full px-5 py-3 font-sub text-sm">Explore Products <ArrowRight className="h-4 w-4" /></Link>
+              <span className="font-sub text-xs text-navy/60">Educational • Institutional • Export Ready</span>
             </div>
           </div>
 
@@ -141,7 +120,7 @@ export default function HomepageFurnitureSequence() {
                       transition={{ delay: index * 0.12, duration: 0.5 }}
                       className={`flex min-h-[150px] items-center justify-center overflow-hidden rounded-xl border border-navy/10 bg-light-grey p-2 sm:min-h-0 ${index === 2 ? 'col-span-2 sm:col-span-1' : ''}`}
                     >
-                      <img src={asset.image} alt={asset.name} className="h-full w-full object-contain" loading={sceneIndex === 0 ? 'eager' : 'lazy'} />
+                      <img src={asset.image} alt={asset.name} className="h-full w-full object-cover" loading={sceneIndex === 0 ? 'eager' : 'lazy'} />
                     </motion.div>
                   ))}
                 </div>

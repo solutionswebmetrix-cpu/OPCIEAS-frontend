@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Manrope Fallback';
+  src: local('Manrope'), local('Manrope Regular'), local('Manrope Medium'), local('Manrope Bold'), local('Manrope ExtraBold');
+  font-weight: 400 800;
+  font-style: normal;
+}
+
 @layer base {
   :root {
     --navy: #071A35;
@@ -18,6 +25,7 @@
     --border-grey: #D9E0E8;
     --body-text: #34445A;
     --muted-text: #68778C;
+    --font-sans: 'Manrope Fallback', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -25,15 +33,15 @@
   html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
 
   body {
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-sans);
     background: var(--white);
     color: var(--body-text);
     overflow-x: hidden;
   }
 
-  h1, h2, h3, h4, h5 { font-family: 'Montserrat', sans-serif; font-weight: 800; }
-  .font-sub { font-family: 'Poppins', sans-serif; }
-  .font-body { font-family: 'Inter', sans-serif; }
+  h1, h2, h3, h4, h5 { font-family: var(--font-sans); font-weight: 800; }
+  .font-sub { font-family: var(--font-sans); }
+  .font-body { font-family: var(--font-sans); }
   .font-serif, .font-times { font-family: 'Times New Roman', Times, Georgia, serif; }
   .font-serif-italic, .font-times-italic { font-family: 'Times New Roman', Times, Georgia, serif; font-style: italic; }
   .font-heading-serif, .font-heading-times {

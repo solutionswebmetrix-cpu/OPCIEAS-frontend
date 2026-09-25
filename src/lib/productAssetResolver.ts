@@ -41,12 +41,19 @@ function isForbiddenAssetPath(path: string): boolean {
   );
 }
 
-function createAsset(path: string, image: string): ProductAsset {
-  const segments = path.split('/');
+function getAssetFolderPath(path: string): string {
+  const segments = path.split(/[\\/]+/).filter(Boolean);
   const productIndex = segments.lastIndexOf('product');
-  const folder = productIndex >= 0 && productIndex < segments.length - 2 ? segments[productIndex + 1] : 'Product Assets';
-  const fileName = segments[segments.length - 1].replace(/\.(png|jpe?g|webp|avif)$/i, '');
-  const relativePath = productIndex >= 0 ? segments.slice(productIndex + 1).join('-') : fileName;
+  const folderSegments = productIndex >= 0 ? segments.slice(productIndex + 1, -1) : [];
+  return folderSegments.length ? folderSegments.join('/') : 'Product Assets';
+}
+
+function createAsset(path: string, image: string): ProductAsset {
+  const segments = path.split(/[\\/]+/).filter(Boolean);
+  const productIndex = segments.lastIndexOf('product');
+  const folder = getAssetFolderPath(path);
+  const fileName = segments[segments.length - 1]?.replace(/\.(png|jpe?g|webp|avif)$/i, '') ?? 'Product Asset';
+  const relativePath = productIndex >= 0 ? segments.slice(productIndex + 1).join('/') : fileName;
   const slug = `asset-${toKebab(relativePath.replace(/\.[^.]+$/, ''))}`;
   const category = detectCategory(path, fileName);
 
@@ -59,6 +66,60 @@ function createAsset(path: string, image: string): ProductAsset {
     name: cleanProductName(fileName),
     category,
   };
+}
+
+const EDUCATIONAL_FOLDER_MAP: Record<string, string[]> = {
+  'kg classes': ['KG_PG/K G'],
+  'primary': ['KG_PG/PRIMARY'],
+  'high school': ['KG_PG/HIGH SCHOOL'],
+  'colleges and higher education': ['KG_PG/P.G = IMIVERSITY'],
+  'colleges higher education': ['KG_PG/P.G = IMIVERSITY'],
+  'higher education': ['KG_PG/P.G = IMIVERSITY'],
+  'junior college': ['KG_PG/JUNIOR COLLEGE  BASIC  COMP. TABLE'],
+  'junior college basic comp table': ['KG_PG/JUNIOR COLLEGE  BASIC  COMP. TABLE'],
+  'university': ['KG_PG/P.G = IMIVERSITY'],
+  'pg': ['KG_PG/P.G = IMIVERSITY'],
+  'p g': ['KG_PG/P.G = IMIVERSITY'],
+  'university and pg': ['KG_PG/P.G = IMIVERSITY'],
+};
+
+function folderLookupKey(value: string): string {
+  return normalizeAssetLookup(value)
+    .replace(/\s+and\s+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function categoryAliases(value?: string): string[] {
+  if (!value) return [];
+  const normalized = normalizeAssetLookup(value);
+  const condensed = normalized.replace(/\s+and\s+/g, ' ');
+  const withoutAmpersand = condensed.replace(/\s+\&\s+/g, ' ');
+  const variants = new Set<string>([
+    normalized,
+    condensed,
+    withoutAmpersand,
+    normalized.replace(/\s+/g, ' '),
+  ]);
+
+  return Array.from(variants).filter(Boolean);
+}
+
+function getExplicitFolderMatches(category?: string): string[] {
+  if (!category) return [];
+
+  const aliases = categoryAliases(category);
+  const direct = aliases.flatMap((alias) => EDUCATIONAL_FOLDER_MAP[alias] ?? []);
+  if (direct.length > 0) return direct;
+
+  const possibleMatches = Object.entries(EDUCATIONAL_FOLDER_MAP)
+    .filter(([key]) => {
+      const keyAliases = categoryAliases(key);
+      return aliases.some((alias) => keyAliases.some((keyAlias) => keyAlias.includes(alias) || alias.includes(keyAlias)));
+    })
+    .flatMap(([, paths]) => paths);
+
+  return possibleMatches.length ? possibleMatches : [];
 }
 
 export const PRODUCT_ASSETS: ProductAsset[] = Object.entries(productAssetModules)
@@ -141,34 +202,147 @@ builtCatalog['Letter Boxes'] = builtCatalog['Letter Box'] ?? [];
 
 export const HOMEPAGE_SHOWCASE_CATALOG: Record<string, ProductAsset[]> = builtCatalog;
 
+export function getEducationalAssets(categoryName: string, limit = 3): ProductAsset[] {
+  const folderTargets = getExplicitFolderMatches(categoryName);
+  const candidates = PRODUCT_ASSETS.filter((asset) => {
+    const assetFolder = folderLookupKey(asset.folder);
+    const assetPath = folderLookupKey(asset.path);
+    if (folderTargets.length > 0) {
+      return folderTargets.some((folder) => {
+        const normalizedFolder = folderLookupKey(folder);
+        return assetFolder.includes(normalizedFolder) || assetPath.includes(normalizedFolder);
+      });
+    }
+    const normalizedCategory = normalizeAssetLookup(categoryName);
+    return asset.category.toLowerCase().includes(normalizedCategory) || assetFolder.includes(normalizedCategory) || assetPath.includes(normalizedCategory);
+  });
+
+  const unique: ProductAsset[] = [];
+  const seen = new Set<string>();
+  for (const candidate of candidates) {
+    if (!seen.has(candidate.path)) {
+      seen.add(candidate.path);
+      unique.push(candidate);
+    }
+  }
+
+  return unique.slice(0, limit);
+}
+
+export function getHostelAssets(limit = 4): ProductAsset[] {
+  const hostelNames = [
+    'Hostel Cot',
+    'Single Cot',
+    'Bunker Cot',
+    'Triple Cot',
+  ];
+
+  const hostelFallbacks = [
+    'Open Wardrobe by the Pillar',
+    'Softly Lit Cabinet Display Room',
+    'Metal Storage Cabinet Interior',
+    'Six-Door Steel Locker Cabinet',
+    'Blue Work Jacket Inside Open Steel Locker',
+    'Nine-Compartment Steel Locker Cabinet',
+  ];
+
+  const selected: ProductAsset[] = [];
+  const seen = new Set<string>();
+
+  for (const label of hostelNames) {
+    const product = findProductAssetByName(label, 'Hostel Furniture');
+    const fallback = PRODUCT_ASSETS.find((asset) => {
+      const assetName = normalizeAssetLookup(asset.name);
+      const targetName = normalizeAssetLookup(label);
+      return asset.category === 'Hostel Furniture' || assetName.includes(targetName) || targetName.includes(assetName);
+    }) ?? PRODUCT_ASSETS.find((asset) => {
+      const assetName = normalizeAssetLookup(asset.name);
+      return hostelFallbacks.some((fallbackName) => {
+        const fallbackKey = normalizeAssetLookup(fallbackName);
+        return assetName.includes(fallbackKey) || fallbackKey.includes(assetName);
+      });
+    });
+
+    const match = product ?? fallback;
+    if (match && !seen.has(match.path)) {
+      selected.push(match);
+      seen.add(match.path);
+    }
+  }
+
+  if (selected.length < limit) {
+    for (const asset of PRODUCT_ASSETS) {
+      const normalized = normalizeAssetLookup(asset.name);
+      const isHostelLike = /hostel|wardrobe|locker|cabinet|study|dorm|bed|cot|storage/i.test(normalized);
+      if (isHostelLike && !seen.has(asset.path)) {
+        selected.push(asset);
+        seen.add(asset.path);
+      }
+      if (selected.length >= limit) break;
+    }
+  }
+
+  return selected.slice(0, limit);
+}
+
+export function getHomepageHeroAssets(): ProductAsset[] {
+  const candidates = [
+    ...getEducationalAssets('KG Classes', 1),
+    ...getEducationalAssets('Primary', 1),
+    ...getEducationalAssets('High School', 1),
+    ...getEducationalAssets('Colleges & Higher Education', 1),
+    ...getHostelAssets(2),
+  ];
+  const unique = new Map<string, ProductAsset>();
+  for (const asset of candidates) unique.set(asset.path, asset);
+  return Array.from(unique.values()).slice(0, 6);
+}
+
 export function findProductAssetByName(name: string, category?: string): ProductAsset | null {
   const targetName = normalizeAssetLookup(cleanProductName(name || ''));
   const targetCategory = category ? normalizeAssetLookup(category) : '';
+  const explicitFolders = getExplicitFolderMatches(category);
 
-  const exact = PRODUCT_ASSETS.find((asset) => {
+  const exact = PRODUCT_ASSETS.filter((asset) => {
     const assetName = normalizeAssetLookup(asset.name);
     const assetFileName = normalizeAssetLookup(asset.fileName);
-    const folderName = normalizeAssetLookup(asset.folder);
-    const sameName = assetName === targetName || assetFileName === targetName || assetName.includes(targetName) || targetName.includes(assetName);
-    const sameFolder = !targetCategory || folderName === targetCategory || asset.category.toLowerCase() === targetCategory || normalizeAssetLookup(asset.category) === targetCategory;
-    return sameName && sameFolder;
+    const assetFolder = folderLookupKey(asset.folder);
+    const assetPath = folderLookupKey(asset.path);
+    const sameName = assetName === targetName || assetFileName === targetName || assetName.includes(targetName) || targetName.includes(assetName) || assetFileName.includes(targetName) || targetName.includes(assetFileName);
+
+    const explicitFolderMatch = explicitFolders.length > 0
+      ? explicitFolders.some((folder) => {
+          const normalizedFolder = folderLookupKey(folder);
+          return assetFolder.includes(normalizedFolder) || assetPath.includes(normalizedFolder);
+        })
+      : !targetCategory || assetFolder.includes(targetCategory) || assetPath.includes(targetCategory) || normalizeAssetLookup(asset.category).includes(targetCategory) || targetCategory.includes(normalizeAssetLookup(asset.category));
+
+    return sameName && explicitFolderMatch;
   });
-  if (exact) return exact;
+
+  if (exact.length > 0) return exact[0];
 
   const partial = PRODUCT_ASSETS.find((asset) => {
     const assetName = normalizeAssetLookup(asset.name);
     const assetFileName = normalizeAssetLookup(asset.fileName);
-    const folderName = normalizeAssetLookup(asset.folder);
+    const assetFolder = folderLookupKey(asset.folder);
+    const assetPath = folderLookupKey(asset.path);
     const sameName =
       assetName.includes(targetName) ||
       targetName.includes(assetName) ||
       assetFileName.includes(targetName) ||
       targetName.includes(assetFileName) ||
-      `${folderName} ${assetFileName}`.includes(targetName) ||
-      targetName.includes(`${folderName} ${assetFileName}`);
-    const sameCategory = !targetCategory || folderName === targetCategory || normalizeAssetLookup(asset.category) === targetCategory || normalizeAssetLookup(asset.category).includes(targetCategory) || targetCategory.includes(normalizeAssetLookup(asset.category));
-    return sameName && sameCategory;
+      `${assetFolder} ${assetFileName}`.includes(targetName) ||
+      targetName.includes(`${assetFolder} ${assetFileName}`);
+    const sameFolder = explicitFolders.length > 0
+      ? explicitFolders.some((folder) => {
+          const normalizedFolder = folderLookupKey(folder);
+          return assetFolder.includes(normalizedFolder) || assetPath.includes(normalizedFolder);
+        })
+      : !targetCategory || assetFolder.includes(targetCategory) || assetPath.includes(targetCategory) || normalizeAssetLookup(asset.category).includes(targetCategory) || targetCategory.includes(normalizeAssetLookup(asset.category));
+    return sameName && sameFolder;
   });
+
   return partial ?? null;
 }
 

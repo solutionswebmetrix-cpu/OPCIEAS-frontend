@@ -8,7 +8,7 @@ import Products from '../components/Products';
 import Industries from '../components/Industries';
 import Clients from '../components/Clients';
 import Testimonials from '../components/Testimonials';
-import HomepageFurnitureSequence from '../components/HomepageFurnitureSequence';
+import HomepageHostelSequence from '../components/HomepageHostelSequence';
 import { motion } from 'framer-motion';
 import { ArrowRight, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -65,8 +65,8 @@ export default function HomePage() {
       {/* 1. HERO */}
       <Hero />
 
-      {/* 2. PRODUCT-FOCUSED OPENING SEQUENCE */}
-      <HomepageFurnitureSequence />
+      {/* 2. HOSTEL FURNITURE STORY */}
+      <HomepageHostelSequence />
 
       <nav
         aria-label="In-page homepage navigation"

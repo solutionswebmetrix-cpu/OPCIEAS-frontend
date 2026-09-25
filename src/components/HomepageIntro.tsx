@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { Building2, Cpu, Heart, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const ENTREPRENEURIAL_CONCLUSION = `OPCIEAS Pvt. Ltd. is a professionally managed, multi-divisional enterprise committed to excellence across every domain we serve. Established with a vision to deliver dependable, value-driven solutions, OPCIEAS operates through three integrated divisions — Tech Business Promotion, Furniture & Textiles, and Social Services — each reinforcing the other with shared values of trust, quality, transparency, and sustainable prosperity. Every undertaking at OPCIEAS is anchored in compliance, accountability, and long-term relationships. Whether empowering businesses through our technology platforms, furnishing institutions with export-ready premium products, or uplifting communities through social initiatives, we bring the same disciplined approach, the same insistence on quality, and the same commitment to outcomes that stand the test of time. Our entrepreneurial philosophy is simple: build enduring value for every stakeholder through integrated operations, ethical governance, and a relentless focus on delivering real, measurable impact.`;
+const ENTREPRENEURIAL_CONCLUSION = `OPCIEAS Pvt. Ltd. is a professionally managed multi-division enterprise committed to quality, accountability and long-term value creation across furniture manufacturing, institutional supply, and social development initiatives. Since 1999, we have supported education, government, hospitality and commercial clients with durable, export-oriented products and dependable manufacturing partnerships.`;
 
 const divisions = [
   {
@@ -19,7 +19,7 @@ const divisions = [
     name: 'Furniture',
     tagline: 'Institutional • Commercial • Educational • Storage',
     narration:
-      'Institutional and commercial furniture solutions built for schools, campuses, hostels, storage needs, and bulk procurement.',
+      'Premium furniture solutions for schools, colleges, hostels, institutions and bulk commercial projects.',
     accent: 'from-[#D4AF37] via-[#B8932B] to-[#8B6F1E]',
     to: '/furniture',
   },
@@ -28,7 +28,7 @@ const divisions = [
     name: 'Rural Development / Agriculture & Fisheries',
     tagline: 'Community Growth • Sustainability • Aquaculture',
     narration:
-      'Community development initiatives supporting rural livelihoods, sustainable agriculture, and fisheries growth.',
+      'Community-led initiatives that strengthen rural livelihoods, agriculture, and social infrastructure.',
     accent: 'from-[#34D399] via-[#059669] to-[#047857]',
     to: '/social-service',
   },
@@ -49,35 +49,44 @@ export default function HomepageIntro() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}     
-          className="mx-auto max-w-3xl text-center"
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="mx-auto max-w-4xl text-center"
         >
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="font-sub text-xs uppercase tracking-[0.35em] text-gold"
+          >
+            OPCIEAS Pvt. Ltd.
+          </motion.p>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.15 }}
-              className="font-heading text-3xl font-black leading-tight text-navy sm:text-4xl"
+            className="mt-4 font-heading text-3xl font-black leading-tight text-navy sm:text-4xl"
           >
-            OPCIEAS Pvt. Ltd. supports dependable growth across furniture, community development, and business initiatives.
+            Premium Commercial Furniture Manufacturer Since 1999
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="mt-4 font-body text-sm leading-relaxed text-navy/70"
+            className="mt-4 font-body text-base leading-relaxed text-navy/70"
           >
-            The company’s business categories are presented separately from the legal identity: Furniture, Rural Development, and Agriculture / Fisheries remain clearly distinct from OPCIEAS Pvt. Ltd. while operating under one quality-focused enterprise.
+            Dedicated to educational, institutional and government furniture solutions with a strong export-ready manufacturing focus.
           </motion.p>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.25 }}
-            className="mt-4 font-sub text-xs text-gold"
+            className="mt-4 font-sub text-xs uppercase tracking-[0.25em] text-gold"
           >
-            MOQ fixed at 500 units – bulk orders only, applicable across all categories.
+            Educational • Institutional • Government • Export
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -87,7 +96,7 @@ export default function HomepageIntro() {
             className="mt-6"
           >
             <Link to="/company/about" className="btn-ghost inline-flex items-center gap-2 rounded-full px-5 py-2.5 font-sub text-xs font-semibold">
-                Learn More About OPCIEAS <ArrowRight className="h-3.5 w-3.5" />
+              Learn More About OPCIEAS <ArrowRight className="h-3.5 w-3.5" />
             </Link>
           </motion.div>
         </motion.div>
