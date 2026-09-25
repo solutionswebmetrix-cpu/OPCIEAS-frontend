@@ -105,7 +105,7 @@ export default function Hero() {
 
       </div>
 
-      <div className="container-x relative z-10 flex min-h-[min(760px,calc(100vh-82px))] w-full items-start px-6 py-10 pb-36 sm:py-12 sm:pb-40 lg:py-14 lg:pb-44">
+      <div className="container-x relative z-10 flex min-h-[min(760px,calc(100vh-82px))] w-full items-start px-6 pb-36 pt-16 sm:pb-40 sm:pt-20 lg:pb-44 lg:pt-24">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}

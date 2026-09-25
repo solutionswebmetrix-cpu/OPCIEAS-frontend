@@ -10,7 +10,7 @@ import { CATEGORY_BANNERS, CANONICAL_CATEGORIES, type CanonicalCategoryName } fr
 import { fetchCategories, fetchProducts, resolveCategoryFromSlug, normalizeCategorySlug, normalizeCategoryName, type Product, type Category } from '../lib/data';
 import { getEducationalAssets } from '../lib/productAssetResolver';
 
-const categoryContent: Record<string, { overview: string; highlights: string[]; specs: Array<{ label: string; value: string }>; gallery: string[]; cta: string[] }> = {
+const categoryContent: Record<string, { overview: string; highlights: string[]; accessories?: string[]; specs: Array<{ label: string; value: string }>; gallery: string[]; cta: string[] }> = {
   'office-furniture': {
     overview: 'Premium office furniture for modern corporate, government and enterprise workspaces including executive desks, workstations, storage and reception.',
     highlights: ['Executive Desk', 'Workstation', 'Conference Table', 'Reception Counter', 'Filing Cabinet', 'Office Chair', 'Pedestal', 'Storage Cupboard', 'Bookshelf'],
@@ -58,15 +58,10 @@ const categoryContent: Record<string, { overview: string; highlights: string[]; 
   },
   'hostel-furniture': {
     overview: 'Robust and durable hostel furniture for student accommodation, dormitories and institutional living spaces.',
-    highlights: ['Hostel Cots' , 'Single Cots', 'Bunker Cots', 'Triple Cots', 'Wardrobe', 'Hostel Locker', 'Study Table', 'Hostel Chair', 'Commercial Mattress'],
-    specs: [
-      { label: 'Suitability', value: 'Hostels, dormitories, student housing and residential institutions' },
-      { label: 'Build', value: 'Powder-coated steel frames with durable bedding textile finishes' },
-      { label: 'Storage', value: 'Under-bed clearance, lockers, wardrobes and study units available' },
-      { label: 'Cot Dimensions', value: 'Single: L 1800 × W 750 × H 300–350 mm; Bunker: L 1800 × W 900 × H 1600–1650 mm; Triple: L 1800 × W 900 × H 2600 mm' },
-      { label: 'Accessories', value: 'Rubberized coir, foam and spring mattresses; washable pillows; 200–600 TC cotton bedsheets and pillow covers' },
-    ],
-    gallery: ['Hostel dormitory setup', 'Bunker cots and storage', 'Student study & wardrobe units'],
+    highlights: ['Hostel Cots', 'Single Cots', 'Bunker Cots', 'Triple Cots'],
+    accessories: ['Cotton Bed / Spring', 'Cushion Mattresses', 'Washable Cushion Pillows', '100% Cotton Bed Sheets'],
+    specs: [],
+    gallery: [],
     cta: ['Request Quote', 'WhatsApp Inquiry'],
   },
   'industrial-storage': {
@@ -324,13 +319,23 @@ export default function ProductCategoryPage() {
                     <span key={item} className="rounded-full border border-navy/10 bg-white px-3 py-1.5 font-sub text-xs text-navy/70">{item}</span>
                   ))}
                 </div>
+                {content.accessories && (
+                  <div className="mt-6">
+                    <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Accessories</p>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {content.accessories.map((item) => (
+                        <span key={item} className="rounded-full border border-gold/20 bg-gold/10 px-3 py-1.5 font-sub text-xs text-navy/70">{item}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
                 <div className="mt-5">
                   <Link to="/products" className="inline-flex items-center gap-1.5 font-sub text-xs font-semibold text-gold">
                     <ArrowRight className="h-3.5 w-3.5 rotate-180" /> Back to All Products
                   </Link>
                 </div>
               </div>
-              <div className="rounded-lux bg-white p-5 shadow-sm">
+              {content.specs.length > 0 && <div className="rounded-lux bg-white p-5 shadow-sm">
                 <p className="font-heading text-sm font-bold text-navy">Specifications</p>
                 <div className="mt-3 space-y-2">
                   {content.specs.map((spec) => (
@@ -340,7 +345,7 @@ export default function ProductCategoryPage() {
                     </div>
                   ))}
                 </div>
-              </div>
+              </div>}
             </motion.div>
           )}
 
@@ -372,7 +377,7 @@ export default function ProductCategoryPage() {
             </motion.div>
           )}
 
-          {content && (
+          {content && content.gallery.length > 0 && (
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12 rounded-lux bg-white p-6 shadow-sm ring-1 ring-navy/10">
               <div className="flex flex-wrap items-center justify-between gap-4">
                 <div>
@@ -391,12 +396,6 @@ export default function ProductCategoryPage() {
                 ))}
               </div>
             </motion.div>
-          )}
-
-          {cat.slug === 'hostel-furniture' && (
-            <div className="mb-8 rounded-lux border border-gold/30 bg-gold/5 p-4 text-sm text-navy/80">
-              <strong>Complimentary OPCIEAS brand 'Single Blankets' supplied with hostel orders of 1000 units and above.</strong>
-            </div>
           )}
 
           <div className="mb-8 flex flex-col gap-4 rounded-lux bg-navy/5 p-4 sm:flex-row sm:items-center sm:justify-between">

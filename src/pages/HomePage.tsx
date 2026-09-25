@@ -8,7 +8,6 @@ import Products from '../components/Products';
 import Industries from '../components/Industries';
 import Clients from '../components/Clients';
 import Testimonials from '../components/Testimonials';
-import HomepageHostelSequence from '../components/HomepageHostelSequence';
 import { motion } from 'framer-motion';
 import { ArrowRight, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -64,32 +63,6 @@ export default function HomePage() {
       />
       {/* 1. HERO */}
       <Hero />
-
-      {/* 2. HOSTEL FURNITURE STORY */}
-      <HomepageHostelSequence />
-
-      <nav
-        aria-label="In-page homepage navigation"
-        className="sticky top-[82px] z-40 border-y border-navy/10 bg-white/95 backdrop-blur lg:top-[92px]"
-      >
-        <div className="container-x mx-auto flex w-full items-center gap-2 overflow-x-auto px-6 py-2">
-          <span className="mr-1 shrink-0 font-sub text-xs font-semibold text-navy/50">On this page</span>
-          {[
-            ['Tech Business Promotion', 'division-tech'],
-            ['Furniture & Textiles', 'division-furniture'],
-            ['Social Services', 'division-social'],
-            ['Products', 'products'],
-          ].map(([label, id]) => (
-            <a
-              key={id}
-              href={`#${id}`}
-              className="shrink-0 rounded-full px-3 py-2 font-sub text-xs text-navy/70 transition hover:bg-gold/10 hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
-            >
-              {label}
-            </a>
-          ))}
-        </div>
-      </nav>
 
       {/* 3. SHORT OPCIEAS INTRODUCTION */}
       <HomepageIntro />

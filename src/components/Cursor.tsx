@@ -15,9 +15,13 @@ export default function Cursor() {
 
     const move = (e: MouseEvent) => {
       tx = e.clientX; ty = e.clientY;
+      const el = e.target as HTMLElement;
+      if (el.closest('#hero')) {
+        setVisible(false);
+        return;
+      }
       setPos({ x: tx, y: ty });
       setVisible(true);
-      const el = e.target as HTMLElement;
       if (el.closest('button, a, .magnetic, [role="button"], input, select, textarea, label')) setVariant('hover');
       else if (el.closest('h1, h2, h3, h4, h5, p, span')) setVariant('text');
       else setVariant('default');
