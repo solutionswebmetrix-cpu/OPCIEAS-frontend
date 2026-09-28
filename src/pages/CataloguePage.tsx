@@ -5,6 +5,8 @@ import PageMeta from '../components/PageMeta';
 import SectionBanner from '../components/SectionBanner';
 import { submitContact } from '../lib/data';
 
+import heroBannerImage from '../assets/banner/banner.png';
+
 const categories = ['Educational Furniture', 'Hostel Furniture', 'Storage Solutions', 'Commercial / Institutional Furniture'];
 const initialForm = { name: '', company: '', email: '', phone: '', category: '', product: '', quantity: '', message: '' };
 
@@ -32,7 +34,7 @@ export default function CataloguePage() {
       <SectionBanner
         title="Catalogue"
         tagline="Full product catalogues available on request"
-        image="/images/hero-bg.jpg"
+        image={heroBannerImage}
         crumb="Catalogue"
         crumbTo="/"
       />

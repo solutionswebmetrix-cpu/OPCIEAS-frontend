@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import PageMeta from '../components/PageMeta';
 import SectionBanner from '../components/SectionBanner';
 
+import heroBannerImage from '../assets/banner/banner.png';
+
 export default function PaymentInstructionsPage() {
   return (
     <>
@@ -15,7 +17,7 @@ export default function PaymentInstructionsPage() {
       <SectionBanner
         title="Payment Instructions"
         tagline="Membership and procurement payments"
-        image="/images/hero-bg.jpg"
+        image={heroBannerImage}
         crumb="Payment Instructions"
         crumbTo="/"
       />

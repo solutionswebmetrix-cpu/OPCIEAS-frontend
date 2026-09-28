@@ -5,6 +5,9 @@ import SectionBanner from '../components/SectionBanner';
 import InquiryForm from '../components/InquiryForm';
 import PageMeta from '../components/PageMeta';
 
+import educationalFurnitureImage from '../assets/Educational Furniture.png';
+import warehouseRacksImage from '../assets/Warehouse Racks.png';
+
 const initiatives: Record<string, { title: string; tagline: string; intro: string; highlights: string[]; links: { label: string; to: string }[]; image: string; }> = {
   'tech-business-promotion': {
     title: 'Tech Business Promotion',
@@ -20,7 +23,7 @@ const initiatives: Record<string, { title: string; tagline: string; intro: strin
       { label: 'Explore Industries', to: '/industries/government' },
       { label: 'Company Profile', to: '/company/about' },
     ],
-    image: '/src/assets/Educational Furniture.png',
+    image: educationalFurnitureImage,
   },
   'agriculture-aquaculture': {
     title: 'Agriculture & Aquaculture',
@@ -36,7 +39,7 @@ const initiatives: Record<string, { title: string; tagline: string; intro: strin
       { label: 'View Export Capability', to: '/industries/export' },
       { label: 'CSR & Rural Empowerment', to: '/initiatives/social-services-rural-empowerment' },
     ],
-    image: '/src/assets/Warehouse Racks.png',
+    image: warehouseRacksImage,
   },
   'social-services-rural-empowerment': {
     title: 'Social Services & Rural Empowerment',
@@ -52,7 +55,7 @@ const initiatives: Record<string, { title: string; tagline: string; intro: strin
       { label: 'View Careers', to: '/company/careers' },
       { label: 'Explore CSR', to: '/company/csr' },
     ],
-    image: '/src/assets/Educational Furniture.png',
+    image: educationalFurnitureImage,
   },
 };
 

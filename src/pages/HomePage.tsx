@@ -15,6 +15,13 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getBusinessVerticalImages, type BusinessVerticalKey } from '../lib/businessVerticalImages';
 
+import educationalFurnitureImage from '../assets/Educational Furniture.png';
+import schoolFurnitureImage from '../assets/School Furniture.png';
+import hostelFurnitureImage from '../assets/Hostel Furniture.png';
+import industrialStorageImage from '../assets/Warehouse Racks.png';
+import bathroomCollectionImage from '../assets/Bathroom Storage.png';
+import letterBoxImage from '../assets/Letter Boxes.png';
+
 function BusinessVerticalImage({ title, category }: { title: string; category: BusinessVerticalKey }) {
   const images = getBusinessVerticalImages(category);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -68,37 +75,37 @@ export default function HomePage() {
   const collectionCards = [
     {
       title: 'Educational Furniture',
-      image: '/src/assets/product/KG_PG/K G.jpg',
+      image: educationalFurnitureImage,
       description: 'Classroom, lecture, and higher-education furniture for schools, colleges, and teaching spaces.',
       link: '/products/category/educational-furniture',
     },
     {
       title: 'School Furniture',
-      image: '/src/assets/product/School Furniture.png',
+      image: schoolFurnitureImage,
       description: 'Student desks, classroom seating and practical learning furniture for school environments.',
       link: '/products/category/school-furniture',
     },
     {
       title: 'Hostel Furniture',
-      image: '/src/assets/product/Hostel Furniture.png',
+      image: hostelFurnitureImage,
       description: 'Durable hostel and dormitory furniture designed for compact, high-use occupancy layouts.',
       link: '/products/category/hostel-furniture',
     },
     {
       title: 'Industrial Storage',
-      image: '/src/assets/product/Warehouse Racks.png',
+      image: industrialStorageImage,
       description: 'Steel storage solutions, racks, lockers and warehouse-ready systems for bulk operations.',
       link: '/products/category/industrial-storage',
     },
     {
       title: 'Bathroom Collection',
-      image: '/src/assets/Bathroom Storage.png',
+      image: bathroomCollectionImage,
       description: 'Practical bathroom and utility storage for institutional and commercial environments.',
       link: '/products/category/bathroom-collection',
     },
     {
       title: 'Letter Box',
-      image: '/src/assets/Letter Boxes.png',
+      image: letterBoxImage,
       description: 'Secure letter and mailbox solutions for institutional and community-facing projects.',
       link: '/products/category/letter-boxes',
     },

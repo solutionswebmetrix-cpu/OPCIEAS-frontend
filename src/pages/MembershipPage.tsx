@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import PageMeta from '../components/PageMeta';
 import SectionBanner from '../components/SectionBanner';
 
+import heroBannerImage from '../assets/banner/banner.png';
+
 export default function MembershipPage() {
   const [submitted, setSubmitted] = useState(false);
 
@@ -22,7 +24,7 @@ export default function MembershipPage() {
       <SectionBanner
         title="Membership"
         tagline="Membership Purpose • Membership Benefits • Annual Subscription • Registration & Support"
-        image={"/images/hero-bg.jpg"}
+        image={heroBannerImage}
         crumb="Membership"
         crumbTo="/"
       />
