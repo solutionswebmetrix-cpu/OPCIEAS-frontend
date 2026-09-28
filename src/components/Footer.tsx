@@ -28,7 +28,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative overflow-hidden bg-white pt-20">
+    <footer className="relative overflow-hidden bg-white pt-16">
       <div className="absolute inset-0 grid-bg opacity-10" />
       <div className="absolute left-1/2 top-0 h-px w-full -translate-x-1/2 bg-gradient-to-r from-transparent via-gold/40 to-transparent" />
 
@@ -38,7 +38,7 @@ export default function Footer() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-16 overflow-hidden rounded-lux glass-navy p-8 sm:p-10"
+          className="mb-12 overflow-hidden rounded-lux glass-navy p-6 sm:p-8"
         >
           <div className="grid gap-6 lg:grid-cols-2 lg:items-center">
             <div>

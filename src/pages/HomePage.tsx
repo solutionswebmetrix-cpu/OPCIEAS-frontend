@@ -1,15 +1,16 @@
 import PageMeta from '../components/PageMeta';
 import Hero from '../components/Hero';
 import HomepageIntro from '../components/HomepageIntro';
-import ThreeDivisions from '../components/ThreeDivisions';
 import WhyChooseUs from '../components/WhyChooseUs';
 import Manufacturing from '../components/Manufacturing';
 import Products from '../components/Products';
 import Industries from '../components/Industries';
 import Clients from '../components/Clients';
 import Testimonials from '../components/Testimonials';
+import HomepageFurnitureSequence from '../components/HomepageFurnitureSequence';
+import HomepageHostelSequence from '../components/HomepageHostelSequence';
 import { motion } from 'framer-motion';
-import { ArrowRight, FileText } from 'lucide-react';
+import { ArrowRight, FileText, Cpu, Building2, Heart, Ship, Globe, FileCheck, Truck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getBusinessVerticalImages, type BusinessVerticalKey } from '../lib/businessVerticalImages';
@@ -54,90 +55,106 @@ function BusinessVerticalImage({ title, category }: { title: string; category: B
 }
 
 export default function HomePage() {
+  const [selectedResponse, setSelectedResponse] = useState<'YES' | 'NO' | null>(null);
+
+  const buyerPositioning = [
+    'DIRECT / FACTORY SUPPLY',
+    'BULK ORDERS',
+    'INSTITUTIONAL PROJECTS',
+    'GOVERNMENT TENDERS',
+    'EXPORT SUPPLY',
+  ];
+
+  const collectionCards = [
+    {
+      title: 'Educational Furniture',
+      image: '/src/assets/product/KG_PG/K G.jpg',
+      description: 'Classroom, lecture, and higher-education furniture for schools, colleges, and teaching spaces.',
+      link: '/products/category/educational-furniture',
+    },
+    {
+      title: 'School Furniture',
+      image: '/src/assets/product/School Furniture.png',
+      description: 'Student desks, classroom seating and practical learning furniture for school environments.',
+      link: '/products/category/school-furniture',
+    },
+    {
+      title: 'Hostel Furniture',
+      image: '/src/assets/product/Hostel Furniture.png',
+      description: 'Durable hostel and dormitory furniture designed for compact, high-use occupancy layouts.',
+      link: '/products/category/hostel-furniture',
+    },
+    {
+      title: 'Industrial Storage',
+      image: '/src/assets/product/Warehouse Racks.png',
+      description: 'Steel storage solutions, racks, lockers and warehouse-ready systems for bulk operations.',
+      link: '/products/category/industrial-storage',
+    },
+    {
+      title: 'Bathroom Collection',
+      image: '/src/assets/Bathroom Storage.png',
+      description: 'Practical bathroom and utility storage for institutional and commercial environments.',
+      link: '/products/category/bathroom-collection',
+    },
+    {
+      title: 'Letter Box',
+      image: '/src/assets/Letter Boxes.png',
+      description: 'Secure letter and mailbox solutions for institutional and community-facing projects.',
+      link: '/products/category/letter-boxes',
+    },
+  ];
+
+  const buyerUseCases = [
+    'GOVERNMENT TENDERS',
+    'EDUCATIONAL INSTITUTIONS',
+    'SCHOOLS & COLLEGES',
+    'HOSTELS',
+    'INSTITUTIONAL PROJECTS',
+    'COMMERCIAL PROJECTS',
+    'INTERNATIONAL BUYERS',
+  ];
+
   return (
-    <>
+    <div className="homepage">
       <PageMeta
-        title="OPCIEAS Tech Business Promotion, Social Services Pvt. Ltd. | Institutional Furniture & Business Promotion"
-        description="OPCIEAS Tech Business Promotion, Social Services Pvt. Ltd. delivers institutional furniture, educational products, storage systems, special-order fiberglass, and business promotion services."
-        keywords="OPCIEAS, institutional furniture, educational furniture, storage solutions, fiberglass, KG furniture, writing pad chairs, stainless steel racks, corporate furniture"
+        title="OPCIEAS Pvt. Ltd. | Institutional Furniture & Bulk Supply"
+        description="OPCIEAS supplies bulk institutional furniture, educational furniture, industrial storage, and custom project manufacturing for government and export buyers."
+        keywords="OPCIEAS, institutional furniture, educational furniture, storage solutions, bulk supply, government tenders, export buyers"
       />
-      {/* 1. HERO */}
+
       <Hero />
 
-      {/* 3. SHORT OPCIEAS INTRODUCTION */}
-      <HomepageIntro />
-
-      <section className="bg-white py-18 sm:py-24">
+      <section className="border-y border-navy/5 bg-white py-4">
         <div className="container-x px-6">
-          <div className="mx-auto mb-10 max-w-3xl text-center">
-            <p className="font-sub text-xs uppercase tracking-[0.35em] text-gold">About OPCIEAS</p>
-            <h2 className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl">A multi-division business focused on trusted institutional growth</h2>
-          </div>
-
-          <div className="grid gap-6 lg:grid-cols-2">
-            <div className="rounded-lux border border-navy/10 bg-light-grey p-6">
-              <p className="font-body text-base leading-relaxed text-navy/75">
-                OPCIEAS Tech Business Promotion, Social Services Pvt. Ltd. operates across business promotion, institutional furniture, and social initiatives with a professional and compliance-first approach.
-              </p>
-              <p className="mt-4 font-body text-base leading-relaxed text-navy/75">
-                The company supports buyers, institutions, suppliers, and government-linked projects with durable furniture systems, high-use storage products, and custom manufacturing engagements.
-              </p>
-            </div>
-
-            <div className="rounded-lux border border-gold/30 bg-gold/5 p-6">
-              <p className="font-sub text-xs uppercase tracking-[0.25em] text-gold">Core business focus</p>
-              <ul className="mt-4 space-y-3 font-body text-sm text-navy/75">
-                <li>• Educational furniture and classroom systems</li>
-                <li>• Commercial furniture for institutions and bulk supply</li>
-                <li>• Storage solutions and steel/rack systems</li>
-                <li>• Special-order fiberglass and custom project requirements</li>
-              </ul>
-            </div>
+          <div className="grid gap-3 md:grid-cols-5">
+            {buyerPositioning.map((item) => (
+              <div key={item} className="rounded-full border border-navy/10 bg-light-grey px-4 py-3 text-center font-sub text-[10px] uppercase tracking-[0.25em] text-navy/75">
+                {item}
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      <section className="bg-white py-18 sm:py-24">
-        <div className="container-x px-6">
-          <div className="rounded-lux border border-navy/10 bg-light-grey p-8 shadow-sm lg:p-10">
-            <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
-              <div>
-                <p className="font-sub text-xs uppercase tracking-[0.35em] text-gold">Social Service / Social Impact</p>
-                <h2 className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl">Heavenly Earth – A Vision for Rural Prosperity</h2>
-                <p className="mt-4 max-w-2xl font-body text-base leading-relaxed text-navy/75">
-                  Rural Development is rooted in self-reliance, unity, and responsible stewardship of land, water, education, and community life. The goal is to strengthen villages through shared effort, practical leadership, and a vision that protects the vulnerable while creating lasting dignity.
-                </p>
-              </div>
-              <div className="flex justify-start">
-                <Link to="/social-service" className="btn-gold inline-flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm">
-                  Explore Social Service <ArrowRight className="h-4 w-4" />
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-light-grey py-18 sm:py-24">
+      <section id="what-we-manufacture" className="bg-white py-10 sm:py-12 lg:py-14">
         <div className="container-x px-6">
           <div className="mb-8 text-center">
-            <p className="font-sub text-xs uppercase tracking-[0.35em] text-gold">Business verticals</p>
-            <h2 className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl">Structured product and business categories</h2>
+            <p className="font-sub text-xs uppercase tracking-[0.35em] text-gold">What We Manufacture</p>
+            <h2 className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl">Commercial furniture and institutional supply built for bulk projects.</h2>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-            {[
-              { title: 'Educational Furniture', text: 'Classroom, learning, and school furniture systems.', category: 'educational' as const, link: '/products/vertical/educational-furniture' },
-              { title: 'Institutional Furniture', text: 'Workstations, chairs, tables, and institutional setups.', category: 'institutional' as const, link: '/products/vertical/institutional-furniture' },
-              { title: 'Storage Solutions', text: 'Steel racks, lockers, cabinets, and warehouse systems.', category: 'storage' as const, link: '/products/vertical/storage-solutions' },
-              { title: 'Fiberglass / Special Order', text: 'Custom fiberglass and project-specific manufacturing.', category: 'fiberglass' as const, link: '/products/vertical/fiberglass-special-order' },
-            ].map((item) => (
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {collectionCards.map((item) => (
               <Link key={item.title} to={item.link} className="group overflow-hidden rounded-lux border border-navy/10 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-                <BusinessVerticalImage title={item.title} category={item.category} />
-                <div className="flex min-h-40 flex-col p-6">
-                  <h3 className="font-heading text-xl font-bold text-navy">{item.title}</h3>
-                  <p className="mt-3 font-body text-sm leading-relaxed text-navy/70">{item.text}</p>
-                  <span className="mt-auto pt-5 inline-flex items-center gap-2 font-sub text-sm text-gold">Explore category <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" /></span>
+                <div className="h-64 overflow-hidden bg-light-grey p-3">
+                  <img src={item.image} alt={item.title} className="h-full w-full rounded-[14px] object-cover transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" />
+                </div>
+                <div className="flex min-h-[12rem] flex-col p-5 sm:p-6">
+                  <h3 className="font-heading text-2xl font-black text-navy">{item.title}</h3>
+                  <p className="mt-3 font-body text-sm leading-relaxed text-navy/70">{item.description}</p>
+                  <span className="mt-auto inline-flex items-center gap-2 pt-5 font-sub text-sm font-semibold text-gold">
+                    View Collection <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </span>
                 </div>
               </Link>
             ))}
@@ -145,108 +162,120 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="bg-light-grey py-18 sm:py-24">
-        <div className="container-x px-6">
-          <div className="flex flex-col gap-6 rounded-lux border border-navy/10 bg-white p-8 lg:flex-row lg:items-center lg:justify-between">
-            <div>
-              <p className="font-sub text-xs uppercase tracking-[0.35em] text-gold">Catalogue</p>
-              <h3 className="mt-3 font-heading text-3xl font-black text-navy">Browse the official OPCIEAS product material</h3>
-            </div>
-            <Link to="/catalogue" className="btn-gold inline-flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm">Request Full Catalogue <ArrowRight className="h-4 w-4" /></Link>
-          </div>
-        </div>
-      </section>
+      <HomepageFurnitureSequence />
 
-      {/* 3. THREE BUSINESS DIVISIONS */}
-      <ThreeDivisions />
-
-      {/* 4. DIRECT MANUFACTURING */}
-      <Manufacturing />
-
-      {/* 5. PRODUCT CATEGORIES */}
       <Products />
 
-      {/* 6. WHY OPCIEAS */}
-      <WhyChooseUs />
+      <Manufacturing />
 
-      {/* 7. INDUSTRIES WE SERVE */}
-      <Industries />
-
-      {/* 8. TRUSTED BY / CLIENTS */}
-      <Clients />
-
-      {/* 9. TESTIMONIALS (compact - only 2-3) */}
-      <Testimonials />
-
-      <section className="bg-white py-18 sm:py-24">
+      <section className="border-t border-navy/10 bg-light-grey py-10 sm:py-12 lg:py-14">
         <div className="container-x px-6">
-          <div className="mx-auto max-w-4xl text-center">
-            <p className="font-sub text-xs uppercase tracking-[0.35em] text-gold">International Buyer / Export Supply</p>
-            <h2 className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl">Global procurement support with clearly defined export workflows</h2>
-            <p className="mt-4 font-body text-base leading-relaxed text-navy/75">
-              OPCIEAS supports international bulk procurement through documented product information, export-ready communication, and procurement coordination. Where final details require client confirmation, the information is clearly marked as pending approval rather than assumed.
-            </p>
+          <div className="mb-7 text-center">
+            <p className="font-sub text-xs uppercase tracking-[0.35em] text-gold">Custom / Project Supply</p>
+            <h2 className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl">Custom dimensions, project requirements and bulk production support.</h2>
           </div>
 
-          <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-5">
             {[
-              { title: 'Export Supply', text: 'Bulk furniture supply coordination for institutional and commercial projects with product-specific approval steps.' },
-              { title: 'Countries Served', text: 'Countries served — to be finalized by OPCIEAS based on active export project records and buyer approval.' },
-              { title: 'Compliance Standards', text: 'Product documentation, manufacturing records, and export readiness reviewed case by case with client approval.' },
-              { title: 'Lead Times & Logistics', text: 'Lead times and logistics support are confirmed per order, shipment scope, and destination requirements.' },
+              'Custom Dimensions',
+              'Project Requirements',
+              'Bulk Production',
+              'Institutional Supply',
+              'OEM / Custom Production',
             ].map((item) => (
-              <div key={item.title} className="rounded-lux border border-navy/10 bg-light-grey p-6 shadow-sm">
-                <p className="font-sub text-xs uppercase tracking-[0.22em] text-gold">{item.title}</p>
-                <p className="mt-3 font-body text-sm leading-relaxed text-navy/75">{item.text}</p>
+              <div key={item} className="rounded-lux border border-navy/10 bg-white p-5 text-center shadow-sm">
+                <p className="font-sub text-[10px] uppercase tracking-[0.28em] text-gold">Project</p>
+                <h3 className="mt-3 font-heading text-xl font-black text-navy">{item}</h3>
               </div>
             ))}
           </div>
 
-          <div className="mt-10 flex flex-col items-center justify-center gap-4 rounded-lux border border-gold/30 bg-gold/5 p-8 text-center">
-            <p className="font-sub text-xs uppercase tracking-[0.25em] text-gold">Request Information</p>
-            <h3 className="font-heading text-2xl font-black text-navy">Request International Bulk Supply Information</h3>
+          <div className="mt-8 flex justify-center">
             <Link to="/rfq" className="btn-gold inline-flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm">
-              Request Export Information <ArrowRight className="h-4 w-4" />
+              Request Custom Manufacturing <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </div>
       </section>
 
-      {/* 10. FINAL B2B CTA */}
-      <section className="relative overflow-hidden bg-light-grey py-20 sm:py-32">
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute left-1/4 top-1/4 h-72 w-72 rounded-full bg-gold/10 blur-[100px] animate-float-slow" />
-          <div className="absolute right-1/4 bottom-1/4 h-96 w-96 rounded-full bg-navy-3/40 blur-[120px] animate-float" />
-        </div>
+      <HomepageHostelSequence />
 
+      <section className="bg-white py-10 sm:py-12 lg:py-14">
+        <div className="container-x px-6">
+          <div className="mb-7 text-center">
+            <p className="font-sub text-xs uppercase tracking-[0.35em] text-gold">Who We Serve</p>
+            <h2 className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl">Buyer use cases and institutional project categories.</h2>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {buyerUseCases.map((item) => (
+              <div key={item} className="rounded-lux border border-navy/10 bg-light-grey p-5 text-center font-sub text-xs uppercase tracking-[0.22em] text-navy/75 shadow-sm">
+                {item}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <Industries />
+
+      <section className="bg-[#F0F4F9] py-10 sm:py-12 lg:py-14">
+        <div className="container-x px-6">
+          <div className="mx-auto max-w-4xl text-center">
+            <p className="font-sub text-xs uppercase tracking-[0.35em] text-gold">For International Buyers</p>
+            <h2 className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl">Bulk institutional furniture supply and export-oriented manufacturing support.</h2>
+            <p className="mt-4 font-body text-base leading-relaxed text-navy/70">
+              OPCIEAS provides commercial furniture, school and hostel systems, and custom supply support for institutional and export-focused procurement projects.
+            </p>
+          </div>
+
+          <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {[
+              'Requirement',
+              'Product / Specification Review',
+              'Sample / Approval',
+              'Bulk Manufacturing',
+              'Quality Inspection',
+              'Packing & Logistics',
+            ].map((step, index) => (
+              <div key={step} className="rounded-lux border border-navy/10 bg-white p-5 shadow-sm">
+                <p className="font-sub text-[10px] uppercase tracking-[0.28em] text-gold">0{index + 1}</p>
+                <h3 className="mt-3 font-heading text-xl font-black text-navy">{step}</h3>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <HomepageIntro />
+
+      <WhyChooseUs />
+
+      <section className="relative overflow-hidden bg-light-grey py-12 sm:py-14 lg:py-16">
         <div className="container-x relative z-10 px-6">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="mx-auto max-w-3xl text-center"
           >
-            <h2 className="font-heading text-3xl font-black text-navy sm:text-4xl xl:text-5xl">
-              Have an Institutional Project?
-            </h2>
-            <p className="mt-4 font-body text-lg text-navy/85">
-              Tell us your requirement and request a customized B2B quotation. We deliver on time, every time.
+            <p className="font-sub text-xs uppercase tracking-[0.35em] text-gold">Request Quote</p>
+            <h2 className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl">Request a bulk quote for your next institutional or export requirement.</h2>
+            <p className="mt-4 font-body text-base leading-relaxed text-navy/75">
+              Share your product requirement, quantity, project type, specification, location, sample need and message to receive a commercial response.
             </p>
 
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
               <Link to="/rfq" className="btn-gold flex items-center gap-2 rounded-full px-8 py-3 font-sub text-sm">
                 Request Bulk Quote <ArrowRight className="h-4 w-4" />
               </Link>
-              <Link to="/membership" className="btn-ghost flex items-center gap-2 rounded-full px-8 py-3 font-sub text-sm">
-                <FileText className="h-4 w-4" /> Request Custom Manufacturing
-              </Link>
-              <Link to="/contact" className="btn-ghost flex items-center gap-2 rounded-full px-8 py-3 font-sub text-sm">
-                Contact Us
+              <Link to="/catalogue" className="btn-ghost flex items-center gap-2 rounded-full px-8 py-3 font-sub text-sm">
+                <FileText className="h-4 w-4" /> Request Full Catalogue
               </Link>
             </div>
           </motion.div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

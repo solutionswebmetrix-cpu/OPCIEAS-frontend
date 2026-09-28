@@ -15,9 +15,10 @@ export default {
       },
       borderRadius: { lux: '20px' },
       fontFamily: {
-        heading: ['Montserrat', 'sans-serif'],
-        sub: ['Poppins', 'sans-serif'],
-        body: ['Inter', 'sans-serif'],
+        manrope: ['Manrope', 'sans-serif'],
+        heading: ['Manrope', 'Montserrat', 'sans-serif'],
+        sub: ['Manrope', 'Poppins', 'sans-serif'],
+        body: ['Manrope', 'Inter', 'sans-serif'],
       },
       spacing: { 18: '4.5rem', 22: '5.5rem', 30: '7.5rem' },
       maxWidth: { '8xl': '1440px' },

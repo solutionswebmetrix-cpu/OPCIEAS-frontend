@@ -34,9 +34,9 @@ export default function HomepageHostelSequence() {
   const assets = getHostelAssets(4);
 
   return (
-    <section id="hostel-furniture" className="border-t border-navy/10 bg-white py-12 sm:py-16 lg:py-20">
+    <section id="hostel-furniture" className="border-t border-navy/10 bg-white py-10 sm:py-12 lg:py-14">
       <div className="container-x px-6">
-        <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="font-sub text-xs uppercase tracking-[0.35em] text-gold">Hostel Furniture</p>
             <h2 className="mt-3 font-heading text-3xl font-black text-navy sm:text-4xl">Student living solutions designed for density, comfort, and durability</h2>
@@ -56,11 +56,11 @@ export default function HomepageHostelSequence() {
               transition={{ delay: index * 0.08, duration: 0.45 }}
               className="overflow-hidden rounded-lux border border-navy/10 bg-light-grey shadow-sm"
             >
-              <div className="relative h-56 overflow-hidden">
+              <div className="relative h-56 overflow-hidden bg-white p-2.5">
                 <img
                   src={assets[index]?.image ?? assets[0]?.image}
                   alt={item.label}
-                  className="h-full w-full object-cover"
+                  className="h-full w-full object-contain"
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy/60 via-transparent to-transparent" />

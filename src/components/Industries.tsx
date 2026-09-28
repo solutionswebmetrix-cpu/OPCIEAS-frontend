@@ -28,7 +28,7 @@ function IndustryCard({ icon: Icon, name, stat, img, i }: { icon: typeof Buildin
       ref={ref}
       onMouseMove={onMove}
       onMouseLeave={() => setT({ rx: 0, ry: 0 })}
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ delay: (i % 4) * 0.08, duration: 0.5 }}
@@ -52,10 +52,10 @@ function IndustryCard({ icon: Icon, name, stat, img, i }: { icon: typeof Buildin
 
 export default function Industries() {
   return (
-    <section id="industries" className="relative overflow-hidden bg-white py-32">
+    <section id="industries" className="relative overflow-hidden bg-light-grey border-t border-navy/5 py-12 sm:py-14 lg:py-16">
       <div className="pointer-events-none absolute inset-0 grid-bg opacity-10" />
       <div className="container-x relative px-6">
-        <div className="mx-auto mb-16 max-w-2xl text-center">
+        <div className="mx-auto mb-8 max-w-2xl text-center">
           <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-sub text-sm uppercase tracking-[0.3em] text-gold">Industries We Serve</motion.p>
           <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl xl:text-5xl">
             Trusted Across Every Sector
@@ -70,7 +70,7 @@ export default function Industries() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-12 text-center"
+          className="mt-8 text-center"
         >
           <Link to="/industries" className="inline-flex items-center gap-2 rounded-full border border-gold/50 bg-gold/10 px-6 py-3 font-sub text-sm text-gold transition hover:bg-gold/20">
             Explore All Industries <ArrowRight className="h-4 w-4" />

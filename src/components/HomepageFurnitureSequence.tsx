@@ -65,9 +65,9 @@ export default function HomepageFurnitureSequence() {
   }, []);
 
   return (
-    <section id="homepage-furniture-sequence" className="relative overflow-hidden border-b border-navy/10 bg-light-grey py-12 sm:py-16 lg:py-20">
+    <section id="homepage-furniture-sequence" className="relative overflow-hidden border-b border-navy/10 bg-light-grey py-10 sm:py-12 lg:py-14">
       <div className="container-x w-full px-6">
-        <div className="grid min-w-0 gap-8 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:items-center lg:gap-10">
+        <div className="grid min-w-0 gap-6 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:items-center lg:gap-8">
           <div className="min-w-0 max-w-xl">
             <motion.div
               initial={{ opacity: 0, y: 18 }}
@@ -111,7 +111,7 @@ export default function HomepageFurnitureSequence() {
                   </div>
                   <span className="shrink-0 font-sub text-xs text-navy/50">{String(sceneIndex + 1).padStart(2, '0')} / {String(scenes.length).padStart(2, '0')}</span>
                 </div>
-                <div className="mt-6 grid min-h-[330px] grid-cols-2 gap-3 sm:mt-8 sm:h-[285px] sm:min-h-0 sm:grid-cols-3 sm:gap-3">
+                <div className="mt-6 grid min-h-[250px] grid-cols-2 gap-3 sm:mt-8 sm:h-[250px] sm:min-h-0 sm:grid-cols-3 sm:gap-3">
                   {activeScene.assets.map((asset, index) => (
                     <motion.div
                       key={asset.slug}
@@ -120,7 +120,7 @@ export default function HomepageFurnitureSequence() {
                       transition={{ delay: index * 0.12, duration: 0.5 }}
                       className={`flex min-h-[150px] items-center justify-center overflow-hidden rounded-xl border border-navy/10 bg-light-grey p-2 sm:min-h-0 ${index === 2 ? 'col-span-2 sm:col-span-1' : ''}`}
                     >
-                      <img src={asset.image} alt={asset.name} className="h-full w-full object-cover" loading={sceneIndex === 0 ? 'eager' : 'lazy'} />
+                      <img src={asset.image} alt={asset.name} className="h-full w-full object-contain" loading={sceneIndex === 0 ? 'eager' : 'lazy'} />
                     </motion.div>
                   ))}
                 </div>

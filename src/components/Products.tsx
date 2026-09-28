@@ -23,7 +23,7 @@ function HomeProductCard({ product, index, categoryIndex }: { product: Product; 
       className="group overflow-hidden rounded-lux border border-navy/10 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
     >
       <Link to={`/product/${productSlug}`} className="block">
-        <div className="h-48 sm:h-52 bg-white p-2.5 sm:p-3">
+        <div className="h-56 sm:h-60 xl:h-64 bg-white p-2.5 sm:p-3">
           {image ? <img
             src={image}
             alt={product.name}
@@ -31,7 +31,7 @@ function HomeProductCard({ product, index, categoryIndex }: { product: Product; 
             loading={categoryIndex === 0 && index < 4 ? 'eager' : 'lazy'}
           /> : <div className="h-full w-full bg-navy/5" aria-label="Product image unavailable" />}
         </div>
-        <div className="flex min-h-[10rem] flex-col border-t border-navy/10 p-3.5 sm:p-4">
+        <div className="flex min-h-[9rem] flex-col border-t border-navy/10 p-3.5 sm:p-4">
           <h3 className="mt-1 font-heading text-base font-bold text-navy sm:text-lg leading-tight line-clamp-2">{product.name}</h3>
           {product.short_desc && <p className="mt-2 line-clamp-2 font-body text-xs leading-relaxed text-navy/70">{product.short_desc}</p>}
           {product.price_range && <p className="mt-2 font-sub text-xs font-semibold text-navy">{product.price_range}</p>}
@@ -188,9 +188,9 @@ export default function Products() {
 
   if (loading) {
     return (
-      <section id="products" className="relative overflow-hidden bg-white py-24 sm:py-32">
+      <section id="products" className="relative overflow-hidden bg-white py-12 sm:py-14 lg:py-16">
         <div className="container-x px-6">
-          <div className="mb-14 sm:mb-16 text-center">
+          <div className="mb-8 lg:mb-10 text-center">
             <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-sub text-sm uppercase tracking-[0.3em] text-gold">Product Showcase</motion.p>
             <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl xl:text-5xl">
               Furniture for Every Commercial Space
@@ -206,19 +206,19 @@ export default function Products() {
   }
 
   return (
-    <section id="products" className="relative overflow-hidden bg-white py-24 sm:py-32">
+    <section id="products" className="relative overflow-hidden bg-white py-12 sm:py-14 lg:py-16">
       <div className="container-x px-6">
-        <div className="mb-14 sm:mb-16 text-center">
-          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-sub text-sm uppercase tracking-[0.3em] text-gold">Product Showcase</motion.p>
+        <div className="mb-8 lg:mb-10 text-center">
+          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-sub text-sm uppercase tracking-[0.3em] text-gold">What We Manufacture</motion.p>
           <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl xl:text-5xl">
-            Furniture for Every Commercial Space
+            Product collections for bulk institutional and commercial supply.
           </motion.h2>
-          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mx-auto mt-4 max-w-xl font-body text-sm text-navy/60">
-            From office interiors and educational campuses to hospitals, hospitality and industrial storage — 1000+ furniture products engineered for durability and style.
+          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mx-auto mt-4 max-w-2xl font-body text-sm leading-relaxed text-navy/65">
+            Educational furniture, school systems, hostel seating, industrial storage, and custom project supply built for government, institutional, and export procurement buyers.
           </motion.p>
         </div>
 
-        <div className="mb-8 rounded-xl border border-navy/10 bg-light-grey/70 p-2">
+        <div className="mb-6 lg:mb-8 rounded-xl border border-navy/10 bg-light-grey/70 p-2">
           <div className="flex flex-wrap items-center justify-center gap-2" role="tablist" aria-label="Product categories">
             {productsByCategory.map(({ category }) => {
               const categoryId = String(category.id);
@@ -239,7 +239,7 @@ export default function Products() {
           </div>
         </div>
 
-        <div className="space-y-14 sm:space-y-20">
+        <div className="grid gap-8 lg:gap-10">
           {visibleProductGroups.map(({ category, products }, catIdx) => {
             return (
               <motion.div
@@ -249,7 +249,7 @@ export default function Products() {
                 viewport={{ once: true, margin: '-80px' }}
                 transition={{ delay: Math.min(catIdx * 0.05, 0.25), duration: 0.5 }}
               >
-                <div className="mb-5 flex flex-wrap items-center justify-between gap-3 sm:mb-7">
+                <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
                   <div>
                     <h3 className="font-heading text-xl font-black text-navy sm:text-2xl">{category.name}</h3>
                   </div>
@@ -261,7 +261,7 @@ export default function Products() {
                   </Link>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3.5 sm:gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+                <div className="grid grid-cols-2 gap-4 sm:gap-5 md:gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                   {products.map((product, idx) => (
                     <HomeProductCard
                       key={product.id || product.slug}

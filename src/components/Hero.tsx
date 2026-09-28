@@ -12,14 +12,14 @@ const bannerAssets = Object.entries(
 const heroMessages = [
   {
     title: 'Commercial & Institutional Furniture',
-    subtitle: 'Built for 500+ Unit Bulk Orders',
+    subtitle: 'Built for Bulk Supply',
   },
   {
-    title: 'Premium Educational & Institutional Furniture',
-    subtitle: 'Manufacturing Since 1999',
+    title: 'Educational Furniture for Schools & Colleges',
+    subtitle: 'Bulk Supply • Institutional Projects',
   },
   {
-    title: 'Furniture Solutions for',
+    title: 'Furniture for Government & Export Buyers',
     subtitle: 'Government • Institutional • Export Markets',
   },
 ];
@@ -81,7 +81,7 @@ export default function Hero() {
       id="hero"
       className="relative isolate overflow-hidden bg-[#091827]"
       style={{
-        minHeight: 'min(760px, calc(100vh - 82px))',
+        minHeight: 'min(640px, calc(100vh - 82px))',
       }}
     >
       <div className="absolute inset-0 z-0">
@@ -105,13 +105,17 @@ export default function Hero() {
 
       </div>
 
-      <div className="container-x relative z-10 flex min-h-[min(760px,calc(100vh-82px))] w-full items-start px-6 pb-36 pt-16 sm:pb-40 sm:pt-20 lg:pb-44 lg:pt-24">
+      <div className="container-x relative z-10 flex min-h-[min(640px,calc(100vh-82px))] w-full items-start px-6 pb-16 pt-12 sm:pb-20 sm:pt-16 lg:pb-24 lg:pt-20">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: 'easeOut' }}
           className="w-full max-w-[560px]">
           <p className="font-sub text-xs uppercase tracking-[0.35em] text-gold">OPCIEAS Pvt. Ltd.</p>
+          <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-3 py-1">
+            <span className="h-1.5 w-1.5 rounded-full bg-gold" />
+            <span className="font-sub text-[10px] uppercase tracking-[0.22em] text-gold">Hand Crafted Since 1999</span>
+          </div>
 
           <AnimatePresence mode="wait">
             <motion.div
@@ -132,15 +136,15 @@ export default function Hero() {
           </AnimatePresence>
 
           <p className="mt-5 max-w-xl font-sub text-xs uppercase tracking-[0.18em] text-white/80 sm:text-sm">
-            National Tender Supply • Institutional Projects • Export Supply
+            Government • Institutional • Educational • Export Markets
           </p>
           <p className="mt-5 max-w-xl font-body text-sm leading-relaxed text-white/85 sm:text-base">
-            Minimum Order Quantity: 500+ Units. Commercial and institutional supply for government buyers, contractors, education, healthcare and export procurement programs.
+            Minimum Order Quantity: 500+ Units. Manufactured for institutional, educational, and bulk project supply requirements.
           </p>
 
           <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-            <Link to="/catalogue" className="btn-gold inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-sub text-sm font-semibold">
-              Explore Catalog <ArrowRight className="h-4 w-4" />
+            <Link to="/products" className="btn-gold inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-sub text-sm font-semibold">
+              Explore Products <ArrowRight className="h-4 w-4" />
             </Link>
             <Link to="/rfq" className="btn-ghost inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-sub text-sm font-semibold text-white">
               Request Bulk Quote

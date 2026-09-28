@@ -39,14 +39,14 @@ export default function HomepageIntro() {
     <section
       id="introduction"
       style={{ scrollMarginTop: '100px' }}
-      className="relative overflow-hidden bg-white py-16 sm:py-24"
+      className="relative overflow-hidden bg-white py-10 sm:py-14 lg:py-16"
     >
-      <div className="pointer-events-none absolute -top-24 right-10 h-80 w-80 rounded-full bg-gold/5 blur-[120px] animate-float-slow" />
-      <div className="pointer-events-none absolute -bottom-24 left-10 h-96 w-96 rounded-full bg-navy/5 blur-[130px] animate-float" />
+      <div className="pointer-events-none absolute top-0 right-0 h-56 w-56 rounded-full bg-gold/5 blur-[80px] animate-float-slow" />
+      <div className="pointer-events-none absolute bottom-0 left-0 h-64 w-64 rounded-full bg-navy/5 blur-[80px] animate-float" />
 
       <div className="container-x relative z-10 px-6">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
@@ -102,17 +102,17 @@ export default function HomepageIntro() {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
-          className="mt-16"
+          className="mt-10 sm:mt-12"
         >
           <div className="grid gap-6 lg:grid-cols-3">
             {divisions.map((d, i) => (
               <motion.div
                 key={d.name}
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
                 transition={{ delay: 0.1 * i, duration: 0.6 }}

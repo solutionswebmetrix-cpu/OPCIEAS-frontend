@@ -11,7 +11,7 @@ interface Props {
 
 export default function SectionBanner({ title, tagline, image, crumb, crumbTo }: Props) {
   return (
-    <section className="relative min-h-[50vh] overflow-hidden bg-white pt-32">
+    <section className="relative min-h-[50vh] overflow-hidden bg-white pt-32" id="hero">
       <div className="pointer-events-none absolute inset-0">
         {image ? (
           <>

@@ -3,10 +3,11 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'Manrope Fallback';
-  src: local('Manrope'), local('Manrope Regular'), local('Manrope Medium'), local('Manrope Bold'), local('Manrope ExtraBold');
-  font-weight: 400 800;
+  font-family: 'Manrope';
+  src: local('Manrope'), local('Manrope Regular'), local('Manrope Medium'), local('Manrope SemiBold'), local('Manrope Bold'), local('Manrope ExtraBold');
+  font-weight: 200 800;
   font-style: normal;
+  font-display: swap;
 }
 
 @layer base {
@@ -25,7 +26,7 @@
     --border-grey: #D9E0E8;
     --body-text: #34445A;
     --muted-text: #68778C;
-    --font-sans: 'Manrope Fallback', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    --font-sans: 'Manrope', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -65,7 +66,7 @@
     border: 1px solid rgba(7, 26, 53, 0.12);
     background: var(--light-grey);
     padding: 0.75rem 1rem;
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-sans);
     font-size: 0.875rem;
     color: var(--navy);
     outline: none;
@@ -156,8 +157,54 @@
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .btn-ghost:hover { border-color: var(--gold); color: var(--gold); background: rgba(217, 173, 43, 0.06); }
-  .section-pad { padding: 8rem 1.5rem; }
+  .section-pad { padding: 4rem 1.5rem; }
   .container-x { max-width: 1280px; margin: 0 auto; }
+
+  /* Reduce the repeated oversized section spacing used across the site while preserving
+     intentionally tall banner/hero layouts. Normal content sections should be content-driven. */
+  main section:not(#hero):not([class*="min-h-"]):not([class*="pt-32"]):not([class*="pt-36"]):not([class*="pt-40"]):not([class*="pt-48"]):not([class*="pt-52"]):not([class*="pt-60"]) {
+    min-height: 0 !important;
+    height: auto !important;
+  }
+
+  section[class*="py-20"],
+  section[class*="py-24"],
+  section[class*="py-28"],
+  section[class*="py-32"],
+  section[class*="py-36"],
+  section[class*="py-40"],
+  section[class*="py-48"],
+  section[class*="py-52"],
+  section[class*="py-60"],
+  section[class*="sm:py-20"],
+  section[class*="sm:py-24"],
+  section[class*="sm:py-28"],
+  section[class*="sm:py-32"],
+  section[class*="sm:py-36"],
+  section[class*="sm:py-40"],
+  section[class*="sm:py-48"],
+  section[class*="sm:py-52"],
+  section[class*="sm:py-60"],
+  section[class*="lg:py-20"],
+  section[class*="lg:py-24"],
+  section[class*="lg:py-28"],
+  section[class*="lg:py-32"],
+  section[class*="lg:py-36"],
+  section[class*="lg:py-40"],
+  section[class*="lg:py-48"],
+  section[class*="lg:py-52"],
+  section[class*="lg:py-60"] {
+    padding-top: clamp(3rem, 4vw, 4.5rem) !important;
+    padding-bottom: clamp(3rem, 4vw, 4.5rem) !important;
+  }
+
+  .homepage > section:not(#hero) { padding-block: 2.5rem; }
+  @media (min-width: 640px) {
+    .homepage > section:not(#hero) { padding-block: 3rem; }
+  }
+  @media (min-width: 1024px) {
+    .homepage > section:not(#hero) { padding-block: 3.5rem; }
+  }
   .luxury-shadow { box-shadow: 0 10px 40px rgba(7, 26, 53, 0.08); }
   .rounded-lux { border-radius: 20px; }
   .grid-bg {

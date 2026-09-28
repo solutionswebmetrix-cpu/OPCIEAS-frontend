@@ -37,8 +37,8 @@ const clients = Object.entries(clientAssets)
 
 export default function Clients() {
   return (
-    <section id="clients" className="relative overflow-hidden bg-white py-24">
-      <div className="container-x mb-12 px-6 text-center">
+    <section id="clients" className="relative overflow-hidden bg-white border-t border-navy/5 py-10 sm:py-12 lg:py-14">
+      <div className="container-x mb-8 px-6 text-center">
         <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-sub text-sm uppercase tracking-[0.3em] text-gold">Trusted By</motion.p>
         <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl">
           Premium Clients & Strategic Partners
@@ -53,13 +53,13 @@ export default function Clients() {
           {clients.map((client, i) => (
             <motion.div
               key={client.name}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.08 }}
               className="group relative overflow-hidden rounded-lux border border-gray-200 bg-light-grey p-6 text-left transition-all duration-500 hover:-translate-y-1 hover:border-gold/40 hover:bg-white"
             >
-              <div className="mb-5 flex h-36 items-center justify-center rounded-2xl border border-gray-200 bg-white p-3 shadow-[0_10px_30px_rgba(0,0,0,0.08)] backdrop-blur-sm transition-all duration-500 group-hover:border-gold/40 group-hover:shadow-[0_18px_40px_rgba(0,0,0,0.12)] sm:h-40 lg:h-44">
+              <div className="mb-5 flex h-28 items-center justify-center rounded-2xl border border-gray-200 bg-white p-3 shadow-[0_10px_30px_rgba(0,0,0,0.08)] backdrop-blur-sm transition-all duration-500 group-hover:border-gold/40 group-hover:shadow-[0_18px_40px_rgba(0,0,0,0.12)] sm:h-32 lg:h-36">
                 <img
                   src={client.src}
                   alt={`${client.name} logo`}

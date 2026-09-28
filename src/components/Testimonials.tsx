@@ -21,10 +21,10 @@ export default function Testimonials() {
   }, [auto]);
 
   return (
-    <section id="testimonials" className="relative overflow-hidden bg-white py-32">
-      <div className="pointer-events-none absolute right-10 top-20 h-60 w-60 rounded-full bg-gold/5 blur-3xl animate-float-slow" />
+    <section id="testimonials" className="relative overflow-hidden bg-[#FBFAF6] border-t border-navy/5 py-12 sm:py-14 lg:py-16">
+      <div className="pointer-events-none absolute right-10 top-20 h-40 w-40 rounded-full bg-gold/5 blur-3xl animate-float-slow" />
       <div className="container-x relative px-6">
-        <div className="mx-auto mb-16 max-w-2xl text-center">
+        <div className="mx-auto mb-8 max-w-2xl text-center">
           <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-sub text-sm uppercase tracking-[0.3em] text-gold">Testimonials</motion.p>
           <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl xl:text-5xl">
             What Our Clients Say
@@ -35,11 +35,11 @@ export default function Testimonials() {
           <AnimatePresence mode="wait">
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -30 }}
+              exit={{ opacity: 0, y: -24 }}
               transition={{ duration: 0.5 }}
-              className="relative rounded-lux glass-light p-10 text-center luxury-shadow"
+              className="relative rounded-lux glass-light p-7 sm:p-8 text-center luxury-shadow"
             >
               <Quote className="mx-auto mb-6 h-10 w-10 text-gold" />
               <div className="mb-4 flex justify-center gap-1">
