@@ -4,7 +4,8 @@ import {
   SCHOOL_FURNITURE_IMAGES,
 } from './images';
 import { apiGet, apiPost, apiFormData } from './api';
-import { findProductAssetBySlug, findProductAssetByName } from './productAssetResolver';
+import { findLocalProductAsset, findProductAssetByUrl } from './productAssetResolver';
+import { FRONTEND_PUBLIC_CATEGORIES, FRONTEND_PUBLIC_PRODUCTS } from './frontendProductCatalog';
 import type {
   Category,
   Product,
@@ -32,12 +33,6 @@ export type {
   ContactPayload,
   AuthStatus,
 };
-
-function formatINR(n: number): string {
-  return '₹' + n.toLocaleString('en-IN');
-}
-
-/* Product data is loaded only from the PHP API and database. */
 
 const mockIndustries: Industry[] = [
   { id: '1', slug: 'government',   name: 'Government',   tagline: 'Trusted for government tenders', overview: 'OPCIEAS supports government departments, public sector undertakings, civic bodies, and defense-linked procurement programs with furniture that meets stringent tender specifications and institutional expectations. We engineer durable chairs, desks, storage systems, and seating solutions suited to offices, training centers, courts, and public facilities, with a strong focus on value, safety, and long-term maintenance. Our team understands the need for compliant documentation, predictable delivery schedules, and scalable manufacturing for large projects. From procurement-ready specifications to bulk production and installation support, OPCIEAS delivers dependable solutions for high-accountability environments. Every order is backed by quality assurance, customization flexibility, and experience working with public institutions that demand reliability, accountability, and on-time execution. Contact our team to discuss your next government furniture requirement.', hero_image: null, solutions: [{ title: 'Tender Ready', desc: 'Compliant products for government procurement.' }, { title: 'Bulk Manufacturing', desc: 'High volume production capability.' }, { title: 'Timely Delivery', desc: 'On-time execution of large projects.' }], certifications: ['ISO 9001:2015', 'NSIC', 'MSME'] },
@@ -78,37 +73,6 @@ function unwrap<T>(resp: any): T {
     return resp.data as T;
   }
   return resp as T;
-}
-
-function parseFeatures(raw: any): string[] {
-  if (!raw) return [];
-  if (Array.isArray(raw)) return raw as string[];
-  if (typeof raw === 'string') {
-    try {
-      const p = JSON.parse(raw);
-      return Array.isArray(p) ? p : [raw];
-    } catch {
-      return raw.split(/[,\n|]/).map((s) => s.trim()).filter(Boolean);
-    }
-  }
-  if (typeof raw === 'object') return Object.values(raw).map((v) => String(v));
-  return [];
-}
-
-function parseSpecs(raw: any): Record<string, string> {
-  if (!raw) return {};
-  if (typeof raw === 'string') {
-    try {
-      const p = JSON.parse(raw);
-      return typeof p === 'object' && p ? Object.fromEntries(Object.entries(p).map(([k, v]) => [k, String(v)])) : {};
-    } catch {
-      return { Details: raw };
-    }
-  }
-  if (typeof raw === 'object' && !Array.isArray(raw)) {
-    return Object.fromEntries(Object.entries(raw).map(([k, v]) => [k, String(v)]));
-  }
-  return {};
 }
 
 function normalizeCategory(raw: any): Category {
@@ -260,6 +224,67 @@ export function resolveCategoryFromSlug(slugOrName: string | null | undefined, s
   return candidateList.find((category) => normalizeCategorySlug(category.slug) === normalized || normalizeCategoryName(category.name).toLowerCase().includes(normalizeCategoryName(raw).toLowerCase())) || null;
 }
 
+export function productBelongsToCategory(
+  product: Pick<Product, 'category_id' | 'category_name' | 'category_slug'>,
+  category: Pick<Category, 'id' | 'name' | 'slug'>,
+): boolean {
+  const productCategoryId = String(product.category_id ?? '').trim();
+  const categoryId = String(category.id ?? '').trim();
+  const canonicalCategory = resolveCategoryFromSlug(category.slug || category.name);
+  const categorySlug = normalizeCategorySlug(canonicalCategory?.slug || category.slug || category.name);
+  const matchesCategory = (value?: string | null) => {
+    if (!value) return false;
+    const canonicalProductCategory = resolveCategoryFromSlug(value);
+    return normalizeCategorySlug(canonicalProductCategory?.slug || value) === categorySlug;
+  };
+
+  return (
+    (!!productCategoryId && !!categoryId && productCategoryId === categoryId) ||
+    matchesCategory(product.category_slug) ||
+    matchesCategory(product.category_name) ||
+    matchesCategory(productCategoryId)
+  );
+}
+
+export function productBelongsToSubcategory(
+  product: Pick<Product, 'name' | 'slug' | 'subcategory' | 'short_desc' | 'short_description' | 'description' | 'tags'>,
+  subcategory: string,
+): boolean {
+  const normalizeTerms = (value: string): string => normalizeCategorySlug(value)
+    .split('-')
+    .map((word) => {
+      if (/(sses|ches|shes|xes|zes)$/.test(word)) return word.slice(0, -2);
+      if (word.endsWith('ies') && word.length > 3) return `${word.slice(0, -3)}y`;
+      if (word.endsWith('s') && !/(ss|us|is)$/.test(word)) return word.slice(0, -1);
+      return word;
+    })
+    .join('-');
+
+  const target = normalizeTerms(subcategory);
+  if (!target) return false;
+
+  const tags = Array.isArray(product.tags)
+    ? product.tags.filter((tag): tag is string => typeof tag === 'string')
+    : typeof product.tags === 'string' ? [product.tags] : [];
+  const candidates = [
+    product.subcategory,
+    product.name,
+    product.slug,
+    product.short_desc,
+    product.short_description,
+    product.description,
+    ...tags,
+  ];
+
+  return candidates.some((value) => {
+    const candidate = normalizeTerms(String(value ?? ''));
+    return candidate === target ||
+      candidate.startsWith(`${target}-`) ||
+      candidate.includes(`-${target}-`) ||
+      candidate.endsWith(`-${target}`);
+  });
+}
+
 export function isCategoryVisible(category: { slug?: string; name?: string }): boolean {
   const slug = (category.slug ?? '').trim().toLowerCase();
   const name = (category.name ?? '').trim();
@@ -269,267 +294,33 @@ export function isCategoryVisible(category: { slug?: string; name?: string }): b
   return true;
 }
 
-function toNumber(value: any): number | null {
-  if (typeof value === 'number') return value;
-  if (typeof value === 'string') {
-    const trimmed = value.trim();
-    if (!trimmed) return null;
-    const parsed = Number(trimmed);
-    return Number.isFinite(parsed) ? parsed : null;
-  }
-  return null;
-}
-
-const configuredBackendBase = (
-  (import.meta as any).env?.VITE_BACKEND_URL ||
-  (import.meta as any).env?.VITE_API_URL?.replace(/\/api\/?$/, '') ||
-  (import.meta as any).env?.VITE_API_BASE_URL?.replace(/\/api\/?$/, '') ||
-  ''
-).replace(/\/$/, '');
-const isLocalBackend = /:\/\/(localhost|127\.0\.0\.1)(:\d+)?/i.test(configuredBackendBase);
-const BACKEND_BASE = ((import.meta as any).env?.PROD && isLocalBackend
-  ? 'https://api.opcieas.com'
-  : configuredBackendBase || ((import.meta as any).env?.PROD ? 'https://api.opcieas.com' : 'http://127.0.0.1:8000')).replace(/\/$/, '');
-
-export function resolveProductImage(value?: string | { image?: string | null; images?: any[]; gallery?: any[]; slug?: string; name?: string; category?: string; category_name?: string } | null): string | null {
+export function resolveProductImage(value?: string | {
+  slug?: string | null;
+  name?: string | null;
+  category?: string | null;
+  category_name?: string | null;
+  category_slug?: string | null;
+  image?: string | null;
+} | null): string | null {
   if (!value) return null;
 
   if (typeof value === 'object' && !Array.isArray(value)) {
-    const candidates = [
-      value.image,
-      ...(Array.isArray(value.images) ? value.images : []),
-      ...(Array.isArray(value.gallery) ? value.gallery : []),
-    ];
-
-    const localByName = value.name ? findProductAssetByName(String(value.name), (value.category ?? value.category_name ?? undefined)) : null;
-    if (localByName?.image) return localByName.image;
-
-    for (const candidate of candidates) {
-      const resolved = resolveProductImage(candidate as any);
-      if (resolved) return resolved;
-    }
-
-    if (value.slug) {
-      const match = findProductAssetBySlug(String(value.slug));
-      if (match?.image) return match.image;
-    }
-
-    if (value.name) {
-      const byName = findProductAssetByName(String(value.name), (value.category ?? value.category_name ?? undefined));
-      if (byName?.image) return byName.image;
-    }
-    return null;
+    if (value.image && findProductAssetByUrl(value.image)) return value.image;
+    return findLocalProductAsset({
+      name: value.name,
+      slug: value.slug,
+      category: value.category ?? value.category_name ?? value.category_slug,
+    })?.image ?? null;
   }
 
   const normalized = String(value).trim();
   if (!normalized) return null;
 
-  if (/^(https?:|data:|blob:)/i.test(normalized)) {
-    return normalized;
-  }
-
-  if (/^\/src\/assets\//i.test(normalized) || /^src\/assets\//i.test(normalized) || /^\.\.\/assets\//i.test(normalized) || /^\.\/assets\//i.test(normalized)) {
-    const fallbackName = normalized.split('/').pop()?.replace(/\.[^.]+$/, '') || normalized;
-    const resolvedFallback = findProductAssetByName(fallbackName);
-    return resolvedFallback?.image ?? null;
-  }
-
-  if (BACKEND_BASE && normalized.startsWith(BACKEND_BASE)) return normalized;
-
-  if (/^\/assets\//i.test(normalized)) {
-    return normalized;
-  }
-  if (/^assets\//i.test(normalized)) {
-    return `/${normalized}`;
-  }
-
-  if (/^uploads\//i.test(normalized) || /^\/uploads\//i.test(normalized)) {
-    const clean = normalized.replace(/^\/+/, '');
-    return BACKEND_BASE ? `${BACKEND_BASE}/${clean}` : `/${clean}`;
-  }
-
-  let path = normalized.replace(/^\/+/, '');
-  if (!path.includes('/')) {
-    path = `uploads/products/${path}`;
-  }
-
-  if (BACKEND_BASE) {
-    return `${BACKEND_BASE}/${path}`;
-  }
-
-  return `/${path}`;
-}
-
-function normalizeImageUrl(value: any): string | null {
-  let raw: string | null = null;
-  if (!value) return null;
-  if (typeof value === 'string') raw = value;
-  else if (typeof value === 'object') {
-    raw = value.image_url || value.image_path || value.url || null;
-  }
-  return resolveProductImage(raw);
-}
-
-function slugifyText(value: string): string {
-  return value
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-    || 'product';
-}
-
-function isPublicProduct(product: Product): boolean {
-  const searchable = `${product.name} ${product.slug}`.toLowerCase();
-  return !/(play equipment|playground|double slide|slide playground|basketball hoop|swing set|seesaw|merry-go-round)/.test(searchable);
-}
-
-function normalizeProduct(raw: any): Product {
-  const images: string[] = [];
-  if (raw.images && Array.isArray(raw.images)) {
-    for (const img of raw.images) {
-      const url = normalizeImageUrl(img);
-      if (url) images.push(url);
-    }
-  }
-  if (raw.gallery && Array.isArray(raw.gallery)) {
-    for (const g of raw.gallery) {
-      const url = normalizeImageUrl(g);
-      if (url) images.push(url);
-    }
-  }
-  const primaryImage =
-    normalizeImageUrl(raw.image) ||
-    normalizeImageUrl(raw.primary_image) ||
-    (raw.images && Array.isArray(raw.images) ? normalizeImageUrl(raw.images.find((i: any) => i?.is_primary)) : null) ||
-    images[0] ||
-    null;
-  const gallery = images.length ? images : (primaryImage ? [primaryImage] : []);
-
-  let priceRange: string | null = raw.price_range ?? null;
-  const price = toNumber(raw.price);
-  const discountPrice = toNumber(raw.discount_price);
-  if (!priceRange && (price !== null || discountPrice !== null)) {
-    const p = discountPrice ?? price;
-    const hi = price ?? discountPrice;
-    priceRange = p === hi ? formatINR(Number(p)) : `${formatINR(Number(p))} - ${formatINR(Number(hi))}`;
-  }
-
-  const category_id = raw.category_id != null ? String(raw.category_id) : null;
-  const dimensions = raw.dimensions && typeof raw.dimensions === 'string' ? (() => { try { return JSON.parse(raw.dimensions); } catch { return raw.dimensions; } })() : (raw.dimensions ?? null);
-  const specs = raw.specifications ?? raw.specs ?? {};
-  const supplyTypeRaw = raw.supply_type ?? raw.supplyType ?? ((typeof specs === 'object' && specs && 'Supply Type' in specs) ? specs['Supply Type'] : null);
-  const supplyType = supplyTypeRaw === 'PARTNER' || supplyTypeRaw === 'IN_HOUSE' ? supplyTypeRaw : (typeof supplyTypeRaw === 'string' ? (supplyTypeRaw.toUpperCase() === 'PARTNER' ? 'PARTNER' : (supplyTypeRaw.toUpperCase() === 'IN_HOUSE' ? 'IN_HOUSE' : null)) : null);
-  const exportAvailable = raw.export_available != null ? !!Number(raw.export_available) : !!(raw.export_availability ?? raw.exportApplicable ?? raw.export_applicable);
-
-  return {
-    id: String(raw.id ?? raw.product_id ?? ''),
-    seller_id: raw.seller_id != null ? String(raw.seller_id) : undefined,
-    category_id,
-    subcategory: raw.subcategory ?? raw.sub_category ?? null,
-    name: raw.name ?? '',
-    slug: raw.slug || slugifyText(String(raw.name ?? raw.title ?? `product-${raw.id ?? 'item'}`)),
-    sku: raw.sku ?? null,
-    short_desc: raw.short_desc ?? raw.short_description ?? null,
-    short_description: raw.short_description ?? raw.short_desc ?? null,
-    long_desc: raw.long_desc ?? raw.description ?? null,
-    description: raw.description ?? raw.long_desc ?? null,
-    key_features: Array.isArray(raw.key_features) ? raw.key_features : parseFeatures(raw.key_features ?? raw.features),
-    features: parseFeatures(raw.features ?? raw.key_features),
-    supply_type: supplyType,
-    specs: parseSpecs(specs),
-    specifications: specs,
-    dimensions,
-    material: raw.material ?? raw.materials_used ?? null,
-    materials_used: raw.materials_used ?? raw.material ?? null,
-    color: raw.color ?? null,
-    warranty_months: typeof raw.warranty_months === 'number' ? raw.warranty_months : null,
-    warranty_terms: raw.warranty_terms ?? raw.warranty ?? raw.warranty_policy ?? null,
-    packaging_specifications: raw.packaging_specifications ?? raw.packaging ?? null,
-    export_available: exportAvailable,
-    export_badge: raw.export_badge ?? 'Export Specifications & Paid Samples Available.',
-    weight: raw.weight ?? raw.product_weight ?? null,
-    variants: raw.variants ?? null,
-    tags: raw.tags ?? null,
-    min_order_quantity: typeof raw.min_order_quantity === 'number' ? raw.min_order_quantity : undefined,
-    max_order_quantity: typeof raw.max_order_quantity === 'number' ? raw.max_order_quantity : null,
-    unit: raw.unit ?? undefined,
-    price: price,
-    discount_price: discountPrice,
-    discount_percentage: typeof raw.discount_percentage === 'number' ? raw.discount_percentage : null,
-    tax_percentage: typeof raw.tax_percentage === 'number' ? raw.tax_percentage : 0,
-    stock_quantity: toNumber(raw.stock_quantity) ?? undefined,
-    availability_status: raw.availability_status ?? undefined,
-    is_approved: !!raw.is_approved,
-    approved_at: raw.approved_at ?? null,
-    approved_by: raw.approved_by != null ? String(raw.approved_by) : null,
-    featured: !!(raw.featured ?? raw.is_featured),
-    is_featured: !!(raw.is_featured ?? raw.featured),
-    is_new_arrival: !!raw.is_new_arrival,
-    is_best_seller: !!raw.is_best_seller,
-    rating: typeof raw.rating === 'number' ? raw.rating : undefined,
-    total_reviews: typeof raw.total_reviews === 'number' ? raw.total_reviews : undefined,
-    total_views: typeof raw.total_views === 'number' ? raw.total_views : undefined,
-    total_orders: typeof raw.total_orders === 'number' ? raw.total_orders : undefined,
-    status: raw.status ?? undefined,
-    meta_title: raw.meta_title ?? null,
-    meta_description: raw.meta_description ?? null,
-    image: primaryImage,
-    gallery,
-    price_range: priceRange,
-    created_at: raw.created_at ?? new Date().toISOString(),
-    updated_at: raw.updated_at ?? undefined,
-  };
+  return findProductAssetByUrl(normalized)?.image ?? null;
 }
 
 export async function fetchCategories(): Promise<Category[]> {
-  try {
-    const resp = await apiGet<any>('/categories/list.php');
-    const items: any[] = unwrap<any[]>(resp) || [];
-    if (Array.isArray(items)) {
-      return items
-        .map((item) => canonicalizeCategory(normalizeCategory(item)))
-        .filter((category): category is Category => !!category && isCategoryVisible(category));
-    }
-  } catch {
-    console.warn('[fetchCategories] API unavailable, returning canonical frontend category fallback');
-    return CANONICAL_CATEGORIES.filter((c) => isCategoryVisible({ slug: c.slug, name: c.name })).map((category) => ({
-      id: String(category.id),
-      parent_id: null,
-      name: category.name,
-      slug: category.slug,
-      description: null,
-      tagline: null,
-      image: null,
-      banner_image: null,
-      icon: null,
-      sort_order: Number(category.id),
-      is_featured: false,
-      status: 'active',
-      meta_title: null,
-      meta_description: null,
-      created_at: undefined,
-      updated_at: undefined,
-    }));
-  }
-  return CANONICAL_CATEGORIES.filter((c) => isCategoryVisible({ slug: c.slug, name: c.name })).map((category) => ({
-    id: String(category.id),
-    parent_id: null,
-    name: category.name,
-    slug: category.slug,
-    description: null,
-    tagline: null,
-    image: null,
-    banner_image: null,
-    icon: null,
-    sort_order: Number(category.id),
-    is_featured: false,
-    status: 'active',
-    meta_title: null,
-    meta_description: null,
-    created_at: undefined,
-    updated_at: undefined,
-  }));
+  return FRONTEND_PUBLIC_CATEGORIES;
 }
 
 export async function fetchCategory(slug: string): Promise<Category | null> {
@@ -561,79 +352,22 @@ export async function fetchCategory(slug: string): Promise<Category | null> {
 }
 
 export async function fetchProducts(categoryId?: string, categorySlug?: string): Promise<Product[]> {
-  try {
-    const products: Product[] = [];
-    let page = 1;
-    let hasNext = true;
-
-    while (hasNext) {
-      const params: Record<string, any> = { status: 'Published', limit: 500, page };
-      if (categorySlug) {
-        params.category_slug = categorySlug;
-      } else if (categoryId) {
-        params.category_id = categoryId;
-      }
-      const resp = await apiGet<any>('/products/list.php', params);
-      const items: any[] = unwrap<any[]>(resp) || [];
-      if (!Array.isArray(items)) break;
-      products.push(...items.map(normalizeProduct));
-      hasNext = !!resp?.pagination?.has_next && items.length > 0;
-      page += 1;
-    }
-    const publicProducts = products.filter(isPublicProduct);
-    return publicProducts;
-  } catch (e) {
-    console.error('Products API error:', e);
-    throw e;
+  if (categorySlug) {
+    const targetSlug = normalizeCategorySlug(categorySlug);
+    return FRONTEND_PUBLIC_PRODUCTS.filter((product) => normalizeCategorySlug(product.category_slug) === targetSlug);
   }
+  if (categoryId) {
+    return FRONTEND_PUBLIC_PRODUCTS.filter((product) => product.category_id === String(categoryId));
+  }
+  return FRONTEND_PUBLIC_PRODUCTS;
 }
 
 export async function fetchProduct(slug: string): Promise<Product | null> {
   const normalizedSlug = String(slug || '').trim();
   if (!normalizedSlug) return null;
-
-  try {
-    const resp = await apiGet<any>('/products/get.php', { slug: normalizedSlug });
-    const raw = unwrap<any>(resp);
-    if (raw && (raw.id || raw.slug)) {
-      return normalizeProduct(raw);
-    }
-
-    if (/^\d+$/.test(normalizedSlug)) {
-      const byId = await apiGet<any>('/products/get.php', { id: Number(normalizedSlug) });
-      const rawById = unwrap<any>(byId);
-      if (rawById && (rawById.id || rawById.slug)) {
-        return normalizeProduct(rawById);
-      }
-    }
-
-    const products = await fetchProducts();
-    const fallback = products.find((product) => product.slug === normalizedSlug || product.id === normalizedSlug);
-    if (fallback) return fallback;
-  } catch (e) {
-    if (/^\d+$/.test(normalizedSlug)) {
-      try {
-        const byId = await apiGet<any>('/products/get.php', { id: Number(normalizedSlug) });
-        const rawById = unwrap<any>(byId);
-        if (rawById && (rawById.id || rawById.slug)) {
-          return normalizeProduct(rawById);
-        }
-      } catch {
-        // fall through to null
-      }
-    }
-    try {
-      const products = await fetchProducts();
-      const fallback = products.find((product) => product.slug === normalizedSlug || product.id === normalizedSlug);
-      if (fallback) return fallback;
-    } catch {
-      // fall through to null
-    }
-    console.error('[fetchProduct] API fetch failed for slug=' + normalizedSlug, e);
-    return null;
-  }
-
-  return null;
+  return FRONTEND_PUBLIC_PRODUCTS.find((product) =>
+    product.slug === normalizedSlug || product.id === normalizedSlug
+  ) ?? null;
 }
 
 export async function fetchFeaturedProducts(): Promise<Product[]> {

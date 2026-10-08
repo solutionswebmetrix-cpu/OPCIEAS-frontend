@@ -208,7 +208,7 @@ export default function FurniturePage() {
             </div>
             <div className="mt-14 border-t border-white/15 pt-12">
               <h3 className="font-heading text-2xl font-bold">State-of-the-Art Infrastructure</h3>
-              <p className="mt-3 max-w-3xl font-body text-base leading-7 text-white/75">Our integrated Bengaluru facility is equipped to handle large-scale commercial contracts with precision:</p>
+              <p className="mt-3 max-w-3xl font-body text-base leading-7 text-white/75">Our integrated Bengaluru facility at 560 076 is equipped to handle large-scale commercial contracts with precision:</p>
               <div className="mt-8 grid gap-5 md:grid-cols-3">
                 {infrastructure.map(([title, description, Icon]) => (
                   <article key={title} className="border border-white/15 p-6">

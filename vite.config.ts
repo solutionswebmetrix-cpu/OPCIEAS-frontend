@@ -3,14 +3,14 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
-  const backendUrl =
-    env.VITE_BACKEND_URL ||
-    env.VITE_API_URL?.replace(/\/api\/?$/, '') ||
-    (mode === 'development' && env.VITE_API_URL?.startsWith('/') ? 'http://localhost:8000' : '');
+  const backendUrl = env.VITE_API_URL
+    ? env.VITE_API_URL.trim().replace(/\/api\/?$/i, '').replace(/\/+$/, '')
+    : (mode === 'development' ? 'http://127.0.0.1:8000' : '');
 
   return {
     base: '/',
     plugins: [react()],
+    assetsInclude: ['**/*.{PNG,JPG,JPEG,WEBP,AVIF}'],
     optimizeDeps: {
       exclude: ['lucide-react'],
     },

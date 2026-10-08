@@ -7,8 +7,8 @@ import SectionBanner from '../components/SectionBanner';
 import ProductCard from '../components/ProductCard';
 import InquiryForm from '../components/InquiryForm';
 import { CATEGORY_BANNERS, CANONICAL_CATEGORIES, type CanonicalCategoryName } from '../lib/images';
-import { fetchCategories, fetchProducts, resolveCategoryFromSlug, normalizeCategorySlug, normalizeCategoryName, type Product, type Category } from '../lib/data';
-import { getEducationalAssets } from '../lib/productAssetResolver';
+import { fetchCategories, fetchProducts, isCategoryVisible, productBelongsToCategory, productBelongsToSubcategory, resolveCategoryFromSlug, normalizeCategorySlug, type Product, type Category } from '../lib/data';
+import { getCategorySubcategoryAsset } from '../lib/productAssetResolver';
 
 const categoryContent: Record<string, { overview: string; highlights: string[]; accessories?: string[]; specs: Array<{ label: string; value: string }>; gallery: string[]; cta: string[] }> = {
   'office-furniture': {
@@ -66,12 +66,12 @@ const categoryContent: Record<string, { overview: string; highlights: string[]; 
   },
   'industrial-storage': {
     overview: 'Heavy-duty warehouse and industrial storage racks, shelves, lockers and cabinets with high load capacity and export finish.',
-    highlights: ['Warehouse Rack', 'Industrial Rack', 'Heavy-Duty Rack', 'Slotted Angle Rack', 'Pallet Rack', 'Long Span Shelving', 'SS Detachable Wire Racks', 'SS Wire Rack', 'Steel Locker'],
+    highlights: ['Warehouse Rack', 'Industrial Rack', 'Heavy-Duty Rack', 'Slotted Angle Rack', 'Pallet Rack', 'Long Span Shelving', 'SS Detachable Wire Rack', 'Steel Locker'],
     specs: [
       { label: 'Applications', value: 'Warehouses, factories, godowns, retail storage, offices and industrial yards' },
-      { label: 'Build', value: 'Mild steel / SS, powder-coated or galvanized finish, boltless / bolted assembly' },
-      { label: 'Capacity', value: '200 kg – 2000 kg / shelf depending on model, custom heights and widths available' },
-      { label: 'SS Detachable Wire Racks', value: 'Medium Duty • Loading Capacity 200 Kg per Level • Size H72" × W36" × D18"' },
+      { label: 'Build', value: 'Premium SUS 304 stainless steel wire, modular detachable construction, durable rust-proof finish' },
+      { label: 'Capacity', value: '150 kg per level' },
+      { label: 'SS Detachable Wire Rack', value: 'Material: Premium SUS 304 Stainless Steel • Wire Gauges: 6.0 mm / 5.0 mm / 4.5 mm / 3.5 mm • Finish: High-gloss chrome plating, electro-polishing, protective coating' },
       { label: 'Customization', value: 'Custom dimensions and tailored configurations available upon request.' },
     ],
     gallery: ['Warehouse rack aisles', 'Factory storage installation', 'Heavy-duty lockers & cabinets'],
@@ -102,37 +102,11 @@ const categoryContent: Record<string, { overview: string; highlights: string[]; 
   },
 };
 
-const fallbackCategories: Pick<Category, 'id' | 'name' | 'slug'>[] = CANONICAL_CATEGORIES.map((category) => ({
+const fallbackCategories: Pick<Category, 'id' | 'name' | 'slug'>[] = CANONICAL_CATEGORIES.filter((category) => isCategoryVisible(category)).map((category) => ({
   id: category.id,
   name: category.name,
   slug: category.slug,
 }));
-
-function normalizeCategoryValue(value: unknown): string {
-  return String(value ?? '')
-    .trim()
-    .toLowerCase()
-    .replace(/&/g, 'and')
-    .replace(/[_\s]+/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/^-+|-+$/g, '');
-}
-
-function productBelongsToCategory(product: Product, category: Pick<Category, 'id' | 'name' | 'slug'>): boolean {
-  const productCategoryId = String(product.category_id ?? '').trim();
-  const categoryId = String(category.id ?? '').trim();
-  const categorySlug = normalizeCategoryValue(category.slug ?? '');
-  const categoryName = normalizeCategoryValue(category.name ?? '');
-
-  const productCategorySlug = normalizeCategoryValue((product as any).category_slug ?? (product as any).categorySlug ?? (product as any).category?.slug ?? '');
-  const productCategoryName = normalizeCategoryValue((product as any).category_name ?? (product as any).categoryName ?? (product as any).category?.name ?? '');
-
-  return (
-    (!!productCategoryId && !!categoryId && productCategoryId === categoryId) ||
-    (!!productCategorySlug && !!categorySlug && (productCategorySlug === categorySlug || productCategorySlug.includes(categorySlug) || categorySlug.includes(productCategorySlug))) ||
-    (!!productCategoryName && !!categoryName && (productCategoryName === categoryName || productCategoryName.includes(categoryName) || categoryName.includes(productCategoryName)))
-  );
-}
 
 export default function ProductCategoryPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -140,14 +114,14 @@ export default function ProductCategoryPage() {
   const [apiProducts, setApiProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Pick<Category, 'id' | 'name' | 'slug'>[]>(fallbackCategories);
   const [loading, setLoading] = useState(true);
-  const [loadError, setLoadError] = useState(false);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [search, setSearch] = useState('');
   const [sort, setSort] = useState('newest');
   const requestedSubcategory = (searchParams.get('subcategory') ?? '').trim();
 
   const loadData = async () => {
     setLoading(true);
-    setLoadError(false);
+    setLoadError(null);
 
     try {
       const categoryList = await fetchCategories().catch(() => fallbackCategories);
@@ -180,6 +154,7 @@ export default function ProductCategoryPage() {
         } catch (loadError) {
           console.error('[CategoryPage] full product list fetch failed:', loadError);
           selectedProducts = [];
+          setLoadError(loadError instanceof Error ? loadError.message : String(loadError));
         }
       }
 
@@ -187,7 +162,7 @@ export default function ProductCategoryPage() {
       setLoading(false);
     } catch (error) {
       console.error('[CategoryPage] product loading failed:', error);
-      setLoadError(true);
+      setLoadError(error instanceof Error ? error.message : String(error));
       setApiProducts([]);
       setCategories(fallbackCategories);
       setLoading(false);
@@ -215,12 +190,7 @@ export default function ProductCategoryPage() {
     if (!cat) return [] as Product[];
     let products = [...apiProducts];
     if (requestedSubcategory) {
-      const subcategoryKey = normalizeCategorySlug(requestedSubcategory);
-      products = products.filter((product) => {
-        const productSubcategory = normalizeCategorySlug(product.subcategory ?? product.short_desc ?? product.description ?? '');
-        const productTags = Array.isArray(product.tags) ? product.tags.map((tag) => normalizeCategorySlug(String(tag))).join(' ') : normalizeCategorySlug(String(product.tags ?? ''));
-        return !productSubcategory || productSubcategory.includes(subcategoryKey) || productTags.includes(subcategoryKey) || normalizeCategoryName(product.subcategory ?? product.short_desc ?? product.description ?? '').toLowerCase() === requestedSubcategory.toLowerCase();
-      });
+      products = products.filter((product) => productBelongsToSubcategory(product, requestedSubcategory));
     }
     return products;
   }, [apiProducts, cat, requestedSubcategory]);
@@ -230,9 +200,17 @@ export default function ProductCategoryPage() {
     const q = search.toLowerCase();
     filtered = filtered.filter((product) => {
       const categoryName = categoryList.find((category) => category.id === String(product.category_id ?? ''))?.name ?? '';
-      return product.name.toLowerCase().includes(q) ||
-        (product.short_desc || '').toLowerCase().includes(q) ||
-        categoryName.toLowerCase().includes(q);
+      const searchable = [
+        product.name,
+        product.slug,
+        product.subcategory,
+        product.short_desc,
+        product.description,
+        categoryName,
+        ...(Array.isArray(product.tags) ? product.tags : []),
+        ...(Array.isArray(product.features) ? product.features : []),
+      ].filter((value): value is string => typeof value === 'string');
+      return searchable.some((value) => value.toLowerCase().includes(q));
     });
   }
   if (sort === 'name') filtered = [...filtered].sort((a, b) => a.name.localeCompare(b.name));
@@ -254,45 +232,16 @@ export default function ProductCategoryPage() {
     );
   }
 
-  if (loadError && apiProducts.length === 0) {
-    return (
-      <div className="flex min-h-screen flex-col items-center justify-center bg-white px-6 text-center">
-        <p className="font-heading text-2xl font-bold text-navy">Unable to load products</p>
-        <p className="mt-2 font-body text-sm text-navy/60">Please try again shortly.</p>
-        <Link to="/products" className="mt-4 rounded-full bg-gold px-6 py-2 font-sub text-sm text-navy">View All Products</Link>
-      </div>
-    );
-  }
-
   const bannerImage = CATEGORY_BANNERS[cat.name as CanonicalCategoryName] || categoryProducts[0]?.image || '';
   const content = categoryContent[cat.slug] || null;
 
-  const educationalCards = [
-    {
-      name: 'KG Classes',
-      description: 'Safe • Durable • Colourful',
-      image: getEducationalAssets('KG Classes', 1)[0]?.image ?? '',
-      to: '/products/category/educational-furniture?subcategory=kg-classes',
-    },
-    {
-      name: 'Primary',
-      description: 'Smart • Strong • Ergonomic',
-      image: getEducationalAssets('Primary', 1)[0]?.image ?? '',
-      to: '/products/category/educational-furniture?subcategory=primary',
-    },
-    {
-      name: 'High School',
-      description: 'Smart • Strong • Ergonomic',
-      image: getEducationalAssets('High School', 1)[0]?.image ?? '',
-      to: '/products/category/educational-furniture?subcategory=high-school',
-    },
-    {
-      name: 'Colleges & Higher Education',
-      description: 'Durable Institutional Solutions',
-      image: getEducationalAssets('Colleges & Higher Education', 1)[0]?.image ?? '',
-      to: '/products/category/educational-furniture?subcategory=colleges-higher-education',
-    },
-  ];
+  const subcategoryCards = cat
+    ? (content?.highlights ?? [])
+        .map((name) => {
+          const asset = getCategorySubcategoryAsset(cat.name, name);
+          return { name, image: asset?.image ?? null, slug: normalizeCategorySlug(name) };
+        })
+    : [];
 
   return (
     <>
@@ -303,7 +252,7 @@ export default function ProductCategoryPage() {
         canonical={`https://www.opcieascommercialfurniture.com/products/category/${cat.slug}`}
         schema={{ '@context': 'https://schema.org', '@type': 'Product', name: cat.name, description: `Premium ${cat.name} from OPCIEAS` }}
       />
-      <SectionBanner title={cat.name} tagline={`${categoryProducts.length} product${categoryProducts.length !== 1 ? 's' : ''}`} image={bannerImage} crumb={cat.name} crumbTo={`/products/category/${cat.slug}`} />
+      <SectionBanner title={cat.name} tagline={loadError ? 'Product data unavailable' : `${categoryProducts.length} product${categoryProducts.length !== 1 ? 's' : ''}`} image={bannerImage} crumb={cat.name} crumbTo={`/products/category/${cat.slug}`} />
 
       <section className="bg-white py-20">
         <div className="container-x px-6">
@@ -349,24 +298,29 @@ export default function ProductCategoryPage() {
             </motion.div>
           )}
 
-          {cat.slug === 'educational-furniture' && (
+          {subcategoryCards.length > 0 && (
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
               <div className="mb-6 flex items-center justify-between gap-4">
                 <div>
-                  <p className="font-sub text-xs uppercase tracking-[0.35em] text-gold">Educational Furniture</p>
-                  <h3 className="mt-2 font-heading text-2xl font-black text-navy">KG Classes → Primary → High School → Colleges & Higher Education</h3>
+                  <p className="font-sub text-xs uppercase tracking-[0.35em] text-gold">{cat.name}</p>
+                  <h3 className="mt-2 font-heading text-2xl font-black text-navy">Explore Subcategories</h3>
                 </div>
               </div>
               <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-                {educationalCards.map((card) => (
-                  <Link key={card.name} to={card.to} className="group overflow-hidden rounded-lux border border-navy/10 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-md">
+                {subcategoryCards.map((card) => (
+                  <Link key={card.name} to={`/products/category/${cat.slug}?subcategory=${encodeURIComponent(card.slug)}`} className="group overflow-hidden rounded-lux border border-navy/10 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-md">
                     <div className="relative h-56 overflow-hidden">
-                      <img src={card.image} alt={card.name} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+                      {card.image ? (
+                        <img src={card.image} alt={card.name} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+                      ) : (
+                        <div role="img" aria-label={`Image unavailable for ${card.name}`} className="flex h-full w-full items-center justify-center bg-navy/5 font-sub text-xs text-navy/50">
+                          Image unavailable
+                        </div>
+                      )}
                     </div>
                     <div className="p-5">
-                      <p className="font-sub text-[10px] uppercase tracking-[0.26em] text-gold">Academic Stage</p>
+                      <p className="font-sub text-[10px] uppercase tracking-[0.26em] text-gold">Subcategory</p>
                       <h4 className="mt-3 font-heading text-xl font-black text-navy">{card.name}</h4>
-                      <p className="mt-2 font-body text-sm text-navy/70">{card.description}</p>
                       <span className="mt-4 inline-flex items-center gap-2 font-sub text-xs font-semibold uppercase tracking-[0.18em] text-gold">
                         Explore Products <ArrowRight className="h-3.5 w-3.5" />
                       </span>
@@ -418,9 +372,14 @@ export default function ProductCategoryPage() {
             <Link to="/contact" className="ml-1 font-semibold text-gold underline underline-offset-2">Request On-Demand Catalogue</Link>
           </div>
 
-          <p className="mb-6 font-sub text-sm text-navy/50">{filtered.length} product(s) found</p>
-
-          {filtered.length === 0 ? (
+          {loadError ? (
+            <p role="alert" className="mb-6 rounded-lux border border-navy/10 bg-navy/5 px-4 py-3 font-body text-sm text-navy/70">
+              Product data could not be loaded from the configured API: {loadError}
+            </p>
+          ) : (
+            <>
+              <p className="mb-6 font-sub text-sm text-navy/50">{filtered.length} product(s) found</p>
+              {filtered.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-20 text-center">
               <Boxes className="mb-4 h-12 w-12 text-navy/20" />
               <p className="font-sub text-sm text-navy/50">No products found in this category.</p>
@@ -428,12 +387,14 @@ export default function ProductCategoryPage() {
                 Browse All Products <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </div>
-          ) : (
+              ) : (
             <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
               {filtered.map((product, index) => (
                 <ProductCard key={product.id || `${product.slug}-${index}`} product={product} index={index} categorySlug={cat.slug} />
               ))}
             </div>
+              )}
+            </>
           )}
         </div>
       </section>

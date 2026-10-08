@@ -83,6 +83,8 @@ export interface Product {
   id: string;
   seller_id?: string;
   category_id: string | null;
+  category_name?: string | null;
+  category_slug?: string | null;
   subcategory?: string | null;
   name: string;
   slug: string;

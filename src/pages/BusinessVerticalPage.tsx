@@ -56,6 +56,7 @@ export default function BusinessVerticalPage() {
     if (!vertical) return [] as Product[];
 
     const targetIds = new Set(vertical.categoryIds.map((id) => String(id)));
+    if (slugKey === 'fiberglass-special-order') targetIds.add('fiberglass-special-order');
     const targetNames = new Set(verticalCategoriesSummary(slugKey).map((name) => name.toLowerCase()));
     const patterns = (vertical as any).namePatterns as readonly string[] | undefined;
 

@@ -42,7 +42,7 @@ export const BUSINESS_VERTICALS = {
     categorySlugs: ['industrial-storage', 'bathroom-collection', 'letter-boxes'],
     categoryIds: categorySlugsToIds(['industrial-storage', 'bathroom-collection', 'letter-boxes']),
     overview: 'Industrial racks, lockers, cabinets, bathroom storage and letter boxes — direct-manufactured steel and SS for every sector.',
-    highlights: ['Warehouse Racks', 'Pallet & Long Span', 'Steel Lockers', 'SS Wire Racks', 'Bathroom Storage', 'Letter Boxes'],
+    highlights: ['Warehouse Racks', 'Pallet & Long Span', 'Steel Lockers', 'SS Detachable Wire Rack', 'Bathroom Storage', 'Letter Boxes'],
   },
   'fiberglass-special-order': {
     name: 'Fiberglass / Special Order',

@@ -1,5 +1,6 @@
 
 export const CANONICAL_CATEGORIES = [
+  { id: '1', slug: 'office-furniture',       name: 'Office Furniture'       },
   { id: '2', slug: 'educational-furniture',  name: 'Educational Furniture'  },
   { id: '3', slug: 'school-furniture',       name: 'School Furniture'       },
   { id: '5', slug: 'hostel-furniture',       name: 'Hostel Furniture'       },
@@ -133,6 +134,13 @@ function lookupStrictOverride(rawName: string): CanonicalCategoryName | null {
 }
 
 const CATEGORY_KEYWORDS: Record<CanonicalCategoryName, string[]> = {
+  'Office Furniture': [
+    'office desk','executive desk','workstation','conference table','reception table',
+    'office chair','executive chair','computer table','computer desk','filing cabinet',
+    'pedestal','storage cupboard','bookshelf','office table','manager table',
+    'boardroom table','office cabinet','modular workstation','meeting table',
+    'office locker','office rack','office storage','office furniture',
+  ],
   'Educational Furniture': [
     'library table','library chair','library rack','reading table','reading chair',
     'laboratory table','laboratory stool','lab bench','science table',
@@ -285,8 +293,8 @@ export function resolveCategoryByPath(path: string, fallback: CanonicalCategoryN
 }
 
 const folderNameToCategory: Record<string, CanonicalCategoryName> = {
-  'office': 'Educational Furniture',
-  'office furniture': 'Educational Furniture',
+  'office': 'Office Furniture',
+  'office furniture': 'Office Furniture',
   'educational': 'Educational Furniture',
   'educational furniture': 'Educational Furniture',
   'school': 'School Furniture',
@@ -438,10 +446,11 @@ function getBannerOrDefault(preferredNames: string[], fallback: string): string 
 
 const firstImg = PRODUCT_IMAGE_GROUPS[0]?.image || Object.values(bannerAssetModules)[0] || '';
 
+const OfficeFurnitureImg      = getBannerOrDefault(['Office Furniture'], firstImg);
 const EducationalFurnitureImg = getBannerOrDefault(['Educational Furniture'], firstImg);
 const SchoolFurnitureImg      = getBannerOrDefault(['School Furniture'], firstImg);
 const HostelFurnitureImg      = getBannerOrDefault(['Hostel Furniture'], firstImg);
-const IndustrialStorageImg    = getBannerOrDefault(['Industrial Storage','Warehouse Racks','SS Wire Racks'], firstImg);
+const IndustrialStorageImg    = getBannerOrDefault(['Industrial Storage','Warehouse Racks','SS Detachable Wire Rack'], firstImg);
 const BathroomStorageImg     = getBannerOrDefault(['Bathroom Storage'], firstImg);
 const LetterBoxesImg          = getBannerOrDefault(['Letter Boxes'], firstImg);
 const AuditoriumChairsImg     = getBannerOrDefault(['Auditorium Chairs'], firstImg);
@@ -510,10 +519,11 @@ const REAL_BATHROOM_COUNT = BATHROOM_POOL.length;
 const REAL_LETTERBOX_COUNT = LETTERBOX_POOL.length;
 
 export const PRODUCT_ASSETS: Record<CanonicalCategoryName, { img: string; count: number }> = {
-  'Educational Furniture': { img: EDUCATIONAL_POOL[0]?.image || EducationalFurnitureImg, count: REAL_EDUCATIONAL_COUNT },
-  'School Furniture':      { img: SCHOOL_POOL[0]?.image || SchoolFurnitureImg,      count: REAL_SCHOOL_COUNT },
-  'Hostel Furniture':      { img: HOSTEL_POOL[0]?.image || HostelFurnitureImg,      count: REAL_HOSTEL_COUNT },
-  'Industrial Storage':    { img: INDUSTRIAL_POOL[0]?.image || IndustrialStorageImg, count: REAL_INDUSTRIAL_COUNT },
+  'Office Furniture':      { img: OfficeFurnitureImg,                               count: 0 },
+  'Educational Furniture':  { img: EDUCATIONAL_POOL[0]?.image || EducationalFurnitureImg, count: REAL_EDUCATIONAL_COUNT },
+  'School Furniture':       { img: SCHOOL_POOL[0]?.image || SchoolFurnitureImg,      count: REAL_SCHOOL_COUNT },
+  'Hostel Furniture':       { img: HOSTEL_POOL[0]?.image || HostelFurnitureImg,      count: REAL_HOSTEL_COUNT },
+  'Industrial Storage':     { img: INDUSTRIAL_POOL[0]?.image || IndustrialStorageImg, count: REAL_INDUSTRIAL_COUNT },
   'Bathroom Collection':   { img: BATHROOM_POOL[0]?.image || BathroomStorageImg,   count: REAL_BATHROOM_COUNT },
   'Letter Box':            { img: LETTERBOX_POOL[0]?.image || LetterBoxesImg,       count: REAL_LETTERBOX_COUNT },
 };
@@ -524,17 +534,41 @@ const EDUCATIONAL_POOL_COPY = [...EDUCATIONAL_POOL];
 const HOSTEL_POOL_COPY = [...HOSTEL_POOL];
 
 export const SCHOOL_FURNITURE_IMAGES: Record<string, { image: string; gallery: string[] }> = {
-  'library-table':        { image: UNIQUE.take(EDUCATIONAL_POOL_COPY) || SchoolFurnitureImg,      gallery: UNIQUE.takeN(EDUCATIONAL_POOL_COPY, 3) },
-  'classroom-furniture':  { image: UNIQUE.take(SCHOOL_POOL_COPY) || SchoolFurnitureImg,           gallery: UNIQUE.takeN(SCHOOL_POOL_COPY, 3) },
-  'student-desk':         { image: UNIQUE.take(SCHOOL_POOL_COPY) || SchoolFurnitureImg,           gallery: UNIQUE.takeN(SCHOOL_POOL_COPY, 3) },
-  'student-chair':        { image: UNIQUE.take(SCHOOL_POOL_COPY) || SchoolFurnitureImg,           gallery: UNIQUE.takeN(SCHOOL_POOL_COPY, 3) },
-  'teacher-table':        { image: UNIQUE.take(EDUCATIONAL_POOL_COPY) || EducationalFurnitureImg, gallery: UNIQUE.takeN(EDUCATIONAL_POOL_COPY, 3) },
-  'teacher-chair':        { image: UNIQUE.take(EDUCATIONAL_POOL_COPY) || EducationalFurnitureImg, gallery: UNIQUE.takeN(EDUCATIONAL_POOL_COPY, 3) },
-  'laboratory-furniture': { image: UNIQUE.take(EDUCATIONAL_POOL_COPY) || EducationalFurnitureImg, gallery: UNIQUE.takeN(EDUCATIONAL_POOL_COPY, 3) },
-  'library-furniture':    { image: UNIQUE.take(EDUCATIONAL_POOL_COPY) || EducationalFurnitureImg, gallery: UNIQUE.takeN(EDUCATIONAL_POOL_COPY, 3) },
-  'book-rack':            { image: UNIQUE.take(EDUCATIONAL_POOL_COPY) || EducationalFurnitureImg, gallery: UNIQUE.takeN(EDUCATIONAL_POOL_COPY, 3) },
-  'storage-cabinet':      { image: UNIQUE.take(HOSTEL_POOL_COPY) || HostelFurnitureImg,           gallery: UNIQUE.takeN(HOSTEL_POOL_COPY, 3) },
-  'display-rack':         { image: UNIQUE.take(EDUCATIONAL_POOL_COPY) || EducationalFurnitureImg, gallery: UNIQUE.takeN(EDUCATIONAL_POOL_COPY, 3) },
+  'school-furniture':       { image: SCHOOL_POOL[0]?.image || SchoolFurnitureImg,      gallery: SCHOOL_POOL.slice(0, 3).map((entry) => entry.image) || [SchoolFurnitureImg] },
+  'student-desk':           { image: UNIQUE.take(SCHOOL_POOL_COPY) || SchoolFurnitureImg,           gallery: UNIQUE.takeN(SCHOOL_POOL_COPY, 3) },
+  'student-chair':          { image: UNIQUE.take(SCHOOL_POOL_COPY) || SchoolFurnitureImg,           gallery: UNIQUE.takeN(SCHOOL_POOL_COPY, 3) },
+  'dual-desk':              { image: UNIQUE.take(SCHOOL_POOL_COPY) || SchoolFurnitureImg,           gallery: UNIQUE.takeN(SCHOOL_POOL_COPY, 3) },
+  'teacher-table':          { image: UNIQUE.take(SCHOOL_POOL_COPY) || SchoolFurnitureImg,           gallery: UNIQUE.takeN(SCHOOL_POOL_COPY, 3) },
+  'teacher-chair':          { image: UNIQUE.take(SCHOOL_POOL_COPY) || SchoolFurnitureImg,           gallery: UNIQUE.takeN(SCHOOL_POOL_COPY, 3) },
+  'kids-nursery-furniture': { image: UNIQUE.take(SCHOOL_POOL_COPY) || SchoolFurnitureImg,           gallery: UNIQUE.takeN(SCHOOL_POOL_COPY, 3) },
+  'activity-table':          { image: UNIQUE.take(SCHOOL_POOL_COPY) || SchoolFurnitureImg,           gallery: UNIQUE.takeN(SCHOOL_POOL_COPY, 3) },
+  'classroom-seating':      { image: UNIQUE.take(SCHOOL_POOL_COPY) || SchoolFurnitureImg,           gallery: UNIQUE.takeN(SCHOOL_POOL_COPY, 3) },
+};
+
+export const EDUCATIONAL_FURNITURE_IMAGES: Record<string, { image: string; gallery: string[] }> = {
+  'educational-furniture': { image: EDUCATIONAL_POOL[0]?.image || EducationalFurnitureImg, gallery: EDUCATIONAL_POOL.slice(0, 3).map((entry) => entry.image) || [EducationalFurnitureImg] },
+  'kg-classes':            { image: UNIQUE.take(EDUCATIONAL_POOL_COPY) || EducationalFurnitureImg, gallery: UNIQUE.takeN(EDUCATIONAL_POOL_COPY, 3) },
+  'primary':               { image: UNIQUE.take(EDUCATIONAL_POOL_COPY) || EducationalFurnitureImg, gallery: UNIQUE.takeN(EDUCATIONAL_POOL_COPY, 3) },
+  'high-school':           { image: UNIQUE.take(EDUCATIONAL_POOL_COPY) || EducationalFurnitureImg, gallery: UNIQUE.takeN(EDUCATIONAL_POOL_COPY, 3) },
+  'colleges-higher-education': { image: UNIQUE.take(EDUCATIONAL_POOL_COPY) || EducationalFurnitureImg, gallery: UNIQUE.takeN(EDUCATIONAL_POOL_COPY, 3) },
+};
+
+export const HOSTEL_FURNITURE_IMAGES: Record<string, { image: string; gallery: string[] }> = {
+  'hostel-furniture': { image: HOSTEL_POOL[0]?.image || HostelFurnitureImg, gallery: HOSTEL_POOL.slice(0, 3).map((entry) => entry.image) || [HostelFurnitureImg] },
+  'hostel-cots': { image: UNIQUE.take(HOSTEL_POOL_COPY) || HostelFurnitureImg, gallery: UNIQUE.takeN(HOSTEL_POOL_COPY, 3) },
+  'single-cots': { image: UNIQUE.take(HOSTEL_POOL_COPY) || HostelFurnitureImg, gallery: UNIQUE.takeN(HOSTEL_POOL_COPY, 3) },
+  'bunker-cots': { image: UNIQUE.take(HOSTEL_POOL_COPY) || HostelFurnitureImg, gallery: UNIQUE.takeN(HOSTEL_POOL_COPY, 3) },
+  'triple-cots': { image: UNIQUE.take(HOSTEL_POOL_COPY) || HostelFurnitureImg, gallery: UNIQUE.takeN(HOSTEL_POOL_COPY, 3) },
+  'cotton-bed-spring': { image: UNIQUE.take(HOSTEL_POOL_COPY) || HostelFurnitureImg, gallery: UNIQUE.takeN(HOSTEL_POOL_COPY, 3) },
+  'cushion-mattresses': { image: UNIQUE.take(HOSTEL_POOL_COPY) || HostelFurnitureImg, gallery: UNIQUE.takeN(HOSTEL_POOL_COPY, 3) },
+  'washable-cushion-pillows': { image: UNIQUE.take(HOSTEL_POOL_COPY) || HostelFurnitureImg, gallery: UNIQUE.takeN(HOSTEL_POOL_COPY, 3) },
+  'cotton-bed-sheets': { image: UNIQUE.take(HOSTEL_POOL_COPY) || HostelFurnitureImg, gallery: UNIQUE.takeN(HOSTEL_POOL_COPY, 3) },
+};
+
+export const CATEGORY_SUBCATEGORY_IMAGES: Record<string, Record<string, { image: string; gallery: string[] }>> = {
+  'School Furniture': SCHOOL_FURNITURE_IMAGES,
+  'Educational Furniture': EDUCATIONAL_FURNITURE_IMAGES,
+  'Hostel Furniture': HOSTEL_FURNITURE_IMAGES,
 };
 
 export const PRODUCT_SHOWCASE_ITEMS = CANONICAL_CATEGORIES.map((c) => ({
@@ -621,6 +655,7 @@ export const IMG = {
 };
 
 export const CATEGORY_BANNERS: Record<CanonicalCategoryName, string> = {
+  'Office Furniture':      OfficeFurnitureImg,
   'Educational Furniture': EducationalFurnitureImg,
   'School Furniture':      SchoolFurnitureImg,
   'Hostel Furniture':      HostelFurnitureImg,

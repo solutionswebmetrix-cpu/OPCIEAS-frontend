@@ -66,10 +66,10 @@ export default function CommercialFurnitureShowcase() {
           <section>
             <p className="font-sub text-xs uppercase tracking-[0.28em] text-gold">Section A</p>
             <h3 className="mt-3 font-heading text-2xl font-black text-navy sm:text-3xl">Educational / Institutional Furniture</h3>
-            <p className="mt-3 max-w-2xl font-body text-sm leading-6 text-navy/70">Furniture-only solutions for classrooms, libraries and record rooms: desks, benches, chairs, tables and SS wire racks.</p>
+            <p className="mt-3 max-w-2xl font-body text-sm leading-6 text-navy/70">Furniture-only solutions for classrooms, libraries and record rooms: desks, benches, chairs, tables and SS detachable wire racks.</p>
             <div className="mt-6"><AssetGrid items={institutionalAssets} /></div>
             <div className="mt-6 flex flex-wrap gap-2 font-sub text-xs text-navy/65">
-              {['Classrooms', 'Libraries', 'Record Rooms', 'Desks', 'Benches', 'Chairs', 'Tables', 'SS Wire Racks'].map((label) => <span key={label} className="rounded-full border border-navy/10 bg-light-grey px-3 py-1.5">{label}</span>)}
+              {['Classrooms', 'Libraries', 'Record Rooms', 'Desks', 'Benches', 'Chairs', 'Tables', 'SS Detachable Wire Rack'].map((label) => <span key={label} className="rounded-full border border-navy/10 bg-light-grey px-3 py-1.5">{label}</span>)}
             </div>
           </section>
 
@@ -95,14 +95,14 @@ export default function CommercialFurnitureShowcase() {
 
           <aside className="border border-gold/30 bg-gold/5 p-6">
             <Ruler className="h-6 w-6 text-gold" />
-            <h3 className="mt-4 font-heading text-xl font-bold text-navy">SS Wire Racks</h3>
+            <h3 className="mt-4 font-heading text-xl font-bold text-navy">SS Detachable Wire Rack</h3>
             <p className="mt-2 font-body text-sm leading-6 text-navy/70">Verified available information:</p>
             <dl className="mt-4 space-y-3 font-body text-sm text-navy/80">
-              <div><dt className="font-sub text-xs uppercase tracking-[0.16em] text-navy/55">Loading capacity</dt><dd className="mt-1 font-semibold">200 kg per level</dd></div>
-              <div><dt className="font-sub text-xs uppercase tracking-[0.16em] text-navy/55">Dimensions</dt><dd className="mt-1">W 914 × D 457 × H 1829 mm</dd></div>
-              <div><dt className="font-sub text-xs uppercase tracking-[0.16em] text-navy/55">Configuration</dt><dd className="mt-1">Medium-duty detachable wire rack</dd></div>
+              <div><dt className="font-sub text-xs uppercase tracking-[0.16em] text-navy/55">Material</dt><dd className="mt-1 font-semibold">Premium SUS 304 Stainless Steel</dd></div>
+              <div><dt className="font-sub text-xs uppercase tracking-[0.16em] text-navy/55">Load capacity</dt><dd className="mt-1">150 kg per level</dd></div>
+              <div><dt className="font-sub text-xs uppercase tracking-[0.16em] text-navy/55">Finish</dt><dd className="mt-1">High-gloss chrome plating, electro-polishing, protective coating</dd></div>
             </dl>
-            <div className="mt-5 flex items-center gap-2 font-sub text-xs text-navy/65"><ShieldCheck className="h-4 w-4 text-gold" /> Confirm final configuration during RFQ</div>
+            <div className="mt-5 flex items-center gap-2 font-sub text-xs text-navy/65"><ShieldCheck className="h-4 w-4 text-gold" /> Custom dimensions available on request</div>
           </aside>
         </div>
 

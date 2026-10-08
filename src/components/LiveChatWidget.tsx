@@ -50,7 +50,7 @@ function getAIResponse(userMessage: string): string {
   }
 
   if (msg.includes('location') || msg.includes('where are you') || msg.includes('located') || msg.includes('factory') || msg.includes('head office')) {
-    return 'Bangalore, Karnataka, India';
+    return '560 076, Bangalore, Karnataka, India';
   }
 
   if (msg.includes('contact') || msg.includes('phone') || msg.includes('email') || msg.includes('sales')) {

@@ -9,14 +9,12 @@ import ProductCard from '../components/ProductCard';
 import InquiryForm from '../components/InquiryForm';
 import { fetchProduct, fetchProducts, resolveProductImage, type Product } from '../lib/data';
 import { validateProductEssentials } from '../lib/productValidation';
-import { findProductAssetBySlug } from '../lib/productAssetResolver';
 
 export default function ProductDetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const [product, setProduct] = useState<Product | null>(null);
   const [related, setRelated] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  const [assetOnly, setAssetOnly] = useState(false);
   const [activeImg, setActiveImg] = useState(0);
   const [viewerOpen, setViewerOpen] = useState(false);
 
@@ -25,21 +23,7 @@ export default function ProductDetailPage() {
       setLoading(true);
       if (!slug) return;
       const p = await fetchProduct(slug);
-      const asset = p ? null : findProductAssetBySlug(slug);
-      const assetProduct: Product | null = asset ? {
-        id: String(asset.slug || slug),
-        category_id: asset.folder,
-        name: asset.name,
-        slug: asset.slug || slug,
-        features: [],
-        specs: {},
-        image: asset.image,
-        gallery: [asset.image],
-        created_at: '',
-      } : null;
-      const resolvedProduct = p || assetProduct;
-      setProduct(resolvedProduct);
-      setAssetOnly(!p && !!assetProduct);
+      setProduct(p);
       if (p) {
         const all = await fetchProducts(p.category_id || undefined);
         setRelated(all.filter((x) => x.id !== p.id).slice(0, 4));
@@ -69,23 +53,163 @@ export default function ProductDetailPage() {
   }
 
   const gallery = product.gallery?.length ? product.gallery : (product.image ? [product.image] : []);
-  const isViteAsset = (v?: string | null): boolean => !!v && (/^\/src\/assets\//i.test(v) || /^\/assets\//i.test(v));
   const resolvedGallery = gallery
-    .map((image) => (assetOnly || isViteAsset(image) ? image : resolveProductImage(image)))
+    .map((image) => resolveProductImage(image))
     .filter((image): image is string => Boolean(image));
   const specs = product.specs || {};
   const features = product.features || [];
   const waText = `Hi, I'm interested in ${encodeURIComponent(product.name)}. Please share details.`;
-  const dimensionValue = assetOnly ? null : specs['Dimensions'] || specs.Dimensions || specs['dimensions'] || (product.dimensions ? JSON.stringify(product.dimensions) : 'Available on request');
-  const materialsValue = assetOnly ? null : specs['Materials Used'] || specs['Material'] || product.materials_used || product.material || 'Available on request';
-  const packagingValue = assetOnly ? null : specs['Packaging Specifications'] || specs['Packaging'] || product.packaging_specifications || 'Available on request';
-  const warrantyText = assetOnly ? null : product.warranty_terms || specs['Warranty'] || '12 Months Warranty on domestic supply.';
-  const weightValue = assetOnly ? null : specs['Weight'] || product.weight || 'Available on request';
-  const variantsValue = assetOnly ? null : specs['Variants'] || (Array.isArray(product.variants) ? product.variants.join(', ') : typeof product.variants === 'string' ? product.variants : 'Available on request');
+  const dimensionValue = specs['Dimensions'] || specs.Dimensions || specs['dimensions'] || (product.dimensions ? JSON.stringify(product.dimensions) : 'Available on request');
+  const materialsValue = specs['Materials Used'] || specs['Material'] || product.materials_used || product.material || 'Available on request';
+  const packagingValue = specs['Packaging Specifications'] || specs['Packaging'] || product.packaging_specifications || 'Available on request';
+  const warrantyText = product.warranty_terms || specs['Warranty'] || '12 Months Warranty on domestic supply.';
+  const weightValue = specs['Weight'] || product.weight || 'Available on request';
+  const variantsValue = specs['Variants'] || (Array.isArray(product.variants) ? product.variants.join(', ') : typeof product.variants === 'string' ? product.variants : 'Available on request');
   const hasExport = !!(product.export_available || /export/i.test(String(specs['Export Available'] || '')));
-  const supplyLabel = assetOnly ? 'Asset Catalogue Item' : product.supply_type === 'IN_HOUSE' ? 'In-House Manufacturing' : product.supply_type === 'PARTNER' ? 'Partner Supply' : 'Direct Manufacturer';
-  const supplyNote = assetOnly ? null : product.supply_type === 'IN_HOUSE' ? 'Manufactured in our own facility with production control and quality assurance.' : 'Supplied through trusted production partners and quality-checked before dispatch.';
+  const supplyLabel = product.supply_type === 'IN_HOUSE' ? 'In-House Manufacturing' : product.supply_type === 'PARTNER' ? 'Partner Supply' : 'Direct Manufacturer';
+  const supplyNote = product.supply_type === 'IN_HOUSE' ? 'Manufactured in our own facility with production control and quality assurance.' : 'Supplied through trusted production partners and quality-checked before dispatch.';
   const validation = validateProductEssentials(product);
+  const isSSRackProduct = /ss detachable wire rack|ss wire rack|detachable wire rack/i.test(`${product.name} ${product.slug}`);
+
+  if (isSSRackProduct) {
+    const ssRackApplications = [
+      'Homes', 'Offices', 'Educational Institutions', 'Retail & Commercial', 'Libraries & Bookstores', 'Specialty Areas',
+    ];
+    const ssRackAdvantages = [
+      { title: 'OPEN WIRE DESIGN', description: 'Promotes airflow and visibility while reducing dust accumulation.' },
+      { title: 'CUSTOMIZABLE & PORTABLE', description: 'Quick and easy to assemble, dismantle and adjust without tools. Can be adapted to different heights and formats.' },
+      { title: 'EXCEPTIONAL LOAD CAPACITY', description: 'Each level can support 150 kg.' },
+      { title: 'DURABILITY', description: 'Constructed from SUS 304 stainless steel with low-carbon, rust-proof properties and no painting or polishing requirement.' },
+      { title: 'ECO-FRIENDLY MAINTENANCE', description: 'Requires zero maintenance according to the client-provided product content.' },
+    ];
+    const ssRackSpecs = [
+      { label: 'Material', value: 'Premium SUS 304 Stainless Steel' },
+      { label: 'Wire Gauges', value: '6.0 mm / 5.0 mm / 4.5 mm / 3.5 mm' },
+      { label: 'Finish', value: 'High-gloss chrome plating\nElectro-polishing\nProtective coating' },
+      { label: 'Load Capacity', value: '150 kg per level' },
+      { label: 'Customization', value: 'Custom dimensions and tailored configurations available upon request.' },
+    ];
+    const mainImage = resolvedGallery[0] || '';
+
+    return (
+      <>
+        <PageMeta
+          title={`${product.name} | OPCIEAS`}
+          description={product.short_desc || `Premium ${product.name} from OPCIEAS.`}
+          keywords={`${product.name}, stainless steel rack, OPCIEAS, industrial storage`}
+          canonical={`https://www.opcieascommercialfurniture.com/product/${product.slug}`}
+          schema={{ '@context': 'https://schema.org', '@type': 'Product', name: product.name, description: product.short_desc || product.long_desc || '' }}
+        />
+        <section className="bg-white pt-32">
+          <div className="container-x px-6 pb-8">
+            <Breadcrumbs items={[{ label: 'Products', to: '/products' }, { label: product.name }]} />
+          </div>
+        </section>
+
+        <section className="bg-white pb-20">
+          <div className="container-x grid gap-10 px-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+            <div className="overflow-hidden rounded-lux border border-navy/10 bg-light-grey p-3">
+              {mainImage ? (
+                <img src={mainImage} alt={product.name} className="h-full max-h-[520px] w-full rounded-xl object-contain" />
+              ) : (
+                <div className="flex h-[520px] items-center justify-center rounded-xl bg-navy/5 text-navy/50">Product image unavailable</div>
+              )}
+            </div>
+            <div>
+              <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Industrial Storage</p>
+              <h1 className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl">SS DETACHABLE WIRE RACK</h1>
+              <p className="mt-4 font-body text-base leading-7 text-navy/75">{product.short_desc || 'Modern, strong, lightweight and durable stainless steel wire rack with a versatile modular design for convenient storage and display.'}</p>
+              <div className="mt-6 space-y-3 text-sm text-navy/75">
+                <div><span className="font-sub uppercase tracking-[0.18em] text-navy/60">Material:</span> <span className="font-medium text-navy">Premium SUS 304 Stainless Steel</span></div>
+                <div><span className="font-sub uppercase tracking-[0.18em] text-navy/60">Wire Gauges:</span> <span className="font-medium text-navy">6.0 mm / 5.0 mm / 4.5 mm / 3.5 mm</span></div>
+                <div><span className="font-sub uppercase tracking-[0.18em] text-navy/60">Load Capacity:</span> <span className="font-medium text-navy">150 kg per level</span></div>
+              </div>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Link to="/rfq" className="btn-gold rounded-full px-5 py-2.5 font-sub text-sm">Request Quote</Link>
+                <a href={`https://wa.me/919845579049?text=${encodeURIComponent(`Hi, I'm interested in SS Detachable Wire Rack. Please share details.`)}`} target="_blank" rel="noreferrer" className="flex items-center gap-2 rounded-full bg-[#25D366] px-5 py-2.5 font-sub text-sm text-white"><MessageCircle className="h-4 w-4" /> Request Bulk Quote</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-light-grey py-16">
+          <div className="container-x px-6">
+            <div className="mb-10">
+              <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Applications</p>
+              <h2 className="mt-3 font-heading text-3xl font-black text-navy">Where it fits</h2>
+            </div>
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {ssRackApplications.map((application) => (
+                <div key={application} className="rounded-lux border border-navy/10 bg-white p-4 font-sub text-sm text-navy/80 shadow-sm">{application}</div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-white py-16">
+          <div className="container-x px-6">
+            <div className="mb-10">
+              <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Key Advantages</p>
+              <h2 className="mt-3 font-heading text-3xl font-black text-navy">Built for performance</h2>
+            </div>
+            <div className="grid gap-5 lg:grid-cols-2 xl:grid-cols-3">
+              {ssRackAdvantages.map((advantage) => (
+                <div key={advantage.title} className="rounded-lux border border-navy/10 bg-light-grey p-5">
+                  <h3 className="font-heading text-lg font-bold text-navy">{advantage.title}</h3>
+                  <p className="mt-3 font-body text-sm leading-6 text-navy/70">{advantage.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-light-grey py-16">
+          <div className="container-x px-6">
+            <div className="mb-8">
+              <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Technical Specifications</p>
+              <h2 className="mt-3 font-heading text-3xl font-black text-navy">Product technical details</h2>
+            </div>
+            <div className="overflow-hidden rounded-lux border border-navy/10 bg-white">
+              <table className="w-full text-left text-sm text-navy/80">
+                <tbody>
+                  {ssRackSpecs.map((spec) => (
+                    <tr key={spec.label} className="border-b border-navy/10 last:border-b-0">
+                      <td className="w-1/3 px-5 py-4 font-sub text-xs uppercase tracking-[0.18em] text-navy/60">{spec.label}</td>
+                      <td className="px-5 py-4 font-body leading-6 text-navy/80 whitespace-pre-line">{spec.value}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-white py-16">
+          <div className="container-x px-6">
+            <div className="mb-8">
+              <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Why Choose This Product</p>
+              <h2 className="mt-3 font-heading text-3xl font-black text-navy">Maximum utility, portability and durability</h2>
+            </div>
+            <div className="max-w-4xl rounded-lux border border-navy/10 bg-light-grey p-6 font-body text-base leading-8 text-navy/75">
+              The SS Detachable Wire Rack is a modern modular storage solution designed for maximum utility, portability, durability and versatile commercial and institutional use.
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-light-grey py-16">
+          <div className="container-x px-6">
+            <div className="mb-8">
+              <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Product Images</p>
+              <h2 className="mt-3 font-heading text-3xl font-black text-navy">Visual presentation</h2>
+            </div>
+            <div className="overflow-hidden rounded-lux border border-navy/10 bg-white p-4">
+              {mainImage ? <img src={mainImage} alt={product.name} className="max-h-[560px] w-full rounded-xl object-contain" /> : <div className="flex h-[420px] items-center justify-center rounded-xl bg-navy/5 text-navy/50">Product image unavailable</div>}
+            </div>
+          </div>
+        </section>
+      </>
+    );
+  }
 
   return (
     <>
@@ -168,11 +292,11 @@ export default function ProductDetailPage() {
             <div className="mt-4 grid gap-2 text-sm text-navy sm:grid-cols-2">
               {product.sku && <div><span className="font-sub uppercase tracking-[0.18em] text-navy/60">SKU</span><p className="mt-1 font-medium">{product.sku}</p></div>}
               <div><span className="font-sub uppercase tracking-[0.18em] text-navy/60">Category</span><p className="mt-1 font-medium">{product.subcategory || product.category_id || 'General'}</p></div>
-              {!assetOnly && <div><span className="font-sub uppercase tracking-[0.18em] text-navy/60">Availability</span><p className="mt-1 font-medium">{product.stock_quantity ? `${product.stock_quantity} units available` : 'Available on request'}</p></div>}
+              <div><span className="font-sub uppercase tracking-[0.18em] text-navy/60">Availability</span><p className="mt-1 font-medium">{product.stock_quantity ? `${product.stock_quantity} units available` : 'Available on request'}</p></div>
               {warrantyText && <div><span className="font-sub uppercase tracking-[0.18em] text-navy/60">Warranty</span><p className="mt-1 font-medium">{warrantyText}</p></div>}
             </div>
 
-            {!assetOnly && !validation.valid && (
+            {!validation.valid && (
               <div className="mt-6 rounded-lux border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
                 <p className="font-semibold">Product publishing checklist</p>
                 <ul className="mt-2 list-disc space-y-1 pl-5">
@@ -229,7 +353,7 @@ export default function ProductDetailPage() {
               </div>
             )}
 
-            {!assetOnly && <div className="mt-8 grid gap-4 sm:grid-cols-2">
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
               <div className="rounded-lux border border-navy/10 bg-white p-5">
                 <p className="font-heading text-sm font-bold text-navy">Applications</p>
                 <p className="mt-2 font-body text-sm text-navy/70">Suitable for institutional, commercial, hospitality and export projects. Specific applications available on request.</p>
@@ -238,7 +362,7 @@ export default function ProductDetailPage() {
                 <p className="font-heading text-sm font-bold text-navy">MOQ & Catalogue</p>
                 <p className="mt-2 font-body text-sm text-navy/70">Minimum order quantities vary by product and project. Download our catalogue or request a quote for exact details.</p>
               </div>
-            </div>}
+            </div>
           </div>
         </div>
 
@@ -246,9 +370,9 @@ export default function ProductDetailPage() {
           <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
             <div className="max-w-3xl">
               <h3 className="font-heading text-xl font-bold text-navy">Product Description</h3>
-              <p className="mt-3 font-body text-sm leading-relaxed text-navy/70">{product.long_desc || product.description || product.short_desc || (assetOnly ? 'Product information will be updated soon.' : 'Description available on request.')}</p>
+              <p className="mt-3 font-body text-sm leading-relaxed text-navy/70">{product.long_desc || product.description || product.short_desc || 'Description available on request.'}</p>
             </div>
-            {!assetOnly && <div className="rounded-lux border border-navy/10 bg-white p-5">
+            <div className="rounded-lux border border-navy/10 bg-white p-5">
               <h3 className="font-heading text-lg font-bold text-navy">Technical Specifications</h3>
               <ul className="mt-4 space-y-3 font-sub text-sm text-navy/70">
                 <li><span className="text-navy/50">Dimensions:</span> {dimensionValue}</li>
@@ -257,11 +381,11 @@ export default function ProductDetailPage() {
                 <li><span className="text-navy/50">Packaging:</span> {packagingValue}</li>
                 <li><span className="text-navy/50">Variants:</span> {variantsValue}</li>
               </ul>
-            </div>}
+            </div>
           </div>
         </div>
 
-        {!assetOnly && <div className="container-x mt-12 px-6">
+        <div className="container-x mt-12 px-6">
           <div className="grid gap-6 lg:grid-cols-2">
             <div className="rounded-lux border border-navy/10 bg-white p-6">
               <h3 className="font-heading text-lg font-bold text-navy">Key Features</h3>
@@ -278,10 +402,10 @@ export default function ProductDetailPage() {
               <p className="mt-4 font-sub text-sm text-gold">High durability and long-life performance.</p>
             </div>
           </div>
-        </div>}
+        </div>
 
         {/* Inquiry form */}
-        {!assetOnly && <div className="container-x mt-16 px-6">
+        <div className="container-x mt-16 px-6">
           <div className="grid gap-6 mb-8">
             <div className="rounded-lux border border-navy/10 bg-white p-6">
               <h3 className="font-heading text-lg font-bold text-navy">Product Quality & Manufacturing</h3>
@@ -317,7 +441,7 @@ export default function ProductDetailPage() {
           <div className="mx-auto max-w-2xl rounded-lux border border-navy/10 bg-white p-8">
             <InquiryForm productName={product.name} />
           </div>
-        </div>}
+        </div>
       </section>
 
       {/* Related products */}

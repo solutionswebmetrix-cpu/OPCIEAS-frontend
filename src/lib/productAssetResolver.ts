@@ -1,6 +1,6 @@
 import { cleanProductName, detectCategory, toKebab } from './images';
 
-const productAssetModules = import.meta.glob('../assets/product/**/*.{png,jpg,jpeg,webp,avif}', { eager: true, import: 'default' }) as Record<string, string>;
+const productAssetModules = import.meta.glob('../assets/product/**/*.{png,jpg,jpeg,webp,avif,PNG,JPG,JPEG,WEBP,AVIF}', { eager: true, import: 'default' }) as Record<string, string>;
 
 export interface ProductAsset {
   path: string;
@@ -10,6 +10,12 @@ export interface ProductAsset {
   slug: string;
   name: string;
   category: string;
+}
+
+export interface LocalProductAssetQuery {
+  name?: string | null;
+  slug?: string | null;
+  category?: string | null;
 }
 
 function normalizeAssetLookup(value: string): string {
@@ -22,6 +28,28 @@ function normalizeAssetLookup(value: string): string {
     .replace(/[^a-z0-9\s/]+/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
+}
+
+function lookupVariants(value: string): string[] {
+  const normalized = normalizeAssetLookup(value);
+  if (!normalized) return [];
+
+  const words = normalized.split(' ');
+  const last = words[words.length - 1];
+  if (last.endsWith('sses') || last.endsWith('ches') || last.endsWith('shes') || last.endsWith('xes') || last.endsWith('zes')) {
+    words[words.length - 1] = last.slice(0, -2);
+  } else if (last.endsWith('ies') && last.length > 3) {
+    words[words.length - 1] = `${last.slice(0, -3)}y`;
+  } else if (last.endsWith('s') && !/(ss|us|is)$/.test(last)) {
+    words[words.length - 1] = last.slice(0, -1);
+  }
+
+  const singular = words.join(' ');
+  return singular === normalized ? [normalized] : [normalized, singular];
+}
+
+function includesWholePhrase(text: string, phrase: string): boolean {
+  return text === phrase || text.startsWith(`${phrase} `) || text.endsWith(` ${phrase}`) || text.includes(` ${phrase} `);
 }
 
 function isForbiddenAssetPath(path: string): boolean {
@@ -69,18 +97,18 @@ function createAsset(path: string, image: string): ProductAsset {
 }
 
 const EDUCATIONAL_FOLDER_MAP: Record<string, string[]> = {
-  'kg classes': ['KG_PG/K G'],
-  'primary': ['KG_PG/PRIMARY'],
-  'high school': ['KG_PG/HIGH SCHOOL'],
-  'colleges and higher education': ['KG_PG/P.G = IMIVERSITY'],
-  'colleges higher education': ['KG_PG/P.G = IMIVERSITY'],
-  'higher education': ['KG_PG/P.G = IMIVERSITY'],
-  'junior college': ['KG_PG/JUNIOR COLLEGE  BASIC  COMP. TABLE'],
-  'junior college basic comp table': ['KG_PG/JUNIOR COLLEGE  BASIC  COMP. TABLE'],
-  'university': ['KG_PG/P.G = IMIVERSITY'],
-  'pg': ['KG_PG/P.G = IMIVERSITY'],
-  'p g': ['KG_PG/P.G = IMIVERSITY'],
-  'university and pg': ['KG_PG/P.G = IMIVERSITY'],
+  'kg classes': ['Educational Furniture/K G', 'Educational Furniture/KG'],
+  'primary': ['Educational Furniture/PRIMARY'],
+  'high school': ['Educational Furniture/HIGH SCHOOL'],
+  'colleges and higher education': ['Educational Furniture/Colleges & Higher Education', 'Educational Furniture/P.G = IMIVERSITY'],
+  'colleges higher education': ['Educational Furniture/Colleges & Higher Education', 'Educational Furniture/P.G = IMIVERSITY'],
+  'higher education': ['Educational Furniture/Colleges & Higher Education', 'Educational Furniture/P.G = IMIVERSITY'],
+  'junior college': ['Educational Furniture/Colleges & Higher Education', 'Educational Furniture/HIGH SCHOOL'],
+  'junior college basic comp table': ['Educational Furniture/Colleges & Higher Education', 'Educational Furniture/HIGH SCHOOL'],
+  'university': ['Educational Furniture/Colleges & Higher Education', 'Educational Furniture/P.G = IMIVERSITY'],
+  'pg': ['Educational Furniture/Colleges & Higher Education', 'Educational Furniture/P.G = IMIVERSITY'],
+  'p g': ['Educational Furniture/Colleges & Higher Education', 'Educational Furniture/P.G = IMIVERSITY'],
+  'university and pg': ['Educational Furniture/Colleges & Higher Education', 'Educational Furniture/P.G = IMIVERSITY'],
 };
 
 function folderLookupKey(value: string): string {
@@ -126,6 +154,114 @@ export const PRODUCT_ASSETS: ProductAsset[] = Object.entries(productAssetModules
   .filter(([path]) => !isForbiddenAssetPath(path))
   .sort(([pathA], [pathB]) => pathA.localeCompare(pathB, undefined, { numeric: true }))
   .map(([path, image]) => createAsset(path, image));
+
+export function findLocalProductAsset(query: LocalProductAssetQuery): ProductAsset | null {
+  const productNames = [...new Set([
+    ...lookupVariants(query.name ?? ''),
+    ...lookupVariants(query.slug ?? ''),
+  ])];
+  if (!productNames.length) return null;
+
+  const categoryNames = lookupVariants(query.category ?? '');
+  const matchingAssets = PRODUCT_ASSETS.flatMap((asset) => {
+    const assetNames = [...new Set([
+      ...lookupVariants(asset.name),
+      ...lookupVariants(asset.fileName),
+    ])];
+    const assetCategory = normalizeAssetLookup(asset.folder.split('/')[0] ?? '');
+    const categoryMatch = !categoryNames.length || categoryNames.some((category) =>
+      lookupVariants(assetCategory).includes(category)
+    );
+    if (!categoryMatch) return [];
+
+    const exactMatch = assetNames.some((assetName) => productNames.includes(assetName));
+    if (exactMatch) return [{ asset, score: 2 }];
+
+    const phraseMatch = assetNames.some((assetName) =>
+      productNames.some((productName) => includesWholePhrase(productName, assetName))
+    );
+    return phraseMatch ? [{ asset, score: 1 }] : [];
+  });
+
+  if (!matchingAssets.length) return null;
+  const highestScore = Math.max(...matchingAssets.map(({ score }) => score));
+  const bestMatches = matchingAssets.filter(({ score }) => score === highestScore);
+  return bestMatches.length === 1 ? bestMatches[0].asset : null;
+}
+
+export function findProductAssetByUrl(url: string): ProductAsset | null {
+  return PRODUCT_ASSETS.find((asset) => asset.image === url) ?? null;
+}
+
+const CATEGORY_SUBCATEGORY_FILES: Record<string, Record<string, { folder?: string; fileName: string }>> = {
+  'School Furniture': {
+    'Student Desk': { fileName: 'Student Desk' },
+    'Student Chair': { fileName: 'Student Chair' },
+    'Dual Desk': { fileName: 'Dual Desk' },
+    'Teacher Table': { fileName: 'Teacher Table' },
+    'Teacher Chair': { fileName: 'Teacher Chair' },
+    'Kids / Nursery Furniture': { fileName: 'Kids-Nursery' },
+    'Activity Table': { fileName: 'Activity Table' },
+    'Classroom Seating': { fileName: 'Classroom Seating' },
+  },
+  'Educational Furniture': {
+    'KG Classes': { folder: 'K G', fileName: 'K G (4)' },
+    'Primary': { folder: 'PRIMARY', fileName: 'PRIMARY (7)' },
+    'High School': { folder: 'HIGH SCHOOL', fileName: 'HIGH SCHOOL' },
+    'Colleges & Higher Education': { folder: 'Colleges & Higher Education', fileName: 'JUNIOR COLLEGE STEEL CHAIR' },
+  },
+  'Hostel Furniture': {
+    'Hostel Cots': { fileName: 'Hostel Cots' },
+    'Single Cots': { fileName: 'Single Cots' },
+    'Bunker Cots': { fileName: 'Bunker Cots' },
+    'Triple Cots': { fileName: 'Triple Cots' },
+    'Cotton Bed / Spring': { fileName: 'Cotton Bed  Spring' },
+    'Cushion Mattresses': { fileName: 'Cushion Mattresses' },
+    'Washable Cushion Pillows': { fileName: 'Washable Cushion Pillows' },
+    '100% Cotton Bed Sheets': { fileName: '100 Percent Cotton Bed Sheets' },
+  },
+  'Industrial Storage': {
+    'Warehouse Rack': { fileName: 'Warehouse Rack' },
+    'Industrial Rack': { fileName: 'Industrial Rack' },
+    'Heavy-Duty Rack': { fileName: 'Heavy-Duty Rack' },
+    'Slotted Angle Rack': { fileName: 'Slotted Angle Rack' },
+    'Pallet Rack': { fileName: 'Pallet Rack' },
+    'Long Span Shelving': { fileName: 'Long Span Shelving' },
+    'SS Detachable Wire Rack': { fileName: 'SS Detachable Wire Rack' },
+    'Steel Locker': { fileName: 'Steel Locker' },
+  },
+  'Bathroom Collection': {
+    'Mirror Cabinet': { fileName: 'Mirror Cabinet' },
+    'Vanity Unit': { fileName: 'Vanity Unit' },
+    'Bathroom Shelf': { fileName: 'Bathroom Shelf' },
+    'Towel Rack': { fileName: 'Towel Rack' },
+    'Bathroom Storage': { fileName: 'Bathroom Storage' },
+    'Wash Basin Cabinet': { fileName: 'Wash Basin Cabinet' },
+    'Stainless Steel Rack': { fileName: 'Stainless Steel Rack' },
+  },
+  'Letter Box': {
+    'ABS Plastic Letter Box': { fileName: 'ABS Plastic Letter Box' },
+    'Metal Letter Box': { fileName: 'Metal Letter Box' },
+    'Wooden Letter Box': { fileName: 'Wooden Letter Box' },
+    'Wall-Mounted Letter Box': { fileName: 'Wall-Mounted Letter Box' },
+    'Apartment Cluster System': { fileName: 'Apartment Cluster System' },
+    'Society Letter Bank': { fileName: 'Society Letter Bank' },
+  },
+};
+
+export function getCategorySubcategoryAsset(category: string, subcategory: string): ProductAsset | null {
+  const mapping = CATEGORY_SUBCATEGORY_FILES[category]?.[subcategory];
+  if (!mapping) return null;
+
+  const expectedFolder = [category, mapping.folder].filter(Boolean).join('/');
+  const expectedFolderKey = folderLookupKey(expectedFolder);
+  const expectedFileName = normalizeAssetLookup(mapping.fileName);
+
+  return PRODUCT_ASSETS.find((asset) =>
+    folderLookupKey(asset.folder) === expectedFolderKey &&
+    normalizeAssetLookup(asset.fileName) === expectedFileName
+  ) ?? null;
+}
 
 const SHOWCASE_CURATION: Record<string, string[]> = {
   'Educational Furniture': [

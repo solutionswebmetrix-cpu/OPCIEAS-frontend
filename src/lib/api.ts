@@ -1,13 +1,7 @@
-const configuredApiBase =
-  (import.meta as any).env?.VITE_API_URL ||
-  (import.meta as any).env?.VITE_API_BASE_URL ||
-  '';
-const isLocalApi = /:\/\/(localhost|127\.0\.0\.1)(:\d+)?/i.test(configuredApiBase);
-const envApiBase = (import.meta as any).env?.PROD && isLocalApi
-  ? 'https://api.opcieas.com/api'
-  : configuredApiBase || ((import.meta as any).env?.PROD ? 'https://api.opcieas.com/api' : '');
+const configuredApiBase = import.meta.env.VITE_API_URL?.trim();
+const developmentApiBase = import.meta.env.DEV ? 'http://127.0.0.1:8000/api' : '';
 
-export const API_BASE_URL: string = envApiBase.replace(/\/$/, '');
+export const API_BASE_URL = (configuredApiBase || developmentApiBase).replace(/\/+$/, '');
 
 function buildQueryString(params?: Record<string, unknown>): string {
   if (!params) return '';
@@ -61,7 +55,7 @@ export async function apiGet<T = any>(
   endpoint: string,
   params?: Record<string, any>
 ): Promise<T> {
-  const url = `${API_BASE_URL}${endpoint}${buildQueryString(params)}`;
+  const url = buildApiUrl(endpoint, params);
   const res = await fetch(url, {
     method: 'GET',
     credentials: 'include',
@@ -76,7 +70,7 @@ export async function apiPost<T = any>(
   endpoint: string,
   body?: Record<string, any>
 ): Promise<T> {
-  const url = `${API_BASE_URL}${endpoint}`;
+  const url = buildApiUrl(endpoint);
   const res = await fetch(url, {
     method: 'POST',
     credentials: 'include',
@@ -93,7 +87,7 @@ export async function apiFormData<T = any>(
   endpoint: string,
   formData: FormData
 ): Promise<T> {
-  const url = `${API_BASE_URL}${endpoint}`;
+  const url = buildApiUrl(endpoint);
   const res = await fetch(url, {
     method: 'POST',
     credentials: 'include',
@@ -103,4 +97,11 @@ export async function apiFormData<T = any>(
     body: formData,
   });
   return handleResponse<T>(res);
+}
+
+function buildApiUrl(endpoint: string, params?: Record<string, unknown>): string {
+  if (!API_BASE_URL) {
+    throw new Error('VITE_API_URL is required to load data from the PHP API.');
+  }
+  return `${API_BASE_URL}${endpoint}${buildQueryString(params)}`;
 }

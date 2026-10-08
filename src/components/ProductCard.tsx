@@ -10,10 +10,11 @@ interface Props {
 }
 
 export default function ProductCard({ product, index }: Props) {
-  const image = resolveProductImage(product.image);
+  const image = resolveProductImage(product);
   const waText = encodeURIComponent(`Hi, I'm interested in ${product.name}. Please share details.`);
   const supplyLabel = product.supply_type === 'IN_HOUSE' ? 'In-House Manufacturing' : product.supply_type === 'PARTNER' ? 'Partner Supply' : 'Direct Manufacturer';
   const productRoute = product.slug || String(product.id || 'product');
+  const isSSRackCard = /ss detachable wire rack|ss wire rack|detachable wire rack/i.test(product.name);
 
   return (
     <motion.div
@@ -42,7 +43,7 @@ export default function ProductCard({ product, index }: Props) {
             {product.short_desc && <p className="mt-1 line-clamp-2 font-body text-xs text-navy/70">{product.short_desc}</p>}
             <div className="relative z-10 mt-3 flex gap-2">
               <span className="flex items-center gap-1 rounded-full bg-navy/10 px-3 py-1.5 font-sub text-xs text-navy backdrop-blur transition group-hover:bg-gold group-hover:text-navy">
-                <Eye className="h-3 w-3" /> View Details
+                <Eye className="h-3 w-3" /> {isSSRackCard ? 'View Product' : 'View Details'}
               </span>
             </div>
           </div>

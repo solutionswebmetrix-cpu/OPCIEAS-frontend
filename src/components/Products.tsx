@@ -2,17 +2,11 @@ import { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
-import { fetchCategories, fetchProducts, resolveProductImage, type Category, type Product } from '../lib/data';
-import { HOMEPAGE_SHOWCASE_CATALOG, type ProductAsset } from '../lib/productAssetResolver';
-
-function isViteAssetUrl(value?: string | null): boolean {
-  if (!value) return false;
-  return /^\/src\/assets\//i.test(value) || /^\/assets\//i.test(value);
-}
+import { fetchCategories, fetchProducts, isCategoryVisible, resolveProductImage, type Category, type Product } from '../lib/data';
 
 function HomeProductCard({ product, index, categoryIndex }: { product: Product; index: number; categoryIndex: number }) {
   const productSlug = product.slug || String(product.id);
-  const image = isViteAssetUrl(product.image) ? product.image : resolveProductImage(product.image);
+  const image = resolveProductImage(product);
 
   return (
     <motion.div
@@ -42,68 +36,6 @@ function HomeProductCard({ product, index, categoryIndex }: { product: Product; 
       </Link>
     </motion.div>
   );
-}
-
-function assetToProduct(category: Category, asset: ProductAsset): Product {
-  return {
-    id: asset.slug || asset.fileName || asset.path,
-    seller_id: undefined,
-    category_id: String(category.id),
-    subcategory: asset.folder,
-    name: asset.name,
-    slug: asset.slug,
-    sku: null,
-    short_desc: null,
-    short_description: asset.folder,
-    long_desc: null,
-    description: asset.folder,
-    key_features: [],
-    features: [],
-    supply_type: null,
-    specs: {},
-    specifications: {},
-    dimensions: null,
-    material: null,
-    materials_used: null,
-    color: null,
-    warranty_months: null,
-    warranty_terms: null,
-    packaging_specifications: null,
-    export_available: false,
-    export_badge: null,
-    weight: null,
-    variants: null,
-    tags: null,
-    min_order_quantity: 1,
-    max_order_quantity: null,
-    unit: undefined,
-    price: null,
-    discount_price: null,
-    discount_percentage: null,
-    tax_percentage: 0,
-    stock_quantity: undefined,
-    availability_status: undefined,
-    is_approved: true,
-    approved_at: null,
-    approved_by: null,
-    featured: false,
-    is_featured: false,
-    is_new_arrival: false,
-    is_best_seller: false,
-    rating: undefined,
-    total_reviews: undefined,
-    total_views: undefined,
-    total_orders: undefined,
-    status: 'Published',
-    meta_title: null,
-    meta_description: null,
-    image: asset.image,
-    gallery: [asset.image],
-    images: [],
-    price_range: null,
-    created_at: new Date().toISOString(),
-    updated_at: undefined,
-  };
 }
 
 export default function Products() {
@@ -140,43 +72,15 @@ export default function Products() {
   }, []);
 
   const productsByCategory = useMemo(() => {
-    return categories.map((category) => {
-      const apiCategoryProducts = allProducts
+    return categories.filter((category) => isCategoryVisible(category)).map((category) => {
+      const products = allProducts
         .filter((product) => String(product.category_id ?? '') === String(category.id))
-        .sort((a, b) => Number(b.featured || b.is_featured) - Number(a.featured || a.is_featured));
-
-      const products: Product[] = [...apiCategoryProducts];
-      const usedSlugs = new Set(products.map((product) => product.slug || String(product.id)));
-      const assetPool = HOMEPAGE_SHOWCASE_CATALOG[category.name] ?? [];
-      const assetByName = new Map<string, ProductAsset>();
-      for (const asset of assetPool) {
-        assetByName.set(asset.name.trim().toLowerCase(), asset);
-      }
-
-      for (const asset of assetPool) {
-        if (products.length >= 5) break;
-        if (usedSlugs.has(asset.slug)) continue;
-        products.push(assetToProduct(category, asset));
-        usedSlugs.add(asset.slug);
-      }
-
-      const finalProducts: Product[] = products.slice(0, 5).map((product) => {
-        const matchName = (product.name || '').trim().toLowerCase();
-        const matched = assetByName.get(matchName);
-        if (matched) {
-          return {
-            ...product,
-            image: matched.image,
-            gallery: [matched.image],
-            __showcaseAssetOverride: true,
-          } as Product & { __showcaseAssetOverride?: boolean };
-        }
-        return product;
-      });
+        .sort((a, b) => Number(b.featured || b.is_featured) - Number(a.featured || a.is_featured))
+        .slice(0, 5);
 
       return {
         category,
-        products: finalProducts,
+        products,
       };
     }).filter((entry) => entry.products.length > 0);
   }, [allProducts, categories]);
@@ -217,6 +121,12 @@ export default function Products() {
             Educational furniture, school systems, hostel seating, industrial storage, and custom project supply built for government, institutional, and export procurement buyers.
           </motion.p>
         </div>
+
+        {error && (
+          <p role="alert" className="mb-6 rounded-lux border border-navy/10 bg-navy/5 px-4 py-3 font-body text-sm text-navy/70">
+            Product data could not be loaded from the configured API.
+          </p>
+        )}
 
         <div className="mb-6 lg:mb-8 rounded-xl border border-navy/10 bg-light-grey/70 p-2">
           <div className="flex flex-wrap items-center justify-center gap-2" role="tablist" aria-label="Product categories">
