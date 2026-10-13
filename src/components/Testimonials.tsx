@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Quote, Star, ChevronLeft, ChevronRight } from 'lucide-react';
-import { IMG } from '../lib/images';
 
 const testimonials = [
-  { name: 'Rajesh Kumar', role: 'Procurement Head, TATA Group', text: 'OPCIEAS delivered 2000+ workstations for our corporate offices on time and with impeccable quality. Their tender documentation was flawless.', img: IMG.testimonials[0] },
-  { name: 'Dr. Anjali Sharma', role: 'Director, AIIMS', text: 'The hospital furniture supplied by OPCIEAS meets every medical-grade standard. Their team understood our requirements perfectly.', img: IMG.testimonials[1] },
-  { name: 'Mohammed Al-Rashid', role: 'Import Manager, UAE', text: 'We have been importing from OPCIEAS for 5 years. Their export packaging, compliance and on-time delivery are world-class.', img: IMG.testimonials[2] },
-  { name: 'Sarah Williams', role: 'Interior Architect, London', text: 'As an architect, I recommend OPCIEAS for commercial projects. Their BIM and CAD files made specification effortless.', img: IMG.testimonials[3] },
+  { name: 'Rajesh Kumar', role: 'Procurement Head, TATA Group', text: 'OPCIEAS delivered 2000+ workstations for our corporate offices on time and with impeccable quality. Their tender documentation was flawless.' },
+  { name: 'Dr. Anjali Sharma', role: 'Director, AIIMS', text: 'The hospital furniture supplied by OPCIEAS meets every medical-grade standard. Their team understood our requirements perfectly.' },
+  { name: 'Mohammed Al-Rashid', role: 'Import Manager, UAE', text: 'We have been importing from OPCIEAS for 5 years. Their export packaging, compliance and on-time delivery are world-class.' },
+  { name: 'Sarah Williams', role: 'Interior Architect, London', text: 'As an architect, I recommend OPCIEAS for commercial projects. Their BIM and CAD files made specification effortless.' },
 ];
 
 export default function Testimonials() {
@@ -46,12 +45,9 @@ export default function Testimonials() {
                 {[...Array(5)].map((_, s) => <Star key={s} className="h-4 w-4 fill-gold text-gold" />)}
               </div>
               <p className="font-body text-lg italic leading-relaxed text-navy/80">"{testimonials[i].text}"</p>
-              <div className="mt-6 flex items-center justify-center gap-4">
-                <img src={testimonials[i].img} alt={testimonials[i].name} className="h-14 w-14 rounded-full object-cover" />
-                <div className="text-left">
-                  <p className="font-heading text-base font-bold text-navy">{testimonials[i].name}</p>
-                  <p className="font-sub text-xs text-navy/60">{testimonials[i].role}</p>
-                </div>
+              <div className="mt-6 text-center">
+                <p className="font-heading text-base font-bold text-navy">{testimonials[i].name}</p>
+                <p className="font-sub text-xs text-navy/60">{testimonials[i].role}</p>
               </div>
             </motion.div>
           </AnimatePresence>

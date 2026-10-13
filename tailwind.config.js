@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const siteFontStack = ['Inter', 'Segoe UI', 'Helvetica Neue', 'Arial', 'sans-serif'];
+
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
@@ -10,15 +12,26 @@ export default {
         dark: { DEFAULT: '#090909', 2: '#111111' },
         'light-grey': { DEFAULT: '#F7F8FA', 2: '#F1F4F7' },
         'border-grey': '#D9E0E8',
-        'body-text': '#34445A',
+        'body-text': '#283548',
         'muted-text': '#68778C',
       },
       borderRadius: { lux: '20px' },
       fontFamily: {
-        manrope: ['Manrope', 'sans-serif'],
-        heading: ['Manrope', 'Montserrat', 'sans-serif'],
-        sub: ['Manrope', 'Poppins', 'sans-serif'],
-        body: ['Manrope', 'Inter', 'sans-serif'],
+        inter: siteFontStack,
+        heading: siteFontStack,
+        sub: siteFontStack,
+        body: siteFontStack,
+      },
+      fontWeight: {
+        thin: '400',
+        extralight: '400',
+        light: '400',
+        normal: '400',
+        medium: '500',
+        semibold: '600',
+        bold: '700',
+        extrabold: '700',
+        black: '700',
       },
       spacing: { 18: '4.5rem', 22: '5.5rem', 30: '7.5rem' },
       maxWidth: { '8xl': '1440px' },

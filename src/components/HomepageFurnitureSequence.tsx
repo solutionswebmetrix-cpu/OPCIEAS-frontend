@@ -21,15 +21,15 @@ function resolveAssets(category: string) {
 const scenes: SequenceScene[] = [
   {
     id: 'kg-classes',
-    label: 'KG Classes',
+    label: 'K G',
     subtitle: 'Safe • Durable • Colourful',
     heading: 'Designed for Young Minds',
-    route: '/products/category/educational-furniture?subcategory=kg-classes',
-    assets: resolveAssets('KG Classes'),
+    route: '/products/category/educational-furniture?subcategory=k-g',
+    assets: resolveAssets('K G'),
   },
   {
     id: 'primary',
-    label: 'Primary',
+    label: 'PRIMARY',
     subtitle: 'Smart • Strong • Ergonomic',
     heading: 'Built for Better Learning',
     route: '/products/category/educational-furniture?subcategory=primary',
@@ -37,7 +37,7 @@ const scenes: SequenceScene[] = [
   },
   {
     id: 'high-school',
-    label: 'High School',
+    label: 'HIGH SCHOOL',
     subtitle: 'Smart • Strong • Ergonomic',
     heading: 'Built for Better Learning',
     route: '/products/category/educational-furniture?subcategory=high-school',
@@ -50,6 +50,14 @@ const scenes: SequenceScene[] = [
     heading: 'Professional Seating for Higher Education',
     route: '/products/category/educational-furniture?subcategory=colleges-higher-education',
     assets: resolveAssets('Colleges & Higher Education'),
+  },
+  {
+    id: 'pg-university',
+    label: 'P.G = IMIVERSITY',
+    subtitle: 'Postgraduate and university furniture',
+    heading: 'Furniture for Advanced Learning',
+    route: '/products/category/educational-furniture?subcategory=p-g-imiversity',
+    assets: resolveAssets('P.G = IMIVERSITY'),
   },
 ];
 
@@ -114,7 +122,7 @@ export default function HomepageFurnitureSequence() {
                 <div className="mt-6 grid min-h-[250px] grid-cols-2 gap-3 sm:mt-8 sm:h-[250px] sm:min-h-0 sm:grid-cols-3 sm:gap-3">
                   {activeScene.assets.map((asset, index) => (
                     <motion.div
-                      key={asset.slug}
+                      key={asset.path}
                       initial={{ opacity: 0, y: 18, scale: 0.96 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       transition={{ delay: index * 0.12, duration: 0.5 }}

@@ -7,6 +7,7 @@ import SectionBanner from '../components/SectionBanner';
 import ProductCard from '../components/ProductCard';
 import InquiryForm from '../components/InquiryForm';
 import { fetchIndustry, fetchIndustryProjects, fetchProducts, fetchClients, type Industry, type IndustryProject, type Product, type Client } from '../lib/data';
+import { IMG } from '../lib/images';
 
 export default function IndustryPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -50,7 +51,7 @@ export default function IndustryPage() {
         description={ind.overview || `Explore ${ind.name} solutions from OPCIEAS, a premium commercial furniture manufacturer serving institutional, corporate and export projects.`}
         keywords={`${ind.name}, commercial furniture, institutional furniture, export furniture, OPCIEAS`}
       />
-      <SectionBanner title={ind.name} tagline={ind.tagline || ''} image={ind.hero_image || ''} crumb={ind.name} crumbTo={`/industries/${ind.slug}`} />
+      <SectionBanner title={ind.name} tagline={ind.tagline || ''} image={ind.hero_image || IMG.industries[ind.name as keyof typeof IMG.industries] || ''} crumb={ind.name} crumbTo={`/industries/${ind.slug}`} />
 
       {/* Overview */}
       <section className="bg-white py-20">

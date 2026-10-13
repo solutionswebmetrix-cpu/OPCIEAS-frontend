@@ -108,11 +108,11 @@ export default function ProductDetailPage() {
 
         <section className="bg-white pb-20">
           <div className="container-x grid gap-10 px-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-            <div className="overflow-hidden rounded-lux border border-navy/10 bg-light-grey p-3">
+            <div className="h-[420px] overflow-hidden rounded-lux border border-navy/10 bg-light-grey p-3 sm:h-[520px]">
               {mainImage ? (
-                <img src={mainImage} alt={product.name} className="h-full max-h-[520px] w-full rounded-xl object-contain" />
+                <img src={mainImage} alt={product.name} className="h-full w-full rounded-xl object-contain object-center" />
               ) : (
-                <div className="flex h-[520px] items-center justify-center rounded-xl bg-navy/5 text-navy/50">Product image unavailable</div>
+                <div className="flex h-full items-center justify-center rounded-xl bg-navy/5 text-navy/50">Product image unavailable</div>
               )}
             </div>
             <div>
@@ -202,8 +202,8 @@ export default function ProductDetailPage() {
               <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Product Images</p>
               <h2 className="mt-3 font-heading text-3xl font-black text-navy">Visual presentation</h2>
             </div>
-            <div className="overflow-hidden rounded-lux border border-navy/10 bg-white p-4">
-              {mainImage ? <img src={mainImage} alt={product.name} className="max-h-[560px] w-full rounded-xl object-contain" /> : <div className="flex h-[420px] items-center justify-center rounded-xl bg-navy/5 text-navy/50">Product image unavailable</div>}
+            <div className="h-[420px] overflow-hidden rounded-lux border border-navy/10 bg-white p-4 sm:h-[560px]">
+              {mainImage ? <img src={mainImage} alt={product.name} className="h-full w-full rounded-xl object-contain object-center" /> : <div className="flex h-full items-center justify-center rounded-xl bg-navy/5 text-navy/50">Product image unavailable</div>}
             </div>
           </div>
         </section>
@@ -232,11 +232,11 @@ export default function ProductDetailPage() {
         <div className="container-x grid gap-10 px-6 lg:grid-cols-2">
           {/* Gallery */}
           <div>
-            <div className="group relative aspect-square overflow-hidden rounded-lux border border-navy/10">
+            <div className="group relative aspect-square overflow-hidden rounded-lux border border-navy/10 bg-light-grey">
               {resolvedGallery.length ? <img
                 src={resolvedGallery[activeImg]}
                 alt={product.name}
-                className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+                className="h-full w-full object-contain object-center"
               /> : <div className="h-full w-full bg-navy/5" aria-label="Product image unavailable" />}
               {resolvedGallery.length > 1 && (
                 <>
@@ -274,7 +274,7 @@ export default function ProductDetailPage() {
                       i === activeImg ? 'border-gold ring-2 ring-gold/40' : 'border-transparent opacity-60 hover:opacity-100'
                     }`}
                   >
-                    <img src={img} alt={`thumb ${i + 1}`} className="h-full w-full object-cover" />
+                    <img src={img} alt={`thumb ${i + 1}`} className="h-full w-full bg-light-grey object-contain object-center" />
                   </button>
                 ))}
               </div>

@@ -60,7 +60,7 @@ export default function CompliancePage() {
       <SectionBanner
         title="Compliance"
         tagline="Informational compliance positioning and documentation guidance"
-        image={IMG.heroBg}
+        image={IMG.aboutFactory}
         crumb="Compliance"
         crumbTo="/"
       />

@@ -83,7 +83,7 @@ const aboutContent = {
     'Every product goes through a rigorous quality control process — from raw material inspection to final assembly testing. Our QC team uses precision measuring instruments and follows ISO 9001 documented procedures.',
   ],
   infrastructure: [
-    'Our 200,000 sq ft facility in Faridabad houses dedicated zones for raw material storage, CNC machining, welding, powder coating, woodworking, upholstery, assembly, quality control and finished goods warehousing.',
+    'Our 200,000 sq ft facility in Bengaluru houses dedicated zones for raw material storage, CNC machining, welding, powder coating, woodworking, upholstery, assembly, quality control and finished goods warehousing.',
     'The facility is equipped with 2 CNC laser cutting machines, 4 CNC press brakes, 6 MIG/TIG welding stations, a 6-stage powder coating line, and a dedicated woodworking shop with edge banding and boring machines.',
     'Our logistics infrastructure includes a fleet of trucks for domestic delivery and partnerships with major freight forwarders for export shipments. We handle container loading and ISPM-15 compliant export packaging in-house.',
   ],
@@ -231,7 +231,7 @@ export default function CompanyPage() {
               <h2 className="font-heading text-2xl font-black text-navy sm:text-3xl">Get in Touch</h2>
               <p className="mt-4 font-body text-sm text-navy/60">Have a question or need a quote? Fill out the form and our team will respond within 24 hours.</p>
               <div className="mt-8 space-y-4">
-                <div className="flex items-center gap-3"><div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gold/10 text-gold"><MapPin className="h-5 w-5" /></div><div><p className="font-sub text-xs text-navy/50">Address</p><p className="font-sub text-sm text-navy">OPCIEAS Pvt. Ltd., Faridabad, Haryana, India</p></div></div>
+                <div className="flex items-center gap-3"><div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gold/10 text-gold"><MapPin className="h-5 w-5" /></div><div><p className="font-sub text-xs text-navy/50">Address</p><p className="font-sub text-sm text-navy">SY No. 76, SITE No. 136, HOMMA DEVANAHALLI, CK. PALAYA ROAD, Bengaluru - 560083, Karnataka, India</p></div></div>
                 <div className="flex items-center gap-3"><div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gold/10 text-gold"><Phone className="h-5 w-5" /></div><div><p className="font-sub text-xs text-navy/50">Contact Person</p><a href="tel:+919845579049" className="font-sub text-sm text-navy hover:text-gold">Ravi • +91 9845579049</a></div></div>
                 <div className="flex items-center gap-3"><div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gold/10 text-gold"><Mail className="h-5 w-5" /></div><div><p className="font-sub text-xs text-navy/50">Email</p><a href="mailto:opcieas.opcieas4@gmail.com" className="font-sub text-sm text-navy hover:text-gold">opcieas.opcieas4@gmail.com</a></div></div>
               </div>

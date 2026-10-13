@@ -2,14 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: 'Manrope';
-  src: local('Manrope'), local('Manrope Regular'), local('Manrope Medium'), local('Manrope SemiBold'), local('Manrope Bold'), local('Manrope ExtraBold');
-  font-weight: 200 800;
-  font-style: normal;
-  font-display: swap;
-}
-
 @layer base {
   :root {
     --navy: #071A35;
@@ -24,9 +16,9 @@
     --light-grey: #F7F8FA;
     --light-grey-2: #F1F4F7;
     --border-grey: #D9E0E8;
-    --body-text: #34445A;
+    --body-text: #283548;
     --muted-text: #68778C;
-    --font-sans: 'Manrope', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    --font-sans: 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -35,29 +27,25 @@
 
   body {
     font-family: var(--font-sans);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
     background: var(--white);
     color: var(--body-text);
     overflow-x: hidden;
   }
 
-  h1, h2, h3, h4, h5 { font-family: var(--font-sans); font-weight: 800; }
+  h1, h2, h3, h4, h5 { font-family: var(--font-sans); font-weight: 700; }
   .font-sub { font-family: var(--font-sans); }
   .font-body { font-family: var(--font-sans); }
-  .font-serif, .font-times { font-family: 'Times New Roman', Times, Georgia, serif; }
-  .font-serif-italic, .font-times-italic { font-family: 'Times New Roman', Times, Georgia, serif; font-style: italic; }
-  .font-heading-serif, .font-heading-times {
-    font-family: 'Times New Roman', Times, Georgia, serif;
-    font-weight: 900;
-    letter-spacing: 0.02em;
-  }
-  .font-sub-serif, .font-sub-times {
-    font-family: 'Times New Roman', Times, Georgia, serif;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-  }
+  .font-serif, .font-times, .font-heading-serif, .font-heading-times, .font-sub-serif, .font-sub-times { font-family: var(--font-sans); }
+  .font-serif-italic, .font-times-italic { font-family: var(--font-sans); font-style: italic; }
 
   ::selection { background: var(--gold); color: var(--navy); }
 }
+
+input, select, textarea { font-family: var(--font-sans); font-size: 16px; }
+.font-body { font-size: 16px; font-weight: 400; line-height: 1.6; }
 
 @layer components {
   .form-input {
@@ -67,7 +55,7 @@
     background: var(--light-grey);
     padding: 0.75rem 1rem;
     font-family: var(--font-sans);
-    font-size: 0.875rem;
+    font-size: 1rem;
     color: var(--navy);
     outline: none;
   }

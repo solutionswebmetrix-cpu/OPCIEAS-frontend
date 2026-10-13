@@ -47,7 +47,7 @@ function BusinessVerticalImage({ title, category }: { title: string; category: B
           src={image}
           alt={`${title} ${index + 1}`}
           loading="lazy"
-          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${index === activeIndex ? 'opacity-100' : 'opacity-0'}`}
+          className={`absolute inset-0 h-full w-full bg-light-grey object-contain object-center transition-opacity duration-700 ${index === activeIndex ? 'opacity-100' : 'opacity-0'}`}
         />
       ))}
       {images.length > 1 && (
@@ -154,7 +154,7 @@ export default function HomePage() {
             {collectionCards.map((item) => (
               <Link key={item.title} to={item.link} className="group overflow-hidden rounded-lux border border-navy/10 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
                 <div className="h-64 overflow-hidden bg-light-grey p-3">
-                  <img src={item.image} alt={item.title} className="h-full w-full rounded-[14px] object-cover transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" />
+                  <img src={item.image} alt={item.title} className="h-full w-full rounded-[14px] object-contain object-center" loading="lazy" />
                 </div>
                 <div className="flex min-h-[12rem] flex-col p-5 sm:p-6">
                   <h3 className="font-heading text-2xl font-black text-navy">{item.title}</h3>
@@ -226,6 +226,8 @@ export default function HomePage() {
 
       <Industries />
 
+      <Clients />
+
       <section className="bg-[#F0F4F9] py-10 sm:py-12 lg:py-14">
         <div className="container-x px-6">
           <div className="mx-auto max-w-4xl text-center">
@@ -257,6 +259,8 @@ export default function HomePage() {
       <HomepageIntro />
 
       <WhyChooseUs />
+
+      <Testimonials />
 
       <section className="relative overflow-hidden bg-light-grey py-12 sm:py-14 lg:py-16">
         <div className="container-x relative z-10 px-6">

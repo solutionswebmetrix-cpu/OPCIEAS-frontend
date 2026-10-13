@@ -6,9 +6,8 @@ import PageMeta from '../components/PageMeta';
 import SectionBanner from '../components/SectionBanner';
 import ProductCard from '../components/ProductCard';
 import InquiryForm from '../components/InquiryForm';
-import { CATEGORY_BANNERS, CANONICAL_CATEGORIES, type CanonicalCategoryName } from '../lib/images';
-import { fetchCategories, fetchProducts, isCategoryVisible, productBelongsToCategory, productBelongsToSubcategory, resolveCategoryFromSlug, normalizeCategorySlug, type Product, type Category } from '../lib/data';
-import { getCategorySubcategoryAsset } from '../lib/productAssetResolver';
+import { CANONICAL_CATEGORIES, getCategoryBannerImage } from '../lib/images';
+import { fetchCategories, fetchProducts, isCategoryVisible, productBelongsToCategory, productBelongsToSubcategory, resolveCategoryFromSlug, type Product, type Category } from '../lib/data';
 
 const categoryContent: Record<string, { overview: string; highlights: string[]; accessories?: string[]; specs: Array<{ label: string; value: string }>; gallery: string[]; cta: string[] }> = {
   'office-furniture': {
@@ -23,13 +22,13 @@ const categoryContent: Record<string, { overview: string; highlights: string[]; 
     cta: ['Request Quote', 'Download Catalogue'],
   },
   'educational-furniture': {
-    overview: 'Educational Furniture follows a clear audience-based flow: KG Classes → Primary → High School → Colleges & Higher Education.',
-    highlights: ['KG Classes', 'Primary', 'High School', 'Colleges & Higher Education'],
+    overview: 'Educational Furniture follows a clear audience-based flow: K G → PRIMARY → HIGH SCHOOL → Colleges & Higher Education → P.G = IMIVERSITY.',
+    highlights: ['K G', 'PRIMARY', 'HIGH SCHOOL', 'Colleges & Higher Education', 'P.G = IMIVERSITY'],
     specs: [
-      { label: 'KG Classes', value: 'Kids desks and individual seating for KG classes.' },
-      { label: 'Primary', value: 'Single-seat and dual-seat desk/chair units for primary learning.' },
-      { label: 'High School', value: 'Single-seat and dual-seat desk/chair units for high school classrooms.' },
-      { label: 'College & Higher Education', value: 'Lecture seating with writing pads and integrated cup/bag holders for college and higher education.' },
+      { label: 'K G', value: 'Kids desks and individual seating for KG classes.' },
+      { label: 'PRIMARY', value: 'Single-seat and dual-seat desk/chair units for primary learning.' },
+      { label: 'HIGH SCHOOL', value: 'Single-seat and dual-seat desk/chair units for high school classrooms.' },
+      { label: 'Colleges & Higher Education', value: 'Lecture seating with writing pads and integrated cup/bag holders for college and higher education.' },
     ],
     gallery: ['KG classroom seating', 'Primary desk/chair units', 'High school desk/chair units', 'College lecture seating with writing pad and cup/bag holders'],
     cta: ['Request Quote', 'Download Catalogue'],
@@ -232,16 +231,8 @@ export default function ProductCategoryPage() {
     );
   }
 
-  const bannerImage = CATEGORY_BANNERS[cat.name as CanonicalCategoryName] || categoryProducts[0]?.image || '';
+  const bannerImage = getCategoryBannerImage(cat.name) ?? '';
   const content = categoryContent[cat.slug] || null;
-
-  const subcategoryCards = cat
-    ? (content?.highlights ?? [])
-        .map((name) => {
-          const asset = getCategorySubcategoryAsset(cat.name, name);
-          return { name, image: asset?.image ?? null, slug: normalizeCategorySlug(name) };
-        })
-    : [];
 
   return (
     <>
@@ -252,7 +243,7 @@ export default function ProductCategoryPage() {
         canonical={`https://www.opcieascommercialfurniture.com/products/category/${cat.slug}`}
         schema={{ '@context': 'https://schema.org', '@type': 'Product', name: cat.name, description: `Premium ${cat.name} from OPCIEAS` }}
       />
-      <SectionBanner title={cat.name} tagline={loadError ? 'Product data unavailable' : `${categoryProducts.length} product${categoryProducts.length !== 1 ? 's' : ''}`} image={bannerImage} crumb={cat.name} crumbTo={`/products/category/${cat.slug}`} />
+      <SectionBanner title={cat.name} tagline={loadError ? 'Product data unavailable' : `${categoryProducts.length} product${categoryProducts.length !== 1 ? 's' : ''}`} image={bannerImage} crumb={cat.name} crumbTo={`/products/category/${cat.slug}`} variant="category" />
 
       <section className="bg-white py-20">
         <div className="container-x px-6">
@@ -295,39 +286,6 @@ export default function ProductCategoryPage() {
                   ))}
                 </div>
               </div>}
-            </motion.div>
-          )}
-
-          {subcategoryCards.length > 0 && (
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
-              <div className="mb-6 flex items-center justify-between gap-4">
-                <div>
-                  <p className="font-sub text-xs uppercase tracking-[0.35em] text-gold">{cat.name}</p>
-                  <h3 className="mt-2 font-heading text-2xl font-black text-navy">Explore Subcategories</h3>
-                </div>
-              </div>
-              <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-                {subcategoryCards.map((card) => (
-                  <Link key={card.name} to={`/products/category/${cat.slug}?subcategory=${encodeURIComponent(card.slug)}`} className="group overflow-hidden rounded-lux border border-navy/10 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-md">
-                    <div className="relative h-56 overflow-hidden">
-                      {card.image ? (
-                        <img src={card.image} alt={card.name} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
-                      ) : (
-                        <div role="img" aria-label={`Image unavailable for ${card.name}`} className="flex h-full w-full items-center justify-center bg-navy/5 font-sub text-xs text-navy/50">
-                          Image unavailable
-                        </div>
-                      )}
-                    </div>
-                    <div className="p-5">
-                      <p className="font-sub text-[10px] uppercase tracking-[0.26em] text-gold">Subcategory</p>
-                      <h4 className="mt-3 font-heading text-xl font-black text-navy">{card.name}</h4>
-                      <span className="mt-4 inline-flex items-center gap-2 font-sub text-xs font-semibold uppercase tracking-[0.18em] text-gold">
-                        Explore Products <ArrowRight className="h-3.5 w-3.5" />
-                      </span>
-                    </div>
-                  </Link>
-                ))}
-              </div>
             </motion.div>
           )}
 

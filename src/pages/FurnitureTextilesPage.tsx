@@ -3,7 +3,7 @@ import { ArrowRight, Building2, FileText, ShieldCheck, Ship, Sofa, Warehouse } f
 import { Link } from 'react-router-dom';
 import PageMeta from '../components/PageMeta';
 import SectionBanner from '../components/SectionBanner';
-import { IMG } from '../lib/images';
+import { IMG, getCategoryBannerImage } from '../lib/images';
 
 const pillars = [
   { icon: Building2, title: 'Educational Furniture', desc: 'Classroom, library and learning space products built for daily institutional use.' },
@@ -31,7 +31,7 @@ export default function FurnitureTextilesPage() {
       <SectionBanner
         title="Furniture & Textiles"
         tagline="Educational Furniture • Institutional Furniture • Textiles • Storage Solutions • Special Order Fiberglass • Steel Furniture • FRP Furniture • Writing Pad Chairs • Export Ready Products • Quality Assurance"
-        image={IMG.heroBg}
+        image={getCategoryBannerImage('Commercial Furniture') ?? IMG.heroProduct}
         crumb="Furniture & Textiles"
         crumbTo="/"
       />

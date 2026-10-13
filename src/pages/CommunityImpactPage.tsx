@@ -5,6 +5,7 @@ import PageMeta from '../components/PageMeta';
 import SectionBanner from '../components/SectionBanner';
 import Gallery from '../components/Gallery';
 import { IMG } from '../lib/images';
+import communityHeroImage from '../assets/Social/inner introduction page.jpg';
 
 export default function CommunityImpactPage() {
   const initiatives = [
@@ -105,7 +106,7 @@ export default function CommunityImpactPage() {
       <SectionBanner
         title="Community Impact & Social Services"
         tagline="Community-Led • Sustainable Development • Social Prosperity"
-        image={IMG.heroBg}
+        image={communityHeroImage}
         crumb="Community Impact"
         crumbTo="/"
       />

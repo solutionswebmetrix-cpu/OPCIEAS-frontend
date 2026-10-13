@@ -5,26 +5,26 @@ import companyLogo from '../assets/logo/logo.png';
 import { findProductAssetByName, type ProductAsset } from '../lib/productAssetResolver';
 
 function asset(name: string, category?: string): ProductAsset | null {
-  return findProductAssetByName(name, category) ?? findProductAssetByName(name);
+  return findProductAssetByName(name, category);
 }
 
 const institutionalAssets = [
-  asset('Minimal Desk and Bench Set', 'School Furniture'),
-  asset('White Lecture Chair with Writing Tablet', 'Educational Furniture'),
-  asset('Adjustable Height Table', 'Educational Furniture'),
-  asset('Chrome Wire Shelving on Terracotta Floor', 'Industrial Storage'),
+  asset('Student Desk', 'School Furniture'),
+  asset('JUNIOR COLLEGE STEEL CHAIR', 'Educational Furniture'),
+  asset('Teacher Table', 'School Furniture'),
+  asset('SS Detachable Wire Rack', 'Industrial Storage'),
 ].filter((item): item is ProductAsset => !!item);
 
 const schoolAssets = [
-  asset('Colorful Kindergarten Classroom Furniture', 'School Furniture'),
-  asset('Kids Classroom Chair', 'School Furniture'),
-  asset('School Desk & Chair Sets', 'School Furniture'),
+  asset('Kids-Nursery', 'School Furniture'),
+  asset('Activity Table', 'School Furniture'),
+  asset('Dual Desk', 'School Furniture'),
 ].filter((item): item is ProductAsset => !!item);
 
 const seatingAssets = [
-  asset('Rows of Burgundy Seats in a Bright Classroom', 'School Furniture'),
-  asset('Chrome Three-Seat Waiting Bench', 'Educational Furniture'),
-  asset('Stackable Student Chairs', 'School Furniture'),
+  asset('Symmetrical Auditorium Stage and Seating', 'Commercial Furniture'),
+  asset('Red Cinema Seats on Tiered Risers', 'Commercial Furniture'),
+  asset('Vibrant Red and Blue Stadium Bleachers', 'Commercial Furniture'),
 ].filter((item): item is ProductAsset => !!item);
 
 function AssetGrid({ items }: { items: ProductAsset[] }) {
@@ -33,7 +33,7 @@ function AssetGrid({ items }: { items: ProductAsset[] }) {
       {items.map((item) => (
         <Link key={item.slug} to={`/product/${item.slug}`} className="group overflow-hidden rounded-xl border border-navy/10 bg-white">
           <div className="flex h-32 items-center justify-center bg-light-grey p-2 sm:h-40 sm:p-3">
-            <img src={item.image} alt={item.name} className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+            <img src={item.image} alt={item.name} className="h-full w-full object-contain object-center" loading="lazy" />
           </div>
           <p className="min-h-12 p-2 font-sub text-[10px] font-semibold leading-4 text-navy sm:p-3 sm:text-xs">{item.name}</p>
         </Link>

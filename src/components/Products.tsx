@@ -21,7 +21,7 @@ function HomeProductCard({ product, index, categoryIndex }: { product: Product; 
           {image ? <img
             src={image}
             alt={product.name}
-            className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
+            className="h-full w-full object-contain object-center"
             loading={categoryIndex === 0 && index < 4 ? 'eager' : 'lazy'}
           /> : <div className="h-full w-full bg-navy/5" aria-label="Product image unavailable" />}
         </div>
@@ -100,7 +100,7 @@ export default function Products() {
               Furniture for Every Commercial Space
             </motion.h2>
             <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mx-auto mt-4 max-w-xl font-body text-sm text-navy/60">
-              From office interiors and educational campuses to hospitals, hospitality and industrial storage — 1000+ furniture products engineered for durability and style.
+              Browse the approved local product range across education, hostel, storage, bathroom and special-order categories.
             </motion.p>
           </div>
           <div className="font-sub text-sm uppercase tracking-[0.2em] text-gold">Loading products...</div>

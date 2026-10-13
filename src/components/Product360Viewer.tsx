@@ -118,7 +118,7 @@ export default function Product360Viewer({ images, productName, open, onClose }:
                 onClick={() => setIdx(i)}
                 className={`h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg border-2 transition ${i === idx ? 'border-gold' : 'border-transparent opacity-60 hover:opacity-100'}`}
               >
-                <img src={img} alt={`thumb ${i + 1}`} className="h-full w-full object-cover" />
+                <img src={img} alt={`thumb ${i + 1}`} className="h-full w-full bg-light-grey object-contain object-center" />
               </button>
             ))}
           </div>

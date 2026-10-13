@@ -6,7 +6,7 @@ import ProductCard from '../components/ProductCard';
 import SectionBanner from '../components/SectionBanner';
 import CommercialFurnitureShowcase from '../components/CommercialFurnitureShowcase';
 import { fetchCategories, fetchProducts, type Category, type Product } from '../lib/data';
-import { CATEGORY_BANNERS } from '../lib/images';
+import { getCategoryBannerImage } from '../lib/images';
 
 type BulkGroup = {
   title: string;
@@ -19,26 +19,20 @@ const bulkGroups: BulkGroup[] = [
   {
     title: 'Auditorium Chairs',
     description: 'Heavy-use auditorium seating with durable chair structures and public-space seating layouts.',
-    categories: ['educational furniture', 'school furniture', 'office furniture'],
-    terms: ['auditorium', 'chair', 'seat'],
+    categories: ['commercial furniture'],
+    terms: ['auditorium'],
   },
   {
     title: 'Cine Chairs',
     description: 'Comfortable, durable cinema and theater seating designed for repeated commercial seating use.',
-    categories: ['office furniture', 'educational furniture', 'industrial storage'],
-    terms: ['cine', 'cinema', 'movie', 'theatre', 'theater', 'chair'],
+    categories: ['commercial furniture'],
+    terms: ['cinema', 'cine'],
   },
   {
     title: 'Stadium Chairs',
     description: 'Outdoor and spectator seating solutions shaped for stadium, training, and public-viewing environments.',
-    categories: ['office furniture', 'educational furniture', 'industrial storage'],
-    terms: ['stadium', 'stadium chair', 'seating'],
-  },
-  {
-    title: 'Commercial Furniture',
-    description: 'We can supply any product if specifications and drawing layouts are shared, with or without images. Request Bulk Quote.',
-    categories: ['office furniture', 'educational furniture', 'school furniture', 'hostel furniture', 'industrial storage'],
-    terms: ['desk', 'storage', 'cabinet', 'chair', 'table', 'bench', 'workstation'],
+    categories: ['commercial furniture'],
+    terms: ['stadium', 'bleachers'],
   },
   {
     title: 'Hostel & Residential Accommodation',
@@ -113,9 +107,10 @@ export default function FurniturePage() {
       <SectionBanner
         title="Commercial & Institutional Furniture Built for Scale"
         tagline="High-volume furniture for institutions, commercial projects, and large-scale contractors"
-        image={CATEGORY_BANNERS['Educational Furniture']}
+        image={getCategoryBannerImage('Commercial Furniture') ?? ''}
         crumb="Commercial Furniture"
         crumbTo="/furniture"
+        variant="category"
       />
 
       <main className="bg-white">
@@ -179,12 +174,6 @@ export default function FurniturePage() {
                 <h3 className="font-heading text-2xl font-bold text-navy">{group.title}</h3>
                 <div className="mt-3 max-w-3xl">
                   <p className="font-body text-base leading-7 text-navy/70">{group.description}</p>
-                  {group.title === 'Commercial Furniture' && (
-                    <div className="mt-4 flex flex-wrap gap-3">
-                      <Link to="/rfq" className="btn-gold inline-flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm">Request Bulk Quote</Link>
-                      <Link to="/rfq" className="btn-ghost inline-flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm text-navy">Request Custom Requirement</Link>
-                    </div>
-                  )}
                 </div>
                 {matchingProducts.length > 0 ? (
                   <div className="mt-7 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">

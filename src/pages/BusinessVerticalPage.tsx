@@ -6,7 +6,7 @@ import PageMeta from '../components/PageMeta';
 import ProductCard from '../components/ProductCard';
 import SectionBanner from '../components/SectionBanner';
 import { BUSINESS_VERTICALS, type BusinessVerticalSlug, verticalCategoriesSummary, getBusinessVerticalImages } from '../lib/businessVerticalImages';
-import { CATEGORY_BANNERS, CANONICAL_CATEGORIES, type CanonicalCategoryName } from '../lib/images';
+import { CATEGORY_BANNERS, CANONICAL_CATEGORIES, getCategoryBannerImage, type CanonicalCategoryName } from '../lib/images';
 import { fetchCategories, fetchProducts, type Product, type Category } from '../lib/data';
 
 const fallbackCategories: Pick<Category, 'id' | 'name' | 'slug'>[] = CANONICAL_CATEGORIES.map((category) => ({
@@ -90,7 +90,9 @@ export default function BusinessVerticalPage() {
     );
   }
 
-  const bannerImage = pickBannerImage(slugKey, vertical);
+  const bannerImage = slugKey === 'fiberglass-special-order'
+    ? getCategoryBannerImage('Fiberglass Special Order') ?? ''
+    : pickBannerImage(slugKey, vertical);
   const categoryNames = verticalCategoriesSummary(slugKey);
 
   return (
@@ -104,9 +106,10 @@ export default function BusinessVerticalPage() {
       <SectionBanner
         title={vertical.name}
         tagline={`${verticalProducts.length} product${verticalProducts.length !== 1 ? 's' : ''} • ${categoryNames.join(' + ')}`}
-        image={bannerImage || CATEGORY_BANNERS['Educational Furniture']}
+        image={bannerImage || (slugKey === 'fiberglass-special-order' ? '' : CATEGORY_BANNERS['Educational Furniture'])}
         crumb={vertical.name}
         crumbTo={`/products/vertical/${slugKey}`}
+        variant={slugKey === 'fiberglass-special-order' ? 'category' : 'default'}
       />
 
       <section className="bg-white py-20">

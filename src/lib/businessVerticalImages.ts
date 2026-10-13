@@ -17,7 +17,7 @@ const fiberglassNamePatterns = [
   'frp', 'fiberglass', 'glassfiber', 'glass-fiber', 'glass fiber',
   'play', 'playground', 'play ground', 'park', 'garden',
   'outdoor furniture', 'slide', 'swing', 'seesaw', 'merry-go-round', 'merry go round',
-  'nursery', 'jungle gym', 'climber', 'multiplay', 'multi play',
+  'jungle gym', 'climber', 'multiplay', 'multi play',
 ];
 
 export type BusinessVerticalKey = keyof typeof categoryAssetModules;

@@ -54,9 +54,9 @@ export default function Gallery() {
               viewport={{ once: true }}
               transition={{ delay: (i % 4) * 0.08, duration: 0.5 }}
               onClick={() => setLightbox(i)}
-              className={`group relative cursor-pointer overflow-hidden rounded-lux border border-navy/10 ${hClass[im.h]}`}
+              className={`group relative cursor-pointer overflow-hidden rounded-lux border border-navy/10 bg-light-grey ${hClass[im.h]}`}
             >
-              <img src={im.src} alt={`${im.cat} furniture by OPCIEAS`} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
+              <img src={im.src} alt={`${im.cat} furniture by OPCIEAS`} className="h-full w-full object-contain object-center" loading="lazy" />
               <div className="absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
               <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between opacity-0 transition-opacity duration-500 group-hover:opacity-100">
                 <span className="rounded-full bg-white/15 px-2 py-1 font-sub text-[10px] text-white backdrop-blur">{im.cat}</span>

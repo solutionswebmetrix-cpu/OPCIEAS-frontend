@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { getHostelAssets } from '../lib/productAssetResolver';
+import { findLocalProductAsset } from '../lib/productAssetResolver';
 
 const hostelStory = [
   {
@@ -31,8 +31,6 @@ const hostelStory = [
 ] as const;
 
 export default function HomepageHostelSequence() {
-  const assets = getHostelAssets(4);
-
   return (
     <section id="hostel-furniture" className="border-t border-navy/10 bg-white py-10 sm:py-12 lg:py-14">
       <div className="container-x px-6">
@@ -47,8 +45,11 @@ export default function HomepageHostelSequence() {
         </div>
 
         <div className="grid gap-5 lg:grid-cols-4">
-          {hostelStory.map((item, index) => (
-            <motion.article
+          {hostelStory.map((item, index) => {
+            const asset = findLocalProductAsset({ name: item.label, category: 'Hostel Furniture' });
+            if (!asset) return null;
+
+            return <motion.article
               key={item.id}
               initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -58,7 +59,7 @@ export default function HomepageHostelSequence() {
             >
               <div className="relative h-56 overflow-hidden bg-white p-2.5">
                 <img
-                  src={assets[index]?.image ?? assets[0]?.image}
+                  src={asset.image}
                   alt={item.label}
                   className="h-full w-full object-contain"
                   loading="lazy"
@@ -74,8 +75,8 @@ export default function HomepageHostelSequence() {
                 <p className="mt-2 font-body text-sm leading-6 text-navy/70">{item.subtitle}</p>
                 <p className="mt-3 font-body text-sm leading-6 text-navy/60">{item.description}</p>
               </div>
-            </motion.article>
-          ))}
+            </motion.article>;
+          })}
         </div>
       </div>
     </section>

@@ -14,7 +14,7 @@ export default function PrivacyPolicyPage() {
       <SectionBanner
         title="Privacy Policy"
         tagline="Your data, our responsibility"
-        image={IMG.heroBg}
+        image={IMG.aboutFactory}
         crumb="Legal"
         crumbTo="/"
       />

@@ -27,7 +27,7 @@ export default function TechBusinessPromotionPage() {
       <SectionBanner
         title="Tech Business Promotion"
         tagline="Portal Governance • Industrial Promotion • Transparency • Trust • Compliance • Business Networking • Export Promotion • Quality Standards"
-        image={IMG.heroBg}
+        image={IMG.heroProduct}
         crumb="Tech Business Promotion"
         crumbTo="/"
       />
@@ -38,11 +38,11 @@ export default function TechBusinessPromotionPage() {
             <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
               <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Introduction</p>
               <h2 className="mt-3 font-heading text-3xl font-black text-navy sm:text-4xl">A professional bridge between industry, governance and opportunity</h2>
-              <p className="mt-6 font-body text-base leading-relaxed text-navy/70">
-                OPCIEAS Tech Business Promotion division builds the connective tissue between industry, governance and markets. We engineer digital systems and institutional frameworks around Portal Governance, Industrial Promotion, Transparency, Trust, Compliance and Business Networking.
+              <p className="mt-6 font-body text-base leading-relaxed text-green-700">
+                This portal is dedicated to industrial development. We understand the challenges businesses face when investing in digital advertisements across various portals. Our focus is on delivering transparent, results-driven growth for industrial manufacturers.
               </p>
-              <p className="mt-4 font-body text-base leading-relaxed text-navy/70">
-                The model is designed to strengthen participation, build supplier confidence and support export-ready growth with a clear quality-first and governance-led approach.
+              <p className="mt-4 font-body text-base leading-relaxed text-green-700">
+                Many industrialists utilize numerous listings across various Indian portals, often finding that traditional directories fall short of driving real industry growth. However, a strong digital presence remains essential.
               </p>
             </motion.div>
 

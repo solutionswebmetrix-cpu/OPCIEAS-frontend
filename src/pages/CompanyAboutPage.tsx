@@ -17,7 +17,7 @@ export default function CompanyAboutPage() {
       <SectionBanner
         title="About OPCIEAS"
         tagline="Direct Manufacturer • Institutional Supply Partner • Premium Quality"
-        image={IMG.heroBg}
+        image={IMG.manufacturingBg}
         crumb="Company"
         crumbTo="/"
       />

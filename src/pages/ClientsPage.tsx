@@ -1,9 +1,18 @@
 import Clients from '../components/Clients';
 import Testimonials from '../components/Testimonials';
+import SectionBanner from '../components/SectionBanner';
+import { IMG } from '../lib/images';
 
 export default function ClientsPage() {
   return (
     <main>
+      <SectionBanner
+        title="Our Clients"
+        tagline="Trusted by leading corporates, government organisations and educational institutions"
+        image={IMG.heroBg}
+        crumb="Clients"
+        crumbTo="/clients"
+      />
       <Clients />
       <section className="relative overflow-hidden bg-light-grey py-20">
         <div className="container-x px-6">

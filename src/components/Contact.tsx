@@ -74,10 +74,10 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="relative overflow-hidden bg-light-grey py-32">
+    <section id="contact" className="relative overflow-hidden bg-light-grey py-20">
       <div className="absolute inset-0 blueprint-bg opacity-20" />
       <div className="container-x relative px-6">
-        <div className="mx-auto mb-16 max-w-2xl text-center">
+        <div className="mx-auto mb-10 max-w-2xl text-center">
           <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-sub text-sm uppercase tracking-[0.3em] text-gold">Contact</motion.p>
           <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl xl:text-5xl">
             Let's Build Together
@@ -88,7 +88,7 @@ export default function Contact() {
           {/* Left — info */}
           <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="space-y-5">
             {[
-              { icon: MapPin, title: 'Head Office', lines: ['OPCIEAS Pvt. Ltd.', 'Faridabad, Haryana, India'] },
+              { icon: MapPin, title: 'Head Office', lines: ['OPCIEAS Pvt. Ltd.', 'SY No. 76, SITE No. 136, HOMMA DEVANAHALLI,', 'CK. PALAYA ROAD, Bengaluru - 560076, Karnataka, India'] },
               { icon: Phone, title: 'Contact Person', lines: ['Ravi'] },
               { icon: Phone, title: 'Phone', lines: ['+91 9845579049'] },
               { icon: Mail, title: 'Email', lines: ['opcieas.opcieas4@gmail.com'] },
@@ -98,25 +98,25 @@ export default function Contact() {
               <div key={c.title} className="flex items-start gap-4 rounded-lux glass-navy p-5">
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gold/10 text-gold"><c.icon className="h-6 w-6" /></div>
                 <div>
-                  <p className="font-heading text-sm font-bold text-white">{c.title}</p>
-                  {c.lines.map((l) => <p key={l} className="font-body text-sm text-white/80">{l}</p>)}
+                  <p className="font-heading text-sm font-bold text-navy">{c.title}</p>
+                  {c.lines.map((l) => <p key={l} className="font-body text-sm text-navy/70">{l}</p>)}
                 </div>
               </div>
             ))}
 
             {/* Meeting options */}
             <div className="rounded-lux glass-navy p-5">
-              <p className="mb-3 font-heading text-sm font-bold text-white">Instant Support</p>
+              <p className="mb-3 font-heading text-sm font-bold text-navy">Instant Support</p>
               <div className="flex flex-wrap gap-2">
                 {[
-                  { icon: MapPin, label: 'Google Maps', href: 'https://maps.google.com/?q=OPCIEAS%20Faridabad%20Haryana%20India' },
+                  { icon: MapPin, label: 'Google Maps', href: 'https://www.google.com/maps/search/?api=1&query=SY+No+76+SITE+No+136+HOMMA+DEVANAHALLI+CK+PALAYA+ROAD+Bengaluru+560083+Karnataka+India' },
                   { icon: MessageCircle, label: 'WhatsApp', href: 'https://wa.me/919845579049' },
                   { icon: Phone, label: 'Call Now', href: 'tel:+919845579049' },
                   { icon: Mail, label: 'Email', href: 'mailto:opcieas.opcieas4@gmail.com' },
                   { icon: Calendar, label: 'Request Quote', href: '/rfq' },
                   { icon: Video, label: 'Live Chat', href: '/contact' },
                 ].map((m) => (
-                  <a key={m.label} href={m.href} className="flex items-center gap-1.5 rounded-full border border-white/15 px-3 py-1.5 font-sub text-xs text-white/85 transition hover:border-gold hover:text-gold">
+                  <a key={m.label} href={m.href} className="flex items-center gap-1.5 rounded-full border border-navy/15 px-3 py-1.5 font-sub text-xs text-navy/80 transition hover:border-gold hover:text-gold">
                     <m.icon className="h-3.5 w-3.5" /> {m.label}
                   </a>
                 ))}
@@ -128,10 +128,11 @@ export default function Contact() {
           <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="space-y-5">
             <div className="overflow-hidden rounded-lux glass-navy">
               <iframe
-                title="OPCIEAS Location"
-                src="https://maps.google.com/maps?q=OPCIEAS%20Faridabad%20Haryana%20India&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                title="OPCIEAS Office Location - Bengaluru"
+                src="https://maps.google.com/maps?q=SY+No.+76,+SITE+No.+136,+HOMMA+DEVANAHALLI,+CK.+PALAYA+ROAD,+Bengaluru+-+560083,+Karnataka,+India&z=14&output=embed"
                 className="h-64 w-full border-0"
                 loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
               />
             </div>
 

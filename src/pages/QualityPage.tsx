@@ -16,7 +16,7 @@ export default function QualityPage() {
       <SectionBanner
         title="Quality & Certifications"
         tagline="Premium Quality • 7-Stage Inspection • ISO 9001:2015 Certified"
-        image={IMG.heroBg}
+        image={IMG.aboutFactory}
         crumb="Quality"
         crumbTo="/"
       />

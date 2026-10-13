@@ -34,7 +34,7 @@ export default function TechnologyPage() {
       <SectionBanner
         title="Tech Business Promotion"
         tagline="Portal Governance • Industrial Promotion • Transparency • Trust • Compliance • Business Networking • Export Promotion • Quality Standards"
-        image={IMG.heroBg}
+        image={IMG.heroProduct}
         crumb="Technology"
         crumbTo="/"
       />

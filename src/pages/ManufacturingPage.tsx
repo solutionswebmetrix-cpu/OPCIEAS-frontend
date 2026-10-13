@@ -15,7 +15,7 @@ export default function ManufacturingPage() {
       <SectionBanner
         title="Manufacturing Capabilities"
         tagline="Direct Factory • In-House Production • Custom OEM Solutions"
-        image={IMG.heroBg}
+        image={IMG.manufacturingBg}
         crumb="Manufacturing"
         crumbTo="/"
       />

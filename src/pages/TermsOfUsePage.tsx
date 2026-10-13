@@ -14,7 +14,7 @@ export default function TermsOfUsePage() {
       <SectionBanner
         title="Terms of Use"
         tagline="Legal terms and conditions"
-        image={IMG.heroBg}
+        image={IMG.aboutFactory}
         crumb="Legal"
         crumbTo="/"
       />

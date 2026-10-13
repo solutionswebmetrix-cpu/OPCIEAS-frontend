@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import PageMeta from '../components/PageMeta';
 import SectionBanner from '../components/SectionBanner';
 import { IMG } from '../lib/images';
+import agricultureHeroImage from '../assets/Social/inner introduction page.jpg';
 
 export default function AgriculturePage() {
   const services = [
@@ -24,7 +25,7 @@ export default function AgriculturePage() {
       <SectionBanner
         title="Agriculture & Fisheries"
         tagline="Sustainable solutions for agriculture and fisheries"
-        image={IMG.heroBg}
+        image={agricultureHeroImage}
         crumb="Agriculture"
         crumbTo="/"
       />

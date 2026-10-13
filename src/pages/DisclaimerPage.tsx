@@ -14,7 +14,7 @@ export default function DisclaimerPage() {
       <SectionBanner
         title="Disclaimer"
         tagline="Important legal notices"
-        image={IMG.heroBg}
+        image={IMG.aboutFactory}
         crumb="Legal"
         crumbTo="/"
       />

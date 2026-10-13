@@ -444,6 +444,39 @@ function getBannerOrDefault(preferredNames: string[], fallback: string): string 
   return fallback;
 }
 
+const CATEGORY_HERO_ASSETS: Record<string, { folder: string; fileName: string }> = {
+  'commercial furniture': { folder: 'Commercial Furniture', fileName: 'Symmetrical Auditorium Stage and Seating' },
+  'educational furniture': { folder: 'Educational Furniture', fileName: 'Classroom Desk-Chair Set' },
+  'school furniture': { folder: 'School Furniture', fileName: 'Classroom Seating' },
+  'hostel furniture': { folder: 'Hostel Furniture', fileName: 'Hostel Cots' },
+  'industrial storage': { folder: 'Industrial Storage', fileName: 'Warehouse Rack' },
+  'bathroom collection': { folder: 'Bathroom Collection', fileName: 'Vanity Unit' },
+  'letter box': { folder: 'Letter Box', fileName: 'Wall-Mounted Letter Box' },
+  'letter boxes': { folder: 'Letter Box', fileName: 'Wall-Mounted Letter Box' },
+  'fiberglass special order': { folder: 'Fiberglass  Special Order', fileName: 'Colourful Twin Slide Playground Structure' },
+};
+
+function normalizeHeroAssetLabel(value: string): string {
+  return value.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+}
+
+export function getCategoryBannerImage(categoryName: string): string | undefined {
+  const key = normalizeHeroAssetLabel(categoryName);
+  const config = CATEGORY_HERO_ASSETS[key];
+  const folder = config?.folder ?? categoryName.replace(/-/g, ' ').trim();
+  const candidates = Object.entries(allAssetModules).filter(([path]) => {
+    const segments = path.replace(/\\/g, '/').split('/');
+    const productIndex = segments.lastIndexOf('product');
+    return productIndex >= 0 &&
+      normalizeHeroAssetLabel(segments[productIndex + 1] ?? '') === normalizeHeroAssetLabel(folder);
+  });
+
+  const preferred = config?.fileName
+    ? candidates.find(([path]) => normalizeHeroAssetLabel(getFileName(path)) === normalizeHeroAssetLabel(config.fileName))
+    : undefined;
+  return preferred?.[1] ?? candidates[0]?.[1];
+}
+
 const firstImg = PRODUCT_IMAGE_GROUPS[0]?.image || Object.values(bannerAssetModules)[0] || '';
 
 const OfficeFurnitureImg      = getBannerOrDefault(['Office Furniture'], firstImg);
@@ -655,13 +688,13 @@ export const IMG = {
 };
 
 export const CATEGORY_BANNERS: Record<CanonicalCategoryName, string> = {
-  'Office Furniture':      OfficeFurnitureImg,
-  'Educational Furniture': EducationalFurnitureImg,
-  'School Furniture':      SchoolFurnitureImg,
-  'Hostel Furniture':      HostelFurnitureImg,
-  'Industrial Storage':    IndustrialStorageImg,
-  'Bathroom Collection':   BathroomStorageImg,
-  'Letter Box':            LetterBoxesImg,
+  'Office Furniture':      getCategoryBannerImage('Office Furniture') ?? '',
+  'Educational Furniture': getCategoryBannerImage('Educational Furniture') ?? '',
+  'School Furniture':      getCategoryBannerImage('School Furniture') ?? '',
+  'Hostel Furniture':      getCategoryBannerImage('Hostel Furniture') ?? '',
+  'Industrial Storage':    getCategoryBannerImage('Industrial Storage') ?? '',
+  'Bathroom Collection':   getCategoryBannerImage('Bathroom Collection') ?? '',
+  'Letter Box':            getCategoryBannerImage('Letter Box') ?? '',
 };
 
 export const _debugProductCount = PRODUCT_IMAGE_GROUPS.length;

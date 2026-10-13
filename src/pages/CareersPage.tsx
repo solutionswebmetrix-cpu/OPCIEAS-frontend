@@ -42,7 +42,7 @@ export default function CareersPage() {
 
   return (
     <>
-      <SectionBanner title="Careers" tagline="Join the OPCIEAS team" image={IMG.heroBg} crumb="Careers" crumbTo="/company/careers" />
+      <SectionBanner title="Careers" tagline="Join the OPCIEAS team" image={IMG.aboutFactory} crumb="Careers" crumbTo="/company/careers" />
 
       {/* Job listings or detail */}
       <section className="bg-white py-20">

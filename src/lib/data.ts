@@ -64,7 +64,7 @@ const mockCertifications: Certification[] = [
 
 const mockCareers: Career[] = [
   { id: '1', slug: 'sales-manager',            title: 'Sales Manager',            department: 'Sales',       location: 'Delhi',     type: 'Full Time', experience: '5-10 Years', description: 'Lead sales team for commercial furniture.', requirements: ['Experience in B2B sales', 'Knowledge of furniture industry', 'Good communication skills'], posted_date: new Date().toISOString(), status: 'Open' },
-  { id: '2', slug: 'production-supervisor',    title: 'Production Supervisor',    department: 'Production',  location: 'Faridabad', type: 'Full Time', experience: '3-5 Years',  description: 'Supervise manufacturing operations.', requirements: ['Production experience', 'Knowledge of furniture manufacturing', 'Leadership skills'], posted_date: new Date().toISOString(), status: 'Open' },
+  { id: '2', slug: 'production-supervisor',    title: 'Production Supervisor',    department: 'Production',  location: 'Bengaluru', type: 'Full Time', experience: '3-5 Years',  description: 'Supervise manufacturing operations.', requirements: ['Production experience', 'Knowledge of furniture manufacturing', 'Leadership skills'], posted_date: new Date().toISOString(), status: 'Open' },
   { id: '3', slug: 'design-engineer',          title: 'Design Engineer',          department: 'Design',      location: 'Delhi',     type: 'Full Time', experience: '2-5 Years',  description: 'Design furniture products using CAD.', requirements: ['CAD skills', 'Furniture design experience', 'Creative mindset'], posted_date: new Date().toISOString(), status: 'Open' },
 ];
 
@@ -305,7 +305,18 @@ export function resolveProductImage(value?: string | {
   if (!value) return null;
 
   if (typeof value === 'object' && !Array.isArray(value)) {
-    if (value.image && findProductAssetByUrl(value.image)) return value.image;
+    const localImage = value.image ? findProductAssetByUrl(value.image) : null;
+    if (localImage) {
+      const categoryName = value.category ?? value.category_name ?? value.category_slug;
+      const duplicateSlug = value.slug?.startsWith(`${localImage.slug}-`) &&
+        /^\d+$/.test(value.slug.slice(localImage.slug.length + 1));
+      const sameProduct =
+        value.name === localImage.name &&
+        normalizeCategorySlug(categoryName) === normalizeCategorySlug(localImage.folder.split('/')[0] ?? '') &&
+        (value.slug === localImage.slug || duplicateSlug);
+      if (sameProduct) return localImage.image;
+    }
+
     return findLocalProductAsset({
       name: value.name,
       slug: value.slug,

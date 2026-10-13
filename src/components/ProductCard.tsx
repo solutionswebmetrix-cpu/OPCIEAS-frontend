@@ -22,39 +22,55 @@ export default function ProductCard({ product, index }: Props) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ delay: (index % 4) * 0.08, duration: 0.5 }}
+      className="h-full"
     >
-      <div className="group relative overflow-hidden rounded-lux border border-navy/10 bg-white shadow-sm hover:shadow-md">
+      <div className="group flex h-full flex-col overflow-hidden rounded-lux border border-navy/10 bg-white shadow-sm hover:shadow-md">
         <Link
           to={`/product/${productRoute}`}
-          className="block aspect-[4/5] overflow-hidden"
+          className="relative block aspect-[4/5] shrink-0 overflow-hidden bg-light-grey"
         >
           {image ? (
-            <img src={image} alt={product.name} className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
+            <img src={image} alt={product.name} className="absolute inset-0 h-full w-full object-contain object-center" loading="lazy" />
           ) : (
             <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-slate-200 to-slate-300" />
           )}
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white/90 via-white/20 to-transparent" />
-          <div className="absolute inset-0 flex flex-col justify-end p-5">
-            <div className="mb-2 flex items-center gap-2">
-              <span className="rounded-full border border-gold/60 bg-gold/15 px-2 py-0.5 font-sub text-[9px] uppercase tracking-[0.2em] text-gold">{supplyLabel}</span>
-              {product.price_range && <span className="font-sub text-[10px] uppercase tracking-wider text-navy/70">{product.price_range}</span>}
-            </div>
-            <h3 className="mt-1 font-heading text-lg font-bold text-navy">{product.name}</h3>
-            {product.short_desc && <p className="mt-1 line-clamp-2 font-body text-xs text-navy/70">{product.short_desc}</p>}
-            <div className="relative z-10 mt-3 flex gap-2">
-              <span className="flex items-center gap-1 rounded-full bg-navy/10 px-3 py-1.5 font-sub text-xs text-navy backdrop-blur transition group-hover:bg-gold group-hover:text-navy">
-                <Eye className="h-3 w-3" /> {isSSRackCard ? 'View Product' : 'View Details'}
-              </span>
-            </div>
-          </div>
           <div className="pointer-events-none absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full glass text-gold opacity-0 transition-opacity duration-500 group-hover:opacity-100">
             <ArrowUpRight className="h-4 w-4" />
           </div>
         </Link>
 
-        <div className="space-y-2 border-t border-navy/10 bg-light-grey p-4">
-          <Link to="/rfq" className="block rounded-full border border-navy/20 bg-white px-3 py-2 text-center text-xs font-sub text-navy transition hover:border-gold hover:text-gold">Request Quote</Link>
-          <a href={`https://wa.me/919845579049?text=${waText}`} target="_blank" rel="noreferrer" className="block rounded-full border border-transparent bg-[#25D366] px-3 py-2 text-center text-xs font-sub text-white transition hover:bg-[#1ebe5b]">WhatsApp Inquiry</a>
+        <div className="flex flex-1 flex-col border-t border-navy/10 bg-light-grey p-4">
+          <div className="mb-4">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="rounded-full border border-gold/60 bg-gold/15 px-2 py-0.5 font-sub text-[9px] uppercase tracking-[0.2em] text-gold">{supplyLabel}</span>
+              {product.price_range && <span className="font-sub text-[10px] uppercase tracking-wider text-navy/70">{product.price_range}</span>}
+            </div>
+            <h3 className="mt-2 line-clamp-2 min-h-[3.5rem] font-heading text-lg font-bold leading-7 text-navy">{product.name}</h3>
+            {product.short_desc && <p className="mt-1 line-clamp-2 min-h-8 font-body text-xs leading-4 text-navy/70">{product.short_desc}</p>}
+          </div>
+
+          <div className="mt-auto flex flex-col gap-2">
+            <Link
+              to="/rfq"
+              className="flex min-h-11 w-full min-w-0 items-center justify-center rounded-full border border-navy/20 bg-white px-3 py-2 text-center font-sub text-xs leading-4 text-navy transition hover:border-gold hover:text-gold"
+            >
+              Request Quote
+            </Link>
+            <Link
+              to={`/product/${productRoute}`}
+              className="flex min-h-11 w-full min-w-0 items-center justify-center gap-2 rounded-full bg-navy/10 px-3 py-2 text-center font-sub text-xs leading-4 text-navy transition hover:bg-gold"
+            >
+              <Eye className="h-3.5 w-3.5 shrink-0" /> {isSSRackCard ? 'View Product' : 'View Details'}
+            </Link>
+            <a
+              href={`https://wa.me/919845579049?text=${waText}`}
+              target="_blank"
+              rel="noreferrer"
+              className="flex min-h-11 w-full min-w-0 items-center justify-center gap-2 rounded-full border border-transparent bg-[#25D366] px-3 py-2 text-center font-sub text-xs leading-4 text-white transition hover:bg-[#1ebe5b]"
+            >
+              <span className="min-w-0 break-words">WhatsApp Inquiry</span>
+            </a>
+          </div>
         </div>
       </div>
     </motion.div>

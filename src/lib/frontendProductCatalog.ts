@@ -8,15 +8,16 @@ const CATEGORY_DEFINITIONS = [
   { id: '6', name: 'Industrial Storage', slug: 'industrial-storage', assetFolder: 'industrial storage' },
   { id: '7', name: 'Bathroom Collection', slug: 'bathroom-collection', assetFolder: 'bathroom collection' },
   { id: '8', name: 'Letter Box', slug: 'letter-boxes', assetFolder: 'letter box' },
+  { id: 'commercial-furniture', name: 'Commercial Furniture', slug: 'commercial-furniture', assetFolder: 'commercial furniture' },
   { id: 'fiberglass-special-order', name: 'Fiberglass Special Order', slug: 'fiberglass-special-order', assetFolder: 'fiberglass special order' },
 ] as const;
 
-const SUBCATEGORY_BY_FOLDER: Record<string, string> = {
-  'educational furniture/colleges higher education': 'Colleges & Higher Education',
-  'educational furniture/high school': 'High School',
-  'educational furniture/k g': 'KG Classes',
-  'educational furniture/p g imiversity': 'Colleges & Higher Education',
-  'educational furniture/primary': 'Primary',
+const EDUCATIONAL_SUBCATEGORY_BY_FOLDER: Record<string, string> = {
+  'k g': 'K G',
+  primary: 'PRIMARY',
+  'high school': 'HIGH SCHOOL',
+  'colleges and higher education': 'Colleges & Higher Education',
+  'p g imiversity': 'P.G = IMIVERSITY',
 };
 
 const SUBCATEGORY_BY_PRODUCT: Record<string, Record<string, string>> = {
@@ -84,11 +85,15 @@ function getCategoryForAsset(asset: ProductAsset) {
 }
 
 function getSubcategoryForAsset(asset: ProductAsset, categoryFolder: string): string | null {
-  const normalizedFolder = normalizeAssetLabel(asset.folder);
-  const folderSubcategory = SUBCATEGORY_BY_FOLDER[normalizedFolder];
-  if (folderSubcategory) return folderSubcategory;
-
+  const [normalizedAssetCategory, ...assetSubcategoryFolders] = asset.folder
+    .split('/')
+    .map(normalizeAssetLabel);
   const normalizedCategoryFolder = normalizeAssetLabel(categoryFolder);
+  if (normalizedAssetCategory === 'educational furniture' && assetSubcategoryFolders.length) {
+    const educationalSubcategory = EDUCATIONAL_SUBCATEGORY_BY_FOLDER[assetSubcategoryFolders.join(' ')];
+    if (educationalSubcategory) return educationalSubcategory;
+  }
+
   const normalizedProductName = normalizeAssetLabel(asset.fileName);
   const subcategory = SUBCATEGORY_BY_PRODUCT[normalizedCategoryFolder]?.[normalizedProductName];
   if (subcategory) return subcategory;
