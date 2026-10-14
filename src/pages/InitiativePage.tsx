@@ -5,8 +5,8 @@ import SectionBanner from '../components/SectionBanner';
 import InquiryForm from '../components/InquiryForm';
 import PageMeta from '../components/PageMeta';
 
-import educationalFurnitureImage from '../assets/Educational Furniture.png';
-import warehouseRacksImage from '../assets/Warehouse Racks.png';
+import educationalFurnitureImage from '../assets/product/Educational Furniture/Colleges & Higher Education/Glossy Red Lecture Chair with Tablet.png';
+import warehouseRacksImage from '../assets/product/Industrial Storage/Industrial Heavy-Duty Racks.png';
 
 const initiatives: Record<string, { title: string; tagline: string; intro: string; highlights: string[]; links: { label: string; to: string }[]; image: string; }> = {
   'tech-business-promotion': {

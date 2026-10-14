@@ -451,9 +451,8 @@ const CATEGORY_HERO_ASSETS: Record<string, { folder: string; fileName: string }>
   'hostel furniture': { folder: 'Hostel Furniture', fileName: 'Hostel Cots' },
   'industrial storage': { folder: 'Industrial Storage', fileName: 'Warehouse Rack' },
   'bathroom collection': { folder: 'Bathroom Collection', fileName: 'Vanity Unit' },
-  'letter box': { folder: 'Letter Box', fileName: 'Wall-Mounted Letter Box' },
-  'letter boxes': { folder: 'Letter Box', fileName: 'Wall-Mounted Letter Box' },
-  'fiberglass special order': { folder: 'Fiberglass  Special Order', fileName: 'Colourful Twin Slide Playground Structure' },
+  'letter box': { folder: 'Letter Box', fileName: 'Metal Letter Box' },
+  'letter boxes': { folder: 'Letter Box', fileName: 'Metal Letter Box' },
 };
 
 function normalizeHeroAssetLabel(value: string): string {

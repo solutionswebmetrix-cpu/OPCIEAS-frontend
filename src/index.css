@@ -329,8 +329,3 @@ input, select, textarea { font-family: var(--font-sans); font-size: 16px; }
 /* Decorative overlays must never block mouse events */
 .pointer-events-none { pointer-events: none; }
 .pointer-events-auto { pointer-events: auto; }
-
-/* Hide default cursor on desktop — but keep elements clickable */
-@media (min-width: 1024px) and (pointer: fine) {
-  body, a, button, [role="button"], input, select, textarea, label { cursor: none; }
-}

@@ -288,9 +288,14 @@ export function productBelongsToSubcategory(
 export function isCategoryVisible(category: { slug?: string; name?: string }): boolean {
   const slug = (category.slug ?? '').trim().toLowerCase();
   const name = (category.name ?? '').trim();
-  if (slug === 'office-furniture' || slug === 'hospital-furniture') return false;
-  if (name === 'Office Furniture' || name === 'Hospital Furniture') return false;
-  if (name.toLowerCase().includes('office furniture') || name.toLowerCase().includes('hospital furniture')) return false;
+  const normalizedName = name.toLowerCase();
+  if (['office-furniture', 'hospital-furniture', 'fiberglass-special-order'].includes(slug)) return false;
+  if (
+    normalizedName === 'office furniture' ||
+    normalizedName === 'hospital furniture' ||
+    normalizedName === 'fiberglass special order'
+  ) return false;
+  if (normalizedName.includes('office furniture') || normalizedName.includes('hospital furniture')) return false;
   return true;
 }
 

@@ -9,8 +9,12 @@ const CATEGORY_DEFINITIONS = [
   { id: '7', name: 'Bathroom Collection', slug: 'bathroom-collection', assetFolder: 'bathroom collection' },
   { id: '8', name: 'Letter Box', slug: 'letter-boxes', assetFolder: 'letter box' },
   { id: 'commercial-furniture', name: 'Commercial Furniture', slug: 'commercial-furniture', assetFolder: 'commercial furniture' },
-  { id: 'fiberglass-special-order', name: 'Fiberglass Special Order', slug: 'fiberglass-special-order', assetFolder: 'fiberglass special order' },
 ] as const;
+
+const HIDDEN_PUBLIC_LETTER_BOX_PRODUCTS = new Set([
+  'wall mounted letter box',
+  'society letter bank',
+]);
 
 const EDUCATIONAL_SUBCATEGORY_BY_FOLDER: Record<string, string> = {
   'k g': 'K G',
@@ -18,6 +22,14 @@ const EDUCATIONAL_SUBCATEGORY_BY_FOLDER: Record<string, string> = {
   'high school': 'HIGH SCHOOL',
   'colleges and higher education': 'Colleges & Higher Education',
   'p g imiversity': 'P.G = IMIVERSITY',
+};
+
+const SCHOOL_SUBCATEGORY_BY_FOLDER: Record<string, string> = {
+  lkg: 'LKG',
+  primary: 'Primary',
+  'high school': 'High School',
+  'junior college': 'Junior College',
+  'university college': 'University College',
 };
 
 const SUBCATEGORY_BY_PRODUCT: Record<string, Record<string, string>> = {
@@ -64,9 +76,7 @@ const SUBCATEGORY_BY_PRODUCT: Record<string, Record<string, string>> = {
     'abs plastic letter box': 'ABS Plastic Letter Box',
     'metal letter box': 'Metal Letter Box',
     'wooden letter box': 'Wooden Letter Box',
-    'wall mounted letter box': 'Wall-Mounted Letter Box',
     'apartment cluster system': 'Apartment Cluster System',
-    'society letter bank': 'Society Letter Bank',
   },
 };
 
@@ -93,6 +103,10 @@ function getSubcategoryForAsset(asset: ProductAsset, categoryFolder: string): st
     const educationalSubcategory = EDUCATIONAL_SUBCATEGORY_BY_FOLDER[assetSubcategoryFolders.join(' ')];
     if (educationalSubcategory) return educationalSubcategory;
   }
+  if (normalizedAssetCategory === 'school furniture' && assetSubcategoryFolders.length) {
+    const schoolSubcategory = SCHOOL_SUBCATEGORY_BY_FOLDER[assetSubcategoryFolders.join(' ')];
+    if (schoolSubcategory) return schoolSubcategory;
+  }
 
   const normalizedProductName = normalizeAssetLabel(asset.fileName);
   const subcategory = SUBCATEGORY_BY_PRODUCT[normalizedCategoryFolder]?.[normalizedProductName];
@@ -107,7 +121,14 @@ function getSubcategoryForAsset(asset: ProductAsset, categoryFolder: string): st
 
 const catalogAssets = PRODUCT_ASSETS.flatMap((asset) => {
   const category = getCategoryForAsset(asset);
-  return category ? [{ asset, category }] : [];
+  if (!category) return [];
+  if (
+    category.slug === 'letter-boxes' &&
+    HIDDEN_PUBLIC_LETTER_BOX_PRODUCTS.has(normalizeAssetLabel(asset.fileName))
+  ) {
+    return [];
+  }
+  return [{ asset, category }];
 });
 
 export const FRONTEND_PUBLIC_CATEGORIES: Category[] = CATEGORY_DEFINITIONS

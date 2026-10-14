@@ -74,7 +74,6 @@ const productDropdownItems = [
     to: getCategoryRoute(category),
   })),
   { name: 'Commercial Furniture', to: '/furniture' },
-  { name: 'Fiberglass Special Order', to: '/products/vertical/fiberglass-special-order' },
 ];
 
 export default function Navbar() {

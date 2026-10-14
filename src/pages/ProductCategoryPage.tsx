@@ -9,7 +9,83 @@ import InquiryForm from '../components/InquiryForm';
 import { CANONICAL_CATEGORIES, getCategoryBannerImage } from '../lib/images';
 import { fetchCategories, fetchProducts, isCategoryVisible, productBelongsToCategory, productBelongsToSubcategory, resolveCategoryFromSlug, type Product, type Category } from '../lib/data';
 
-const categoryContent: Record<string, { overview: string; highlights: string[]; accessories?: string[]; specs: Array<{ label: string; value: string }>; gallery: string[]; cta: string[] }> = {
+type CategoryDescriptionSection = {
+  heading: string;
+  paragraphs?: string[];
+  items?: Array<{ label?: string; text: string }>;
+};
+
+type CategoryContent = {
+  overview: string;
+  highlights: string[];
+  accessories?: string[];
+  specs: Array<{ label: string; value: string }>;
+  gallery: string[];
+  cta: string[];
+  descriptionSections?: CategoryDescriptionSection[];
+};
+
+type CategoryHighlightPill = {
+  label: string;
+  subcategory: string;
+};
+
+type CategoryHighlightGroup = {
+  subcategories: CategoryHighlightPill[];
+  accessories?: CategoryHighlightPill[];
+};
+
+const categoryHighlightGroups: Record<string, CategoryHighlightGroup> = {
+  'educational-furniture': {
+    subcategories: [
+      { label: 'KG', subcategory: 'K G' },
+      { label: 'Primary', subcategory: 'PRIMARY' },
+      { label: 'High School', subcategory: 'HIGH SCHOOL' },
+      { label: 'Junior College', subcategory: 'Colleges & Higher Education' },
+      { label: 'PG College', subcategory: 'P.G = IMIVERSITY' },
+    ],
+  },
+  'school-furniture': {
+    subcategories: [
+      { label: 'LKG', subcategory: 'LKG' },
+      { label: 'Primary', subcategory: 'Primary' },
+      { label: 'High School', subcategory: 'High School' },
+      { label: 'Junior College', subcategory: 'Junior College' },
+      { label: 'University College', subcategory: 'University College' },
+    ],
+  },
+  'hostel-furniture': {
+    subcategories: [
+      { label: 'Hostel – Single Cot', subcategory: 'Single Cots' },
+      { label: 'Bunker Cots', subcategory: 'Bunker Cots' },
+      { label: 'Triple Cots', subcategory: 'Triple Cots' },
+    ],
+    accessories: [{ label: 'Protector', subcategory: 'Protector' }],
+  },
+  'industrial-storage': {
+    subcategories: [
+      { label: 'SS Detachable Wire Racks', subcategory: 'SS Detachable Wire Rack' },
+      { label: 'Commercial Kitchen Rack', subcategory: 'Commercial Kitchen Rack' },
+      { label: 'Industrial Heavy-Duty Racks', subcategory: 'Heavy-Duty Rack' },
+    ],
+  },
+  'bathroom-collection': {
+    subcategories: [
+      { label: 'Waterproof Mirror', subcategory: 'Waterproof Mirror' },
+      { label: 'Heart Shape', subcategory: 'Heart Shape' },
+    ],
+  },
+  'letter-boxes': {
+    subcategories: [
+      { label: 'ABS Plastic Letter Box', subcategory: 'ABS Plastic Letter Box' },
+      { label: 'Metal Letter Box', subcategory: 'Metal Letter Box' },
+      { label: 'Wooden Letter Box', subcategory: 'Wooden Letter Box' },
+      { label: 'Apartment Cluster System', subcategory: 'Apartment Cluster System' },
+    ],
+  },
+};
+
+const categoryContent: Record<string, CategoryContent> = {
   'office-furniture': {
     overview: 'Premium office furniture for modern corporate, government and enterprise workspaces including executive desks, workstations, storage and reception.',
     highlights: ['Executive Desk', 'Workstation', 'Conference Table', 'Reception Counter', 'Filing Cabinet', 'Office Chair', 'Pedestal', 'Storage Cupboard', 'Bookshelf'],
@@ -22,16 +98,44 @@ const categoryContent: Record<string, { overview: string; highlights: string[]; 
     cta: ['Request Quote', 'Download Catalogue'],
   },
   'educational-furniture': {
-    overview: 'Educational Furniture follows a clear audience-based flow: K G → PRIMARY → HIGH SCHOOL → Colleges & Higher Education → P.G = IMIVERSITY.',
-    highlights: ['K G', 'PRIMARY', 'HIGH SCHOOL', 'Colleges & Higher Education', 'P.G = IMIVERSITY'],
-    specs: [
-      { label: 'K G', value: 'Kids desks and individual seating for KG classes.' },
-      { label: 'PRIMARY', value: 'Single-seat and dual-seat desk/chair units for primary learning.' },
-      { label: 'HIGH SCHOOL', value: 'Single-seat and dual-seat desk/chair units for high school classrooms.' },
-      { label: 'Colleges & Higher Education', value: 'Lecture seating with writing pads and integrated cup/bag holders for college and higher education.' },
+    overview: 'Equip learning spaces and institutions with durable, ergonomic, and high-performance furniture designed to withstand rigorous daily use. Our comprehensive range ensures comfort, safety, and longevity across all academic and institutional environments.',
+    highlights: [],
+    specs: [],
+    gallery: [],
+    cta: [],
+    descriptionSections: [
+      {
+        heading: 'Classroom & Campus Solutions',
+        paragraphs: ['We offer thoughtfully designed student desks, chairs, and collaborative layouts optimized for every stage of learning and professional training.'],
+        items: [
+          { label: 'Kindergarten & Nursery (KG):', text: 'Colorful, safe, rounded-edge ergonomic tables and low seating.' },
+          { label: 'Primary School Sets:', text: 'Integrated student desk-bench combinations optimized for growing children.' },
+          { label: 'High School & College Benches:', text: 'Durable dual- or triple-seater desks with integrated bookshelves and modesty panels.' },
+          { label: 'University, Lecture Halls & PG Training Centers:', text: 'Premium writing pad chairs, executive lecture seating, and setups trusted by higher education institutions and defense training academies.' },
+        ],
+      },
+      {
+        heading: 'Hostel Furniture & Bedding Solutions (Including Defense Quarters)',
+        paragraphs: ['Sturdy, space-efficient heavy-duty metal cots, bunk beds, study tables, wardrobes, cupboards, and storage units built for rigorous hostel living. Specifically engineered to meet the durability demands of military barracks, air force residential quarters, university hostels, and corporate dormitories.'],
+        items: [
+          { label: 'Single Cot:', text: 'Compact, heavy-duty single-user frames (durable steel/wood finish for individual rooms).' },
+          { label: 'Bunk Bed:', text: 'Space-saving two-tier beds (ideal for student hostels, dormitories, and budget accommodations).' },
+          { label: 'Triple Bunk / Heavy Institutional Bed:', text: 'Multi-tier or heavy enterprise configurations designed for maximum capacity utilization.' },
+        ],
+      },
+      {
+        heading: 'The Bedding & Living Collection',
+        paragraphs: ['Complete your institutional rooms with our premium sleep essentials. We offer long-lasting mattresses (rubberized coir, latex, and high-density cushion foam), breathable cotton-filled beds, washable cushion pillows, 100% cotton bedsheets, and protective mattress covers designed for easy maintenance and superior hygiene.'],
+      },
+      {
+        heading: 'Auditorium & Stadium Seating',
+        paragraphs: ['Premium, comfortable seating solutions engineered for large-scale assembly halls, auditoriums, and sports stadiums, balancing aesthetics with long-lasting structural strength.'],
+      },
+      {
+        heading: 'Why Choose Our Institutional Range?',
+        paragraphs: ['Built to outperform standard commercial options, our products use heavy-duty materials and reinforced construction to handle rough, high-traffic usage. We deliver exceptional value through superior lifespan, minimizing replacement costs for schools, colleges, and hostels.'],
+      },
     ],
-    gallery: ['KG classroom seating', 'Primary desk/chair units', 'High school desk/chair units', 'College lecture seating with writing pad and cup/bag holders'],
-    cta: ['Request Quote', 'Download Catalogue'],
   },
   'school-furniture': {
     overview: 'Classroom, activity and institutional furniture for schools and kindergartens with safety, ergonomics and heavy-duty durability.',
@@ -57,28 +161,44 @@ const categoryContent: Record<string, { overview: string; highlights: string[]; 
   },
   'hostel-furniture': {
     overview: 'Robust and durable hostel furniture for student accommodation, dormitories and institutional living spaces.',
-    highlights: ['Hostel Cots', 'Single Cots', 'Bunker Cots', 'Triple Cots'],
-    accessories: ['Cotton Bed / Spring', 'Cushion Mattresses', 'Washable Cushion Pillows', '100% Cotton Bed Sheets'],
+    highlights: [],
     specs: [],
     gallery: [],
     cta: ['Request Quote', 'WhatsApp Inquiry'],
   },
   'industrial-storage': {
-    overview: 'Heavy-duty warehouse and industrial storage racks, shelves, lockers and cabinets with high load capacity and export finish.',
-    highlights: ['Warehouse Rack', 'Industrial Rack', 'Heavy-Duty Rack', 'Slotted Angle Rack', 'Pallet Rack', 'Long Span Shelving', 'SS Detachable Wire Rack', 'Steel Locker'],
-    specs: [
-      { label: 'Applications', value: 'Warehouses, factories, godowns, retail storage, offices and industrial yards' },
-      { label: 'Build', value: 'Premium SUS 304 stainless steel wire, modular detachable construction, durable rust-proof finish' },
-      { label: 'Capacity', value: '150 kg per level' },
-      { label: 'SS Detachable Wire Rack', value: 'Material: Premium SUS 304 Stainless Steel • Wire Gauges: 6.0 mm / 5.0 mm / 4.5 mm / 3.5 mm • Finish: High-gloss chrome plating, electro-polishing, protective coating' },
-      { label: 'Customization', value: 'Custom dimensions and tailored configurations available upon request.' },
+    overview: 'Heavy-duty storage solutions for warehouses, commercial kitchens and industrial environments.',
+    highlights: [],
+    specs: [],
+    gallery: [],
+    cta: [],
+    descriptionSections: [
+      {
+        heading: 'Light-Duty Wire Racks & Utility Shelving',
+        items: [
+          { label: 'Ideal For:', text: 'Office files, light storage, and general utility use.' },
+          { label: 'Capacity:', text: '200 kg to 250 kg capacity per shelf. When fitted with wheels, capacity is 120 kg to 150 kg per rack.' },
+        ],
+      },
+      {
+        heading: 'Medium-Duty Boltless Shelving & SS Racks',
+        items: [
+          { label: 'Ideal For:', text: 'Multi-tier shelving systems for archiving old documents in banks and courts, commercial kitchens, and retail display backrooms.' },
+          { label: 'Capacity:', text: '200 kg to 250 kg per level, offering a balance of strength and versatility.' },
+        ],
+      },
+      {
+        heading: 'Heavy-Duty Industrial Storage & Pallet Racks',
+        items: [
+          { label: 'Ideal For:', text: 'Industrial warehouses, godowns, and demanding commercial environments.' },
+          { label: 'Capacity:', text: 'High-weight-capacity systems ranging from 1,000 kg to 2,500 kg+ per level, engineered with superior corrosion resistance.' },
+        ],
+      },
     ],
-    gallery: ['Warehouse rack aisles', 'Factory storage installation', 'Heavy-duty lockers & cabinets'],
-    cta: ['Request Quote', 'Download Catalogue'],
   },
   'bathroom-collection': {
     overview: 'Premium bathroom collection featuring waterproof mirrors, rust-resistant racks and compact storage solutions for modern commercial washrooms.',
-    highlights: ['Mirror Cabinet', 'Vanity Unit', 'Bathroom Shelf', 'Towel Rack', 'Bathroom Storage', 'Wash Basin Cabinet', 'Stainless Steel Rack'],
+    highlights: [],
     specs: [
       { label: 'Finish', value: 'Marine grade stainless steel 304, chrome, waterproof laminate / PVC' },
       { label: 'Protection', value: 'Waterproof, rust-resistant and corrosion-proof design' },
@@ -90,7 +210,7 @@ const categoryContent: Record<string, { overview: string; highlights: string[]; 
   },
   'letter-boxes': {
     overview: 'Premium letter boxes for apartments, societies and office entrances, available in ABS plastic, metal and wood finishes.',
-    highlights: ['ABS Plastic Letter Box', 'Metal Letter Box', 'Wooden Letter Box', 'Wall-Mounted Letter Box', 'Apartment Cluster System', 'Society Letter Bank'],
+    highlights: ['ABS Plastic Letter Box', 'Metal Letter Box', 'Wooden Letter Box', 'Apartment Cluster System'],
     specs: [
       { label: 'Material Options', value: 'Stainless Steel, Mild Steel, ABS Plastic and Solid Wood' },
       { label: 'Applications', value: 'Residential societies, apartments, offices, institutions and gated communities' },
@@ -233,6 +353,7 @@ export default function ProductCategoryPage() {
 
   const bannerImage = getCategoryBannerImage(cat.name) ?? '';
   const content = categoryContent[cat.slug] || null;
+  const highlightGroup = categoryHighlightGroups[cat.slug];
 
   return (
     <>
@@ -248,7 +369,85 @@ export default function ProductCategoryPage() {
       <section className="bg-white py-20">
         <div className="container-x px-6">
 
-          {content && (
+          {content && highlightGroup && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="mb-12 rounded-lux border border-navy/10 bg-navy/5 p-6"
+            >
+              <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Category Highlights</p>
+              <h2 className="mt-2 font-heading text-2xl font-black text-navy">{cat.name}</h2>
+              <p className="mt-3 font-body text-sm text-navy/70">{content.overview}</p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {highlightGroup.subcategories.map((item) => (
+                  <Link
+                    key={item.label}
+                    to={`/products/category/${cat.slug}?subcategory=${encodeURIComponent(item.subcategory)}`}
+                    aria-label={`View ${item.label} products`}
+                    className="rounded-full border border-navy/10 bg-white px-3 py-1.5 font-sub text-xs text-navy/70 transition-colors hover:border-gold/40 hover:text-navy"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+              {highlightGroup.accessories && (
+                <div className="mt-6">
+                  <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Accessories</p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {highlightGroup.accessories.map((item) => (
+                      <Link
+                        key={item.label}
+                        to={`/products/category/${cat.slug}?subcategory=${encodeURIComponent(item.subcategory)}`}
+                        aria-label={`View ${item.label} products`}
+                        className="rounded-full border border-navy/10 bg-white px-3 py-1.5 font-sub text-xs text-navy/70 transition-colors hover:border-gold/40 hover:text-navy"
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </motion.div>
+          )}
+
+          {content && content.descriptionSections ? (
+            <motion.article
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="mb-12 rounded-lux border border-navy/10 bg-navy/5 p-6"
+            >
+              <p className="font-sub text-base uppercase tracking-[0.3em] text-[#FF6600]">Category Overview</p>
+              <h2 className="mt-2 font-heading text-2xl font-black text-navy">{cat.name}</h2>
+              {content.overview && <p className="mt-3 font-body text-base leading-relaxed text-navy/70">{content.overview}</p>}
+              <div className="mt-6 grid gap-6 lg:grid-cols-2">
+                {content.descriptionSections.map((section) => (
+                  <section key={section.heading} className="rounded-lux bg-white p-5 shadow-sm">
+                    <h3 className="font-heading text-lg font-bold text-navy">{section.heading}</h3>
+                    {section.paragraphs?.map((paragraph) => (
+                      <p key={paragraph} className="mt-3 font-body text-base leading-relaxed text-navy/70">{paragraph}</p>
+                    ))}
+                    {section.items && (
+                      <ul className="mt-3 list-disc space-y-2 pl-5 font-body text-base leading-relaxed text-navy/70">
+                        {section.items.map((item) => (
+                          <li key={item.label ?? item.text}>
+                            {item.label && <strong className="font-semibold text-navy">{item.label} </strong>}
+                            {item.text}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </section>
+                ))}
+              </div>
+              <div className="mt-5">
+                <Link to="/products" className="inline-flex items-center gap-1.5 font-sub text-sm font-semibold text-gold">
+                  <ArrowRight className="h-3.5 w-3.5 rotate-180" /> Back to All Products
+                </Link>
+              </div>
+            </motion.article>
+          ) : content && !highlightGroup && (
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12 grid gap-6 rounded-lux border border-navy/10 bg-navy/5 p-6 lg:grid-cols-[1.2fr_0.8fr]">
               <div>
                 <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Category Highlights</p>

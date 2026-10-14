@@ -240,9 +240,7 @@ const CATEGORY_SUBCATEGORY_FILES: Record<string, Record<string, { folder?: strin
     'ABS Plastic Letter Box': { fileName: 'ABS Plastic Letter Box' },
     'Metal Letter Box': { fileName: 'Metal Letter Box' },
     'Wooden Letter Box': { fileName: 'Wooden Letter Box' },
-    'Wall-Mounted Letter Box': { fileName: 'Wall-Mounted Letter Box' },
     'Apartment Cluster System': { fileName: 'Apartment Cluster System' },
-    'Society Letter Bank': { fileName: 'Society Letter Bank' },
   },
 };
 
@@ -297,7 +295,7 @@ const SHOWCASE_CURATION: Record<string, string[]> = {
     'White Rolling Tool Cabinet with Green Shelves',
   ],
   'Letter Box': [
-    'Wall-Mounted Letter Box',
+    'Metal Letter Box',
     'Silver Key Safe with Open Door',
     'Open White Key Cabinet on Blue Tabletop',
     'Mobile filing cabinet with key lock',
@@ -319,6 +317,8 @@ function curateShowcase(categoryName: string, curatedNames: string[]): ProductAs
     const fillers = PRODUCT_ASSETS.filter(
       (asset) =>
         normalizeAssetLookup(asset.folder.split('/')[0] ?? '') === normalizeAssetLookup(categoryName) &&
+        !(normalizeAssetLookup(categoryName) === 'letter box' &&
+          ['wall mounted letter box', 'society letter bank'].includes(normalizeAssetLookup(asset.fileName))) &&
         !usedSlugs.has(asset.slug),
     ).slice(0, 5 - result.length);
     for (const f of fillers) {

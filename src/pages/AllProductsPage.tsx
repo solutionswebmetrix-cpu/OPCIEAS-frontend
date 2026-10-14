@@ -7,7 +7,6 @@ import SectionBanner from '../components/SectionBanner';
 import ProductCard from '../components/ProductCard';
 import { CATEGORY_BANNERS, CANONICAL_CATEGORIES } from '../lib/images';
 import { fetchCategories, fetchProducts, isCategoryVisible, productBelongsToCategory, type Product, type Category } from '../lib/data';
-import { getBusinessVerticalImages } from '../lib/businessVerticalImages';
 
 const fallbackCategories: Pick<Category, 'id' | 'name' | 'slug'>[] = CANONICAL_CATEGORIES.filter((category) => isCategoryVisible(category)).map((category) => ({
   id: category.id,
@@ -108,7 +107,6 @@ export default function AllProductsPage() {
             {categoryList.map((category, index) => {
               const count = categoryCounts[category.id] || 0;
               const categoryImage = CATEGORY_BANNERS[category.name as keyof typeof CATEGORY_BANNERS] ||
-                (category.slug === 'fiberglass-special-order' ? getBusinessVerticalImages('fiberglass')[0] : null) ||
                 CATEGORY_BANNERS['Educational Furniture'];
               return (
                 <motion.div key={category.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: (index % 4) * 0.08 }}>

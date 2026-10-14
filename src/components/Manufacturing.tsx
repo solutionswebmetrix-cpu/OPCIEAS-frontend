@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { PenTool, Layers, Scissors, Boxes, Flame, Sparkles, Wrench, Search, Package, Truck } from 'lucide-react';
 import { IMG } from '../lib/images';
+import educationalFurnitureImage from '../assets/product/Educational Furniture/Colleges & Higher Education/Classroom Desk-Chair Set.png';
 
 const steps = [
   { icon: PenTool, label: 'Design' },
@@ -47,15 +48,15 @@ export default function Manufacturing() {
         <div className="mx-auto mb-8 lg:mb-10 max-w-2xl text-center">
           <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-sub text-sm uppercase tracking-[0.3em] text-gold">Direct Manufacturing</motion.p>
           <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl xl:text-5xl">
-            Product-led manufacturing built for institutional and export supply.
+            Commercial Product-led manufacturer built for Educational, institutional and export
           </motion.h2>
         </div>
 
         <div className="lg:grid lg:grid-cols-[1fr_1fr] lg:gap-8 lg:items-start">
           <div className="relative overflow-hidden rounded-lux border border-navy/10 shadow-sm">
             <img
-              src={IMG.manufacturingBg}
-              alt="OPCIEAS manufacturing floor – direct factory production"
+              src={educationalFurnitureImage}
+              alt="Educational classroom desk and chair furniture"
               className="h-full w-full object-cover aspect-[4/3]"
               loading="lazy"
             />

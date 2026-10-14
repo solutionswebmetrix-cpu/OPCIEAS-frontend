@@ -35,7 +35,7 @@ const bulkGroups: BulkGroup[] = [
     terms: ['stadium', 'bleachers'],
   },
   {
-    title: 'Hostel & Residential Accommodation',
+    title: 'Hostel Accommodation',
     description: 'Heavy-duty single, bunker, and triple cots, paired with marine-grade stainless steel hardware and waterproof amenities.',
     categories: ['hostel furniture'],
     terms: ['single cot', 'bunker cot', 'triple cot', 'cot', 'bunk bed', 'hostel', 'bed', 'mattress', 'pillow', 'bedsheet'],

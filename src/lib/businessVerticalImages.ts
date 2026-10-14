@@ -4,7 +4,6 @@ const categoryAssetModules: Record<string, AssetModules> = {
   educational: import.meta.glob('../assets/product/School Furniture/*.{png,jpg,jpeg,webp,avif}', { eager: true, import: 'default' }) as AssetModules,
   institutional: import.meta.glob('../assets/product/vInstitutional Furniture/*.{png,jpg,jpeg,webp,avif}', { eager: true, import: 'default' }) as AssetModules,
   storage: import.meta.glob('../assets/product/Storage Solutions/*.{png,jpg,jpeg,webp,avif}', { eager: true, import: 'default' }) as AssetModules,
-  fiberglass: import.meta.glob('../assets/product/Fiberglass  Special Order/*.{png,jpg,jpeg,webp,avif}', { eager: true, import: 'default' }) as AssetModules,
 };
 
 import { CANONICAL_CATEGORIES, PRODUCT_IMAGE_GROUPS, cleanProductName, toKebab, type CanonicalCategoryName } from './images';
@@ -13,18 +12,11 @@ function categorySlugsToIds(slugs: readonly string[]): string[] {
   return CANONICAL_CATEGORIES.filter((c) => slugs.includes(c.slug)).map((c) => c.id);
 }
 
-const fiberglassNamePatterns = [
-  'frp', 'fiberglass', 'glassfiber', 'glass-fiber', 'glass fiber',
-  'play', 'playground', 'play ground', 'park', 'garden',
-  'outdoor furniture', 'slide', 'swing', 'seesaw', 'merry-go-round', 'merry go round',
-  'jungle gym', 'climber', 'multiplay', 'multi play',
-];
-
 export type BusinessVerticalKey = keyof typeof categoryAssetModules;
 
 export const BUSINESS_VERTICALS = {
-  'educational-furniture': {
-    name: 'Educational Furniture',
+  'Student For Writing Pad Chair': {
+    name: 'Student For Writing Pad Chair',
     categorySlugs: ['educational-furniture', 'school-furniture'],
     categoryIds: categorySlugsToIds(['educational-furniture', 'school-furniture']),
     overview: 'Classroom, library, laboratory and activity furniture engineered for schools, colleges, institutes and campuses.',
@@ -43,14 +35,6 @@ export const BUSINESS_VERTICALS = {
     categoryIds: categorySlugsToIds(['industrial-storage', 'bathroom-collection', 'letter-boxes']),
     overview: 'Industrial racks, lockers, cabinets, bathroom storage and letter boxes — direct-manufactured steel and SS for every sector.',
     highlights: ['Warehouse Racks', 'Pallet & Long Span', 'Steel Lockers', 'SS Detachable Wire Rack', 'Bathroom Storage', 'Letter Boxes'],
-  },
-  'fiberglass-special-order': {
-    name: 'Fiberglass / Special Order',
-    categorySlugs: [],
-    categoryIds: [] as string[],
-    namePatterns: fiberglassNamePatterns,
-    overview: 'FRP / fiberglass and special-order custom products for outdoor, coastal and project-specific applications.',
-    highlights: ['FRP / Fiberglass Furniture', 'Outdoor Seating', 'Custom Molded FRP', 'Special Order Items', 'Coastal / Rustproof'],
   },
 } as const;
 

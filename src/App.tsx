@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
-import Cursor from './components/Cursor';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
@@ -71,7 +70,6 @@ export default function App() {
     <BrowserRouter>
       <ScrollToTop />
       {!skipSplash && <SplashScreen onComplete={handleSplashComplete} />}
-      <Cursor />
       <Navbar />
       <main>
         <Routes>

@@ -100,7 +100,7 @@ export default function Products() {
               Furniture for Every Commercial Space
             </motion.h2>
             <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mx-auto mt-4 max-w-xl font-body text-sm text-navy/60">
-              Browse the approved local product range across education, hostel, storage, bathroom and special-order categories.
+              Browse the approved local product range across education, hostel, storage, bathroom and commercial categories.
             </motion.p>
           </div>
           <div className="font-sub text-sm uppercase tracking-[0.2em] text-gold">Loading products...</div>
@@ -115,7 +115,7 @@ export default function Products() {
         <div className="mb-8 lg:mb-10 text-center">
           <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-sub text-sm uppercase tracking-[0.3em] text-gold">What We Manufacture</motion.p>
           <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl xl:text-5xl">
-            Product collections for bulk institutional and commercial supply.
+            Commercial Furniture- Educational and Institutional furniture Manufacturer
           </motion.h2>
           <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mx-auto mt-4 max-w-2xl font-body text-sm leading-relaxed text-navy/65">
             Educational furniture, school systems, hostel seating, industrial storage, and custom project supply built for government, institutional, and export procurement buyers.

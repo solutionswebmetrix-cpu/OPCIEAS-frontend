@@ -15,12 +15,12 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getBusinessVerticalImages, type BusinessVerticalKey } from '../lib/businessVerticalImages';
 
-import educationalFurnitureImage from '../assets/Educational Furniture.png';
-import schoolFurnitureImage from '../assets/School Furniture.png';
-import hostelFurnitureImage from '../assets/Hostel Furniture.png';
-import industrialStorageImage from '../assets/Warehouse Racks.png';
-import bathroomCollectionImage from '../assets/Bathroom Storage.png';
-import letterBoxImage from '../assets/Letter Boxes.png';
+import educationalFurnitureImage from '../assets/product/Educational Furniture/Colleges & Higher Education/Glossy Red Lecture Chair with Tablet.png';
+import schoolFurnitureImage from '../assets/product/School Furniture/High School/Orange and Red School Desk Set.png';
+import hostelFurnitureImage from '../assets/product/Hostel Furniture/Bunker Cots.png';
+import industrialStorageImage from '../assets/product/Industrial Storage/Industrial Heavy-Duty Racks.png';
+import bathroomCollectionImage from '../assets/product/Bathroom Collection/Waterproof Mirror.png';
+import letterBoxImage from '../assets/product/Letter Box/ABS Plastic Letter Box.png';
 
 function BusinessVerticalImage({ title, category }: { title: string; category: BusinessVerticalKey }) {
   const images = getBusinessVerticalImages(category);
@@ -74,13 +74,13 @@ export default function HomePage() {
 
   const collectionCards = [
     {
-      title: 'Educational Furniture',
+      title: 'Student or Writing Pad Chair',
       image: educationalFurnitureImage,
-      description: 'Classroom, lecture, and higher-education furniture for schools, colleges, and teaching spaces.',
+      description: 'Student or Writing Pad Chair for Junior College Students',
       link: '/products/category/educational-furniture',
     },
     {
-      title: 'School Furniture',
+      title: 'High School Furniture',
       image: schoolFurnitureImage,
       description: 'Student desks, classroom seating and practical learning furniture for school environments.',
       link: '/products/category/school-furniture',
@@ -147,7 +147,7 @@ export default function HomePage() {
         <div className="container-x px-6">
           <div className="mb-8 text-center">
             <p className="font-sub text-xs uppercase tracking-[0.35em] text-gold">What We Manufacture</p>
-            <h2 className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl">Commercial furniture and institutional supply built for bulk projects.</h2>
+            <h2 className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl">Educational and institutional furniture Manufacture</h2>
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
@@ -179,7 +179,7 @@ export default function HomePage() {
         <div className="container-x px-6">
           <div className="mb-7 text-center">
             <p className="font-sub text-xs uppercase tracking-[0.35em] text-gold">Custom / Project Supply</p>
-            <h2 className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl">Custom dimensions, project requirements and bulk production support.</h2>
+            <h2 className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl">Customized Manufacturer</h2>
           </div>
 
           <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-5">
@@ -211,7 +211,7 @@ export default function HomePage() {
         <div className="container-x px-6">
           <div className="mb-7 text-center">
             <p className="font-sub text-xs uppercase tracking-[0.35em] text-gold">Who We Serve</p>
-            <h2 className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl">Buyer use cases and institutional project categories.</h2>
+            <h2 className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl">Educational , Institutional , Corporates , Government, Semi-Government, Hostels, Defence,</h2>
           </div>
 
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -232,7 +232,7 @@ export default function HomePage() {
         <div className="container-x px-6">
           <div className="mx-auto max-w-4xl text-center">
             <p className="font-sub text-xs uppercase tracking-[0.35em] text-gold">For International Buyers</p>
-            <h2 className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl">Bulk institutional furniture supply and export-oriented manufacturing support.</h2>
+            <h2 className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl">Bulk Commercial Furniture Manufacturer  </h2>
             <p className="mt-4 font-body text-base leading-relaxed text-navy/70">
               OPCIEAS provides commercial furniture, school and hostel systems, and custom supply support for institutional and export-focused procurement projects.
             </p>
