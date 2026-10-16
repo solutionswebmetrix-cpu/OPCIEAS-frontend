@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { MessageSquare, Send, X, Minus, Upload, Loader2, CheckCircle } from 'lucide-react';
+import { submitContact } from '../lib/data';
 
 type ChatMessage = {
   id: string;
@@ -90,6 +91,9 @@ export default function LiveChatWidget() {
   });
   const [uploadingFile, setUploadingFile] = useState(false);
   const [leadSubmitted, setLeadSubmitted] = useState(false);
+  const [leadStatus, setLeadStatus] = useState<'idle' | 'loading' | 'error'>('idle');
+  const [leadError, setLeadError] = useState('');
+  const [leadSuccessMessage, setLeadSuccessMessage] = useState('');
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -179,10 +183,33 @@ export default function LiveChatWidget() {
     }, 1000);
   };
 
-  const handleLeadSubmit = (e: FormEvent) => {
+  const handleLeadSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log('Demo mode: Lead submitted', leadForm);
-    setLeadSubmitted(true);
+    if (leadStatus === 'loading') return;
+    setLeadStatus('loading');
+    setLeadError('');
+    try {
+      const result = await submitContact({
+        name: leadForm.name,
+        company: leadForm.companyName,
+        email: leadForm.email,
+        phone: leadForm.phone,
+        subject: 'Website live chat inquiry',
+        message: messages.map(({ role, text }) => `${role === 'user' ? 'Visitor' : 'Assistant'}: ${text}`).join('\n\n'),
+        type: 'sales',
+        source: 'live-chat',
+      });
+      if (!result || result.success === false) {
+        throw new Error(result?.message || 'Your inquiry could not be submitted. Please try again.');
+      }
+      setLeadSuccessMessage(result.notification_email_sent === false
+        ? result.message
+        : 'Thank you! Our sales team will contact you shortly.');
+      setLeadSubmitted(true);
+    } catch (error: unknown) {
+      setLeadError(error instanceof Error ? error.message : 'Your inquiry could not be submitted. Please try again.');
+      setLeadStatus('error');
+    }
   };
 
   return (
@@ -359,11 +386,13 @@ export default function LiveChatWidget() {
                         placeholder="Country"
                         className="w-full rounded-xl bg-white/5 px-4 py-3 text-sm text-white placeholder-white/30 outline-none ring-1 ring-white/10 transition focus:ring-[#D4AF37]"
                       />
+                      {leadStatus === 'error' && <p role="alert" className="text-xs text-red-300">{leadError}</p>}
                       <button
                         type="submit"
-                        className="w-full rounded-full bg-gradient-to-br from-[#D4AF37] to-[#E8C766] px-4 py-2 text-sm font-semibold text-navy hover:brightness-110 transition"
+                        disabled={leadStatus === 'loading'}
+                        className="flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-br from-[#D4AF37] to-[#E8C766] px-4 py-2 text-sm font-semibold text-navy transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
                       >
-                        Submit
+                        {leadStatus === 'loading' ? <><Loader2 className="h-4 w-4 animate-spin" /> Sending...</> : 'Submit'}
                       </button>
                     </form>
                   </div>
@@ -372,7 +401,7 @@ export default function LiveChatWidget() {
                 {leadSubmitted && (
                   <div className="self-start rounded-3xl bg-green-500/10 px-4 py-3 text-sm text-white flex items-center gap-2">
                     <CheckCircle className="h-4 w-4 text-green-400" />
-                    Thank you! Our sales team will contact you shortly.
+                    {leadSuccessMessage}
                   </div>
                 )}
 

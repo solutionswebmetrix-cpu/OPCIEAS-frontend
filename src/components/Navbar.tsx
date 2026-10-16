@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Download, FileText, Globe, ChevronDown } from 'lucide-react';
-import companyLogo from '../assets/logo/logo.png';
 import opcIeasTextWordmark from '../assets/logo/OPCIEAS_approved_text_wordmark.png';
+import CompanyLogo from './CompanyLogo';
 import { resolveCategoryFromSlug, normalizeCategorySlug, type Category } from '../lib/data';
 
 const menu = [
@@ -148,11 +148,7 @@ export default function Navbar() {
             aria-label="OPCIEAS logo and wordmark"
             className="inline-flex min-w-0 shrink-0 items-center gap-1.5 min-[1200px]:gap-2"
           >
-            <img
-              src={companyLogo}
-              alt="OPCIEAS emblem"
-              className="h-12 w-12 shrink-0 object-contain min-[1200px]:h-16 min-[1200px]:w-16"
-            />
+            <CompanyLogo className="h-12 w-12 min-[1200px]:h-14 min-[1200px]:w-14" />
             <img
               src={opcIeasTextWordmark}
               alt="OPCIEAS Private Limited — Hand Crafted Since 1999 wordmark"

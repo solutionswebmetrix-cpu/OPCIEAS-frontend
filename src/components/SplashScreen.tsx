@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import logoSrc from '../assets/logo/logo.png';
-
-console.log('Logo Loaded:', logoSrc);
+import CompanyLogo from './CompanyLogo';
 
 const subtitles = [
   'Commercial Furniture Manufacturer',
@@ -32,11 +30,11 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
     const logoPreload = document.createElement('link');
     logoPreload.rel = 'preload';
     logoPreload.as = 'image';
-    logoPreload.href = logoSrc;
+    logoPreload.href = new URL('../assets/logo/logo.png', import.meta.url).href;
     document.head.appendChild(logoPreload);
 
     const image = new Image();
-    image.src = logoSrc;
+    image.src = logoPreload.href;
 
     const timeline = [
       window.setTimeout(() => setLogoVisible(true), 150),
@@ -103,7 +101,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
           >
             <div className="absolute inset-0 rounded-[36px] bg-gradient-to-r from-[#F2D37B]/20 via-[#D4AF37]/10 to-transparent blur-3xl opacity-80" />
             <div className="relative flex h-40 w-40 items-center justify-center rounded-[32px] border border-white/10 bg-white/5 p-6 shadow-[0_30px_120px_rgba(212,175,55,0.24)] backdrop-blur-2xl">
-              <img src={logoSrc} alt="OPCIEAS logo" className="h-full w-full object-contain" />
+              <CompanyLogo alt="OPCIEAS logo" className="h-full w-full" />
             </div>
             <motion.div
               animate={{ opacity: logoVisible ? 1 : 0, scale: logoVisible ? 1 : 0.75 }}

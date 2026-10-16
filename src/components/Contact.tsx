@@ -27,6 +27,7 @@ export default function Contact() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (status === 'loading') return;
 
     const nextErrors: Record<string, string> = {};
     if (!form.name.trim()) nextErrors.name = 'Name is required.';
@@ -61,15 +62,17 @@ export default function Contact() {
 
       if (response && response.success !== false) {
         setStatus('success');
-        setServerMessage('Your enquiry has been sent successfully. Our team will respond shortly.');
+        setServerMessage(response.notification_email_sent === false
+          ? response.message
+          : 'Your enquiry was recorded successfully. Our team will respond shortly.');
         setForm(initialForm);
       } else {
         setStatus('error');
         setServerMessage(response?.message || 'The enquiry form is ready, but the backend endpoint is not currently available in this environment.');
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       setStatus('error');
-      setServerMessage(error?.message || 'The enquiry form is ready, but the backend endpoint is not currently available in this environment.');
+      setServerMessage(error instanceof Error ? error.message : 'The enquiry form is ready, but the backend endpoint is not currently available in this environment.');
     }
   };
 

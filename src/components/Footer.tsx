@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowUp, Send, CheckCircle2, Loader2 } from 'lucide-react';
-import companyLogo from '../assets/logo/logo.png';
+import CompanyLogo from './CompanyLogo';
 
 const cols = [
   { title: 'Company', links: [{ label: 'About', to: '/company/about' }, { label: 'Manufacturing', to: '/manufacturing' }, { label: 'Tech Business Promotion', to: '/tech-business-promotion' }, { label: 'Contact', to: '/contact' }] },
@@ -61,7 +61,7 @@ export default function Footer() {
           <div>
             <div className="flex items-center gap-3">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-gold/40 bg-navy/60">
-                <img src={companyLogo} alt="OPCIEAS logo" className="h-full w-full object-contain" />
+                <CompanyLogo alt="OPCIEAS logo" className="h-full w-full" />
               </div>
               <div>
                 <p className="font-heading text-xl font-bold tracking-widest text-navy">OPCIEAS</p>

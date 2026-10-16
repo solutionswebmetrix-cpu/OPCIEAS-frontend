@@ -15,13 +15,24 @@ export default function CataloguePage() {
   const [form, setForm] = useState(initialForm);
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const update = (key: keyof typeof initialForm, value: string) => setForm((current) => ({ ...current, [key]: value }));
   const openRequest = (category = '') => { setForm((current) => ({ ...current, category })); setStatus('idle'); setError(''); setIsRequestOpen(true); };
   const submit = async (event: React.FormEvent) => {
     event.preventDefault();
+    if (status === 'loading') return;
     setStatus('loading');
     const result = await submitContact({ ...form, subject: 'Full Catalogue Request', type: 'catalogue_request', source: 'catalogue-page', product: form.product, message: `Category / Catalogue Required: ${form.category}\nProduct Requirement: ${form.product}\nQuantity: ${form.quantity}\n${form.message}` });
-    if (result?.success) { setStatus('success'); setForm(initialForm); } else { setStatus('error'); setError(result?.message || 'We could not submit your request. Please try again.'); }
+    if (result?.success) {
+      setSuccessMessage(result.notification_email_sent === false
+        ? result.message
+        : 'Thank you. Your catalogue request has been received. Our team will contact you with the relevant catalogue.');
+      setStatus('success');
+      setForm(initialForm);
+    } else {
+      setStatus('error');
+      setError(result?.message || 'We could not submit your request. Please try again.');
+    }
   };
 
   return (
@@ -59,7 +70,7 @@ export default function CataloguePage() {
       {isRequestOpen && <div className="fixed inset-0 z-[1100] flex items-center justify-center bg-navy/70 p-4" role="dialog" aria-modal="true" aria-labelledby="catalogue-request-title">
         <div className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-lux bg-white p-6 shadow-2xl sm:p-8">
           <div className="flex items-start justify-between gap-4"><div><p className="font-sub text-xs uppercase tracking-[0.25em] text-gold">Catalogue enquiry</p><h2 id="catalogue-request-title" className="mt-2 font-heading text-2xl font-black text-navy">Request Full Catalogue</h2></div><button type="button" onClick={() => setIsRequestOpen(false)} className="text-navy/60 hover:text-navy" aria-label="Close request form"><X className="h-6 w-6" /></button></div>
-          {status === 'success' ? <div className="mt-8 rounded-xl border border-green-200 bg-green-50 p-5 font-body text-sm leading-relaxed text-green-800">Thank you. Your catalogue request has been received. Our team will contact you with the relevant catalogue.</div> : <form onSubmit={submit} className="mt-6 grid gap-4 sm:grid-cols-2">
+          {status === 'success' ? <div className="mt-8 rounded-xl border border-green-200 bg-green-50 p-5 font-body text-sm leading-relaxed text-green-800">{successMessage}</div> : <form onSubmit={submit} className="mt-6 grid gap-4 sm:grid-cols-2">
             <input required value={form.name} onChange={(event) => update('name', event.target.value)} placeholder="Name *" className="form-input" />
             <input value={form.company} onChange={(event) => update('company', event.target.value)} placeholder="Company / Organization" className="form-input" />
             <input required type="email" value={form.email} onChange={(event) => update('email', event.target.value)} placeholder="Email *" className="form-input" />

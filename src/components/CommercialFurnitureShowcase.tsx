@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Ruler, ShieldCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import companyLogo from '../assets/logo/logo.png';
+import CompanyLogo from './CompanyLogo';
 import { findProductAssetByName, type ProductAsset } from '../lib/productAssetResolver';
 
 function asset(name: string, category?: string): ProductAsset | null {
@@ -47,8 +47,8 @@ export default function CommercialFurnitureShowcase() {
     <section id="commercial-furniture-showcase" className="bg-white px-6 py-16 sm:py-20">
       <div className="container-x">
         <div className="grid gap-8 border-b border-navy/10 pb-14 lg:grid-cols-[0.65fr_1.35fr] lg:items-center">
-          <motion.div initial={{ opacity: 0, scale: 0.92 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="flex items-center gap-5">
-            <img src={companyLogo} alt="OPCIEAS emblem" className="h-24 w-24 object-contain sm:h-28 sm:w-28" />
+          <motion.div initial={{ opacity: 0, scale: 0.92 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="flex items-center gap-3">
+            <CompanyLogo className="h-16 w-16 sm:h-20 sm:w-20" />
             <div>
               <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">OPCIEAS™</p>
               <p className="mt-2 font-heading text-2xl font-black text-navy">Commercial Furniture</p>

@@ -12,6 +12,7 @@ const categories = [
 export default function RFQ() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMsg, setErrorMsg] = useState<string>('');
+  const [successMessage, setSuccessMessage] = useState('');
   const [form, setForm] = useState({
     company_name: '', contact_name: '', email: '', phone: '',
     country: '', city: '', gst: '', category: '', product: '',
@@ -23,7 +24,7 @@ export default function RFQ() {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.contact_name || !form.email) return;
+    if (status === 'loading') return;
     setStatus('loading');
     setErrorMsg('');
     try {
@@ -31,6 +32,9 @@ export default function RFQ() {
       if (result && result.success === false) {
         throw new Error(result.message || 'Submission failed');
       }
+      setSuccessMessage(result?.notification_email_sent === false
+        ? result.message
+        : 'Thank you! Your inquiry has been submitted successfully.');
       setStatus('success');
       setForm({ company_name: '', contact_name: '', email: '', phone: '', country: '', city: '', gst: '', category: '', product: '', quantity: '', budget: '', expected_delivery: '', message: '', project_type: '', sample_requirement: '', custom_dimensions: '', frame_colour: '', modification_requirements: '' });
     } catch (err: any) {
@@ -76,8 +80,8 @@ export default function RFQ() {
                 {categories.map((c) => <option key={c} value={c}>{c}</option>)}
               </select>
             </div>
-            <Field label="Product" value={form.product} onChange={(v) => set('product', v)} />
-            <Field label="Quantity" value={form.quantity} onChange={(v) => set('quantity', v)} />
+            <Field label="Product *" value={form.product} onChange={(v) => set('product', v)} required />
+            <Field label="Quantity *" value={form.quantity} onChange={(v) => set('quantity', v)} required />
             <Field label="Project Budget" value={form.budget} onChange={(v) => set('budget', v)} />
             <Field label="Expected Delivery" value={form.expected_delivery} onChange={(v) => set('expected_delivery', v)} />
             <div>
@@ -133,7 +137,7 @@ export default function RFQ() {
             {status === 'success' && (
               <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="mt-5 flex items-center gap-3 rounded-xl border border-green-400/30 bg-green-500/10 p-4">
                 <CheckCircle2 className="h-5 w-5 text-green-400" />
-                <p className="font-sub text-sm text-green-300">Thank you! Your inquiry has been submitted successfully.</p>
+                <p className="font-sub text-sm text-green-300">{successMessage}</p>
               </motion.div>
             )}
             {status === 'error' && (

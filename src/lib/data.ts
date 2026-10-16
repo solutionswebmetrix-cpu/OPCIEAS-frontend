@@ -478,7 +478,7 @@ export async function submitRFQ(payload: RFQPayload | Record<string, any>): Prom
     return resp;
   } catch (err: any) {
     const message = err?.message || 'RFQ submission failed';
-    console.error('RFQ submission failed', payload, message);
+    console.error('RFQ submission failed', message);
     return { success: false, message };
   }
 }
@@ -509,7 +509,7 @@ export async function submitContact(payload: ContactPayload | Record<string, any
     return resp;
   } catch (err: any) {
     const message = err?.message || 'Contact submission failed';
-    console.error('Contact submission failed', payload, message);
+    console.error('Contact submission failed', message);
     return { success: false, message };
   }
 }
