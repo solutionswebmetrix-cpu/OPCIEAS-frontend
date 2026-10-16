@@ -1,7 +1,8 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { PenTool, Layers, Scissors, Boxes, Flame, Sparkles, Wrench, Search, Package, Truck } from 'lucide-react';
 import { IMG } from '../lib/images';
+import classroomDeskImage from '../assets/product/Educational Furniture/Colleges & Higher Education/JUNIOR COLLEGE DESK - STEEL AND WOODEN BOARD TOP.png';
 
 const steps = [
   { icon: PenTool, label: 'Design' },
@@ -54,7 +55,7 @@ export default function Manufacturing() {
         <div className="lg:grid lg:grid-cols-[1fr_1fr] lg:gap-8 lg:items-start">
           <div className="relative overflow-hidden rounded-lux border border-navy/10 shadow-sm">
             <img
-              src={IMG.products['Educational Furniture'].img}
+              src={classroomDeskImage}
               alt="Educational classroom desk and chair furniture"
               className="h-full w-full object-cover aspect-[4/3]"
               loading="lazy"

@@ -2,7 +2,6 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import companyLogo from '../assets/logo/logo.png';
 import { getEducationalAssets, type ProductAsset } from '../lib/productAssetResolver';
 
 type SequenceScene = {
@@ -77,18 +76,6 @@ export default function HomepageFurnitureSequence() {
       <div className="container-x w-full px-6">
         <div className="grid min-w-0 gap-6 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:items-center lg:gap-8">
           <div className="min-w-0 max-w-xl">
-            <motion.div
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="flex items-center gap-3"
-            >
-              <img src={companyLogo} alt="OPCIEAS emblem" className="h-14 w-14 object-contain sm:h-16 sm:w-16" />
-              <div>
-                <p className="font-sub text-xs text-gold">OPCIEAS Pvt. Ltd.</p>
-                <p className="mt-1 font-sub text-xs text-navy/60">Premium furniture manufacturer since 1999</p>
-              </div>
-            </motion.div>
             <p className="mt-8 font-sub text-xs uppercase tracking-[0.3em] text-gold">Educational Journey</p>
             <h2 className="mt-3 font-heading text-3xl font-black text-navy sm:text-4xl">Furniture That Builds Better Learning Spaces</h2>
             <p className="mt-4 font-body text-base leading-7 text-navy/70">Premium Educational &amp; Institutional Furniture Manufacturing Since 1999</p>
