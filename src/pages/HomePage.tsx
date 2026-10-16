@@ -82,7 +82,7 @@ export default function HomePage() {
       categorySlug: 'educational-furniture',
     },
     {
-      title: 'High School Furniture',
+      title: 'School Furniture',
       image: IMG.products['School Furniture'].img,
       description: 'Student desks, classroom seating and practical learning furniture for school environments.',
       link: '/products/category/school-furniture',

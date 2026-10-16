@@ -4,6 +4,45 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { fetchCategories, fetchProducts, isCategoryVisible, resolveProductImage, type Category, type Product } from '../lib/data';
 
+const EDUCATIONAL_PROGRESSION = ['KG', 'Primary', 'High School', 'Junior College', 'PG College'] as const;
+type EducationalProgression = typeof EDUCATIONAL_PROGRESSION[number];
+
+const PROGRESSION_BY_SUBCATEGORY: Record<string, EducationalProgression> = {
+  'k g': 'KG',
+  kg: 'KG',
+  lkg: 'KG',
+  primary: 'Primary',
+  'high school': 'High School',
+  'colleges higher education': 'Junior College',
+  'junior college': 'Junior College',
+  'p g imiversity': 'PG College',
+  'university college': 'PG College',
+};
+
+function getProgressionGroup(categorySlug: string, product: Product): string {
+  const subcategory = (product.subcategory ?? '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+  return PROGRESSION_BY_SUBCATEGORY[subcategory] ?? (categorySlug === 'school-furniture' ? 'Other School Furniture' : 'Other Educational Furniture');
+}
+
+function groupProgressionProducts(categorySlug: string, products: Product[]): { label: string; products: Product[] }[] {
+  const groups = new Map<string, Product[]>(
+    EDUCATIONAL_PROGRESSION.map((label) => [label, []]),
+  );
+
+  for (const product of products) {
+    const label = getProgressionGroup(categorySlug, product);
+    const group = groups.get(label);
+    if (group) {
+      group.push(product);
+    } else {
+      groups.set(label, [product]);
+    }
+  }
+
+  return Array.from(groups, ([label, groupProducts]) => ({ label, products: groupProducts }))
+    .filter(({ products: groupProducts }) => groupProducts.length > 0);
+}
+
 function HomeProductCard({ product, index, categoryIndex }: { product: Product; index: number; categoryIndex: number }) {
   const productSlug = product.slug || String(product.id);
   const image = resolveProductImage(product);
@@ -75,12 +114,13 @@ export default function Products() {
     return categories.filter((category) => isCategoryVisible(category)).map((category) => {
       const products = allProducts
         .filter((product) => String(product.category_id ?? '') === String(category.id))
-        .sort((a, b) => Number(b.featured || b.is_featured) - Number(a.featured || a.is_featured))
-        .slice(0, 5);
+        .sort((a, b) => Number(b.featured || b.is_featured) - Number(a.featured || a.is_featured));
+      const isEducationalListing = ['educational-furniture', 'school-furniture'].includes(category.slug);
+      const visibleProducts = isEducationalListing ? products : products.slice(0, 5);
 
       return {
         category,
-        products,
+        products: visibleProducts,
       };
     }).filter((entry) => entry.products.length > 0);
   }, [allProducts, categories]);
@@ -151,6 +191,10 @@ export default function Products() {
 
         <div className="grid gap-8 lg:gap-10">
           {visibleProductGroups.map(({ category, products }, catIdx) => {
+            const progressionGroups = ['educational-furniture', 'school-furniture'].includes(category.slug)
+              ? groupProgressionProducts(category.slug, products)
+              : [{ label: '', products }];
+
             return (
               <motion.div
                 key={category.id}
@@ -171,16 +215,21 @@ export default function Products() {
                   </Link>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4 sm:gap-5 md:gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-                  {products.map((product, idx) => (
-                    <HomeProductCard
-                      key={product.id || product.slug}
-                      product={product}
-                      index={idx}
-                      categoryIndex={catIdx}
-                    />
-                  ))}
-                </div>
+                {progressionGroups.map((group, groupIndex) => (
+                  <div key={group.label || category.slug} className={groupIndex > 0 ? 'mt-6' : ''}>
+                    {group.label && <h4 className="mb-3 font-heading text-lg font-bold text-navy">{group.label}</h4>}
+                    <div className="grid grid-cols-2 gap-4 sm:gap-5 md:gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+                      {group.products.map((product, idx) => (
+                        <HomeProductCard
+                          key={product.id || product.slug}
+                          product={product}
+                          index={idx}
+                          categoryIndex={catIdx}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                ))}
               </motion.div>
             );
           })}
