@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowUp, Send, CheckCircle2, Loader2 } from 'lucide-react';
+import opcIeasTextWordmark from '../assets/logo/OPCIEAS_approved_text_wordmark.png';
 import CompanyLogo from './CompanyLogo';
 
 const cols = [
@@ -59,14 +60,15 @@ export default function Footer() {
         <div className="grid gap-10 lg:grid-cols-[1.5fr_3fr]">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-3">
+            <div className="flex min-w-0 items-center gap-3">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-gold/40 bg-navy/60">
                 <CompanyLogo alt="OPCIEAS logo" className="h-full w-full" />
               </div>
-              <div>
-                <p className="font-heading text-xl font-bold tracking-widest text-navy">OPCIEAS</p>
-                <p className="font-sub text-[10px] tracking-[0.2em] text-gold">Pvt. Ltd.</p>
-              </div>
+              <img
+                src={opcIeasTextWordmark}
+                alt="OPCIEAS Private Limited — Hand Crafted Since 1999 wordmark"
+                className="block h-auto w-[min(58vw,220px)] object-contain sm:w-[220px]"
+              />
             </div>
             <div className="mt-4 flex flex-wrap gap-2 font-sub text-[10px] uppercase tracking-[0.18em] text-gold">
               <span>Furniture</span>
