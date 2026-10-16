@@ -446,7 +446,7 @@ function getBannerOrDefault(preferredNames: string[], fallback: string): string 
 
 const CATEGORY_HERO_ASSETS: Record<string, { folder: string; fileName: string }> = {
   'commercial furniture': { folder: 'Commercial Furniture', fileName: 'Symmetrical Auditorium Stage and Seating' },
-  'educational furniture': { folder: 'Educational Furniture', fileName: 'Classroom Desk-Chair Set' },
+  'educational furniture': { folder: 'Educational Furniture', fileName: 'JUNIOR COLLEGE DESK - STEEL AND WOODEN BOARD TOP' },
   'school furniture': { folder: 'School Furniture', fileName: 'Classroom Seating' },
   'hostel furniture': { folder: 'Hostel Furniture', fileName: 'Hostel Cots' },
   'industrial storage': { folder: 'Industrial Storage', fileName: 'Warehouse Rack' },

@@ -4,8 +4,8 @@ import { ArrowRight, Building2, Factory } from 'lucide-react';
 import SectionBanner from '../components/SectionBanner';
 import InquiryForm from '../components/InquiryForm';
 import PageMeta from '../components/PageMeta';
+import { IMG } from '../lib/images';
 
-import educationalFurnitureImage from '../assets/product/Educational Furniture/Colleges & Higher Education/Glossy Red Lecture Chair with Tablet.png';
 import warehouseRacksImage from '../assets/product/Industrial Storage/Industrial Heavy-Duty Racks.png';
 
 const initiatives: Record<string, { title: string; tagline: string; intro: string; highlights: string[]; links: { label: string; to: string }[]; image: string; }> = {
@@ -23,7 +23,7 @@ const initiatives: Record<string, { title: string; tagline: string; intro: strin
       { label: 'Explore Industries', to: '/industries/government' },
       { label: 'Company Profile', to: '/company/about' },
     ],
-    image: educationalFurnitureImage,
+    image: IMG.products['Educational Furniture'].img,
   },
   'agriculture-aquaculture': {
     title: 'Agriculture & Aquaculture',
@@ -55,7 +55,7 @@ const initiatives: Record<string, { title: string; tagline: string; intro: strin
       { label: 'View Careers', to: '/company/careers' },
       { label: 'Explore CSR', to: '/company/csr' },
     ],
-    image: educationalFurnitureImage,
+    image: IMG.products['Educational Furniture'].img,
   },
 };
 

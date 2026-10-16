@@ -5,7 +5,8 @@ import {
 } from './images';
 import { apiGet, apiPost, apiFormData } from './api';
 import { findLocalProductAsset, findProductAssetByUrl } from './productAssetResolver';
-import { FRONTEND_PUBLIC_CATEGORIES, FRONTEND_PUBLIC_PRODUCTS } from './frontendProductCatalog';
+import { FRONTEND_PUBLIC_CATEGORIES, FRONTEND_PUBLIC_PRODUCTS, HOSTEL_ACCESSORY_SUBCATEGORIES } from './frontendProductCatalog';
+import { categoryHighlightGroups } from './categorySubcategories';
 import type {
   Category,
   Product,
@@ -276,13 +277,21 @@ export function productBelongsToSubcategory(
     ...tags,
   ];
 
-  return candidates.some((value) => {
+  const matchesSubcategory = (value: unknown, subcategoryTarget: string): boolean => {
     const candidate = normalizeTerms(String(value ?? ''));
-    return candidate === target ||
-      candidate.startsWith(`${target}-`) ||
-      candidate.includes(`-${target}-`) ||
-      candidate.endsWith(`-${target}`);
-  });
+    return candidate === subcategoryTarget ||
+      candidate.startsWith(`${subcategoryTarget}-`) ||
+      candidate.includes(`-${subcategoryTarget}-`) ||
+      candidate.endsWith(`-${subcategoryTarget}`);
+  };
+
+  if (target === normalizeTerms('Accessories')) {
+    const protectorSubcategory = categoryHighlightGroups['hostel-furniture'].accessories?.map((item) => item.subcategory) ?? [];
+    return [...HOSTEL_ACCESSORY_SUBCATEGORIES, ...protectorSubcategory]
+      .some((accessorySubcategory) => candidates.some((value) => matchesSubcategory(value, normalizeTerms(accessorySubcategory))));
+  }
+
+  return candidates.some((value) => matchesSubcategory(value, target));
 }
 
 export function isCategoryVisible(category: { slug?: string; name?: string }): boolean {

@@ -14,12 +14,13 @@ import { ArrowRight, FileText, Cpu, Building2, Heart, Ship, Globe, FileCheck, Tr
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getBusinessVerticalImages, type BusinessVerticalKey } from '../lib/businessVerticalImages';
+import { IMG } from '../lib/images';
+import { categoryHighlightGroups, getCategorySubcategoryRoute } from '../lib/categorySubcategories';
 
-import educationalFurnitureImage from '../assets/product/Educational Furniture/Colleges & Higher Education/Glossy Red Lecture Chair with Tablet.png';
-import schoolFurnitureImage from '../assets/product/School Furniture/High School/Orange and Red School Desk Set.png';
+import studentWritingPadChairImage from '../assets/product/Educational Furniture/Colleges & Higher Education/JUNIOR COLLEGE - STEEL WRITING PAD CHAIR WITH WOODEN FULL PAD.png';
 import hostelFurnitureImage from '../assets/product/Hostel Furniture/Bunker Cots.png';
 import industrialStorageImage from '../assets/product/Industrial Storage/Industrial Heavy-Duty Racks.png';
-import bathroomCollectionImage from '../assets/product/Bathroom Collection/Waterproof Mirror.png';
+import bathroomCollectionImage from '../assets/product/Bathroom Collection/Heart Shape.png';
 import letterBoxImage from '../assets/product/Letter Box/ABS Plastic Letter Box.png';
 
 function BusinessVerticalImage({ title, category }: { title: string; category: BusinessVerticalKey }) {
@@ -74,22 +75,25 @@ export default function HomePage() {
 
   const collectionCards = [
     {
-      title: 'Student or Writing Pad Chair',
-      image: educationalFurnitureImage,
-      description: 'Student or Writing Pad Chair for Junior College Students',
+      title: 'Educational Furniture',
+      image: studentWritingPadChairImage,
+      description: 'Educational furniture for Junior College Students',
       link: '/products/category/educational-furniture',
+      categorySlug: 'educational-furniture',
     },
     {
       title: 'High School Furniture',
-      image: schoolFurnitureImage,
+      image: IMG.products['School Furniture'].img,
       description: 'Student desks, classroom seating and practical learning furniture for school environments.',
       link: '/products/category/school-furniture',
+      categorySlug: 'school-furniture',
     },
     {
       title: 'Hostel Furniture',
       image: hostelFurnitureImage,
       description: 'Durable hostel and dormitory furniture designed for compact, high-use occupancy layouts.',
       link: '/products/category/hostel-furniture',
+      categorySlug: 'hostel-furniture',
     },
     {
       title: 'Industrial Storage',
@@ -151,20 +155,43 @@ export default function HomePage() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {collectionCards.map((item) => (
-              <Link key={item.title} to={item.link} className="group overflow-hidden rounded-lux border border-navy/10 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-                <div className="h-64 overflow-hidden bg-light-grey p-3">
-                  <img src={item.image} alt={item.title} className="h-full w-full rounded-[14px] object-contain object-center" loading="lazy" />
+            {collectionCards.map((item) => {
+              const categorySlug = item.categorySlug;
+              const highlightGroup = categorySlug ? categoryHighlightGroups[categorySlug] : undefined;
+              const subcategoryPills = [
+                ...(highlightGroup?.subcategories ?? []),
+                ...(highlightGroup?.accessories ?? []),
+              ];
+
+              return (
+                <div key={item.title} className="group overflow-hidden rounded-lux border border-navy/10 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+                  <div className="h-64 overflow-hidden bg-light-grey p-3">
+                    <img src={item.image} alt={item.title} className="h-full w-full rounded-[14px] object-contain object-center" loading="lazy" />
+                  </div>
+                  <div className="flex min-h-[12rem] flex-col p-5 sm:p-6">
+                    <h3 className="font-heading text-2xl font-black text-navy">{item.title}</h3>
+                    <p className="mt-3 font-body text-sm leading-relaxed text-navy/70">{item.description}</p>
+                    {categorySlug && subcategoryPills.length > 0 && (
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        {subcategoryPills.map((pill) => (
+                          <Link
+                            key={pill.label}
+                            to={getCategorySubcategoryRoute(categorySlug, pill.subcategory)}
+                            aria-label={`View ${pill.homepageLabel ?? pill.label} products`}
+                            className="rounded-full border border-navy/10 bg-white px-3 py-1.5 font-sub text-xs text-navy/70 transition-colors hover:border-gold/40 hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+                          >
+                            {pill.homepageLabel ?? pill.label}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                    <Link to={item.link} className="mt-auto inline-flex items-center gap-2 pt-5 font-sub text-sm font-semibold text-gold">
+                      View Collection <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </Link>
+                  </div>
                 </div>
-                <div className="flex min-h-[12rem] flex-col p-5 sm:p-6">
-                  <h3 className="font-heading text-2xl font-black text-navy">{item.title}</h3>
-                  <p className="mt-3 font-body text-sm leading-relaxed text-navy/70">{item.description}</p>
-                  <span className="mt-auto inline-flex items-center gap-2 pt-5 font-sub text-sm font-semibold text-gold">
-                    View Collection <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </span>
-                </div>
-              </Link>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

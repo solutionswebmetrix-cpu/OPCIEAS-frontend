@@ -8,6 +8,7 @@ import ProductCard from '../components/ProductCard';
 import InquiryForm from '../components/InquiryForm';
 import { CANONICAL_CATEGORIES, getCategoryBannerImage } from '../lib/images';
 import { fetchCategories, fetchProducts, isCategoryVisible, productBelongsToCategory, productBelongsToSubcategory, resolveCategoryFromSlug, type Product, type Category } from '../lib/data';
+import { categoryHighlightGroups, getCategorySubcategoryRoute } from '../lib/categorySubcategories';
 
 type CategoryDescriptionSection = {
   heading: string;
@@ -23,66 +24,6 @@ type CategoryContent = {
   gallery: string[];
   cta: string[];
   descriptionSections?: CategoryDescriptionSection[];
-};
-
-type CategoryHighlightPill = {
-  label: string;
-  subcategory: string;
-};
-
-type CategoryHighlightGroup = {
-  subcategories: CategoryHighlightPill[];
-  accessories?: CategoryHighlightPill[];
-};
-
-const categoryHighlightGroups: Record<string, CategoryHighlightGroup> = {
-  'educational-furniture': {
-    subcategories: [
-      { label: 'KG', subcategory: 'K G' },
-      { label: 'Primary', subcategory: 'PRIMARY' },
-      { label: 'High School', subcategory: 'HIGH SCHOOL' },
-      { label: 'Junior College', subcategory: 'Colleges & Higher Education' },
-      { label: 'PG College', subcategory: 'P.G = IMIVERSITY' },
-    ],
-  },
-  'school-furniture': {
-    subcategories: [
-      { label: 'LKG', subcategory: 'LKG' },
-      { label: 'Primary', subcategory: 'Primary' },
-      { label: 'High School', subcategory: 'High School' },
-      { label: 'Junior College', subcategory: 'Junior College' },
-      { label: 'University College', subcategory: 'University College' },
-    ],
-  },
-  'hostel-furniture': {
-    subcategories: [
-      { label: 'Hostel – Single Cot', subcategory: 'Single Cots' },
-      { label: 'Bunker Cots', subcategory: 'Bunker Cots' },
-      { label: 'Triple Cots', subcategory: 'Triple Cots' },
-    ],
-    accessories: [{ label: 'Protector', subcategory: 'Protector' }],
-  },
-  'industrial-storage': {
-    subcategories: [
-      { label: 'SS Detachable Wire Racks', subcategory: 'SS Detachable Wire Rack' },
-      { label: 'Commercial Kitchen Rack', subcategory: 'Commercial Kitchen Rack' },
-      { label: 'Industrial Heavy-Duty Racks', subcategory: 'Heavy-Duty Rack' },
-    ],
-  },
-  'bathroom-collection': {
-    subcategories: [
-      { label: 'Waterproof Mirror', subcategory: 'Waterproof Mirror' },
-      { label: 'Heart Shape', subcategory: 'Heart Shape' },
-    ],
-  },
-  'letter-boxes': {
-    subcategories: [
-      { label: 'ABS Plastic Letter Box', subcategory: 'ABS Plastic Letter Box' },
-      { label: 'Metal Letter Box', subcategory: 'Metal Letter Box' },
-      { label: 'Wooden Letter Box', subcategory: 'Wooden Letter Box' },
-      { label: 'Apartment Cluster System', subcategory: 'Apartment Cluster System' },
-    ],
-  },
 };
 
 const categoryContent: Record<string, CategoryContent> = {
@@ -383,7 +324,7 @@ export default function ProductCategoryPage() {
                 {highlightGroup.subcategories.map((item) => (
                   <Link
                     key={item.label}
-                    to={`/products/category/${cat.slug}?subcategory=${encodeURIComponent(item.subcategory)}`}
+                    to={getCategorySubcategoryRoute(cat.slug, item.subcategory)}
                     aria-label={`View ${item.label} products`}
                     className="rounded-full border border-navy/10 bg-white px-3 py-1.5 font-sub text-xs text-navy/70 transition-colors hover:border-gold/40 hover:text-navy"
                   >
@@ -398,7 +339,7 @@ export default function ProductCategoryPage() {
                     {highlightGroup.accessories.map((item) => (
                       <Link
                         key={item.label}
-                        to={`/products/category/${cat.slug}?subcategory=${encodeURIComponent(item.subcategory)}`}
+                        to={getCategorySubcategoryRoute(cat.slug, item.subcategory)}
                         aria-label={`View ${item.label} products`}
                         className="rounded-full border border-navy/10 bg-white px-3 py-1.5 font-sub text-xs text-navy/70 transition-colors hover:border-gold/40 hover:text-navy"
                       >

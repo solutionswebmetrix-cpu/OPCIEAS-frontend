@@ -80,6 +80,10 @@ const SUBCATEGORY_BY_PRODUCT: Record<string, Record<string, string>> = {
   },
 };
 
+export const HOSTEL_ACCESSORY_SUBCATEGORIES = Object.entries(SUBCATEGORY_BY_PRODUCT['hostel furniture'])
+  .filter(([productName]) => !productName.endsWith('cots'))
+  .map(([, subcategory]) => subcategory);
+
 function normalizeAssetLabel(value: string): string {
   return value
     .toLowerCase()
