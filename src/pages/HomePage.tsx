@@ -17,9 +17,9 @@ import { getBusinessVerticalImages, type BusinessVerticalKey } from '../lib/busi
 import { IMG } from '../lib/images';
 import { categoryHighlightGroups, getCategorySubcategoryRoute } from '../lib/categorySubcategories';
 
-import studentWritingPadChairImage from '../assets/product/Educational Furniture/Colleges & Higher Education/JUNIOR COLLEGE - STEEL WRITING PAD CHAIR WITH WOODEN FULL PAD.png';
-import hostelFurnitureImage from '../assets/product/Hostel Furniture/Bunker Cots.png';
-import industrialStorageImage from '../assets/product/Industrial Storage/Industrial Heavy-Duty Racks.png';
+import studentWritingPadChairImage from '../assets/product/Educational Furniture/Colleges & Higher Education/JUNIOR COLLEGE - STEEL WRITING PAD CHAIR WITH WOODEN FULL PAD.webp';
+import hostelFurnitureImage from '../assets/product/Hostel Furniture/Bunker Cots.webp';
+import industrialStorageImage from '../assets/product/Industrial Storage/Industrial Heavy-Duty Racks.webp';
 import bathroomCollectionImage from '../assets/product/Bathroom Collection/Heart Shape.png';
 import letterBoxImage from '../assets/product/Letter Box/ABS Plastic Letter Box.png';
 

@@ -6,7 +6,7 @@ import InquiryForm from '../components/InquiryForm';
 import PageMeta from '../components/PageMeta';
 import { IMG } from '../lib/images';
 
-import warehouseRacksImage from '../assets/product/Industrial Storage/Industrial Heavy-Duty Racks.png';
+import warehouseRacksImage from '../assets/product/Industrial Storage/Industrial Heavy-Duty Racks.webp';
 
 const initiatives: Record<string, { title: string; tagline: string; intro: string; highlights: string[]; links: { label: string; to: string }[]; image: string; }> = {
   'tech-business-promotion': {

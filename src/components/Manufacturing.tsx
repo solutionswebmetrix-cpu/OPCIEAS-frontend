@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { PenTool, Layers, Scissors, Boxes, Flame, Sparkles, Wrench, Search, Package, Truck } from 'lucide-react';
 import { IMG } from '../lib/images';
-import classroomDeskImage from '../assets/product/Educational Furniture/Colleges & Higher Education/JUNIOR COLLEGE DESK - STEEL AND WOODEN BOARD TOP.png';
+import classroomDeskImage from '../assets/product/Educational Furniture/Colleges & Higher Education/JUNIOR COLLEGE DESK - STEEL AND WOODEN BOARD TOP.webp';
 
 const steps = [
   { icon: PenTool, label: 'Design' },
