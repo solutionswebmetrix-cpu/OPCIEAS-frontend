@@ -70,6 +70,11 @@ export default function App() {
     <BrowserRouter>
       <ScrollToTop />
       {!skipSplash && <SplashScreen onComplete={handleSplashComplete} />}
+      <div className="border-b border-gold/40 bg-navy px-4 py-3 text-center text-sm font-semibold leading-relaxed text-white sm:px-6 sm:py-3.5 sm:text-base">
+        <p className="mx-auto max-w-6xl break-words">
+          Free to Join Today: We do not collect any subscription fees until our minimum required membership is confirmed. Add your voice with a simple "Yes"!
+        </p>
+      </div>
       <Navbar />
       <main>
         <Routes>

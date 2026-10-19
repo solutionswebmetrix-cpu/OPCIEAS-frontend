@@ -77,7 +77,67 @@ export default function TechBusinessPromotionPage() {
             ))}
           </div>
 
+          <article className="mx-auto mt-16 max-w-4xl rounded-lux border border-navy/10 bg-white p-6 shadow-sm sm:p-10">
+            <h2 className="font-heading text-2xl font-black leading-tight text-navy sm:text-3xl">
+              Tech Business Promotion – A New Era for Indian Industrialists
+            </h2>
+
+            <section className="mt-8">
+              <h3 className="font-heading text-xl font-bold text-navy">The Present Reality</h3>
+              <p className="mt-3 font-body leading-relaxed text-navy/75">
+                Across India, manufacturers and industrialists have long depended on traditional advertisement portals that allow anyone to post buy leads - whether genuine or fabricated. Many of these so-called leads turn out to be minor retail needs or non-serious inquiries, yet platforms continue to circulate them simply to drive revenue.
+              </p>
+              <p className="mt-4 font-body leading-relaxed text-navy/75">
+                Manufacturers spend time calling these numbers, only to discover they are completely irrelevant or misleading. Despite the lack of genuine returns, portals return year after year to collect heavy annual subscriptions. Consequently, many companies maintain 10 to 12 different ad listings simply out of habit or prestige, rather than actual business results.
+              </p>
+              <p className="mt-4 font-body leading-relaxed text-navy/75">
+                This outdated system has become a persistent burden. The inefficiency of traditional portals drains valuable resources without delivering verified, confirmed business opportunities.
+              </p>
+            </section>
+
+            <section className="mt-8">
+              <h3 className="font-heading text-xl font-bold text-navy">Why OPCIEAS?</h3>
+              <p className="mt-3 font-body leading-relaxed text-navy/75">
+                OPCIEAS Tech Business Promotion, Social Services Pvt. Ltd. is not an outsider-we are one among you. We deeply understand the frustration of paying for high-cost advertisements that yield little more than noise and fake leads. That is why we are inviting fellow industrialists to explore a results-driven transformation.
+              </p>
+              <p className="mt-4 font-body leading-relaxed text-navy/75">
+                Our vision is straightforward: instead of relying on speculative ads, we are building a transparent, collective ecosystem where confirmed orders and genuine opportunities are shared fairly among members. Together, we can break free from the costly cycle of traditional advertising and create a platform that truly serves manufacturers.
+              </p>
+            </section>
+
+            <section className="mt-8">
+              <h3 className="font-heading text-xl font-bold text-navy">A Call for Change</h3>
+              <p className="mt-3 font-body leading-relaxed text-navy/75">
+                We believe many industrialists are ready to move past the old advertising model and are seeking a smarter, more transparent path. But to take the next step forward, we need to know - are you ready for change?
+              </p>
+              <p className="mt-5 rounded-xl border-l-4 border-gold bg-gold/10 px-5 py-4 font-body leading-relaxed text-navy">
+                <strong>Important Notice:</strong> At this stage, we are not collecting any subscription fees until our minimum required membership is confirmed. We only ask for your willingness to participate. Please simply reply with a Yes along with your company name and contact details so we can shape this movement together.
+              </p>
+            </section>
+
+            <section className="mt-8">
+              <h3 className="font-heading text-xl font-bold text-navy">How You Can Join</h3>
+              <ul className="mt-3 list-disc space-y-2 pl-6 font-body leading-relaxed text-navy/75">
+                <li><strong>Visit our website:</strong> www.opcieas.com</li>
+                <li><strong>Write to us:</strong> opcieas@outlook.com</li>
+                <li><strong>Spread the Word:</strong> Share this vision with your fellow industrialists and friends in the manufacturing community.</li>
+              </ul>
+            </section>
+
+            <section className="mt-8">
+              <h3 className="font-heading text-xl font-bold text-navy">Together Forward</h3>
+              <p className="mt-3 font-body leading-relaxed text-navy/75">
+                This is not just another portal; it is a movement dedicated to fairness, transparency, and sustainable growth. With your support, OPCIEAS will become the definitive platform where Indian industrialists finally achieve true dignity in promotion and verified business opportunities.
+              </p>
+            </section>
+          </article>
+
           <div className="mt-16 flex flex-wrap gap-4">
+            <div className="w-full rounded-2xl border border-gold/40 bg-gold/10 px-5 py-4 text-navy">
+              <p className="font-sub text-base font-bold leading-relaxed sm:text-lg">
+                Zero Subscription Fees Until We Reach Our Goal! We are building a verified network of manufacturers first. No fees, no risk - just reply "Yes" with your company details to join the movement.
+              </p>
+            </div>
             <Link to="/contact" className="btn-gold flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm">
               Contact Us <ArrowRight className="h-4 w-4" />
             </Link>
