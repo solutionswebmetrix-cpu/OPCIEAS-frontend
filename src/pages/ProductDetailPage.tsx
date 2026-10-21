@@ -285,7 +285,7 @@ export default function ProductDetailPage() {
           <div>
             <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="font-heading text-3xl font-black text-navy sm:text-4xl">{product.name}</motion.h1>
             {product.short_desc && <p className="mt-2 font-sub text-lg text-body-text">{product.short_desc}</p>}
-            <div className="mt-4 inline-flex rounded-full border border-gold/70 bg-gold/10 px-3 py-1.5 font-sub text-xs font-semibold uppercase tracking-[0.2em] text-gold">{supplyLabel}</div>
+            <div className="mt-4 inline-flex rounded-full border border-gold/70 bg-gold/10 px-3 py-1.5 font-sub text-xs font-semibold uppercase tracking-[0.2em] text-navy">{supplyLabel}</div>
             {hasExport && (<div className="mt-3 inline-flex rounded-full border border-gold/70 bg-gold/10 px-3 py-1.5 font-sub text-xs font-semibold uppercase tracking-[0.2em] text-gold">Export Specifications & Paid Samples Available.</div>)}
             {product.price_range && <p className="mt-4 font-heading text-xl font-bold gold-text">{product.price_range}</p>}
             {supplyNote && <p className="mt-3 font-body text-sm text-navy/70">{supplyNote}</p>}

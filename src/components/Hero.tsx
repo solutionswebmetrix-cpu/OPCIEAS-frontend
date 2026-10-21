@@ -85,7 +85,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: 'easeOut' }}
           className="w-full max-w-[700px]">
-          <p className="font-sub text-xs uppercase tracking-[0.28em] text-gold sm:text-sm">OPCIEAS PVT. LTD.</p>
+          <p className="inline-flex rounded-sm bg-white/90 px-2 py-1 font-sub text-xs uppercase tracking-[0.28em] text-navy sm:text-sm">OPCIEAS PVT. LTD.</p>
           <h1 className="mt-4 font-heading text-4xl font-black leading-tight text-white sm:text-5xl lg:text-6xl">
             Commercial Furniture
           </h1>
