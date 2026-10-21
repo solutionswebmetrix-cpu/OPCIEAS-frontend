@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import opcIeasTextWordmark from '../assets/logo/OPCIEAS_approved_text_wordmark.png';
 import CompanyLogo from './CompanyLogo';
 
 const subtitles = [
@@ -33,6 +34,12 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
     logoPreload.href = new URL('../assets/logo/logo.png', import.meta.url).href;
     document.head.appendChild(logoPreload);
 
+    const wordmarkPreload = document.createElement('link');
+    wordmarkPreload.rel = 'preload';
+    wordmarkPreload.as = 'image';
+    wordmarkPreload.href = opcIeasTextWordmark;
+    document.head.appendChild(wordmarkPreload);
+
     const image = new Image();
     image.src = logoPreload.href;
 
@@ -54,6 +61,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
       document.body.style.overflow = '';
       timeline.forEach(window.clearTimeout);
       document.head.removeChild(logoPreload);
+      document.head.removeChild(wordmarkPreload);
     };
   }, [onComplete]);
 
@@ -100,8 +108,8 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
             className="relative flex items-center justify-center"
           >
             <div className="absolute inset-0 rounded-[36px] bg-gradient-to-r from-[#F2D37B]/20 via-[#D4AF37]/10 to-transparent blur-3xl opacity-80" />
-            <div className="relative flex h-40 w-40 items-center justify-center rounded-[32px] border border-white/10 bg-white/5 p-6 shadow-[0_30px_120px_rgba(212,175,55,0.24)] backdrop-blur-2xl">
-              <CompanyLogo alt="OPCIEAS logo" className="h-full w-full" />
+            <div className="relative flex h-36 w-36 items-center justify-center sm:h-40 sm:w-40">
+              <CompanyLogo alt="OPCIEAS logo" className="h-full w-full object-contain" />
             </div>
             <motion.div
               animate={{ opacity: logoVisible ? 1 : 0, scale: logoVisible ? 1 : 0.75 }}
@@ -116,19 +124,14 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
             transition={{ duration: 0.8, delay: 0.1, ease: 'easeOut' }}
             className="mt-10 max-w-3xl"
           >
-            <h1 className="font-heading text-4xl font-black uppercase tracking-[0.35em] text-transparent sm:text-5xl md:text-6xl" style={{ backgroundImage: 'linear-gradient(135deg, #E8C766 0%, #D4AF37 50%, #B8932B 100%)', WebkitBackgroundClip: 'text' }}>
-              OPCIEAS™
-            </h1>
+            <div className="inline-flex max-w-full rounded-md bg-white/95 px-2 py-1">
+              <img
+                src={opcIeasTextWordmark}
+                alt="OPCIEAS Private Limited — Hand Crafted Since 1999"
+                className="h-auto w-[min(72vw,340px)] object-contain"
+              />
+            </div>
           </motion.div>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: showTagline ? 1 : 0 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
-            className="mt-4 max-w-2xl text-sm uppercase tracking-[0.35em] text-white/80 sm:text-base"
-          >
-            Everyone Says Go Green... We Show How!!!
-          </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 16 }}
