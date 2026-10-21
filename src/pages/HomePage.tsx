@@ -135,17 +135,7 @@ export default function HomePage() {
 
       <Hero />
 
-      <section className="border-y border-navy/5 bg-white py-4">
-        <div className="container-x px-6">
-          <div className="grid gap-3 md:grid-cols-5">
-            {buyerPositioning.map((item) => (
-              <div key={item} className="rounded-full border border-navy/10 bg-light-grey px-4 py-3 text-center font-sub text-[10px] uppercase tracking-[0.25em] text-navy/75">
-                {item}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <Products />
 
       <section id="what-we-manufacture" className="bg-white py-10 sm:py-12 lg:py-14">
         <div className="container-x px-6">
@@ -198,7 +188,17 @@ export default function HomePage() {
 
       <HomepageFurnitureSequence />
 
-      <Products />
+      <section className="border-y border-navy/5 bg-white py-4">
+        <div className="container-x px-6">
+          <div className="grid gap-3 md:grid-cols-5">
+            {buyerPositioning.map((item) => (
+              <div key={item} className="rounded-full border border-navy/10 bg-light-grey px-4 py-3 text-center font-sub text-[10px] uppercase tracking-[0.25em] text-navy/75">
+                {item}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <Manufacturing />
 
