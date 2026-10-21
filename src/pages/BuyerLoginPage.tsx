@@ -71,7 +71,7 @@ export default function BuyerLoginPage() {
           value={(form as any)[name]}
           onChange={(e) => update(name, e.target.value)}
           placeholder={placeholder}
-          className={`w-full pl-10 ${endAdornment ? 'pr-12' : 'pr-4'} py-3.5 rounded-xl border ${errors[name] ? 'border-red-400 focus:ring-red-400' : 'border-gray-300 focus:ring-gold'} focus:outline-none focus:ring-2 bg-white text-navy transition`}
+          className={`w-full pl-10 ${endAdornment ? 'pr-12' : 'pr-4'} py-3.5 rounded-xl border ${errors[name] ? 'border-red-400 focus:ring-red-400' : 'border-gray-300 focus:ring-accent-blue'} focus:outline-none focus:ring-2 bg-white text-navy transition`}
         />
         {endAdornment && (
           <button type="button" onClick={() => endAdornment.onClick?.()} className="absolute right-3 top-1/2 -translate-y-1/2 text-navy/40 hover:text-navy/60">
@@ -84,14 +84,14 @@ export default function BuyerLoginPage() {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-amber-50 pt-24 pb-16 flex items-center">
+    <div className="min-h-screen bg-gradient-to-br from-light-blue via-white to-light-blue pt-24 pb-16 flex items-center">
       <PageMeta title="Buyer Login | OPCIEAS" description="Sign in to your OPCIEAS buyer account to manage purchase requirements and track orders." />
       <div className="w-full max-w-md mx-auto px-4">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
           <div className="text-center mb-8">
             <Link to="/" className="inline-block mb-6">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-900 to-emerald-800 mx-auto flex items-center justify-center shadow-lg shadow-emerald-900/20">
-                <LogIn size={28} className="text-amber-300" />
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-navy to-navy mx-auto flex items-center justify-center shadow-lg shadow-navy/20">
+                <LogIn size={28} className="text-secondary-navy" />
               </div>
             </Link>
             <h1 className="text-3xl font-bold text-slate-900 mb-2 tracking-tight">Welcome Back, Buyer</h1>
@@ -99,11 +99,11 @@ export default function BuyerLoginPage() {
           </div>
 
           <div className="bg-white rounded-2xl shadow-2xl shadow-slate-200/50 border border-slate-200 overflow-hidden">
-            <div className="bg-gradient-to-r from-emerald-900 via-emerald-800 to-emerald-900 px-8 py-5">
+            <div className="bg-gradient-to-r from-navy via-navy to-navy px-8 py-5">
               <h2 className="text-xl font-bold text-white flex items-center gap-2">
                 <User size={20} /> Buyer Login
               </h2>
-              <p className="text-emerald-200 text-sm mt-1">For Buyers & Procurement Teams</p>
+              <p className="text-border-grey text-sm mt-1">For Buyers & Procurement Teams</p>
             </div>
 
             <form onSubmit={onSubmit} className="p-8 space-y-5">
@@ -127,19 +127,19 @@ export default function BuyerLoginPage() {
                     type="checkbox"
                     checked={form.remember}
                     onChange={(e) => update('remember', e.target.checked)}
-                    className="w-4 h-4 rounded border-slate-300 text-emerald-800 focus:ring-emerald-500"
+                    className="w-4 h-4 rounded border-slate-300 text-navy focus:ring-secondary-navy"
                   />
                   <span className="text-sm text-slate-600">Remember me</span>
                 </label>
-                <a href="#" className="text-sm font-semibold text-emerald-700 hover:text-emerald-900">Forgot password?</a>
+                <a href="#" className="text-sm font-semibold text-secondary-navy hover:text-navy">Forgot password?</a>
               </div>
 
               {result && (
                 <motion.div
                   initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }}
-                  className={`rounded-xl p-4 flex items-start gap-3 border ${result.ok ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-red-50 border-red-200 text-red-900'}`}
+                  className={`rounded-xl p-4 flex items-start gap-3 border ${result.ok ? 'bg-light-blue border-border-grey text-navy' : 'bg-red-50 border-red-200 text-red-900'}`}
                 >
-                  {result.ok ? <CheckCircle2 size={20} className="text-emerald-600 mt-0.5 flex-shrink-0" /> : <AlertCircle size={20} className="text-red-600 mt-0.5 flex-shrink-0" />}
+                  {result.ok ? <CheckCircle2 size={20} className="text-secondary-navy mt-0.5 flex-shrink-0" /> : <AlertCircle size={20} className="text-red-600 mt-0.5 flex-shrink-0" />}
                   <div>
                     <p className="font-semibold text-sm">{result.ok ? 'Success' : 'Error'}</p>
                     <p className="text-sm opacity-90">{result.msg}</p>
@@ -150,7 +150,7 @@ export default function BuyerLoginPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-800 to-emerald-900 text-white font-semibold shadow-lg shadow-emerald-900/20 hover:shadow-emerald-900/30 hover:from-emerald-900 hover:to-black transition disabled:opacity-60 disabled:cursor-not-allowed"
+                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-navy to-navy text-white font-semibold shadow-lg shadow-navy/20 hover:shadow-navy/30 hover:from-navy hover:to-black transition disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 {loading ? (
                   <><div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Signing in...</>
@@ -162,31 +162,31 @@ export default function BuyerLoginPage() {
               <div className="pt-4 border-t border-slate-100 space-y-3">
                 <p className="text-sm text-slate-600 text-center">
                   New to OPCIEAS?{' '}
-                  <Link to="/buyer/register" className="text-emerald-700 font-semibold hover:text-emerald-900 inline-flex items-center gap-1">
+                  <Link to="/buyer/register" className="text-secondary-navy font-semibold hover:text-navy inline-flex items-center gap-1">
                     Create Buyer Account <ChevronRight size={14} />
                   </Link>
                 </p>
                 <Link
                   to="/seller/register"
-                  className="flex items-center justify-center gap-3 w-full p-3 rounded-xl border border-slate-200 hover:border-amber-400 hover:bg-amber-50 transition group"
+                  className="flex items-center justify-center gap-3 w-full p-3 rounded-xl border border-slate-200 hover:border-secondary-navy hover:bg-light-blue transition group"
                 >
-                  <div className="w-9 h-9 rounded-lg bg-amber-100 group-hover:bg-amber-200 flex items-center justify-center transition">
-                    <Building2 size={18} className="text-amber-700" />
+                  <div className="w-9 h-9 rounded-lg bg-light-blue group-hover:bg-border-grey flex items-center justify-center transition">
+                    <Building2 size={18} className="text-secondary-navy" />
                   </div>
                   <div className="text-left">
-                    <p className="font-semibold text-sm text-slate-900 group-hover:text-amber-900">Are you a Manufacturer / Seller?</p>
+                    <p className="font-semibold text-sm text-slate-900 group-hover:text-navy">Are you a Manufacturer / Seller?</p>
                     <p className="text-xs text-slate-500">Register your company to get featured</p>
                   </div>
                 </Link>
                 <Link
                   to="/rfq"
-                  className="flex items-center justify-center gap-3 w-full p-3 rounded-xl border border-slate-200 hover:border-emerald-400 hover:bg-emerald-50 transition group"
+                  className="flex items-center justify-center gap-3 w-full p-3 rounded-xl border border-slate-200 hover:border-secondary-navy hover:bg-light-blue transition group"
                 >
-                  <div className="w-9 h-9 rounded-lg bg-emerald-100 group-hover:bg-emerald-200 flex items-center justify-center transition">
-                    <CheckCircle2 size={18} className="text-emerald-700" />
+                  <div className="w-9 h-9 rounded-lg bg-light-blue group-hover:bg-border-grey flex items-center justify-center transition">
+                    <CheckCircle2 size={18} className="text-secondary-navy" />
                   </div>
                   <div className="text-left">
-                    <p className="font-semibold text-sm text-slate-900 group-hover:text-emerald-900">Quick RFQ (No Signup)</p>
+                    <p className="font-semibold text-sm text-slate-900 group-hover:text-navy">Quick RFQ (No Signup)</p>
                     <p className="text-xs text-slate-500">Post a one-time requirement</p>
                   </div>
                 </Link>

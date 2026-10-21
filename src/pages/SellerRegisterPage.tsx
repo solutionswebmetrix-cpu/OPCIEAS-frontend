@@ -105,13 +105,13 @@ export default function SellerRegisterPage() {
             onChange={(e) => update(name, e.target.value)}
             placeholder={placeholder}
             rows={4}
-            className={`w-full pl-4 pr-4 py-3 rounded-xl border ${errors[name] ? 'border-red-400 focus:ring-red-400' : 'border-slate-300 focus:ring-amber-500'} focus:outline-none focus:ring-2 bg-white transition resize-none`}
+            className={`w-full pl-4 pr-4 py-3 rounded-xl border ${errors[name] ? 'border-red-400 focus:ring-red-400' : 'border-slate-300 focus:ring-secondary-navy'} focus:outline-none focus:ring-2 bg-white transition resize-none`}
           />
         ) : options ? (
           <select
             value={(form as any)[name]}
             onChange={(e) => update(name, e.target.value)}
-            className={`w-full pl-10 pr-4 py-3 rounded-xl border ${errors[name] ? 'border-red-400 focus:ring-red-400' : 'border-slate-300 focus:ring-amber-500'} focus:outline-none focus:ring-2 bg-white transition`}
+            className={`w-full pl-10 pr-4 py-3 rounded-xl border ${errors[name] ? 'border-red-400 focus:ring-red-400' : 'border-slate-300 focus:ring-secondary-navy'} focus:outline-none focus:ring-2 bg-white transition`}
           >
             {options.map((o: any) => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
@@ -121,7 +121,7 @@ export default function SellerRegisterPage() {
             value={(form as any)[name]}
             onChange={(e) => update(name, e.target.value)}
             placeholder={placeholder}
-            className={`w-full pl-10 ${endAdornment ? 'pr-12' : 'pr-4'} py-3 rounded-xl border ${errors[name] ? 'border-red-400 focus:ring-red-400' : 'border-slate-300 focus:ring-amber-500'} focus:outline-none focus:ring-2 bg-white transition`}
+            className={`w-full pl-10 ${endAdornment ? 'pr-12' : 'pr-4'} py-3 rounded-xl border ${errors[name] ? 'border-red-400 focus:ring-red-400' : 'border-slate-300 focus:ring-secondary-navy'} focus:outline-none focus:ring-2 bg-white transition`}
           />
         )}
         {endAdornment && (
@@ -139,25 +139,25 @@ export default function SellerRegisterPage() {
       {[1, 2, 3].map((s) => (
         <div key={s} className="flex items-center gap-2">
           <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition ${
-            s === step ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/30' :
-            s < step ? 'bg-emerald-600 text-white' :
+            s === step ? 'bg-secondary-navy text-white shadow-lg shadow-secondary-navy/30' :
+            s < step ? 'bg-secondary-navy text-white' :
             'bg-slate-200 text-slate-500'
           }`}>
             {s < step ? <CheckCircle2 size={20} /> : s}
           </div>
-          {s < 3 && <div className={`w-10 md:w-20 h-1 rounded-full transition ${s < step ? 'bg-emerald-500' : 'bg-slate-200'}`} />}
+          {s < 3 && <div className={`w-10 md:w-20 h-1 rounded-full transition ${s < step ? 'bg-secondary-navy' : 'bg-slate-200'}`} />}
         </div>
       ))}
     </div>
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-emerald-50 pt-24 pb-16">
+    <div className="min-h-screen bg-gradient-to-br from-light-blue via-white to-light-blue pt-24 pb-16">
       <PageMeta title="Seller / Manufacturer Registration | OPCIEAS" description="Register as a seller or manufacturer on OPCIEAS. Submit your company profile for admin approval and start featuring your furniture products." />
       <div className="max-w-4xl mx-auto px-4">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
           <div className="text-center mb-8">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-100 text-amber-800 text-sm font-medium mb-4">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-light-blue text-navy text-sm font-medium mb-4">
               <Factory size={16} /> Manufacturer / Seller Registration
             </div>
             <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-3 tracking-tight">Partner With OPCIEAS</h1>
@@ -165,12 +165,12 @@ export default function SellerRegisterPage() {
           </div>
 
           <div className="bg-white rounded-2xl shadow-2xl shadow-slate-200/50 border border-slate-200 overflow-hidden">
-            <div className="bg-gradient-to-r from-amber-700 via-amber-600 to-amber-700 px-8 py-5 flex items-center justify-between">
+            <div className="bg-gradient-to-r from-secondary-navy via-secondary-navy to-secondary-navy px-8 py-5 flex items-center justify-between">
               <div>
                 <h2 className="text-2xl font-bold text-white flex items-center gap-2">
                   <Building2 size={24} /> Company Registration
                 </h2>
-                <p className="text-amber-100 text-sm mt-1">Step {step} of {totalSteps} — Fill in all details for faster approval</p>
+                <p className="text-light-blue text-sm mt-1">Step {step} of {totalSteps} — Fill in all details for faster approval</p>
               </div>
               <div className="hidden md:block w-16 h-16 rounded-2xl bg-white/10 backdrop-blur flex items-center justify-center">
                 <FileCheck size={32} className="text-white" />
@@ -182,7 +182,7 @@ export default function SellerRegisterPage() {
 
               {step === 1 && (
                 <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
-                  <h3 className="text-sm font-bold text-amber-700 uppercase tracking-wider mb-4 pb-2 border-b border-slate-100">Step 1 — Contact Person & Account</h3>
+                  <h3 className="text-sm font-bold text-secondary-navy uppercase tracking-wider mb-4 pb-2 border-b border-slate-100">Step 1 — Contact Person & Account</h3>
                   <div className="grid md:grid-cols-2 gap-4">
                     <Field label="Authorized Contact Person" icon={User} name="name" placeholder="Full name of signatory" required />
                     <Field label="Official Email" icon={Mail} name="email" type="email" placeholder="name@company.com" required />
@@ -199,15 +199,15 @@ export default function SellerRegisterPage() {
                     />
                     <Field label="Confirm Password" icon={Lock} name="confirm_password" type={showPw ? 'text' : 'password'} placeholder="Re-enter password" required />
                   </div>
-                  <div className="p-4 rounded-xl bg-amber-50 border border-amber-200">
-                    <p className="text-sm text-amber-900"><strong className="font-semibold">💡 Note:</strong> After submission, your account will be under review. Admin may request additional company documents (GST, PAN, IEC, factory photos, certifications) via email for verification.</p>
+                  <div className="p-4 rounded-xl bg-light-blue border border-border-grey">
+                    <p className="text-sm text-navy"><strong className="font-semibold">💡 Note:</strong> After submission, your account will be under review. Admin may request additional company documents (GST, PAN, IEC, factory photos, certifications) via email for verification.</p>
                   </div>
                 </motion.div>
               )}
 
               {step === 2 && (
                 <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
-                  <h3 className="text-sm font-bold text-amber-700 uppercase tracking-wider mb-4 pb-2 border-b border-slate-100">Step 2 — Company Details & Address</h3>
+                  <h3 className="text-sm font-bold text-secondary-navy uppercase tracking-wider mb-4 pb-2 border-b border-slate-100">Step 2 — Company Details & Address</h3>
                   <div className="grid md:grid-cols-2 gap-4">
                     <Field label="Company Name (Legal)" icon={Building2} name="company_name" placeholder="e.g. OPCIEAS Pvt Ltd" required />
                     <Field label="Business Type" icon={Factory} name="business_type" required options={[
@@ -248,7 +248,7 @@ export default function SellerRegisterPage() {
 
               {step === 3 && (
                 <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
-                  <h3 className="text-sm font-bold text-amber-700 uppercase tracking-wider mb-4 pb-2 border-b border-slate-100">Step 3 — Business Profile & Final Review</h3>
+                  <h3 className="text-sm font-bold text-secondary-navy uppercase tracking-wider mb-4 pb-2 border-b border-slate-100">Step 3 — Business Profile & Final Review</h3>
                   <div className="grid md:grid-cols-2 gap-4 mb-4">
                     <Field label="Annual Turnover (optional)" icon={FileCheck} name="annual_turnover" placeholder="e.g. ₹5–10 Cr" />
                     <div />
@@ -257,7 +257,7 @@ export default function SellerRegisterPage() {
 
                   <div className="grid md:grid-cols-2 gap-4 mt-2">
                     <div className="p-5 rounded-xl bg-slate-50 border border-slate-200">
-                      <h4 className="font-bold text-slate-900 mb-2 flex items-center gap-2"><FileCheck size={18} className="text-amber-600" /> Summary</h4>
+                      <h4 className="font-bold text-slate-900 mb-2 flex items-center gap-2"><FileCheck size={18} className="text-secondary-navy" /> Summary</h4>
                       <ul className="space-y-1.5 text-sm text-slate-700">
                         <li>• Contact: <strong>{form.name || '—'}</strong></li>
                         <li>• Email: <strong>{form.email || '—'}</strong></li>
@@ -267,20 +267,20 @@ export default function SellerRegisterPage() {
                         <li>• Location: <strong>{[form.city, form.state, form.country].filter(Boolean).join(', ') || '—'}</strong></li>
                       </ul>
                     </div>
-                    <div className="p-5 rounded-xl bg-emerald-50 border border-emerald-200">
-                      <h4 className="font-bold text-emerald-900 mb-2 flex items-center gap-2"><CheckCircle2 size={18} className="text-emerald-600" /> Approval Workflow</h4>
-                      <ol className="space-y-1.5 text-sm text-emerald-900 list-decimal list-inside">
+                    <div className="p-5 rounded-xl bg-light-blue border border-border-grey">
+                      <h4 className="font-bold text-navy mb-2 flex items-center gap-2"><CheckCircle2 size={18} className="text-secondary-navy" /> Approval Workflow</h4>
+                      <ol className="space-y-1.5 text-sm text-navy list-decimal list-inside">
                         <li>Admin reviews your profile</li>
                         <li>May request more documents via email</li>
                         <li>Documents verified (GST, PAN, certificates)</li>
                         <li>Profile approved — your products get published</li>
                       </ol>
-                      <p className="mt-3 text-xs text-emerald-800/80">You will receive email notifications at each stage. Your products are managed by the admin team.</p>
+                      <p className="mt-3 text-xs text-navy/80">You will receive email notifications at each stage. Your products are managed by the admin team.</p>
                     </div>
                   </div>
 
-                  <label className="flex items-start gap-3 cursor-pointer select-none p-4 rounded-xl border border-slate-200 hover:border-amber-300 bg-slate-50 transition">
-                    <input type="checkbox" required className="mt-1 w-4 h-4 rounded border-slate-300 text-amber-600 focus:ring-amber-500" />
+                  <label className="flex items-start gap-3 cursor-pointer select-none p-4 rounded-xl border border-slate-200 hover:border-secondary-navy bg-slate-50 transition">
+                    <input type="checkbox" required className="mt-1 w-4 h-4 rounded border-slate-300 text-secondary-navy focus:ring-secondary-navy" />
                     <span className="text-sm text-slate-700">
                       I hereby confirm that all information provided is accurate and belongs to my company. I understand that OPCIEAS admin may request additional identity/address proof documents, and any false information may result in rejection.<strong className="text-slate-900"> Admin manages all product listings; sellers do not get dashboard access.</strong>
                     </span>
@@ -291,9 +291,9 @@ export default function SellerRegisterPage() {
               {result && (
                 <motion.div
                   initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }}
-                  className={`mt-6 rounded-xl p-4 flex items-start gap-3 border ${result.ok ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-red-50 border-red-200 text-red-900'}`}
+                  className={`mt-6 rounded-xl p-4 flex items-start gap-3 border ${result.ok ? 'bg-light-blue border-border-grey text-navy' : 'bg-red-50 border-red-200 text-red-900'}`}
                 >
-                  {result.ok ? <CheckCircle2 size={20} className="text-emerald-600 mt-0.5 flex-shrink-0" /> : <AlertCircle size={20} className="text-red-600 mt-0.5 flex-shrink-0" />}
+                  {result.ok ? <CheckCircle2 size={20} className="text-secondary-navy mt-0.5 flex-shrink-0" /> : <AlertCircle size={20} className="text-red-600 mt-0.5 flex-shrink-0" />}
                   <div>
                     <p className="font-semibold text-sm">{result.ok ? 'Application Submitted' : 'Error'}</p>
                     <p className="text-sm opacity-90">{result.msg}</p>
@@ -314,15 +314,15 @@ export default function SellerRegisterPage() {
                   )}
                 </div>
                 <div className="flex items-center gap-3">
-                  <Link to="/buyer/register" className="text-sm text-emerald-700 font-semibold hover:text-emerald-900 hidden md:inline-flex items-center gap-1">
+                  <Link to="/buyer/register" className="text-sm text-secondary-navy font-semibold hover:text-navy hidden md:inline-flex items-center gap-1">
                     Looking to Buy? Register as Buyer <ChevronRight size={14} />
                   </Link>
                   {step < totalSteps ? (
-                    <button type="button" onClick={next} className="inline-flex items-center gap-2 px-7 py-3 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 text-white font-semibold shadow-lg shadow-amber-700/20 hover:shadow-amber-700/30 hover:from-amber-700 hover:to-amber-800 transition">
+                    <button type="button" onClick={next} className="inline-flex items-center gap-2 px-7 py-3 rounded-xl bg-gradient-to-r from-secondary-navy to-secondary-navy text-white font-semibold shadow-lg shadow-secondary-navy/20 hover:shadow-secondary-navy/30 hover:from-secondary-navy hover:to-navy transition">
                       Continue <ChevronRight size={18} />
                     </button>
                   ) : (
-                    <button type="button" onClick={onFinalSubmit} disabled={loading} className="inline-flex items-center gap-2 px-7 py-3 rounded-xl bg-gradient-to-r from-emerald-800 to-emerald-900 text-white font-semibold shadow-lg shadow-emerald-900/20 hover:shadow-emerald-900/30 hover:from-emerald-900 hover:to-black transition disabled:opacity-60">
+                    <button type="button" onClick={onFinalSubmit} disabled={loading} className="inline-flex items-center gap-2 px-7 py-3 rounded-xl bg-gradient-to-r from-navy to-navy text-white font-semibold shadow-lg shadow-navy/20 hover:shadow-navy/30 hover:from-navy hover:to-black transition disabled:opacity-60">
                       {loading ? (
                         <><div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Submitting...</>
                       ) : (

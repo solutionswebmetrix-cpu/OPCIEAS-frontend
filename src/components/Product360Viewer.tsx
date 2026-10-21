@@ -64,7 +64,7 @@ export default function Product360Viewer({ images, productName, open, onClose }:
           <div className="mb-4 flex items-center justify-between">
             <div>
               <h3 className="font-heading text-lg font-bold text-navy">{productName}</h3>
-              <p className="font-sub text-xs text-gold">360° Product Viewer</p>
+              <p className="font-sub text-xs text-accent-blue">360° Product Viewer</p>
             </div>
             <button onClick={onClose} className="rounded-full bg-navy/10 p-2 text-navy transition hover:bg-navy/20">
               <X className="h-5 w-5" />
@@ -96,15 +96,15 @@ export default function Product360Viewer({ images, productName, open, onClose }:
 
           <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-2">
-              <button onClick={() => setZoom((z) => Math.max(1, z - 0.2))} className="rounded-full bg-navy/10 p-2 text-navy transition hover:bg-gold hover:text-navy"><ZoomOut className="h-4 w-4" /></button>
+              <button onClick={() => setZoom((z) => Math.max(1, z - 0.2))} className="rounded-full bg-navy/10 p-2 text-navy transition hover:bg-accent-blue hover:text-navy"><ZoomOut className="h-4 w-4" /></button>
               <span className="font-sub text-xs text-navy/70">{Math.round(zoom * 100)}%</span>
-              <button onClick={() => setZoom((z) => Math.min(3, z + 0.2))} className="rounded-full bg-navy/10 p-2 text-navy transition hover:bg-gold hover:text-navy"><ZoomIn className="h-4 w-4" /></button>
+              <button onClick={() => setZoom((z) => Math.min(3, z + 0.2))} className="rounded-full bg-navy/10 p-2 text-navy transition hover:bg-accent-blue hover:text-navy"><ZoomIn className="h-4 w-4" /></button>
             </div>
             <div className="flex items-center gap-2">
-              <button onClick={() => setAuto(!auto)} className={`flex items-center gap-2 rounded-full px-4 py-2 font-sub text-xs transition ${auto ? 'bg-gold text-navy' : 'bg-navy/10 text-navy hover:bg-navy/20'}`}>
+              <button onClick={() => setAuto(!auto)} className={`flex items-center gap-2 rounded-full px-4 py-2 font-sub text-xs transition ${auto ? 'bg-accent-blue text-navy' : 'bg-navy/10 text-navy hover:bg-navy/20'}`}>
                 <RotateCw className="h-4 w-4" /> {auto ? 'Stop Auto-Rotate' : 'Auto-Rotate'}
               </button>
-              <button onClick={() => setIdx((i) => (i + 1) % images.length)} className="flex items-center gap-2 rounded-full bg-navy/10 px-4 py-2 font-sub text-xs text-navy transition hover:bg-gold hover:text-navy">
+              <button onClick={() => setIdx((i) => (i + 1) % images.length)} className="flex items-center gap-2 rounded-full bg-navy/10 px-4 py-2 font-sub text-xs text-navy transition hover:bg-accent-blue hover:text-navy">
                 <Maximize2 className="h-4 w-4" /> Next Angle
               </button>
             </div>
@@ -116,7 +116,7 @@ export default function Product360Viewer({ images, productName, open, onClose }:
               <button
                 key={i}
                 onClick={() => setIdx(i)}
-                className={`h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg border-2 transition ${i === idx ? 'border-gold' : 'border-transparent opacity-60 hover:opacity-100'}`}
+                className={`h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg border-2 transition ${i === idx ? 'border-accent-blue' : 'border-transparent opacity-60 hover:opacity-100'}`}
               >
                 <img src={img} alt={`thumb ${i + 1}`} className="h-full w-full bg-light-grey object-contain object-center" />
               </button>

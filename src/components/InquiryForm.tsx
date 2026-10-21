@@ -47,10 +47,10 @@ export default function InquiryForm({ productName, category, compact }: Props) {
 
   if (status === 'success') {
     return (
-      <div className="rounded-lux bg-green-500/10 p-8 text-center">
-        <CheckCircle className="mx-auto mb-3 h-12 w-12 text-green-400" />
+      <div className="rounded-lux bg-secondary-navy/10 p-8 text-center">
+        <CheckCircle className="mx-auto mb-3 h-12 w-12 text-secondary-navy" />
         <h3 className="font-heading text-lg font-bold text-navy">Thank you! Your inquiry has been submitted successfully.</h3>
-        <p className={`mt-2 font-sub text-sm ${successMessage.includes('could not be delivered') ? 'text-amber-800' : 'text-navy/80'}`}>{successMessage}</p>
+        <p className={`mt-2 font-sub text-sm ${successMessage.includes('could not be delivered') ? 'text-navy' : 'text-navy/80'}`}>{successMessage}</p>
         <button onClick={() => setStatus('idle')} className="mt-4 rounded-full bg-white px-5 py-2 font-sub text-xs text-navy transition hover:bg-light-grey">Submit Another</button>
       </div>
     );
@@ -62,35 +62,35 @@ export default function InquiryForm({ productName, category, compact }: Props) {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <label className="flex min-w-0 flex-col gap-1.5 font-sub text-sm font-medium text-navy">
           <span>Your Name <span className="text-red-700">*</span></span>
-          <input required value={form.contact_name} onChange={(e) => set('contact_name', e.target.value)} placeholder="Enter your name" className="w-full rounded-xl border border-navy/20 bg-white px-4 py-3 font-sub text-base text-navy placeholder:text-navy/50 outline-none transition focus:border-gold focus:ring-2 focus:ring-gold/30" />
+          <input required value={form.contact_name} onChange={(e) => set('contact_name', e.target.value)} placeholder="Enter your name" className="w-full rounded-xl border border-navy/20 bg-white px-4 py-3 font-sub text-base text-navy placeholder:text-navy/50 outline-none transition focus:border-accent-blue focus:ring-2 focus:ring-accent-blue/30" />
         </label>
         <label className="flex min-w-0 flex-col gap-1.5 font-sub text-sm font-medium text-navy">
           <span>Email <span className="text-red-700">*</span></span>
-          <input required type="email" value={form.email} onChange={(e) => set('email', e.target.value)} placeholder="Enter your email" className="w-full rounded-xl border border-navy/20 bg-white px-4 py-3 font-sub text-base text-navy placeholder:text-navy/50 outline-none transition focus:border-gold focus:ring-2 focus:ring-gold/30" />
+          <input required type="email" value={form.email} onChange={(e) => set('email', e.target.value)} placeholder="Enter your email" className="w-full rounded-xl border border-navy/20 bg-white px-4 py-3 font-sub text-base text-navy placeholder:text-navy/50 outline-none transition focus:border-accent-blue focus:ring-2 focus:ring-accent-blue/30" />
         </label>
         <label className="flex min-w-0 flex-col gap-1.5 font-sub text-sm font-medium text-navy">
           <span>Phone</span>
-          <input value={form.phone} onChange={(e) => set('phone', e.target.value)} placeholder="Enter your phone number" className="w-full rounded-xl border border-navy/20 bg-white px-4 py-3 font-sub text-base text-navy placeholder:text-navy/50 outline-none transition focus:border-gold focus:ring-2 focus:ring-gold/30" />
+          <input value={form.phone} onChange={(e) => set('phone', e.target.value)} placeholder="Enter your phone number" className="w-full rounded-xl border border-navy/20 bg-white px-4 py-3 font-sub text-base text-navy placeholder:text-navy/50 outline-none transition focus:border-accent-blue focus:ring-2 focus:ring-accent-blue/30" />
         </label>
         <label className="flex min-w-0 flex-col gap-1.5 font-sub text-sm font-medium text-navy">
           <span>Company</span>
-          <input value={form.company_name} onChange={(e) => set('company_name', e.target.value)} placeholder="Enter your company" className="w-full rounded-xl border border-navy/20 bg-white px-4 py-3 font-sub text-base text-navy placeholder:text-navy/50 outline-none transition focus:border-gold focus:ring-2 focus:ring-gold/30" />
+          <input value={form.company_name} onChange={(e) => set('company_name', e.target.value)} placeholder="Enter your company" className="w-full rounded-xl border border-navy/20 bg-white px-4 py-3 font-sub text-base text-navy placeholder:text-navy/50 outline-none transition focus:border-accent-blue focus:ring-2 focus:ring-accent-blue/30" />
         </label>
         <label className="flex min-w-0 flex-col gap-1.5 font-sub text-sm font-medium text-navy">
           <span>Product{isRFQ && <span className="text-red-700"> *</span>}</span>
-          <input required={isRFQ} value={form.product} onChange={(e) => set('product', e.target.value)} placeholder="Product of interest" className="w-full rounded-xl border border-navy/20 bg-white px-4 py-3 font-sub text-base text-navy placeholder:text-navy/50 outline-none transition focus:border-gold focus:ring-2 focus:ring-gold/30" />
+          <input required={isRFQ} value={form.product} onChange={(e) => set('product', e.target.value)} placeholder="Product of interest" className="w-full rounded-xl border border-navy/20 bg-white px-4 py-3 font-sub text-base text-navy placeholder:text-navy/50 outline-none transition focus:border-accent-blue focus:ring-2 focus:ring-accent-blue/30" />
         </label>
         <label className="flex min-w-0 flex-col gap-1.5 font-sub text-sm font-medium text-navy">
           <span>Quantity{isRFQ && <span className="text-red-700"> *</span>}</span>
-          <input required={isRFQ} value={form.quantity} onChange={(e) => set('quantity', e.target.value)} placeholder="Enter quantity" className="w-full rounded-xl border border-navy/20 bg-white px-4 py-3 font-sub text-base text-navy placeholder:text-navy/50 outline-none transition focus:border-gold focus:ring-2 focus:ring-gold/30" />
+          <input required={isRFQ} value={form.quantity} onChange={(e) => set('quantity', e.target.value)} placeholder="Enter quantity" className="w-full rounded-xl border border-navy/20 bg-white px-4 py-3 font-sub text-base text-navy placeholder:text-navy/50 outline-none transition focus:border-accent-blue focus:ring-2 focus:ring-accent-blue/30" />
         </label>
       </div>
       <label className="flex flex-col gap-1.5 font-sub text-sm font-medium text-navy">
         <span>Message{!isRFQ && <span className="text-red-700"> *</span>}</span>
-        <textarea required={!isRFQ} value={form.message} onChange={(e) => set('message', e.target.value)} placeholder="Tell us about your requirements" rows={compact ? 2 : 3} className="w-full rounded-xl border border-navy/20 bg-white px-4 py-3 font-sub text-base text-navy placeholder:text-navy/50 outline-none transition focus:border-gold focus:ring-2 focus:ring-gold/30" />
+        <textarea required={!isRFQ} value={form.message} onChange={(e) => set('message', e.target.value)} placeholder="Tell us about your requirements" rows={compact ? 2 : 3} className="w-full rounded-xl border border-navy/20 bg-white px-4 py-3 font-sub text-base text-navy placeholder:text-navy/50 outline-none transition focus:border-accent-blue focus:ring-2 focus:ring-accent-blue/30" />
       </label>
       {status === 'error' && <p role="alert" className="text-sm text-red-700">{errorMsg || 'Something went wrong. Please try again.'}</p>}
-      <button type="submit" disabled={status === 'loading'} className="btn-gold flex w-full items-center justify-center gap-2 rounded-full px-6 py-3 font-sub text-sm disabled:cursor-not-allowed disabled:opacity-70">
+      <button type="submit" disabled={status === 'loading'} className="btn-primary flex w-full items-center justify-center gap-2 rounded-full px-6 py-3 font-sub text-sm disabled:cursor-not-allowed disabled:opacity-70">
         {status === 'loading' ? <><Loader2 className="h-4 w-4 animate-spin" /> Sending...</> : <><Send className="h-4 w-4" /> Submit Inquiry</>}
       </button>
     </form>

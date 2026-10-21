@@ -67,7 +67,7 @@ export default function CompliancePage() {
       <section className="bg-white py-20">
         <div className="container-x px-6">
           <div className="mb-10 max-w-4xl rounded-lux border border-navy/10 bg-light-grey p-6">
-            <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Client informational note</p>
+            <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue">Client informational note</p>
             <h2 className="mt-3 font-heading text-2xl font-black text-navy">Compliance positioning</h2>
             <div className="mt-4 space-y-4 font-body text-sm leading-relaxed text-navy/75">
               <p><strong className="text-navy">MCA applicability note:</strong> OPCIEAS operates as a company structure subject to applicable corporate and regulatory compliance requirements under the relevant legal framework. This website is informational and does not replace formal legal, regulatory or statutory advice.</p>
@@ -90,7 +90,7 @@ export default function CompliancePage() {
                 >
                   <div className="group rounded-lux bg-navy/5 p-6 transition hover:bg-navy/10">
                     <div className="flex items-start gap-4">
-                      <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-gold/10 text-gold">
+                      <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-accent-blue/10 text-accent-blue">
                         <Icon className="h-6 w-6" />
                       </div>
                       <div className="flex-1">
@@ -101,7 +101,7 @@ export default function CompliancePage() {
                         )}
                       </div>
                     </div>
-                    <button className="mt-4 flex items-center gap-2 rounded-full bg-gold px-4 py-2 font-sub text-xs text-navy transition hover:bg-gold/80 disabled:opacity-60" disabled={item.placeholder}>
+                    <button className="mt-4 flex items-center gap-2 rounded-full bg-accent-blue px-4 py-2 font-sub text-xs text-navy transition hover:bg-accent-blue/80 disabled:opacity-60" disabled={item.placeholder}>
                       <Download className="h-4 w-4" />
                       {item.placeholder ? 'Coming Soon' : 'Download PDF'}
                     </button>

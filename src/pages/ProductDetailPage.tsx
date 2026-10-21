@@ -38,7 +38,7 @@ export default function ProductDetailPage() {
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-white">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-gold border-t-transparent" />
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-accent-blue border-t-transparent" />
       </div>
     );
   }
@@ -47,7 +47,7 @@ export default function ProductDetailPage() {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center bg-white px-6 text-center">
         <p className="font-heading text-2xl font-bold text-navy">Product not found</p>
-        <Link to="/products" className="mt-4 rounded-full bg-gold px-6 py-2 font-sub text-sm text-navy">View All Products</Link>
+        <Link to="/products" className="mt-4 rounded-full bg-accent-blue px-6 py-2 font-sub text-sm text-navy">View All Products</Link>
       </div>
     );
   }
@@ -116,7 +116,7 @@ export default function ProductDetailPage() {
               )}
             </div>
             <div>
-              <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Industrial Storage</p>
+              <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue">Industrial Storage</p>
               <h1 className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl">SS DETACHABLE WIRE RACK</h1>
               <p className="mt-4 font-body text-base leading-7 text-navy/75">{product.short_desc || 'Modern, strong, lightweight and durable stainless steel wire rack with a versatile modular design for convenient storage and display.'}</p>
               <div className="mt-6 space-y-3 text-sm text-navy/75">
@@ -125,7 +125,7 @@ export default function ProductDetailPage() {
                 <div><span className="font-sub uppercase tracking-[0.18em] text-navy/60">Load Capacity:</span> <span className="font-medium text-navy">150 kg per level</span></div>
               </div>
               <div className="mt-8 flex flex-wrap gap-3">
-                <Link to="/rfq" className="btn-gold rounded-full px-5 py-2.5 font-sub text-sm">Request Quote</Link>
+                <Link to="/rfq" className="btn-primary rounded-full px-5 py-2.5 font-sub text-sm">Request Quote</Link>
                 <a href={`https://wa.me/919845579049?text=${encodeURIComponent(`Hi, I'm interested in SS Detachable Wire Rack. Please share details.`)}`} target="_blank" rel="noreferrer" className="flex items-center gap-2 rounded-full bg-[#25D366] px-5 py-2.5 font-sub text-sm text-white"><MessageCircle className="h-4 w-4" /> Request Bulk Quote</a>
               </div>
             </div>
@@ -135,7 +135,7 @@ export default function ProductDetailPage() {
         <section className="bg-light-grey py-16">
           <div className="container-x px-6">
             <div className="mb-10">
-              <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Applications</p>
+              <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue">Applications</p>
               <h2 className="mt-3 font-heading text-3xl font-black text-navy">Where it fits</h2>
             </div>
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -149,7 +149,7 @@ export default function ProductDetailPage() {
         <section className="bg-white py-16">
           <div className="container-x px-6">
             <div className="mb-10">
-              <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Key Advantages</p>
+              <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue">Key Advantages</p>
               <h2 className="mt-3 font-heading text-3xl font-black text-navy">Built for performance</h2>
             </div>
             <div className="grid gap-5 lg:grid-cols-2 xl:grid-cols-3">
@@ -166,7 +166,7 @@ export default function ProductDetailPage() {
         <section className="bg-light-grey py-16">
           <div className="container-x px-6">
             <div className="mb-8">
-              <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Technical Specifications</p>
+              <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue">Technical Specifications</p>
               <h2 className="mt-3 font-heading text-3xl font-black text-navy">Product technical details</h2>
             </div>
             <div className="overflow-hidden rounded-lux border border-navy/10 bg-white">
@@ -187,7 +187,7 @@ export default function ProductDetailPage() {
         <section className="bg-white py-16">
           <div className="container-x px-6">
             <div className="mb-8">
-              <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Why Choose This Product</p>
+              <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue">Why Choose This Product</p>
               <h2 className="mt-3 font-heading text-3xl font-black text-navy">Maximum utility, portability and durability</h2>
             </div>
             <div className="max-w-4xl rounded-lux border border-navy/10 bg-light-grey p-6 font-body text-base leading-8 text-navy/75">
@@ -199,7 +199,7 @@ export default function ProductDetailPage() {
         <section className="bg-light-grey py-16">
           <div className="container-x px-6">
             <div className="mb-8">
-              <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Product Images</p>
+              <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue">Product Images</p>
               <h2 className="mt-3 font-heading text-3xl font-black text-navy">Visual presentation</h2>
             </div>
             <div className="h-[420px] overflow-hidden rounded-lux border border-navy/10 bg-white p-4 sm:h-[560px]">
@@ -243,14 +243,14 @@ export default function ProductDetailPage() {
                   <button
                     onClick={() => setActiveImg((i) => (i - 1 + resolvedGallery.length) % resolvedGallery.length)}
                     aria-label="Previous image"
-                    className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-white/90 border border-navy/10 p-2 text-navy shadow-sm opacity-0 transition hover:bg-gold hover:text-navy group-hover:opacity-100 focus:opacity-100"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-white/90 border border-navy/10 p-2 text-navy shadow-sm opacity-0 transition hover:bg-accent-blue hover:text-navy group-hover:opacity-100 focus:opacity-100"
                   >
                     <ChevronLeft className="h-5 w-5" />
                   </button>
                   <button
                     onClick={() => setActiveImg((i) => (i + 1) % resolvedGallery.length)}
                     aria-label="Next image"
-                    className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-white/90 border border-navy/10 p-2 text-navy shadow-sm opacity-0 transition hover:bg-gold hover:text-navy group-hover:opacity-100 focus:opacity-100"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-white/90 border border-navy/10 p-2 text-navy shadow-sm opacity-0 transition hover:bg-accent-blue hover:text-navy group-hover:opacity-100 focus:opacity-100"
                   >
                     <ChevronRight className="h-5 w-5" />
                   </button>
@@ -259,7 +259,7 @@ export default function ProductDetailPage() {
               <div className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-white/90 border border-navy/10 px-3 py-1 font-sub text-[11px] text-navy shadow-sm opacity-0 transition group-hover:opacity-100">
                 {activeImg + 1} / {resolvedGallery.length}
               </div>
-              <button onClick={() => setViewerOpen(true)} className="absolute bottom-4 right-4 flex items-center gap-2 rounded-full bg-white border border-navy/10 px-4 py-2 font-sub text-xs text-navy shadow-sm transition hover:bg-gold hover:text-navy">
+              <button onClick={() => setViewerOpen(true)} className="absolute bottom-4 right-4 flex items-center gap-2 rounded-full bg-white border border-navy/10 px-4 py-2 font-sub text-xs text-navy shadow-sm transition hover:bg-accent-blue hover:text-navy">
                 <RotateCw className="h-4 w-4" /> 360° View
               </button>
             </div>
@@ -271,7 +271,7 @@ export default function ProductDetailPage() {
                     onClick={() => setActiveImg(i)}
                     aria-label={`View image ${i + 1}`}
                     className={`relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg border-2 transition sm:h-20 sm:w-20 md:h-24 md:w-24 ${
-                      i === activeImg ? 'border-gold ring-2 ring-gold/40' : 'border-transparent opacity-60 hover:opacity-100'
+                      i === activeImg ? 'border-accent-blue ring-2 ring-accent-blue/40' : 'border-transparent opacity-60 hover:opacity-100'
                     }`}
                   >
                     <img src={img} alt={`thumb ${i + 1}`} className="h-full w-full bg-light-grey object-contain object-center" />
@@ -285,9 +285,9 @@ export default function ProductDetailPage() {
           <div>
             <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="font-heading text-3xl font-black text-navy sm:text-4xl">{product.name}</motion.h1>
             {product.short_desc && <p className="mt-2 font-sub text-lg text-body-text">{product.short_desc}</p>}
-            <div className="mt-4 inline-flex rounded-full border border-gold/70 bg-gold/10 px-3 py-1.5 font-sub text-xs font-semibold uppercase tracking-[0.2em] text-navy">{supplyLabel}</div>
-            {hasExport && (<div className="mt-3 inline-flex rounded-full border border-gold/70 bg-gold/10 px-3 py-1.5 font-sub text-xs font-semibold uppercase tracking-[0.2em] text-gold">Export Specifications & Paid Samples Available.</div>)}
-            {product.price_range && <p className="mt-4 font-heading text-xl font-bold gold-text">{product.price_range}</p>}
+            <div className="mt-4 inline-flex rounded-full border border-accent-blue/70 bg-accent-blue/10 px-3 py-1.5 font-sub text-xs font-semibold uppercase tracking-[0.2em] text-navy">{supplyLabel}</div>
+            {hasExport && (<div className="mt-3 inline-flex rounded-full border border-accent-blue/70 bg-accent-blue/10 px-3 py-1.5 font-sub text-xs font-semibold uppercase tracking-[0.2em] text-accent-blue">Export Specifications & Paid Samples Available.</div>)}
+            {product.price_range && <p className="mt-4 font-heading text-xl font-bold accent-blue-text">{product.price_range}</p>}
             {supplyNote && <p className="mt-3 font-body text-sm text-navy/70">{supplyNote}</p>}
             <div className="mt-4 grid gap-2 text-sm text-navy sm:grid-cols-2">
               {product.sku && <div><span className="font-sub uppercase tracking-[0.18em] text-navy/60">SKU</span><p className="mt-1 font-medium">{product.sku}</p></div>}
@@ -297,7 +297,7 @@ export default function ProductDetailPage() {
             </div>
 
             {!validation.valid && (
-              <div className="mt-6 rounded-lux border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+              <div className="mt-6 rounded-lux border border-border-grey bg-light-blue p-4 text-sm text-navy">
                 <p className="font-semibold">Product publishing checklist</p>
                 <ul className="mt-2 list-disc space-y-1 pl-5">
                   {validation.missing.map((item) => <li key={item}>{item}</li>)}
@@ -308,7 +308,7 @@ export default function ProductDetailPage() {
 
             {/* Actions */}
             <div className="mt-6 flex flex-wrap gap-3">
-              <Link to="/rfq" className="btn-gold flex items-center gap-2 rounded-full px-5 py-2.5 font-sub text-sm">Request Quote</Link>
+              <Link to="/rfq" className="btn-primary flex items-center gap-2 rounded-full px-5 py-2.5 font-sub text-sm">Request Quote</Link>
               <Link to="/catalogue" className="btn-ghost flex items-center gap-2 rounded-full px-5 py-2.5 font-sub text-sm text-navy"><Download className="h-4 w-4" /> Download Catalogue</Link>
               <a href={`https://wa.me/919845579049?text=${waText}`} target="_blank" rel="noreferrer" className="flex items-center gap-2 rounded-full bg-[#25D366] px-5 py-2.5 font-sub text-sm text-white"><MessageCircle className="h-4 w-4" /> WhatsApp Inquiry</a>
               <button onClick={() => setViewerOpen(true)} className="btn-ghost flex items-center gap-2 rounded-full px-5 py-2.5 font-sub text-sm"><RotateCw className="h-4 w-4" /> 360° Viewer</button>
@@ -347,7 +347,7 @@ export default function ProductDetailPage() {
                 <h3 className="font-heading text-lg font-bold text-navy">Key Features</h3>
                 <ul className="mt-3 grid grid-cols-2 gap-2">
                   {features.map((f, i) => (
-                    <li key={i} className="flex items-center gap-2 font-sub text-sm text-navy/80"><Check className="h-4 w-4 flex-shrink-0 text-gold" /> {f}</li>
+                    <li key={i} className="flex items-center gap-2 font-sub text-sm text-navy/80"><Check className="h-4 w-4 flex-shrink-0 text-accent-blue" /> {f}</li>
                   ))}
                 </ul>
               </div>
@@ -391,7 +391,7 @@ export default function ProductDetailPage() {
               <h3 className="font-heading text-lg font-bold text-navy">Key Features</h3>
               <ul className="mt-4 space-y-2">
                 {features.length ? features.map((feature, index) => (
-                  <li key={index} className="flex items-start gap-2 font-sub text-sm text-navy/70"><Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-gold" /> {feature}</li>
+                  <li key={index} className="flex items-start gap-2 font-sub text-sm text-navy/70"><Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-accent-blue" /> {feature}</li>
                 )) : <li className="font-sub text-sm text-navy/70">Available on request.</li>}
               </ul>
             </div>
@@ -399,7 +399,7 @@ export default function ProductDetailPage() {
               <h3 className="font-heading text-lg font-bold text-navy">Warranty</h3>
               <p className="mt-4 font-sub text-sm text-navy/70">{warrantyText}</p>
               <p className="mt-2 font-sub text-sm text-navy/70">Fabric and cushion parts are excluded from warranty.</p>
-              <p className="mt-4 font-sub text-sm text-gold">High durability and long-life performance.</p>
+              <p className="mt-4 font-sub text-sm text-accent-blue">High durability and long-life performance.</p>
             </div>
           </div>
         </div>
@@ -412,16 +412,16 @@ export default function ProductDetailPage() {
               <p className="mt-4 font-body text-sm text-navy/70">Every product—whether manufactured in our facility or sourced through our strategic partners—undergoes strict multi-point commercial durability inspections.</p>
               {product.supply_type === 'IN_HOUSE' && (
                 <>
-                  <p className="mt-3 font-sub text-sm text-gold font-semibold">In-House Manufacturing | Factory Direct</p>
+                  <p className="mt-3 font-sub text-sm text-accent-blue font-semibold">In-House Manufacturing | Factory Direct</p>
                   <p className="mt-2 font-body text-sm text-navy/70">This product is manufactured in our specialized production facility with complete production control and quality assurance protocols.</p>
                 </>
               )}
               {product.supply_type === 'PARTNER' && (
-                <p className="mt-3 font-sub text-sm text-gold font-semibold">Verified Supply Partner Item</p>
+                <p className="mt-3 font-sub text-sm text-accent-blue font-semibold">Verified Supply Partner Item</p>
               )}
             </div>
             {product.supply_type === 'IN_HOUSE' && (
-              <div className="rounded-lux border border-gold/50 bg-gold/5 p-6">
+              <div className="rounded-lux border border-accent-blue/50 bg-accent-blue/5 p-6">
                 <h3 className="font-heading text-lg font-bold text-navy">Custom Modifications & Bulk Orders</h3>
                 <p className="mt-3 font-body text-sm text-navy/70">As a direct manufacturer, we offer complete customization for enterprise buyers, educational institutions, government projects, and hostel chains.</p>
                 <p className="mt-3 font-sub text-sm text-navy">Available options:</p>
@@ -432,7 +432,7 @@ export default function ProductDetailPage() {
                   <li>• Bulk Order Specifications & Pricing</li>
                   <li>• Turnkey Project Delivery</li>
                 </ul>
-                <Link to="/rfq" className="mt-4 inline-flex items-center gap-2 rounded-full bg-gold px-6 py-2.5 font-sub text-sm font-semibold text-navy transition hover:bg-gold-2">
+                <Link to="/rfq" className="mt-4 inline-flex items-center gap-2 rounded-full bg-accent-blue px-6 py-2.5 font-sub text-sm font-semibold text-navy transition hover:bg-accent-blue-2">
                   Request Custom Dimensions / Bulk Modifications
                 </Link>
               </div>
@@ -460,7 +460,7 @@ export default function ProductDetailPage() {
 
       <div className="bg-white border-t border-navy/5 pb-8 pt-4">
         <div className="container-x px-6">
-          <Link to="/products" className="inline-flex items-center gap-2 font-sub text-sm text-navy/70 transition hover:text-gold"><ChevronLeft className="h-4 w-4" /> Back to Products</Link>
+          <Link to="/products" className="inline-flex items-center gap-2 font-sub text-sm text-navy/70 transition hover:text-accent-blue"><ChevronLeft className="h-4 w-4" /> Back to Products</Link>
         </div>
       </div>
     </>

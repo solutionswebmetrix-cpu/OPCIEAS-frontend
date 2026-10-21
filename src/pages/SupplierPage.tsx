@@ -79,7 +79,7 @@ export default function SupplierPage() {
       {/* Why Join OPCIEAS as Supplier */}
       <section className="relative overflow-hidden bg-white py-20 sm:py-32">
         <div className="pointer-events-none absolute inset-0">
-          <div className="absolute -left-40 top-1/3 h-96 w-96 rounded-full bg-gold/10 blur-[100px] animate-float" />
+          <div className="absolute -left-40 top-1/3 h-96 w-96 rounded-full bg-accent-blue/10 blur-[100px] animate-float" />
           <div className="absolute -right-40 bottom-1/3 h-80 w-80 rounded-full bg-navy-3/10 blur-[120px] animate-float-slow" />
         </div>
 
@@ -89,7 +89,7 @@ export default function SupplierPage() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="font-sub text-xs uppercase tracking-[0.3em] text-gold"
+              className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue"
             >
               Grow With OPCIEAS
             </motion.p>
@@ -122,11 +122,11 @@ export default function SupplierPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
-                  className="group relative overflow-hidden rounded-lux border border-border-grey bg-gradient-to-br from-white to-blue-50/30 p-8 transition-all duration-300 hover:border-gold hover:shadow-lg"
+                  className="group relative overflow-hidden rounded-lux border border-border-grey bg-gradient-to-br from-white to-blue-50/30 p-8 transition-all duration-300 hover:border-accent-blue hover:shadow-lg"
                 >
-                  <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-gold/5 transition-all group-hover:bg-gold/10" />
+                  <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-accent-blue/5 transition-all group-hover:bg-accent-blue/10" />
                   <div className="relative z-10">
-                    <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-gold/15 text-gold transition-all group-hover:bg-gold/25">
+                    <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-accent-blue/15 text-accent-blue transition-all group-hover:bg-accent-blue/25">
                       <Icon className="h-6 w-6" />
                     </div>
                     <h3 className="font-heading text-lg font-bold text-navy">{benefit.title}</h3>
@@ -147,7 +147,7 @@ export default function SupplierPage() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="font-sub text-xs uppercase tracking-[0.3em] text-gold"
+              className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue"
             >
               Eligibility
             </motion.p>
@@ -180,7 +180,7 @@ export default function SupplierPage() {
                 transition={{ delay: i * 0.08 }}
                 className="relative rounded-lux border border-border-grey bg-white p-8 hover:shadow-md transition-all"
               >
-                <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-gold/20 font-heading text-lg font-bold text-gold">
+                <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-accent-blue/20 font-heading text-lg font-bold text-accent-blue">
                   {req.num}
                 </div>
                 <h3 className="font-heading text-lg font-bold text-navy">{req.title}</h3>
@@ -199,7 +199,7 @@ export default function SupplierPage() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="font-sub text-xs uppercase tracking-[0.3em] text-gold"
+              className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue"
             >
               Categories
             </motion.p>
@@ -230,9 +230,9 @@ export default function SupplierPage() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
-                className="group relative overflow-hidden rounded-lg border border-border-grey bg-gradient-to-br from-blue-50/50 to-transparent p-6 text-center hover:border-gold hover:bg-gold/5 transition-all"
+                className="group relative overflow-hidden rounded-lg border border-border-grey bg-gradient-to-br from-blue-50/50 to-transparent p-6 text-center hover:border-accent-blue hover:bg-accent-blue/5 transition-all"
               >
-                <CheckCircle2 className="mx-auto h-6 w-6 text-gold mb-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <CheckCircle2 className="mx-auto h-6 w-6 text-accent-blue mb-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                 <p className="font-heading font-semibold text-navy">{cat}</p>
               </motion.div>
             ))}
@@ -248,7 +248,7 @@ export default function SupplierPage() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="font-sub text-xs uppercase tracking-[0.3em] text-gold"
+              className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue"
             >
               Process
             </motion.p>
@@ -280,10 +280,10 @@ export default function SupplierPage() {
                   className="relative flex gap-6"
                 >
                   <div className="flex flex-col items-center">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold/20 font-heading text-lg font-bold text-gold">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-accent-blue/20 font-heading text-lg font-bold text-accent-blue">
                       {item.step}
                     </div>
-                    {i < 4 && <div className="mt-4 w-1 h-20 bg-gradient-to-b from-gold/40 to-transparent" />}
+                    {i < 4 && <div className="mt-4 w-1 h-20 bg-gradient-to-b from-accent-blue/40 to-transparent" />}
                   </div>
                   <div className="pt-2 pb-8">
                     <h3 className="font-heading text-lg font-bold text-navy">{item.title}</h3>
@@ -304,10 +304,10 @@ export default function SupplierPage() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="rounded-lux border border-gold/30 bg-gradient-to-br from-gold/5 to-transparent p-8 sm:p-10"
+              className="rounded-lux border border-accent-blue/30 bg-gradient-to-br from-accent-blue/5 to-transparent p-8 sm:p-10"
             >
               <div className="mb-6 flex items-center gap-3">
-                <Shield className="h-6 w-6 text-gold" />
+                <Shield className="h-6 w-6 text-accent-blue" />
                 <h3 className="font-heading text-xl font-bold text-navy">Supplier Declaration & Undertaking</h3>
               </div>
               <p className="font-body text-navy/75 leading-relaxed">
@@ -323,7 +323,7 @@ export default function SupplierPage() {
                   'Participate in fair competition without unethical or fraudulent practices',
                 ].map((item, i) => (
                   <li key={i} className="flex gap-3 font-body text-navy/70">
-                    <CheckCircle2 className="h-5 w-5 text-gold mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="h-5 w-5 text-accent-blue mt-0.5 flex-shrink-0" />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -336,7 +336,7 @@ export default function SupplierPage() {
       {/* Primary CTA */}
       <section className="relative overflow-hidden bg-gradient-to-br from-navy via-navy-2 to-navy/95 py-20 sm:py-32">
         <div className="pointer-events-none absolute inset-0">
-          <div className="absolute left-1/4 top-1/4 h-72 w-72 rounded-full bg-gold/10 blur-[100px] animate-float-slow" />
+          <div className="absolute left-1/4 top-1/4 h-72 w-72 rounded-full bg-accent-blue/10 blur-[100px] animate-float-slow" />
           <div className="absolute right-1/4 bottom-1/4 h-96 w-96 rounded-full bg-white/10 blur-[120px] animate-float" />
         </div>
 
@@ -357,7 +357,7 @@ export default function SupplierPage() {
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <Link
                 to="/seller/application"
-                className="btn-gold flex items-center gap-2 rounded-full px-8 py-3 font-sub text-sm"
+                className="btn-primary flex items-center gap-2 rounded-full px-8 py-3 font-sub text-sm"
               >
                 Join as Supplier <ArrowRight className="h-4 w-4" />
               </Link>
@@ -370,7 +370,7 @@ export default function SupplierPage() {
             </div>
 
             <p className="mt-6 font-body text-sm text-white/70">
-              Questions? Our supplier support team is available to assist you at <a href="mailto:supplier@opcieas.com" className="text-gold hover:underline">supplier@opcieas.com</a>
+              Questions? Our supplier support team is available to assist you at <a href="mailto:supplier@opcieas.com" className="text-accent-blue hover:underline">supplier@opcieas.com</a>
             </p>
           </motion.div>
         </div>

@@ -36,10 +36,10 @@ export default function HomepageHostelSequence() {
       <div className="container-x px-6">
         <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="font-sub text-xs uppercase tracking-[0.35em] text-gold">Hostel Furniture</p>
+            <p className="font-sub text-xs uppercase tracking-[0.35em] text-accent-blue">Hostel Furniture</p>
             <h2 className="mt-3 font-heading text-3xl font-black text-navy sm:text-4xl">Student living solutions designed for density, comfort, and durability</h2>
           </div>
-          <Link to="/products/category/hostel-furniture" className="btn-gold inline-flex items-center gap-2 rounded-full px-5 py-3 font-sub text-sm">
+          <Link to="/products/category/hostel-furniture" className="btn-primary inline-flex items-center gap-2 rounded-full px-5 py-3 font-sub text-sm">
             Explore Hostel Range <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
@@ -70,7 +70,7 @@ export default function HomepageHostelSequence() {
                 </span>
               </div>
               <div className="p-5">
-                <p className="font-sub text-[10px] uppercase tracking-[0.24em] text-gold">Dormitory System</p>
+                <p className="font-sub text-[10px] uppercase tracking-[0.24em] text-accent-blue">Dormitory System</p>
                 <h3 className="mt-3 font-heading text-xl font-black text-navy">{item.label}</h3>
                 <p className="mt-2 font-body text-sm leading-6 text-navy/70">{item.subtitle}</p>
                 <p className="mt-3 font-body text-sm leading-6 text-navy/60">{item.description}</p>

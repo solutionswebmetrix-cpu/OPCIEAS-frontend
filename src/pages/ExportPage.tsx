@@ -15,9 +15,9 @@ export default function ExportPage() {
             <div>
               <div className="overflow-hidden rounded-lux border border-navy/10 bg-cover bg-center" style={{ backgroundImage: `url("${IMG.exportContainer}")` }}>
                 <div className="bg-gradient-to-r from-navy/90 via-navy/70 to-navy/30 p-8 sm:p-10">
-                  <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Export Advantages</p>
+                  <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue">Export Advantages</p>
                   <h2 className="mt-3 font-heading text-3xl font-black text-white sm:text-4xl">Why choose OPCIEAS for exports</h2>
-                  <div className="mt-5 h-[3px] w-20 bg-gradient-to-r from-gold to-gold-2 rounded-full" />
+                  <div className="mt-5 h-[3px] w-20 bg-gradient-to-r from-accent-blue to-accent-blue-2 rounded-full" />
                 </div>
               </div>
               <div className="mt-6 grid gap-4 sm:grid-cols-2">
@@ -41,7 +41,7 @@ export default function ExportPage() {
 
               <div className="mt-8 flex flex-wrap gap-3">
                 <a href="/catalogue" className="btn-ghost inline-flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm">Download Catalogue</a>
-                <a href="/rfq" className="btn-gold inline-flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm">Request Quote</a>
+                <a href="/rfq" className="btn-primary inline-flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm">Request Quote</a>
               </div>
             </div>
 

@@ -115,7 +115,7 @@ export default function SupplierApplicationPage() {
                 </div>
               </section>
               <section className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
-                <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-slate-900"><Landmark size={18} className="text-amber-600" /> Section B – Banking Details</h2>
+                <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-slate-900"><Landmark size={18} className="text-secondary-navy" /> Section B – Banking Details</h2>
                 <div className="grid gap-4 md:grid-cols-2">
                   <Field label="Bank Name" icon={Landmark} name="bank_name" />
                   <Field label="Account Number" icon={CreditCard} name="account_number" />
@@ -123,7 +123,7 @@ export default function SupplierApplicationPage() {
                 </div>
               </section>
               <section className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
-                <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-slate-900"><PenTool size={18} className="text-emerald-700" /> Section C – Declaration & Undertaking</h2>
+                <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-slate-900"><PenTool size={18} className="text-secondary-navy" /> Section C – Declaration & Undertaking</h2>
                 <Field label="Declaration" icon={FileCheck} name="declaration_text" textarea required={false} />
                 <div className="mt-4 grid gap-4 md:grid-cols-2">
                   <Field label="Signature" icon={PenTool} name="signature" />
@@ -141,11 +141,11 @@ export default function SupplierApplicationPage() {
                   {summary.map(([label, value]) => <li key={label} className="flex items-start justify-between gap-2"><span className="font-medium text-slate-600">{label}</span><span className="text-right text-slate-900">{value}</span></li>)}
                 </ul>
               </div>
-              <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-950">
+              <div className="rounded-2xl border border-border-grey bg-light-blue p-4 text-sm text-navy">
                 <p className="font-semibold">Portal governance</p>
                 <p className="mt-2">Portal staff controls registration details and supplier corrections go through admin review rather than direct seller editing.</p>
               </div>
-              {result && <div className={`rounded-2xl border p-4 text-sm ${result.ok ? 'border-emerald-200 bg-emerald-50 text-emerald-800' : 'border-red-200 bg-red-50 text-red-700'}`}><div className="flex items-start gap-2"><span>{result.ok ? <CheckCircle2 size={18} /> : <AlertCircle size={18} />}</span><div>{result.msg}</div></div></div>}
+              {result && <div className={`rounded-2xl border p-4 text-sm ${result.ok ? 'border-border-grey bg-light-blue text-navy' : 'border-red-200 bg-red-50 text-red-700'}`}><div className="flex items-start gap-2"><span>{result.ok ? <CheckCircle2 size={18} /> : <AlertCircle size={18} />}</span><div>{result.msg}</div></div></div>}
               <button type="submit" disabled={loading} className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-700 px-5 py-3 font-semibold text-white transition hover:bg-blue-800 disabled:opacity-60">
                 {loading ? 'Submitting…' : <>Submit Application <ChevronRight size={18} /></>}
               </button>

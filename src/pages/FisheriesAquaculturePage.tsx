@@ -35,35 +35,35 @@ const STEPS = [
     icon: ShieldCheck,
     title: 'Obtain Necessary Licensing',
     desc: 'Secure standard permits and regulatory approvals to ensure full operational compliance.',
-    accent: 'from-[#1e3a8a] via-[#0B2745] to-[#071A35]',
+    accent: 'from-[#0B1F3A] via-[#163A63] to-[#0B1F3A]',
   },
   {
     num: '02',
     icon: Mountain,
     title: 'Prepare Suitable Land',
     desc: 'Develop unused or low-yield land into properly designed fish ponds or tank facilities.',
-    accent: 'from-[#047857] via-[#059669] to-[#34D399]',
+    accent: 'from-[#0B1F3A] via-[#163A63] to-[#EAF1F8]',
   },
   {
     num: '03',
     icon: Droplets,
     title: 'Establish Water Facilities',
     desc: 'Secure reliable, clean water sources and maintain quality monitoring for optimal stock health.',
-    accent: 'from-[#0369a1] via-[#0284c7] to-[#38bdf8]',
+    accent: 'from-[#0B1F3A] via-[#163A63] to-[#EAF1F8]',
   },
   {
     num: '04',
     icon: Utensils,
     title: 'Implement Planned Feeding Systems',
     desc: 'Follow structured feeding schedules to maximize growth rates and reduce operational waste.',
-    accent: 'from-[#b45309] via-[#d97706] to-[#f59e0b]',
+    accent: 'from-[#163A63] via-[#0B1F3A] to-[#163A63]',
   },
   {
     num: '05',
     icon: Truck,
     title: 'Manage Harvesting & Marketing',
     desc: 'Time harvests effectively, secure advance local orders, and build direct channels to local and regional buyers.',
-    accent: 'from-[#D4AF37] via-[#B8932B] to-[#8B6F1E]',
+    accent: 'from-[#163A63] via-[#0B1F3A] to-[#163A63]',
   },
 ];
 
@@ -110,7 +110,7 @@ const BENEFIT_CARDS = [
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
-    <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">{children}</p>
+    <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue">{children}</p>
   );
 }
 
@@ -129,7 +129,7 @@ function SectionTitle({
       <h2 className="mt-3 font-heading text-3xl font-black leading-tight text-navy sm:text-4xl lg:text-5xl">
         {title}
       </h2>
-      <div className={`mt-5 h-[3px] w-24 rounded-full bg-gradient-to-r from-gold to-gold-2 ${center ? 'mx-auto' : ''}`} />
+      <div className={`mt-5 h-[3px] w-24 rounded-full bg-gradient-to-r from-accent-blue to-accent-blue-2 ${center ? 'mx-auto' : ''}`} />
     </div>
   );
 }
@@ -147,7 +147,7 @@ export default function FisheriesAquaculturePage() {
          SECTION 1 — HERO
          ============================================================ */}
       <header className="relative isolate overflow-hidden bg-navy pt-32">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(217,173,43,0.2),_transparent_40%),linear-gradient(90deg,rgba(7,26,53,0.98),rgba(7,26,53,0.7),rgba(7,26,53,0.45))]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(11,31,58,0.2),_transparent_40%),linear-gradient(90deg,rgba(7,26,53,0.98),rgba(7,26,53,0.7),rgba(7,26,53,0.45))]" />
         <div className="container-x relative z-10 px-6 pb-14 pt-12 sm:pb-16 lg:pb-20 lg:pt-16">
           <motion.div
             initial={{ opacity: 0, y: 28 }}
@@ -155,19 +155,19 @@ export default function FisheriesAquaculturePage() {
             transition={{ duration: 0.7 }}
             className="max-w-5xl text-white"
           >
-            <div className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-white/5 px-4 py-2 backdrop-blur">
+            <div className="inline-flex items-center gap-2 rounded-full border border-accent-blue/30 bg-white/5 px-4 py-2 backdrop-blur">
               <Link
                 to="/social-service"
-                className="font-sub text-[11px] uppercase tracking-[0.25em] text-gold-2 transition hover:text-gold"
+                className="font-sub text-[11px] uppercase tracking-[0.25em] text-accent-blue-2 transition hover:text-accent-blue"
               >
                 Social Services
               </Link>
-              <span className="text-gold-2/40">›</span>
-              <span className="font-sub text-[11px] uppercase tracking-[0.25em] text-gold-2/80">
+              <span className="text-accent-blue-2/40">›</span>
+              <span className="font-sub text-[11px] uppercase tracking-[0.25em] text-accent-blue-2/80">
                 Agriculture
               </span>
-              <span className="text-gold-2/40">›</span>
-              <span className="font-sub text-[11px] uppercase tracking-[0.25em] text-gold">
+              <span className="text-accent-blue-2/40">›</span>
+              <span className="font-sub text-[11px] uppercase tracking-[0.25em] text-accent-blue">
                 Fisheries & Aquaculture
               </span>
             </div>
@@ -175,7 +175,7 @@ export default function FisheriesAquaculturePage() {
             <h1 className="mt-8 font-heading text-4xl font-black leading-[1.05] sm:text-5xl lg:text-6xl xl:text-7xl">
               Fisheries &amp; Aquaculture:
               <br />
-              <span className="gold-text">A Modern Livelihood Opportunity</span>
+              <span className="accent-blue-text">A Modern Livelihood Opportunity</span>
             </h1>
 
             <p className="mt-7 max-w-3xl font-body text-base leading-relaxed text-white/85 sm:text-lg">
@@ -185,7 +185,7 @@ export default function FisheriesAquaculturePage() {
             <div className="mt-9 flex flex-wrap items-center gap-4">
               <a
                 href="#land-transformation"
-                className="btn-gold inline-flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm"
+                className="btn-primary inline-flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm"
               >
                 Explore the Aquaculture Model <ArrowRight className="h-4 w-4" />
               </a>
@@ -260,7 +260,7 @@ export default function FisheriesAquaculturePage() {
                       key={label}
                       className="flex items-center gap-3 bg-white px-5 py-4"
                     >
-                      <div className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gold/10 text-gold">
+                      <div className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-accent-blue/10 text-accent-blue">
                         <Icon className="h-4 w-4" />
                       </div>
                       <p className="font-sub text-xs font-medium leading-snug text-navy/80 sm:text-sm">
@@ -285,8 +285,8 @@ export default function FisheriesAquaculturePage() {
               <div className="relative overflow-hidden rounded-lux border border-navy/10 bg-white shadow-sm">
                 <div className="p-6 sm:p-7">
                   <div className="flex items-center gap-3">
-                    <FileText className="h-5 w-5 text-gold" />
-                    <p className="font-sub text-xs uppercase tracking-[0.28em] text-gold">
+                    <FileText className="h-5 w-5 text-accent-blue" />
+                    <p className="font-sub text-xs uppercase tracking-[0.28em] text-accent-blue">
                       Official Reference
                     </p>
                   </div>
@@ -322,9 +322,9 @@ export default function FisheriesAquaculturePage() {
                   appropriate scale is reached. Participating families gain nutritional benefits
                   alongside income opportunities.
                 </p>
-                <div className="rounded-lux border border-gold/30 bg-gold/5 p-5">
+                <div className="rounded-lux border border-accent-blue/30 bg-accent-blue/5 p-5">
                   <div className="flex items-start gap-3">
-                    <Scale className="mt-0.5 h-5 w-5 shrink-0 text-gold" />
+                    <Scale className="mt-0.5 h-5 w-5 shrink-0 text-accent-blue" />
                     <p className="font-body text-sm leading-relaxed text-navy/80">
                       Applicable tax treatment should be verified according to the nature, scale
                       and structure of the activity. Licensing, subsidy eligibility, and
@@ -345,7 +345,7 @@ export default function FisheriesAquaculturePage() {
                     key={label}
                     className="rounded-xl border border-navy/10 bg-white p-4 shadow-sm"
                   >
-                    <Icon className="h-5 w-5 text-gold" />
+                    <Icon className="h-5 w-5 text-accent-blue" />
                     <p className="mt-3 font-heading text-sm font-bold text-navy">{label}</p>
                   </div>
                 ))}
@@ -370,7 +370,7 @@ export default function FisheriesAquaculturePage() {
             <h2 className="mt-3 font-heading text-3xl font-black leading-tight text-navy sm:text-4xl lg:text-5xl">
               5 Steps to Aquaculture Success
             </h2>
-            <div className="mx-auto mt-5 h-[3px] w-24 rounded-full bg-gradient-to-r from-gold to-gold-2" />
+            <div className="mx-auto mt-5 h-[3px] w-24 rounded-full bg-gradient-to-r from-accent-blue to-accent-blue-2" />
             <p className="mt-6 font-body text-base leading-relaxed text-navy/70">
               A structured sequence helps community units move from planning to disciplined
               production, harvest, and market linkage.
@@ -379,7 +379,7 @@ export default function FisheriesAquaculturePage() {
 
           <div className="relative mt-10 sm:mt-14">
             <div
-              className="absolute left-[22px] top-0 hidden h-full w-[2px] bg-gradient-to-b from-gold via-gold/40 to-transparent sm:left-1/2 sm:block sm:-translate-x-1/2"
+              className="absolute left-[22px] top-0 hidden h-full w-[2px] bg-gradient-to-b from-accent-blue via-accent-blue/40 to-transparent sm:left-1/2 sm:block sm:-translate-x-1/2"
               aria-hidden="true"
             />
             <div className="space-y-6 sm:space-y-10">
@@ -402,7 +402,7 @@ export default function FisheriesAquaculturePage() {
                           <Icon className="h-5 w-5 sm:h-6 sm:w-6" strokeWidth={1.8} />
                         </div>
                         <div className={`${isEven ? 'sm:flex sm:flex-col sm:items-end' : ''}`}>
-                          <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">
+                          <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue">
                             Step {num}
                           </p>
                           <h3 className="mt-1 font-heading text-xl font-bold text-navy sm:text-2xl">
@@ -444,12 +444,12 @@ export default function FisheriesAquaculturePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
-                className="group rounded-lux border border-navy/10 bg-white p-7 shadow-sm transition-all duration-300 hover:border-gold/40 hover:shadow-md"
+                className="group rounded-lux border border-navy/10 bg-white p-7 shadow-sm transition-all duration-300 hover:border-accent-blue/40 hover:shadow-md"
               >
-                <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gold/10 text-gold transition group-hover:bg-gold/15">
+                <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-accent-blue/10 text-accent-blue transition group-hover:bg-accent-blue/15">
                   <Icon className="h-6 w-6" />
                 </div>
-                <p className="mt-6 font-sub text-[11px] uppercase tracking-[0.3em] text-gold">
+                <p className="mt-6 font-sub text-[11px] uppercase tracking-[0.3em] text-accent-blue">
                   Pillar 0{i + 1}
                 </p>
                 <h3 className="mt-2 font-heading text-xl font-bold text-navy">{title}</h3>
@@ -506,7 +506,7 @@ export default function FisheriesAquaculturePage() {
                     key={item}
                     className="flex items-center gap-3 rounded-xl border border-navy/10 bg-light-grey p-4"
                   >
-                    <CheckCircle2 className="h-4 w-4 shrink-0 text-gold" />
+                    <CheckCircle2 className="h-4 w-4 shrink-0 text-accent-blue" />
                     <span className="font-sub text-sm text-navy/80">{item}</span>
                   </div>
                 ))}
@@ -520,7 +520,7 @@ export default function FisheriesAquaculturePage() {
               className="relative"
             >
               <div className="overflow-hidden rounded-lux border border-navy/10 bg-navy p-8 text-white shadow-sm">
-                <Fish className="h-10 w-10 text-gold-2" />
+                <Fish className="h-10 w-10 text-accent-blue-2" />
                 <p className="mt-6 font-heading text-3xl font-black leading-tight sm:text-4xl">
                   Nutrition &amp; Livelihood
                 </p>
@@ -538,7 +538,7 @@ export default function FisheriesAquaculturePage() {
                       key={k}
                       className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 px-4 py-3"
                     >
-                      <span className="font-heading text-sm font-bold text-gold-2">{k}</span>
+                      <span className="font-heading text-sm font-bold text-accent-blue-2">{k}</span>
                       <span className="font-sub text-xs text-white/80">{v}</span>
                     </div>
                   ))}
@@ -552,7 +552,7 @@ export default function FisheriesAquaculturePage() {
       {/* ============================================================
          SECTION 7 — TRANSFORMING LAND THROUGH COOPERATIVE EFFORT
          ============================================================ */}
-      <section className="bg-[#edf3ed] py-12 sm:py-16">
+      <section className="bg-[#EAF1F8] py-12 sm:py-16">
         <div className="container-x px-6">
           <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
             <motion.div
@@ -579,7 +579,7 @@ export default function FisheriesAquaculturePage() {
                 </p>
                 <div className="rounded-lux border border-navy/10 bg-white p-6 shadow-sm">
                   <div className="flex items-start gap-3">
-                    <Users className="mt-0.5 h-5 w-5 shrink-0 text-gold" />
+                    <Users className="mt-0.5 h-5 w-5 shrink-0 text-accent-blue" />
                     <p className="font-body text-sm leading-relaxed text-navy/80">
                       The proposed community-unit model is based on shared ownership and
                       collective responsibility. Participation structures, roles, contributions
@@ -604,11 +604,11 @@ export default function FisheriesAquaculturePage() {
                 className="rounded-lux border border-navy/10 bg-white p-6 shadow-sm"
               >
                 <div
-                  className={`inline-flex h-11 w-11 items-center justify-center rounded-xl bg-gold/10 text-gold`}
+                  className={`inline-flex h-11 w-11 items-center justify-center rounded-xl bg-accent-blue/10 text-accent-blue`}
                 >
                   <Icon className="h-5 w-5" />
                 </div>
-                <p className="mt-5 font-sub text-[11px] uppercase tracking-[0.28em] text-gold">
+                <p className="mt-5 font-sub text-[11px] uppercase tracking-[0.28em] text-accent-blue">
                   Element 0{i + 1}
                 </p>
                 <h3 className="mt-1 font-heading text-base font-bold leading-snug text-navy">
@@ -661,9 +661,9 @@ export default function FisheriesAquaculturePage() {
                 ].map((tag) => (
                   <span
                     key={tag}
-                    className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/5 px-3 py-1.5 font-sub text-[11px] text-navy/80"
+                    className="inline-flex items-center gap-2 rounded-full border border-accent-blue/30 bg-accent-blue/5 px-3 py-1.5 font-sub text-[11px] text-navy/80"
                   >
-                    <TreePine className="h-3.5 w-3.5 text-gold" />
+                    <TreePine className="h-3.5 w-3.5 text-accent-blue" />
                     {tag}
                   </span>
                 ))}
@@ -694,7 +694,7 @@ export default function FisheriesAquaculturePage() {
          ============================================================ */}
       <section className="relative overflow-hidden bg-gradient-to-br from-navy via-navy-2 to-navy/95 py-12 text-white sm:py-16">
         <div className="pointer-events-none absolute inset-0">
-          <div className="absolute left-1/4 top-10 h-64 w-64 rounded-full bg-gold/10 blur-[100px] animate-float-slow" />
+          <div className="absolute left-1/4 top-10 h-64 w-64 rounded-full bg-accent-blue/10 blur-[100px] animate-float-slow" />
           <div className="absolute right-1/4 bottom-10 h-72 w-72 rounded-full bg-white/5 blur-[120px] animate-float" />
         </div>
 
@@ -705,13 +705,13 @@ export default function FisheriesAquaculturePage() {
             viewport={{ once: true, margin: '-80px' }}
             className="mx-auto max-w-3xl text-center"
           >
-            <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold-2">
+            <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue-2">
               4 Premium Outcomes
             </p>
             <h2 className="mt-3 font-heading text-3xl font-black leading-tight text-white sm:text-4xl lg:text-5xl">
               Key Benefits of the Community Unit Model
             </h2>
-            <div className="mx-auto mt-5 h-[3px] w-24 rounded-full bg-gradient-to-r from-gold to-gold-2" />
+            <div className="mx-auto mt-5 h-[3px] w-24 rounded-full bg-gradient-to-r from-accent-blue to-accent-blue-2" />
           </motion.div>
 
           <div className="mt-10 grid gap-6 md:grid-cols-2">
@@ -722,12 +722,12 @@ export default function FisheriesAquaculturePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
-                className="rounded-lux border border-white/10 bg-white/5 p-8 backdrop-blur transition-all hover:border-gold/30 hover:bg-white/[0.08]"
+                className="rounded-lux border border-white/10 bg-white/5 p-8 backdrop-blur transition-all hover:border-accent-blue/30 hover:bg-white/[0.08]"
               >
-                <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gold/15 text-gold-2 ring-1 ring-inset ring-gold/20">
+                <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-accent-blue/15 text-accent-blue-2 ring-1 ring-inset ring-accent-blue/20">
                   <Icon className="h-7 w-7" />
                 </div>
-                <p className="mt-7 font-sub text-[11px] uppercase tracking-[0.3em] text-gold-2">
+                <p className="mt-7 font-sub text-[11px] uppercase tracking-[0.3em] text-accent-blue-2">
                   Benefit 0{i + 1}
                 </p>
                 <h3 className="mt-2 font-heading text-2xl font-bold text-white">{title}</h3>
@@ -751,31 +751,31 @@ export default function FisheriesAquaculturePage() {
             viewport={{ once: true, margin: '-80px' }}
             className="mx-auto max-w-5xl"
           >
-            <div className="overflow-hidden rounded-lux border border-gold/30 bg-gradient-to-br from-gold/[0.08] via-white to-white shadow-sm">
+            <div className="overflow-hidden rounded-lux border border-accent-blue/30 bg-gradient-to-br from-accent-blue/[0.08] via-white to-white shadow-sm">
               <div className="grid gap-0 lg:grid-cols-[0.8fr_1.2fr]">
                 <div className="relative p-8 sm:p-10 lg:p-12">
-                  <Sun className="h-10 w-10 text-gold" />
+                  <Sun className="h-10 w-10 text-accent-blue" />
                   <h2 className="mt-6 font-heading text-3xl font-black leading-tight text-navy sm:text-4xl">
                     A Model for National Prosperity
                   </h2>
-                  <div className="mt-5 h-[3px] w-24 rounded-full bg-gradient-to-r from-gold to-gold-2" />
+                  <div className="mt-5 h-[3px] w-24 rounded-full bg-gradient-to-r from-accent-blue to-accent-blue-2" />
                   <div className="mt-6 flex flex-wrap gap-2">
                     <Link
                       to="/social-service"
-                      className="inline-flex items-center gap-2 rounded-full border border-navy/15 bg-white px-3 py-1.5 font-sub text-[11px] text-navy/80 transition hover:border-gold hover:text-gold"
+                      className="inline-flex items-center gap-2 rounded-full border border-navy/15 bg-white px-3 py-1.5 font-sub text-[11px] text-navy/80 transition hover:border-accent-blue hover:text-accent-blue"
                     >
                       <Building2 className="h-3.5 w-3.5" /> Social Services
                     </Link>
                     <Link
                       to="/community-impact"
-                      className="inline-flex items-center gap-2 rounded-full border border-navy/15 bg-white px-3 py-1.5 font-sub text-[11px] text-navy/80 transition hover:border-gold hover:text-gold"
+                      className="inline-flex items-center gap-2 rounded-full border border-navy/15 bg-white px-3 py-1.5 font-sub text-[11px] text-navy/80 transition hover:border-accent-blue hover:text-accent-blue"
                     >
                       <Heart className="h-3.5 w-3.5" /> Community Impact
                     </Link>
                   </div>
                 </div>
 
-                <div className="border-t border-gold/20 p-8 sm:p-10 lg:border-l lg:border-t-0 lg:p-12">
+                <div className="border-t border-accent-blue/20 p-8 sm:p-10 lg:border-l lg:border-t-0 lg:p-12">
                   <p className="font-body text-[15px] leading-relaxed text-navy/80 sm:text-base">
                     The proposed self-sufficient community / family-unit model aims to support
                     rural self-reliance, food security, livelihood creation, cooperative economic
@@ -801,7 +801,7 @@ export default function FisheriesAquaculturePage() {
                         key={item}
                         className="flex items-center gap-3 rounded-xl border border-navy/10 bg-white px-4 py-3 shadow-sm"
                       >
-                        <Sprout className="h-4 w-4 shrink-0 text-gold" />
+                        <Sprout className="h-4 w-4 shrink-0 text-accent-blue" />
                         <span className="font-sub text-sm text-navy/80">{item}</span>
                       </div>
                     ))}
@@ -810,7 +810,7 @@ export default function FisheriesAquaculturePage() {
                   <div className="mt-9 flex flex-wrap gap-4">
                     <Link
                       to="/contact"
-                      className="btn-gold inline-flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm"
+                      className="btn-primary inline-flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm"
                     >
                       Partner With Us <ArrowRight className="h-4 w-4" />
                     </Link>

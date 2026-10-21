@@ -46,7 +46,7 @@ export default function TechnologyPage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Introduction</p>
+              <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue">Introduction</p>
               <h2 className="mt-3 font-heading text-3xl font-black text-navy sm:text-4xl">A professional bridge between governance, industry and global opportunity</h2>
               <p className="mt-6 font-body text-sm leading-relaxed text-navy/70">
                 OPCIEAS Tech Business Promotion division builds the connective tissue between industry, governance and markets. We create trusted digital platforms and institutional frameworks that support portal governance, industrial promotion, transparency, trust, compliance, business networking, export promotion and quality standards — all within a disciplined corporate structure.
@@ -58,7 +58,7 @@ export default function TechnologyPage() {
               viewport={{ once: true }}
               className="rounded-lux border border-navy/10 bg-white p-8 text-navy luxury-shadow"
             >
-              <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Core Focus Areas</p>
+              <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue">Core Focus Areas</p>
               <div className="mt-6 grid gap-3 sm:grid-cols-2">
                 {pillars.map((pillar) => (
                   <div key={pillar} className="rounded-2xl border border-navy/10 bg-navy/5 px-4 py-3 text-sm text-navy/90">
@@ -71,7 +71,7 @@ export default function TechnologyPage() {
 
           <div className="mt-16 grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
             <div className="rounded-lux border border-navy/10 bg-navy/5 p-8">
-              <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Products & Offerings</p>
+              <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue">Products & Offerings</p>
               <div className="mt-6 space-y-5">
                 {offerings.map((item) => (
                   <div key={item.title} className="rounded-2xl border border-navy/10 bg-white p-5">
@@ -88,7 +88,7 @@ export default function TechnologyPage() {
           </div>
 
           <div className="mt-16 flex flex-wrap gap-4">
-            <Link to="/company/contact" className="btn-gold flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm">
+            <Link to="/company/contact" className="btn-primary flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm">
               Contact Us <ArrowRight className="h-4 w-4" />
             </Link>
             <Link to="/rfq" className="btn-ghost flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm">

@@ -114,7 +114,7 @@ export default function CommunityImpactPage() {
       {/* Vision Statement */}
       <section className="relative overflow-hidden bg-white py-20 sm:py-32">
         <div className="pointer-events-none absolute inset-0">
-          <div className="absolute -left-40 top-1/3 h-96 w-96 rounded-full bg-gold/10 blur-[100px] animate-float" />
+          <div className="absolute -left-40 top-1/3 h-96 w-96 rounded-full bg-accent-blue/10 blur-[100px] animate-float" />
           <div className="absolute -right-40 bottom-1/3 h-80 w-80 rounded-full bg-navy-3/10 blur-[120px] animate-float-slow" />
         </div>
 
@@ -129,7 +129,7 @@ export default function CommunityImpactPage() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="font-sub text-xs uppercase tracking-[0.3em] text-gold"
+              className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue"
             >
               Our Mission
             </motion.p>
@@ -140,7 +140,7 @@ export default function CommunityImpactPage() {
               OPCIEAS Social Services division is dedicated to community-led, sustainable development. We believe in empowering people through initiatives that build financial independence, upgrade infrastructure, provide clean energy access, strengthen agricultural livelihoods, and ensure dignity for every generation.
             </p>
             <p className="mt-6 font-body text-lg font-semibold text-navy">
-              <span className="text-gold">Every intervention is measured by its ability to deliver</span><br />
+              <span className="text-accent-blue">Every intervention is measured by its ability to deliver</span><br />
               <span className="italic">Socially just, economically viable, ecologically regenerative outcomes.</span>
             </p>
           </motion.div>
@@ -160,7 +160,7 @@ export default function CommunityImpactPage() {
                 transition={{ delay: i * 0.1 }}
                 className="relative rounded-lux border border-border-grey bg-white p-8 text-center hover:shadow-lg transition-all"
               >
-                <div className="text-4xl font-heading font-black text-gold mb-2">{metric.number}</div>
+                <div className="text-4xl font-heading font-black text-accent-blue mb-2">{metric.number}</div>
                 <p className="font-heading text-lg font-bold text-navy">{metric.label}</p>
               </motion.div>
             ))}
@@ -176,7 +176,7 @@ export default function CommunityImpactPage() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="font-sub text-xs uppercase tracking-[0.3em] text-gold"
+              className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue"
             >
               Our Initiatives
             </motion.p>
@@ -204,18 +204,18 @@ export default function CommunityImpactPage() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.1 }}
-                    className="group relative h-full overflow-hidden rounded-lux border border-border-grey bg-gradient-to-br from-white to-blue-50/30 p-8 transition-all duration-300 hover:border-gold hover:shadow-lg"
+                    className="group relative h-full overflow-hidden rounded-lux border border-border-grey bg-gradient-to-br from-white to-blue-50/30 p-8 transition-all duration-300 hover:border-accent-blue hover:shadow-lg"
                   >
-                    <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-gold/5 transition-all group-hover:bg-gold/10" />
+                    <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-accent-blue/5 transition-all group-hover:bg-accent-blue/10" />
                     <div className="relative z-10">
-                      <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-gold/15 text-gold transition-all group-hover:bg-gold/25">
+                      <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-accent-blue/15 text-accent-blue transition-all group-hover:bg-accent-blue/25">
                         <Icon className="h-6 w-6" />
                       </div>
                       <h3 className="font-heading text-lg font-bold text-navy">{init.title}</h3>
                       <p className="mt-3 font-body text-sm text-navy/70 leading-relaxed">{init.desc}</p>
-                      <p className="mt-4 font-sub text-xs font-semibold text-gold uppercase">{init.stats}</p>
+                      <p className="mt-4 font-sub text-xs font-semibold text-accent-blue uppercase">{init.stats}</p>
                       {(init as any).to && (
-                        <p className="mt-5 font-sub text-[11px] uppercase tracking-[0.2em] text-gold transition group-hover:translate-x-0.5">
+                        <p className="mt-5 font-sub text-[11px] uppercase tracking-[0.2em] text-accent-blue transition group-hover:translate-x-0.5">
                           Explore Fisheries & Aquaculture →
                         </p>
                       )}
@@ -236,7 +236,7 @@ export default function CommunityImpactPage() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="font-sub text-xs uppercase tracking-[0.3em] text-gold"
+              className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue"
             >
               Thematic Areas
             </motion.p>
@@ -260,11 +260,11 @@ export default function CommunityImpactPage() {
                 transition={{ delay: i * 0.1 }}
                 className="rounded-lux border border-border-grey bg-white p-8 hover:shadow-lg transition-all"
               >
-                <h3 className="font-heading text-lg font-bold text-gold mb-4">{area.category}</h3>
+                <h3 className="font-heading text-lg font-bold text-accent-blue mb-4">{area.category}</h3>
                 <ul className="space-y-3">
                   {area.items.map((item, j) => (
                     <li key={j} className="flex gap-3 font-body text-sm text-navy/70">
-                      <span className="text-gold">✓</span>
+                      <span className="text-accent-blue">✓</span>
                       <span>{item}</span>
                     </li>
                   ))}
@@ -284,7 +284,7 @@ export default function CommunityImpactPage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold mb-4">
+              <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue mb-4">
                 Our Philosophy
               </p>
               <h2 className="font-heading text-3xl font-black text-navy sm:text-4xl mb-6">
@@ -303,7 +303,7 @@ export default function CommunityImpactPage() {
                   'Long-term sustainability focus, not quick fixes',
                 ].map((item, i) => (
                   <li key={i} className="flex gap-3 font-body text-navy/70">
-                    <Award className="h-5 w-5 text-gold mt-0.5 flex-shrink-0" />
+                    <Award className="h-5 w-5 text-accent-blue mt-0.5 flex-shrink-0" />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -313,11 +313,11 @@ export default function CommunityImpactPage() {
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="relative rounded-lux overflow-hidden border border-border-grey bg-gradient-to-br from-gold/10 to-blue-50/50"
+              className="relative rounded-lux overflow-hidden border border-border-grey bg-gradient-to-br from-accent-blue/10 to-blue-50/50"
             >
               <div className="aspect-video flex items-center justify-center">
                 <div className="text-center">
-                  <Heart className="h-20 w-20 text-gold/60 mx-auto mb-4" />
+                  <Heart className="h-20 w-20 text-accent-blue/60 mx-auto mb-4" />
                   <p className="font-body text-navy/60 italic">
                     "Community-led sustainable development ensures that prosperity is shared, equitable, and rooted in local wisdom and aspirations."
                   </p>
@@ -336,7 +336,7 @@ export default function CommunityImpactPage() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="font-sub text-xs uppercase tracking-[0.3em] text-gold"
+              className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue"
             >
               Impact Stories
             </motion.p>
@@ -361,10 +361,10 @@ export default function CommunityImpactPage() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="rounded-lux border border-gold/30 bg-gradient-to-br from-gold/5 to-transparent p-8 sm:p-10"
+              className="rounded-lux border border-accent-blue/30 bg-gradient-to-br from-accent-blue/5 to-transparent p-8 sm:p-10"
             >
               <div className="mb-6 flex items-center gap-3">
-                <Heart className="h-6 w-6 text-gold" />
+                <Heart className="h-6 w-6 text-accent-blue" />
                 <h3 className="font-heading text-xl font-bold text-navy">Support Our Initiatives</h3>
               </div>
               <p className="font-body text-navy/75 leading-relaxed mb-6">
@@ -373,13 +373,13 @@ export default function CommunityImpactPage() {
               <div className="flex flex-wrap gap-4">
                 <Link
                   to="/contact"
-                  className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 font-sub text-sm font-semibold text-navy hover:bg-gold/90 transition-all"
+                  className="inline-flex items-center gap-2 rounded-full bg-accent-blue px-6 py-3 font-sub text-sm font-semibold text-navy hover:bg-accent-blue/90 transition-all"
                 >
                   Become a Partner <ArrowRight className="h-4 w-4" />
                 </Link>
                 <Link
                   to="/contact"
-                  className="inline-flex items-center gap-2 rounded-full border-2 border-gold px-6 py-3 font-sub text-sm font-semibold text-navy hover:bg-gold/10 transition-all"
+                  className="inline-flex items-center gap-2 rounded-full border-2 border-accent-blue px-6 py-3 font-sub text-sm font-semibold text-navy hover:bg-accent-blue/10 transition-all"
                 >
                   Learn More About Initiatives
                 </Link>
@@ -392,7 +392,7 @@ export default function CommunityImpactPage() {
       {/* Final CTA */}
       <section className="relative overflow-hidden bg-gradient-to-br from-navy via-navy-2 to-navy/95 py-20 sm:py-32">
         <div className="pointer-events-none absolute inset-0">
-          <div className="absolute left-1/4 top-1/4 h-72 w-72 rounded-full bg-gold/10 blur-[100px] animate-float-slow" />
+          <div className="absolute left-1/4 top-1/4 h-72 w-72 rounded-full bg-accent-blue/10 blur-[100px] animate-float-slow" />
           <div className="absolute right-1/4 bottom-1/4 h-96 w-96 rounded-full bg-white/10 blur-[120px] animate-float" />
         </div>
 
@@ -413,7 +413,7 @@ export default function CommunityImpactPage() {
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <Link
                 to="/contact"
-                className="btn-gold flex items-center gap-2 rounded-full px-8 py-3 font-sub text-sm"
+                className="btn-primary flex items-center gap-2 rounded-full px-8 py-3 font-sub text-sm"
               >
                 Contact Us <ArrowRight className="h-4 w-4" />
               </Link>

@@ -24,7 +24,7 @@ export default function Gallery() {
       <div className="pointer-events-none absolute inset-0 grid-bg opacity-20" />
       <div className="container-x relative px-6">
         <div className="mx-auto mb-12 max-w-2xl text-center">
-          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-sub text-sm uppercase tracking-[0.3em] text-gold">Premium Gallery</motion.p>
+          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-sub text-sm uppercase tracking-[0.3em] text-accent-blue">Premium Gallery</motion.p>
           <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl xl:text-5xl">
             Inside OPCIEAS
           </motion.h2>
@@ -36,7 +36,7 @@ export default function Gallery() {
             <button
               key={c}
               onClick={() => setActive(c)}
-              className={`rounded-full px-4 py-2 font-sub text-xs transition-all ${active === c ? 'btn-gold' : 'glass text-navy/85 hover:text-gold'}`}
+              className={`rounded-full px-4 py-2 font-sub text-xs transition-all ${active === c ? 'btn-primary' : 'glass text-navy/85 hover:text-accent-blue'}`}
             >
               {c}
             </button>

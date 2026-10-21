@@ -6,13 +6,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        navy: { DEFAULT: '#071A35', 2: '#0B2745', 3: '#103258' },
-        gold: { DEFAULT: '#D9AD2B', 2: '#E8C766', 3: '#B8932B', light: '#F5E8B5' },
+        navy: { DEFAULT: '#0B1F3A', 2: '#163A63', 3: '#163A63' },
+        'accent-blue': { DEFAULT: '#0B1F3A', 2: '#163A63', 3: '#0B1F3A', light: '#EAF1F8' },
         silver: { DEFAULT: '#C0C0C0' },
         dark: { DEFAULT: '#090909', 2: '#111111' },
-        'light-grey': { DEFAULT: '#F7F8FA', 2: '#F1F4F7' },
-        'border-grey': '#D9E0E8',
-        'body-text': '#283548',
+        'light-grey': { DEFAULT: '#F4F6F8', 2: '#EAF1F8' },
+        'border-grey': '#D7DEE7',
+        'body-text': '#334155',
         'muted-text': '#68778C',
       },
       borderRadius: { lux: '20px' },

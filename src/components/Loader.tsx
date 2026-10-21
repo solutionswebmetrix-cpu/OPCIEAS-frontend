@@ -10,7 +10,7 @@ export default function Loader({ done }: { done: boolean }) {
         >
           {/* Ambient glow */}
           <div className="absolute inset-0 overflow-hidden">
-            <div className="absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold/15 blur-[120px]" />
+            <div className="absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent-blue/15 blur-[120px]" />
             <div className="absolute inset-0 grid-bg opacity-40" />
           </div>
 
@@ -26,10 +26,10 @@ export default function Loader({ done }: { done: boolean }) {
               animate={{ rotateY: 360 }}
               transition={{ duration: 2.4, repeat: Infinity, ease: 'linear' }}
               style={{ transformStyle: 'preserve-3d' }}
-              className="relative flex h-28 w-28 items-center justify-center rounded-lux border border-gold/40 bg-white shadow-[0_8px_40px_rgba(7,26,53,0.1),0_0_30px_rgba(212,175,55,0.15)] glow-gold"
+              className="relative flex h-28 w-28 items-center justify-center rounded-lux border border-accent-blue/40 bg-white shadow-[0_8px_40px_rgba(7,26,53,0.1),0_0_30px_rgba(22,58,99,0.15)] glow-navy"
             >
-              <span className="font-heading text-6xl font-black gold-text" style={{ transform: 'translateZ(20px)' }}>O</span>
-              <div className="absolute inset-0 rounded-lux border border-gold/20" style={{ transform: 'translateZ(-20px)' }} />
+              <span className="font-heading text-6xl font-black accent-blue-text" style={{ transform: 'translateZ(20px)' }}>O</span>
+              <div className="absolute inset-0 rounded-lux border border-accent-blue/20" style={{ transform: 'translateZ(-20px)' }} />
             </motion.div>
           </motion.div>
 
@@ -45,7 +45,7 @@ export default function Loader({ done }: { done: boolean }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6, duration: 0.6 }}
-            className="mt-3 font-sub text-sm tracking-wide text-gold"
+            className="mt-3 font-sub text-sm tracking-wide text-accent-blue"
           >
             Everyone Says Go Green... We Show How!!!
           </motion.p>
@@ -53,7 +53,7 @@ export default function Loader({ done }: { done: boolean }) {
           {/* Progress bar */}
           <div className="mt-10 h-[2px] w-56 overflow-hidden rounded-full bg-navy/10">
             <motion.div
-              className="h-full bg-gradient-to-r from-gold-2 to-gold"
+              className="h-full bg-gradient-to-r from-accent-blue-2 to-accent-blue"
               initial={{ width: '0%' }}
               animate={{ width: '100%' }}
               transition={{ duration: 2, ease: [0.16, 1, 0.3, 1] }}

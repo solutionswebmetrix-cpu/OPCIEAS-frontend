@@ -47,7 +47,7 @@ export default function WhatsAppButton() {
                   href={waLink(`Hello OPCIEAS, I would like to know about: ${a}`)}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center gap-2 rounded-xl border border-navy/10 bg-white px-3 py-2.5 font-sub text-xs text-navy shadow-md transition hover:border-gold hover:bg-gold/10 hover:text-gold"
+                  className="flex items-center gap-2 rounded-xl border border-navy/10 bg-white px-3 py-2.5 font-sub text-xs text-navy shadow-md transition hover:border-accent-blue hover:bg-accent-blue/10 hover:text-accent-blue"
                 >
                   <Send className="h-3.5 w-3.5 text-[#25D366]" /> {a}
                 </a>

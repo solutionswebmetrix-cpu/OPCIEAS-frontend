@@ -21,10 +21,10 @@ export default function Testimonials() {
 
   return (
     <section id="testimonials" className="relative overflow-hidden bg-[#FBFAF6] border-t border-navy/5 py-12 sm:py-14 lg:py-16">
-      <div className="pointer-events-none absolute right-10 top-20 h-40 w-40 rounded-full bg-gold/5 blur-3xl animate-float-slow" />
+      <div className="pointer-events-none absolute right-10 top-20 h-40 w-40 rounded-full bg-accent-blue/5 blur-3xl animate-float-slow" />
       <div className="container-x relative px-6">
         <div className="mx-auto mb-8 max-w-2xl text-center">
-          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-sub text-sm uppercase tracking-[0.3em] text-gold">Testimonials</motion.p>
+          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-sub text-sm uppercase tracking-[0.3em] text-accent-blue">Testimonials</motion.p>
           <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl xl:text-5xl">
             What Our Clients Say
           </motion.h2>
@@ -40,9 +40,9 @@ export default function Testimonials() {
               transition={{ duration: 0.5 }}
               className="relative rounded-lux glass-light p-7 sm:p-8 text-center luxury-shadow"
             >
-              <Quote className="mx-auto mb-6 h-10 w-10 text-gold" />
+              <Quote className="mx-auto mb-6 h-10 w-10 text-accent-blue" />
               <div className="mb-4 flex justify-center gap-1">
-                {[...Array(5)].map((_, s) => <Star key={s} className="h-4 w-4 fill-gold text-gold" />)}
+                {[...Array(5)].map((_, s) => <Star key={s} className="h-4 w-4 fill-accent-blue text-accent-blue" />)}
               </div>
               <p className="font-body text-lg italic leading-relaxed text-navy/80">"{testimonials[i].text}"</p>
               <div className="mt-6 text-center">
@@ -52,12 +52,12 @@ export default function Testimonials() {
             </motion.div>
           </AnimatePresence>
 
-          <button onClick={() => setI((p) => (p - 1 + testimonials.length) % testimonials.length)} className="absolute -left-4 top-1/2 -translate-y-1/2 rounded-full glass-light p-3 text-navy hover:text-gold sm:-left-12"><ChevronLeft className="h-5 w-5" /></button>
-          <button onClick={() => setI((p) => (p + 1) % testimonials.length)} className="absolute -right-4 top-1/2 -translate-y-1/2 rounded-full glass-light p-3 text-navy hover:text-gold sm:-right-12"><ChevronRight className="h-5 w-5" /></button>
+          <button onClick={() => setI((p) => (p - 1 + testimonials.length) % testimonials.length)} className="absolute -left-4 top-1/2 -translate-y-1/2 rounded-full glass-light p-3 text-navy hover:text-accent-blue sm:-left-12"><ChevronLeft className="h-5 w-5" /></button>
+          <button onClick={() => setI((p) => (p + 1) % testimonials.length)} className="absolute -right-4 top-1/2 -translate-y-1/2 rounded-full glass-light p-3 text-navy hover:text-accent-blue sm:-right-12"><ChevronRight className="h-5 w-5" /></button>
 
           <div className="mt-6 flex justify-center gap-2">
             {testimonials.map((_, d) => (
-              <button key={d} onClick={() => setI(d)} className={`h-1.5 rounded-full transition-all ${d === i ? 'w-8 bg-gold' : 'w-1.5 bg-navy/20'}`} />
+              <button key={d} onClick={() => setI(d)} className={`h-1.5 rounded-full transition-all ${d === i ? 'w-8 bg-accent-blue' : 'w-1.5 bg-navy/20'}`} />
             ))}
           </div>
         </div>

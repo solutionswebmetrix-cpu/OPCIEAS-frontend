@@ -19,7 +19,7 @@ export default function MarketsServed() {
     <section className="bg-navy/5 py-24">
       <div className="container-x px-6">
         <div className="mx-auto mb-16 max-w-2xl text-center">
-          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-sub text-sm uppercase tracking-[0.3em] text-gold">Our Reach</motion.p>
+          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-sub text-sm uppercase tracking-[0.3em] text-accent-blue">Our Reach</motion.p>
           <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl">Industries We Serve</motion.h2>
         </div>
 
@@ -35,7 +35,7 @@ export default function MarketsServed() {
                 transition={{ delay: i * 0.05 }}
                 className="rounded-lux bg-white p-8 shadow-lg hover:shadow-xl transition-all duration-300"
               >
-                <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-gold/10 text-gold mb-6">
+                <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-accent-blue/10 text-accent-blue mb-6">
                   <Icon className="h-7 w-7" />
                 </div>
                 <h3 className="font-heading text-xl font-bold text-navy mb-3">{market.title}</h3>

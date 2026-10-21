@@ -51,8 +51,8 @@ const menu = [
   },
 ];
 
-const headerNavItemClass = 'group relative inline-flex h-9 shrink-0 items-center gap-1 rounded-full px-2 font-sub text-sm font-semibold leading-none text-navy transition-colors duration-200 hover:bg-gold/10 hover:text-gold';
-const headerActionClass = 'inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full px-2.5 font-sub text-sm font-medium text-navy transition-colors duration-200 hover:bg-gold/10 hover:text-gold';
+const headerNavItemClass = 'group relative inline-flex h-9 shrink-0 items-center gap-1 rounded-full px-2 font-sub text-sm font-semibold leading-none text-navy transition-colors duration-200 hover:bg-accent-blue/10 hover:text-accent-blue';
+const headerActionClass = 'inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full px-2.5 font-sub text-sm font-medium text-navy transition-colors duration-200 hover:bg-accent-blue/10 hover:text-accent-blue';
 
 const fallbackCategorySeed: Category[] = [
   { id: '2', name: 'Educational Furniture', slug: 'educational-furniture', description: null, tagline: null, image: null, banner_image: null, icon: null, sort_order: 2, is_featured: false, status: 'active', meta_title: null, meta_description: null, parent_id: null, created_at: undefined, updated_at: undefined },
@@ -165,7 +165,7 @@ export default function Navbar() {
                     <button type="button" onClick={() => { setProductsPanel((value) => !value); navigate('/products'); }} className={headerNavItemClass}>
                       <span>Products</span>
                       <ChevronDown className="h-3 w-3" />
-                      <span className="absolute bottom-0 left-1/2 h-[1px] w-0 -translate-x-1/2 bg-gold transition-all duration-300 group-hover:w-2/3" />
+                      <span className="absolute bottom-0 left-1/2 h-[1px] w-0 -translate-x-1/2 bg-accent-blue transition-all duration-300 group-hover:w-2/3" />
                     </button>
 
                     <AnimatePresence>
@@ -176,7 +176,7 @@ export default function Navbar() {
                               key={item.name}
                               to={item.to}
                               onClick={closeProductsPanel}
-                              className="block rounded-lg px-3 py-2 font-sub text-sm font-semibold text-navy transition-colors hover:bg-gold/10 hover:text-gold"
+                              className="block rounded-lg px-3 py-2 font-sub text-sm font-semibold text-navy transition-colors hover:bg-accent-blue/10 hover:text-accent-blue"
                             >
                               {item.name}
                             </Link>
@@ -193,13 +193,13 @@ export default function Navbar() {
                   {m.to ? (
                     <Link to={m.to} className={headerNavItemClass}>
                       <span>{m.label}</span>
-                      <span className="absolute bottom-0 left-1/2 h-[1px] w-0 -translate-x-1/2 bg-gold transition-all duration-300 group-hover:w-2/3" />
+                      <span className="absolute bottom-0 left-1/2 h-[1px] w-0 -translate-x-1/2 bg-accent-blue transition-all duration-300 group-hover:w-2/3" />
                     </Link>
                   ) : (
-                    <span className={`${headerNavItemClass} cursor-pointer ${m.label === 'Home' && ['overview','why-choose-us','manufacturing'].includes(activeId) ? 'border-gold bg-gold/15 text-gold' : ''}`}>
+                    <span className={`${headerNavItemClass} cursor-pointer ${m.label === 'Home' && ['overview','why-choose-us','manufacturing'].includes(activeId) ? 'border-accent-blue bg-accent-blue/15 text-accent-blue' : ''}`}>
                       <span>{m.label}</span>
                       {m.items && <ChevronDown className="h-3 w-3" />}
-                      <span className="absolute bottom-0 left-1/2 h-[1px] w-0 -translate-x-1/2 bg-gold transition-all duration-300 group-hover:w-2/3" />
+                      <span className="absolute bottom-0 left-1/2 h-[1px] w-0 -translate-x-1/2 bg-accent-blue transition-all duration-300 group-hover:w-2/3" />
                     </span>
                   )}
 
@@ -233,7 +233,7 @@ export default function Navbar() {
                                 }`}
                               >
                                 <div
-                                  className={`flex items-center justify-center rounded-lg bg-gold/10 text-gold transition group-hover:bg-gold group-hover:text-navy ${
+                                  className={`flex items-center justify-center rounded-lg bg-accent-blue/10 text-accent-blue transition group-hover:bg-accent-blue group-hover:text-navy ${
                                     m.label === 'Special' ? 'mt-0.5 h-8 w-8 flex-shrink-0' : 'h-8 w-8'
                                   }`}
                                 >
@@ -242,9 +242,9 @@ export default function Navbar() {
                                 <span
                                   className={`font-sub text-sm ${
                                     ((item as any).scrollId && activeId === (item as any).scrollId)
-                                      ? 'text-gold'
+                                      ? 'text-accent-blue'
                                       : 'text-navy/70'
-                                  } group-hover:text-gold ${
+                                  } group-hover:text-accent-blue ${
                                     m.label === 'Special' ? 'leading-[1.4] flex-1' : ''
                                   }`}
                                 >
@@ -268,13 +268,13 @@ export default function Navbar() {
               <button onClick={() => setLangOpen((s) => !s)} className={headerActionClass}><Globe className="h-3.5 w-3.5" /> EN</button>
               {langOpen && (
                 <div className="absolute right-0 mt-2 w-44 rounded-lux bg-white border border-border-grey p-2 shadow-lg">
-                  <button className="w-full text-left rounded px-3 py-2 font-sub text-sm text-navy">English <span className="text-gold">(Active)</span></button>
+                  <button className="w-full text-left rounded px-3 py-2 font-sub text-sm text-navy">English <span className="text-accent-blue">(Active)</span></button>
                   <button className="w-full text-left rounded px-3 py-2 font-sub text-sm text-navy/60">Hindi <span className="text-navy/40">(Coming Soon)</span></button>
                 </div>
               )}
             </div>
             <Link to="/catalogue" className={`${headerActionClass} gap-2 px-3`}><Download className="h-4 w-4" /> Catalogue</Link>
-            <Link to="/rfq" className="btn-gold inline-flex h-10 shrink-0 items-center justify-center rounded-full border border-gold/80 px-[18px] py-0 font-sub text-sm font-semibold shadow-sm transition-colors duration-200 hover:border-gold-3">Request Quote</Link>
+            <Link to="/rfq" className="btn-primary inline-flex h-10 shrink-0 items-center justify-center rounded-full border border-accent-blue/80 px-[18px] py-0 font-sub text-sm font-semibold shadow-sm transition-colors duration-200 hover:border-accent-blue-3">Request Quote</Link>
           </div>
 
           {/* Mobile toggle */}
@@ -295,8 +295,8 @@ export default function Navbar() {
                   return (
                     <div key={m.label} className="border-b border-border-grey py-3">
                       <div className="flex items-center justify-between gap-2">
-                        <button type="button" onClick={() => setProductsOpen((value) => !value)} className="rounded-lg border border-navy/10 bg-navy/5 px-3 py-2 font-sub text-base font-bold text-navy transition-colors hover:border-gold hover:bg-gold/10">{m.label}</button>
-                        <ChevronDown className={`h-4 w-4 text-gold transition-transform ${productsOpen ? 'rotate-180' : ''}`} />
+                        <button type="button" onClick={() => setProductsOpen((value) => !value)} className="rounded-lg border border-navy/10 bg-navy/5 px-3 py-2 font-sub text-base font-bold text-navy transition-colors hover:border-accent-blue hover:bg-accent-blue/10">{m.label}</button>
+                        <ChevronDown className={`h-4 w-4 text-accent-blue transition-transform ${productsOpen ? 'rotate-180' : ''}`} />
                       </div>
                       {productsOpen && (
                         <div className="mt-2 space-y-1 pl-2">
@@ -305,7 +305,7 @@ export default function Navbar() {
                               key={item.name}
                               to={item.to}
                               onClick={() => setOpen(false)}
-                              className="block rounded-lg px-3 py-2 font-sub text-sm font-semibold text-navy transition-colors hover:bg-gold/10 hover:text-gold"
+                              className="block rounded-lg px-3 py-2 font-sub text-sm font-semibold text-navy transition-colors hover:bg-accent-blue/10 hover:text-accent-blue"
                             >
                               {item.name}
                             </Link>
@@ -319,13 +319,13 @@ export default function Navbar() {
                 return (
                   <div key={m.label}>
                     {m.to ? (
-                      <Link to={m.to} onClick={() => setOpen(false)} className="mb-2 block rounded-lg border border-navy/10 bg-navy/5 px-3 py-3 font-sub text-base text-navy transition-colors hover:border-gold hover:bg-gold/10">{m.label}</Link>
+                      <Link to={m.to} onClick={() => setOpen(false)} className="mb-2 block rounded-lg border border-navy/10 bg-navy/5 px-3 py-3 font-sub text-base text-navy transition-colors hover:border-accent-blue hover:bg-accent-blue/10">{m.label}</Link>
                     ) : (
                       <div className="border-b border-border-grey py-3">
                         <p className="font-sub text-base font-bold text-navy">{m.label}</p>
                         <div className="mt-2 space-y-1 pl-4">
                           {m.items?.map((item) => (
-                            <button key={item.name} onClick={() => { setOpen(false); goTo(item.to, (item as any).scrollId); }} className="block w-full text-left py-1.5 font-sub text-sm text-navy/70 hover:text-gold">{item.name}</button>
+                            <button key={item.name} onClick={() => { setOpen(false); goTo(item.to, (item as any).scrollId); }} className="block w-full text-left py-1.5 font-sub text-sm text-navy/70 hover:text-accent-blue">{item.name}</button>
                           ))}
                         </div>
                       </div>
@@ -339,19 +339,19 @@ export default function Navbar() {
                   onClick={() => setLangOpen((value) => !value)}
                   className="flex min-h-11 w-full items-center justify-between rounded-lg border border-navy/10 bg-navy/5 px-3 py-2 font-sub text-sm font-semibold text-navy"
                 >
-                  <span className="inline-flex items-center gap-2"><Globe className="h-4 w-4 text-gold" /> Language</span>
+                  <span className="inline-flex items-center gap-2"><Globe className="h-4 w-4 text-accent-blue" /> Language</span>
                   <span className="text-navy/65">EN <ChevronDown className={`ml-1 inline h-4 w-4 transition-transform ${langOpen ? 'rotate-180' : ''}`} /></span>
                 </button>
                 {langOpen && (
                   <div className="mt-2 space-y-1 pl-2">
-                    <button type="button" className="block min-h-10 w-full rounded-lg px-3 text-left font-sub text-sm text-navy">English <span className="text-gold">(Active)</span></button>
+                    <button type="button" className="block min-h-10 w-full rounded-lg px-3 text-left font-sub text-sm text-navy">English <span className="text-accent-blue">(Active)</span></button>
                     <button type="button" className="block min-h-10 w-full rounded-lg px-3 text-left font-sub text-sm text-navy/60">Hindi <span className="text-navy/40">(Coming Soon)</span></button>
                   </div>
                 )}
               </div>
               <div className="mt-6 flex flex-col gap-3">
                 <Link to="/catalogue" onClick={() => setOpen(false)} className="inline-flex min-h-11 items-center justify-center rounded-full border border-navy/20 bg-navy/5 px-4 font-sub text-sm text-navy transition-colors hover:bg-navy/10"><Download className="mr-2 h-4 w-4" /> Catalogue</Link>
-                <Link to="/rfq" onClick={() => setOpen(false)} className="btn-gold inline-flex min-h-11 items-center justify-center rounded-full px-5 font-sub text-sm font-semibold">Request Quote</Link>
+                <Link to="/rfq" onClick={() => setOpen(false)} className="btn-primary inline-flex min-h-11 items-center justify-center rounded-full px-5 font-sub text-sm font-semibold">Request Quote</Link>
               </div>
             </motion.div>
           </>

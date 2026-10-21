@@ -46,7 +46,7 @@ export default function Manufacturing() {
 
       <div className="container-x relative px-6">
         <div className="mx-auto mb-8 lg:mb-10 max-w-2xl text-center">
-          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-sub text-sm uppercase tracking-[0.3em] text-gold">Direct Manufacturing</motion.p>
+          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-sub text-sm uppercase tracking-[0.3em] text-accent-blue">Direct Manufacturing</motion.p>
           <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl xl:text-5xl">
             Commercial Product-led manufacturer built for Educational, institutional and export
           </motion.h2>
@@ -65,7 +65,7 @@ export default function Manufacturing() {
               <div className="rounded-full bg-white/90 px-3 py-1 font-sub text-[10px] uppercase tracking-[0.22em] text-navy">
                 In-House Production
               </div>
-              <div className="rounded-full bg-gold px-3 py-1 font-sub text-[10px] uppercase tracking-[0.22em] text-navy">
+              <div className="rounded-full bg-accent-blue px-3 py-1 font-sub text-[10px] uppercase tracking-[0.22em] text-navy">
                 Since 1999
               </div>
             </div>
@@ -102,7 +102,7 @@ export default function Manufacturing() {
                 transition={{ delay: idx * 0.08 }}
                 className="rounded-lux bg-white p-5 sm:p-6 border border-navy/10 luxury-shadow"
               >
-                <p className="font-sub text-[10px] uppercase tracking-[0.28em] text-gold">{card.title.split(' ')[0]}</p>
+                <p className="font-sub text-[10px] uppercase tracking-[0.28em] text-accent-blue">{card.title.split(' ')[0]}</p>
                 <h3 className="mt-2 font-heading text-xl font-bold text-navy">{card.title.replace(/^\d+\s+/, '')}</h3>
                 <p className="mt-4 font-body text-sm text-navy/70 leading-relaxed">{card.content}</p>
               </motion.div>
@@ -113,7 +113,7 @@ export default function Manufacturing() {
         <div className="relative mt-10 lg:mt-12 overflow-x-auto pb-4 no-scrollbar">
           <div className="relative flex min-w-[900px] items-start justify-between px-4">
             <div className="absolute left-4 right-4 top-7 h-0.5 overflow-hidden rounded-full bg-navy/10">
-              <motion.div className="h-full bg-gradient-to-r from-gold-2 to-gold" style={{ scaleX: lineScale, transformOrigin: 'left' }} />
+              <motion.div className="h-full bg-gradient-to-r from-accent-blue-2 to-accent-blue" style={{ scaleX: lineScale, transformOrigin: 'left' }} />
             </div>
             {steps.map((s, i) => (
               <motion.div
@@ -124,7 +124,7 @@ export default function Manufacturing() {
                 transition={{ delay: i * 0.05 }}
                 className="relative z-10 flex w-20 flex-col items-center text-center"
               >
-                <div className="flex h-14 w-14 items-center justify-center rounded-full border border-gold/40 bg-white text-gold shadow-md">
+                <div className="flex h-14 w-14 items-center justify-center rounded-full border border-accent-blue/40 bg-white text-accent-blue shadow-md">
                   <s.icon className="h-6 w-6" />
                 </div>
                 <p className="mt-3 font-sub text-xs font-medium text-navy">{s.label}</p>
@@ -142,7 +142,7 @@ export default function Manufacturing() {
               viewport={{ once: true }}
               className="rounded-lux bg-white p-4 sm:p-5 text-center border border-navy/10 shadow-sm"
             >
-              <p className="font-heading text-3xl font-black gold-text sm:text-4xl">{c.value}</p>
+              <p className="font-heading text-3xl font-black accent-blue-text sm:text-4xl">{c.value}</p>
               <p className="mt-2 font-sub text-xs uppercase tracking-wider text-navy/70">{c.label}</p>
             </motion.div>
           ))}

@@ -144,7 +144,7 @@ function SocialVisualCard({ src, alt, caption, priority = false }: { src: string
 function SectionTitle({ eyebrow, title }: { eyebrow: string; title: string }) {
   return (
     <div className="max-w-3xl">
-      <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">{eyebrow}</p>
+      <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue">{eyebrow}</p>
       <h2 className="mt-3 font-heading text-3xl font-black leading-tight text-navy sm:text-5xl">{title}</h2>
     </div>
   );
@@ -162,7 +162,7 @@ export default function SocialServicesPage() {
       />
 
       <header className="relative isolate overflow-hidden bg-navy">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(217,173,43,0.18),_transparent_35%),linear-gradient(90deg,rgba(7,26,53,0.95),rgba(7,26,53,0.6),rgba(7,26,53,0.35))]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(11,31,58,0.18),_transparent_35%),linear-gradient(90deg,rgba(7,26,53,0.95),rgba(7,26,53,0.6),rgba(7,26,53,0.35))]" />
         <img
           src={heroSocialImage}
           alt="Heavenly Earth rural development cover image showing a prosperous agricultural landscape"
@@ -177,7 +177,7 @@ export default function SocialServicesPage() {
             transition={{ duration: 0.7 }}
             className="max-w-5xl text-white"
           >
-            <p className="font-sub text-xs uppercase tracking-[0.35em] text-gold-2">RURAL DEVELOPMENT</p>
+            <p className="font-sub text-xs uppercase tracking-[0.35em] text-accent-blue-2">RURAL DEVELOPMENT</p>
             <h1 className="mt-6 font-heading text-4xl font-black leading-[1.05] sm:text-5xl lg:text-7xl">
               HEAVENLY EARTH – A VISION FOR RURAL PROSPERITY
             </h1>
@@ -198,7 +198,7 @@ export default function SocialServicesPage() {
             <div className="mt-12 grid gap-5 lg:grid-cols-3">
               {vignettes.map(({ icon: Icon, title, text }) => (
                 <article key={title} className="rounded-lux border border-navy/10 bg-light-grey p-7 shadow-sm">
-                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gold/10 text-gold">
+                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-accent-blue/10 text-accent-blue">
                     <Icon className="h-6 w-6" />
                   </div>
                   <h3 className="mt-5 font-heading text-xl font-bold text-navy">{title}</h3>
@@ -209,19 +209,19 @@ export default function SocialServicesPage() {
           </div>
         </section>
 
-        <section className="bg-[#edf3ed] py-12 sm:py-16">
+        <section className="bg-[#EAF1F8] py-12 sm:py-16">
           <div className="container-x grid gap-12 px-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
             <SectionTitle eyebrow="Rural Empowerment" title="Empowering Rural Communities" />
             <div className="grid gap-5 sm:grid-cols-2">
               <article className="rounded-lux bg-white p-6 shadow-sm">
-                <Users className="h-7 w-7 text-gold" />
+                <Users className="h-7 w-7 text-accent-blue" />
                 <h3 className="mt-5 font-heading text-xl font-bold text-navy">Shared effort</h3>
                 <p className="mt-3 font-body text-sm leading-relaxed text-navy/70">
                   Rural transformation grows when families, communities, and local institutions work together with discipline and concern for the common good.
                 </p>
               </article>
               <article className="rounded-lux bg-navy p-6 text-white shadow-sm">
-                <Sprout className="h-7 w-7 text-gold-2" />
+                <Sprout className="h-7 w-7 text-accent-blue-2" />
                 <h3 className="mt-5 font-heading text-xl font-bold">Self-reliance</h3>
                 <p className="mt-3 font-body text-sm leading-relaxed text-white/75">
                   It is not about dependency; it is about strengthening local capacity, dignity, and long-term responsibility.
@@ -237,7 +237,7 @@ export default function SocialServicesPage() {
             <div className="grid gap-3 sm:grid-cols-2">
               {['Legal awareness', 'Formal organization', 'Fair support', 'Trust', 'Hard work', 'Equality', 'Responsible citizenship', 'Dignity'].map((item) => (
                 <div key={item} className="flex items-center gap-3 rounded-xl border border-navy/10 bg-light-grey p-4 font-sub text-sm text-navy">
-                  <Check className="h-4 w-4 shrink-0 text-gold" />
+                  <Check className="h-4 w-4 shrink-0 text-accent-blue" />
                   {item}
                 </div>
               ))}
@@ -251,7 +251,7 @@ export default function SocialServicesPage() {
             <div className="grid gap-5 sm:grid-cols-2">
               {['Dignity', 'Safety', 'Fairness', 'Protection', 'Legal safeguards', 'Shared responsibility'].map((item) => (
                 <div key={item} className="rounded-lux border border-white/15 bg-white/5 p-6">
-                  <ShieldCheck className="h-6 w-6 text-gold-2" />
+                  <ShieldCheck className="h-6 w-6 text-accent-blue-2" />
                   <h3 className="mt-4 font-heading text-lg font-bold">{item}</h3>
                   <p className="mt-2 font-body text-sm leading-relaxed text-white/70">
                     Rural development must protect people across all economic levels and strengthen the dignity of every family.
@@ -262,12 +262,12 @@ export default function SocialServicesPage() {
           </div>
         </section>
 
-        <section className="bg-[#f8f4ea] py-12 sm:py-16">
+        <section className="bg-[#F4F6F8] py-12 sm:py-16">
           <div className="container-x px-6">
             <SectionTitle eyebrow="Our Vision" title="Our Vision" />
             <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
               {['Rural workers', 'Skilled labourers', 'Striving communities', 'Honest practices', 'Equality', 'Self-reliance', 'Dignity', 'Unity'].map((item) => (
-                <div key={item} className="border-b border-gold/40 py-5 font-heading text-xl font-bold text-navy">
+                <div key={item} className="border-b border-accent-blue/40 py-5 font-heading text-xl font-bold text-navy">
                   {item}
                 </div>
               ))}
@@ -285,12 +285,12 @@ export default function SocialServicesPage() {
           </div>
         </section>
 
-        <section className="bg-[#edf3ed] py-12 sm:py-16">
+        <section className="bg-[#EAF1F8] py-12 sm:py-16">
           <div className="container-x px-6">
             <SectionTitle eyebrow="200-Family Township Model" title="200-Family Township Model" />
             <div className="mt-12 grid gap-8 lg:grid-cols-[0.7fr_1.3fr]">
               <div className="rounded-lux bg-navy p-8 text-white shadow-lg">
-                <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold-2">Unit Model</p>
+                <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue-2">Unit Model</p>
                 <p className="mt-7 font-heading text-6xl font-black">200</p>
                 <p className="font-sub text-base text-white/75">families</p>
                 <p className="mt-6 font-heading text-3xl font-bold">approximately 1,000</p>
@@ -299,7 +299,7 @@ export default function SocialServicesPage() {
               <div className="grid gap-4 sm:grid-cols-2">
                 {modelIdeas.map((item, index) => (
                   <article key={item} className="rounded-lux border border-navy/10 bg-white p-6 shadow-sm">
-                    <span className="font-sub text-xs uppercase tracking-[0.25em] text-gold">0{index + 1}</span>
+                    <span className="font-sub text-xs uppercase tracking-[0.25em] text-accent-blue">0{index + 1}</span>
                     <h3 className="mt-4 font-heading text-lg font-bold text-navy">{item}</h3>
                   </article>
                 ))}
@@ -319,7 +319,7 @@ export default function SocialServicesPage() {
                 { icon: Building2, title: 'Infrastructure', text: 'Planning and governance support durable local growth.' },
               ].map(({ icon: Icon, title, text }) => (
                 <article key={title} className="rounded-lux border border-navy/10 bg-light-grey p-6">
-                  <Icon className="h-8 w-8 text-gold" />
+                  <Icon className="h-8 w-8 text-accent-blue" />
                   <h3 className="mt-5 font-heading text-xl font-bold text-navy">{title}</h3>
                   <p className="mt-3 font-body text-sm leading-relaxed text-navy/70">{text}</p>
                 </article>
@@ -328,13 +328,13 @@ export default function SocialServicesPage() {
           </div>
         </section>
 
-        <section className="bg-[#f7f4ea] py-12 sm:py-16">
+        <section className="bg-[#F4F6F8] py-12 sm:py-16">
           <div className="container-x px-6">
             <SectionTitle eyebrow="Key Principles & Insights" title="Key Principles & Insights" />
             <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {keyInsights.map((item, index) => (
                 <article key={item} className="rounded-lux border border-navy/10 bg-white p-5 shadow-sm">
-                  <span className="font-sub text-[10px] uppercase tracking-[0.28em] text-gold">0{index + 1}</span>
+                  <span className="font-sub text-[10px] uppercase tracking-[0.28em] text-accent-blue">0{index + 1}</span>
                   <p className="mt-3 font-body text-sm leading-relaxed text-navy/80">{item}</p>
                 </article>
               ))}
@@ -347,14 +347,14 @@ export default function SocialServicesPage() {
             <div className="rounded-lux border border-white/15 bg-white/5 p-8">
               <div className="flex h-48 items-center justify-center rounded-lux border border-dashed border-white/15 bg-white/5">
                 <div className="text-center">
-                  <BookOpen className="mx-auto h-10 w-10 text-gold-2" />
+                  <BookOpen className="mx-auto h-10 w-10 text-accent-blue-2" />
                   <p className="mt-5 font-heading text-2xl font-black text-white">HEAVENLY EARTH</p>
                   <p className="mt-2 font-sub text-xs uppercase tracking-[0.25em] text-white/70">A Vision for Rural Prosperity</p>
                 </div>
               </div>
             </div>
             <div>
-              <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold-2">Heavenly Earth Book</p>
+              <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue-2">Heavenly Earth Book</p>
               <h2 className="mt-4 font-heading text-3xl font-black sm:text-5xl">HEAVENLY EARTH</h2>
               <p className="mt-3 font-sub text-lg text-white/85">A VISION FOR RURAL PROSPERITY</p>
               <p className="mt-6 max-w-2xl font-body text-base leading-relaxed text-white/75">
@@ -363,7 +363,7 @@ export default function SocialServicesPage() {
               <div className="mt-8 grid gap-3 sm:grid-cols-2">
                 {['Self-reliance, not dependency', 'Shared leadership', 'Unit-based planning', 'Education and culture'].map((item) => (
                   <div key={item} className="flex gap-3 rounded-xl border border-white/15 bg-white/5 p-4 font-sub text-sm text-white/85">
-                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-gold-2" />
+                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-accent-blue-2" />
                     {item}
                   </div>
                 ))}
@@ -385,7 +385,7 @@ export default function SocialServicesPage() {
                     className="flex w-full items-center justify-between gap-4 py-4 text-left font-sub text-sm font-semibold text-navy sm:text-base"
                   >
                     <span>{chapter}</span>
-                    <ChevronDown className={`h-5 w-5 shrink-0 text-gold transition-transform ${openChapter === index ? 'rotate-180' : ''}`} />
+                    <ChevronDown className={`h-5 w-5 shrink-0 text-accent-blue transition-transform ${openChapter === index ? 'rotate-180' : ''}`} />
                   </button>
                   {openChapter === index && (
                     <div className="pb-5 pr-8 font-body text-sm leading-relaxed text-navy/70">
@@ -398,7 +398,7 @@ export default function SocialServicesPage() {
           </div>
         </section>
 
-        <section className="bg-[#f7f4ea] py-12 sm:py-16">
+        <section className="bg-[#F4F6F8] py-12 sm:py-16">
           <div className="container-x px-6">
             <SectionTitle eyebrow="Heavenly Earth Visuals" title="Rural prosperity through land, community and stewardship" />
             <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
@@ -418,7 +418,7 @@ export default function SocialServicesPage() {
                   The village is not built by isolated efforts. It is built by unity, shared planning, and a collective willingness to solve local problems with honesty and courage.
                 </p>
               </div>
-              <div className="rounded-lux border border-gold/30 bg-gold/5 p-7">
+              <div className="rounded-lux border border-accent-blue/30 bg-accent-blue/5 p-7">
                 <p className="font-body text-base leading-relaxed text-navy/75">
                   Shared leadership and inclusive collaboration are essential to building a strong rural future rooted in equal ownership, fairness, and accountability.
                 </p>
@@ -427,7 +427,7 @@ export default function SocialServicesPage() {
           </div>
         </section>
 
-        <section className="bg-[#edf3ed] py-12 sm:py-16">
+        <section className="bg-[#EAF1F8] py-12 sm:py-16">
           <div className="container-x px-6">
             <SectionTitle eyebrow="A Call to Action" title="A Call to Action" />
             <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
@@ -440,7 +440,7 @@ export default function SocialServicesPage() {
                 'Cultivating a new mindset',
               ].map((item) => (
                 <article key={item} className="rounded-lux bg-white p-6 shadow-sm">
-                  <Check className="h-5 w-5 text-gold" />
+                  <Check className="h-5 w-5 text-accent-blue" />
                   <h3 className="mt-4 font-heading text-xl font-bold text-navy">{item}</h3>
                 </article>
               ))}
@@ -461,19 +461,19 @@ export default function SocialServicesPage() {
           </div>
         </section>
 
-        <section className="bg-[#f7f4ea] py-12 sm:py-16">
+        <section className="bg-[#F4F6F8] py-12 sm:py-16">
           <div className="container-x px-6">
             <SectionTitle eyebrow="Education and Accountability" title="Rediscovering the Foundations of Education" />
             <div className="mt-10 grid gap-6 lg:grid-cols-2">
               <article className="rounded-lux border border-navy/10 bg-white p-7">
-                <GraduationCap className="h-8 w-8 text-gold" />
+                <GraduationCap className="h-8 w-8 text-accent-blue" />
                 <h3 className="mt-5 font-heading text-2xl font-black text-navy">Education as a foundation</h3>
                 <p className="mt-4 font-body text-base leading-relaxed text-navy/75">
                   Education is not only academic. It is about character, discipline, practical wisdom, responsibility, and the capacity to build a better future.
                 </p>
               </article>
               <article className="rounded-lux border border-navy/10 bg-white p-7">
-                <Landmark className="h-8 w-8 text-gold" />
+                <Landmark className="h-8 w-8 text-accent-blue" />
                 <h3 className="mt-5 font-heading text-2xl font-black text-navy">Accountability and integrity</h3>
                 <p className="mt-4 font-body text-base leading-relaxed text-navy/75">
                   Transparent management and honest leadership are essential for trust, fairness, and the confident growth of every rural community.
@@ -486,7 +486,7 @@ export default function SocialServicesPage() {
         <section className="bg-white py-12 sm:py-16">
           <div className="container-x px-6">
             <SectionTitle eyebrow="A New Mindset" title="Cultivating a New Mindset" />
-            <div className="mt-10 rounded-lux border border-gold/30 bg-gold/5 p-8">
+            <div className="mt-10 rounded-lux border border-accent-blue/30 bg-accent-blue/5 p-8">
               <p className="font-body text-lg leading-relaxed text-navy/80">
                 The future requires a new mindset: one that values shared effort, local ownership, practical action, and the courage to move beyond old patterns of inequality, passivity, or dependency.
               </p>
@@ -503,7 +503,7 @@ export default function SocialServicesPage() {
                   When communities lose direction, hope, or accountability, it becomes harder to build a future of dignity and prosperity. Transformation must be guided by wisdom, responsibility, and honest leadership.
                 </p>
               </div>
-              <div className="rounded-lux border border-gold/40 bg-gold/10 p-7">
+              <div className="rounded-lux border border-accent-blue/40 bg-accent-blue/10 p-7">
                 <p className="font-body text-base leading-relaxed text-navy/80">
                   Empowering through understanding is the bridge between despair and renewal. It means seeing people clearly, preparing them for responsibility, and helping them act with confidence and purpose.
                 </p>
@@ -523,7 +523,7 @@ export default function SocialServicesPage() {
                 { icon: Check, title: 'Hope', text: 'A credible future is possible when people work together.' },
               ].map(({ icon: Icon, title, text }) => (
                 <article key={title} className="rounded-lux border border-navy/10 bg-light-grey p-6">
-                  <Icon className="h-7 w-7 text-gold" />
+                  <Icon className="h-7 w-7 text-accent-blue" />
                   <h3 className="mt-5 font-heading text-xl font-bold text-navy">{title}</h3>
                   <p className="mt-3 font-body text-sm leading-relaxed text-navy/70">{text}</p>
                 </article>
@@ -535,13 +535,13 @@ export default function SocialServicesPage() {
         <section className="bg-gradient-to-br from-navy via-navy-2 to-navy/95 py-12 text-white sm:py-16">
           <div className="container-x px-6">
             <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mx-auto max-w-4xl text-center">
-              <p className="font-sub text-xs uppercase tracking-[0.35em] text-gold-2">Final CTA</p>
+              <p className="font-sub text-xs uppercase tracking-[0.35em] text-accent-blue-2">Final CTA</p>
               <h2 className="mt-5 font-heading text-3xl font-black sm:text-5xl">A vision for rural prosperity begins with collective action.</h2>
               <p className="mt-5 font-body text-lg leading-relaxed text-white/80">
                 The path is clear: shared effort, honest leadership, education, transparent systems, and a commitment to dignity for every family and every village.
               </p>
               <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-                <a href={ruralDevelopmentPdf} download className="btn-gold inline-flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm">
+                <a href={ruralDevelopmentPdf} download className="btn-primary inline-flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm">
                   <Download className="h-4 w-4" /> Download Full Rural Development PDF
                 </a>
                 <button type="button" onClick={() => window.print()} className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-6 py-3 font-sub text-sm text-white transition hover:bg-white hover:text-navy">

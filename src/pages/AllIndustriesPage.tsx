@@ -73,12 +73,12 @@ function IndustryCard({
           <div className="absolute inset-0 bg-gradient-to-t from-white/80 via-white/20 to-transparent" />
         </div>
         <div className="relative z-10 bg-white p-6">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gold/10 text-gold transition-all duration-500 group-hover:scale-110 group-hover:bg-gold group-hover:text-navy">
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-accent-blue/10 text-accent-blue transition-all duration-500 group-hover:scale-110 group-hover:bg-accent-blue group-hover:text-navy">
             <Icon className="h-6 w-6" />
           </div>
           <div className="mt-4">
             <h3 className="font-heading text-lg font-bold text-navy">{name}</h3>
-            <p className="mt-1 font-sub text-xs text-gold">{stat}</p>
+            <p className="mt-1 font-sub text-xs text-accent-blue">{stat}</p>
             <p className="mt-3 font-body text-xs text-navy/70">{desc}</p>
           </div>
         </div>
@@ -112,7 +112,7 @@ export default function IndustriesPage() {
             viewport={{ once: true }}
             className="mx-auto mb-16 max-w-2xl text-center"
           >
-            <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Comprehensive Coverage</p>
+            <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue">Comprehensive Coverage</p>
             <h2 className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl">
               All 14 Industries
             </h2>

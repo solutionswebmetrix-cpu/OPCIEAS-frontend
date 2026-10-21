@@ -93,15 +93,15 @@ export default function BuyerApplicationPage() {
       <PageMeta title="Buyer Application Form | OPCIEAS" description="Submit your buyer application for review and access to the OPCIEAS procurement portal." />
       <div className="mx-auto max-w-6xl px-4">
         <motion.div initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.4 }} className="rounded-3xl border border-slate-200 bg-white shadow-2xl shadow-slate-200/50 overflow-hidden">
-          <div className="bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 px-8 py-8 text-white">
-            <div className="flex flex-wrap items-center gap-3 text-sm uppercase tracking-[0.24em] text-amber-50"><ShoppingCart size={18} /> OPCIEAS Buyer Application Form</div>
+          <div className="bg-gradient-to-r from-secondary-navy via-secondary-navy to-secondary-navy px-8 py-8 text-white">
+            <div className="flex flex-wrap items-center gap-3 text-sm uppercase tracking-[0.24em] text-light-blue"><ShoppingCart size={18} /> OPCIEAS Buyer Application Form</div>
             <h1 className="mt-3 text-3xl font-bold tracking-tight">Buyer Registration & Governance Review</h1>
-            <p className="mt-3 max-w-3xl text-amber-50/90">Submit your profile for procurement review. All applications are screened for authenticity, compliance, and fit for the OPCIEAS network.</p>
+            <p className="mt-3 max-w-3xl text-light-blue/90">Submit your profile for procurement review. All applications are screened for authenticity, compliance, and fit for the OPCIEAS network.</p>
           </div>
           <form onSubmit={onSubmit} className="grid gap-8 p-6 lg:grid-cols-[1.3fr_0.7fr] lg:p-8">
             <div className="space-y-8">
               <section className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
-                <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-slate-900"><User size={18} className="text-amber-700" /> Section A – Buyer Profile</h2>
+                <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-slate-900"><User size={18} className="text-secondary-navy" /> Section A – Buyer Profile</h2>
                 <div className="grid gap-4 md:grid-cols-2">
                   <Field label="Full Name" icon={User} name="full_name" />
                   <Field label="Company/Entity Name" icon={Building2} name="company_name" />
@@ -127,8 +127,8 @@ export default function BuyerApplicationPage() {
               </section>
             </div>
             <div className="space-y-4 lg:sticky lg:top-24 lg:self-start">
-              <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4">
-                <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-amber-700">Submission Summary</h3>
+              <div className="rounded-2xl border border-border-grey bg-light-blue p-4">
+                <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-secondary-navy">Submission Summary</h3>
                 <ul className="mt-3 space-y-2 text-sm text-slate-700">
                   {summary.map(([label, value]) => <li key={label} className="flex items-start justify-between gap-2"><span className="font-medium text-slate-600">{label}</span><span className="text-right text-slate-900">{value}</span></li>)}
                 </ul>
@@ -137,8 +137,8 @@ export default function BuyerApplicationPage() {
                 <p className="font-semibold">Governance note</p>
                 <p className="mt-2">Buyers are reviewed by portal staff before access is activated. Verified business purpose and declaration statements are required.</p>
               </div>
-              {result && <div className={`rounded-2xl border p-4 text-sm ${result.ok ? 'border-emerald-200 bg-emerald-50 text-emerald-800' : 'border-red-200 bg-red-50 text-red-700'}`}><div className="flex items-start gap-2"><span>{result.ok ? <CheckCircle2 size={18} /> : <AlertCircle size={18} />}</span><div>{result.msg}</div></div></div>}
-              <button type="submit" disabled={loading} className="flex w-full items-center justify-center gap-2 rounded-xl bg-amber-600 px-5 py-3 font-semibold text-white transition hover:bg-amber-700 disabled:opacity-60">
+              {result && <div className={`rounded-2xl border p-4 text-sm ${result.ok ? 'border-border-grey bg-light-blue text-navy' : 'border-red-200 bg-red-50 text-red-700'}`}><div className="flex items-start gap-2"><span>{result.ok ? <CheckCircle2 size={18} /> : <AlertCircle size={18} />}</span><div>{result.msg}</div></div></div>}
+              <button type="submit" disabled={loading} className="flex w-full items-center justify-center gap-2 rounded-xl bg-secondary-navy px-5 py-3 font-semibold text-white transition hover:bg-secondary-navy disabled:opacity-60">
                 {loading ? 'Submitting…' : <>Submit Application <ChevronRight size={18} /></>}
               </button>
               <Link to="/seller/application" className="flex items-center justify-center gap-2 rounded-xl border border-slate-300 px-5 py-3 font-semibold text-slate-700 transition hover:bg-slate-50">Apply as Supplier <ChevronRight size={18} /></Link>

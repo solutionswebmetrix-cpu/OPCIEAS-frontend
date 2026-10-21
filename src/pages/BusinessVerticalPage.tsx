@@ -84,7 +84,7 @@ export default function BusinessVerticalPage() {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center bg-white px-6 text-center">
         <p className="font-heading text-2xl font-bold text-navy">Business vertical not found</p>
-        <Link to="/" className="mt-4 rounded-full bg-gold px-6 py-2 font-sub text-sm text-navy">Return Home</Link>
+        <Link to="/" className="mt-4 rounded-full bg-accent-blue px-6 py-2 font-sub text-sm text-navy">Return Home</Link>
       </div>
     );
   }
@@ -114,7 +114,7 @@ export default function BusinessVerticalPage() {
 
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12 grid gap-6 rounded-lux border border-navy/10 bg-navy/5 p-6 lg:grid-cols-[1.2fr_0.8fr]">
             <div>
-              <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Business Vertical</p>
+              <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue">Business Vertical</p>
               <h1 className="mt-2 font-heading text-2xl font-black text-navy sm:text-3xl">{vertical.name}</h1>
               <p className="mt-3 font-body text-sm text-navy/70 leading-relaxed">{vertical.overview}</p>
               <div className="mt-4 flex flex-wrap gap-2">
@@ -123,10 +123,10 @@ export default function BusinessVerticalPage() {
                 ))}
               </div>
               <div className="mt-5 flex flex-wrap gap-3">
-                <Link to="/products" className="inline-flex items-center gap-1.5 font-sub text-xs font-semibold text-gold">
+                <Link to="/products" className="inline-flex items-center gap-1.5 font-sub text-xs font-semibold text-accent-blue">
                   <ArrowRight className="h-3.5 w-3.5 rotate-180" /> All Product Categories
                 </Link>
-                <Link to="/rfq" className="inline-flex items-center gap-1.5 rounded-full bg-gold px-4 py-2 font-sub text-xs font-semibold text-navy">
+                <Link to="/rfq" className="inline-flex items-center gap-1.5 rounded-full bg-accent-blue px-4 py-2 font-sub text-xs font-semibold text-navy">
                   Request Quote <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </div>
@@ -139,7 +139,7 @@ export default function BusinessVerticalPage() {
                   return (
                     <li key={categoryName} className="flex items-center justify-between border-b border-navy/5 pb-2 last:border-0 last:pb-0">
                       <span className="font-body text-sm text-navy/70">{categoryName}</span>
-                      <Link to={`/products/category/${catSlug}`} className="font-sub text-xs text-gold hover:underline">View Category →</Link>
+                      <Link to={`/products/category/${catSlug}`} className="font-sub text-xs text-accent-blue hover:underline">View Category →</Link>
                     </li>
                   );
                 })}
@@ -150,7 +150,7 @@ export default function BusinessVerticalPage() {
           <div className="mb-8 flex flex-col gap-4 rounded-lux bg-navy/5 p-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="relative flex-1 max-w-md">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-navy/40" />
-              <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search products..." className="w-full rounded-full bg-white px-10 py-2.5 font-sub text-sm text-navy outline-none ring-1 ring-navy/10 transition focus:ring-gold" />
+              <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search products..." className="w-full rounded-full bg-white px-10 py-2.5 font-sub text-sm text-navy outline-none ring-1 ring-navy/10 transition focus:ring-accent-blue" />
             </div>
             <div className="flex flex-wrap gap-2">
               <Link to="/catalogue" className="btn-ghost flex items-center gap-2 rounded-full px-4 py-2.5 font-sub text-sm text-navy"><Download className="h-4 w-4" /> Catalogue</Link>
@@ -159,12 +159,12 @@ export default function BusinessVerticalPage() {
           </div>
 
           {loading ? (
-            <div className="flex justify-center py-20"><div className="h-8 w-8 animate-spin rounded-full border-2 border-gold border-t-transparent" /></div>
+            <div className="flex justify-center py-20"><div className="h-8 w-8 animate-spin rounded-full border-2 border-accent-blue border-t-transparent" /></div>
           ) : filtered.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-20 text-center">
               <Boxes className="mb-4 h-12 w-12 text-navy/20" />
               <p className="font-sub text-sm text-navy/50">No matching products. This vertical aggregates products from: {categoryNames.join(', ')}. Try a different search or browse All Products.</p>
-              <Link to="/products" className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-gold px-5 py-2 font-sub text-xs text-navy">
+              <Link to="/products" className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-accent-blue px-5 py-2 font-sub text-xs text-navy">
                 Browse All Products <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </div>
@@ -180,7 +180,7 @@ export default function BusinessVerticalPage() {
           )}
 
           <div className="mt-14 text-center">
-            <Link to="/products" className="inline-flex items-center gap-2 font-sub text-sm text-gold">
+            <Link to="/products" className="inline-flex items-center gap-2 font-sub text-sm text-accent-blue">
               Browse all product categories <ArrowRight className="h-4 w-4" />
             </Link>
           </div>

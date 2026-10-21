@@ -226,7 +226,7 @@ export default function LiveChatWidget() {
             className="fixed bottom-20 right-4 z-[910] flex min-h-[64px] w-[min(92vw,360px)] items-center justify-between gap-3 rounded-3xl border border-white/10 bg-[#081526]/95 p-4 shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur-xl"
           >
             <div className="flex items-center gap-3">
-              <div className="grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br from-[#D4AF37] via-[#E8C766] to-[#B8932B] text-navy shadow-[0_10px_30px_rgba(212,175,55,0.35)]">
+              <div className="grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br from-[#163A63] via-[#163A63] to-[#0B1F3A] text-navy shadow-[0_10px_30px_rgba(22,58,99,0.35)]">
                 <MessageSquare className="h-5 w-5" />
               </div>
               <div>
@@ -255,10 +255,10 @@ export default function LiveChatWidget() {
             setOpen(true);
             setMinimized(false);
           }}
-          className="fixed bottom-20 right-6 z-[910] flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#D4AF37] to-[#E8C766] text-navy shadow-[0_18px_40px_rgba(212,175,55,0.35)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_22px_50px_rgba(212,175,55,0.45)]"
+          className="fixed bottom-20 right-6 z-[910] flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#163A63] to-[#163A63] text-navy shadow-[0_18px_40px_rgba(22,58,99,0.35)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_22px_50px_rgba(22,58,99,0.45)]"
           aria-label="Open live chat"
         >
-          <span className="absolute -inset-1 rounded-full bg-gradient-to-br from-[#D4AF37]/20 to-[#E8C766]/20" />
+          <span className="absolute -inset-1 rounded-full bg-gradient-to-br from-[#163A63]/20 to-[#163A63]/20" />
           <MessageSquare className="relative h-7 w-7" />
         </button>
       )}
@@ -311,7 +311,7 @@ export default function LiveChatWidget() {
                     className={`rounded-3xl px-4 py-3 text-sm shadow-[0_10px_30px_rgba(0,0,0,0.18)] ${
                       message.role === 'agent'
                         ? 'self-start bg-white/10 text-white'
-                        : 'self-end bg-gradient-to-br from-[#D4AF37]/15 to-[#E8C766]/15 text-white'
+                        : 'self-end bg-gradient-to-br from-[#163A63]/15 to-[#163A63]/15 text-white'
                     }`}
                   >
                     <p className="whitespace-pre-line">{message.text}</p>
@@ -320,7 +320,7 @@ export default function LiveChatWidget() {
                         href={message.fileUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="mt-2 inline-flex items-center gap-1 text-xs text-[#D4AF37]"
+                        className="mt-2 inline-flex items-center gap-1 text-xs text-[#163A63]"
                       >
                         📎 View Attachment
                       </a>
@@ -358,13 +358,13 @@ export default function LiveChatWidget() {
                         value={leadForm.name}
                         onChange={(e) => setLeadForm({ ...leadForm, name: e.target.value })}
                         placeholder="Name *"
-                        className="w-full rounded-xl bg-white/5 px-4 py-3 text-sm text-white placeholder-white/30 outline-none ring-1 ring-white/10 transition focus:ring-[#D4AF37]"
+                        className="w-full rounded-xl bg-white/5 px-4 py-3 text-sm text-white placeholder-white/30 outline-none ring-1 ring-white/10 transition focus:ring-[#163A63]"
                       />
                       <input
                         value={leadForm.companyName}
                         onChange={(e) => setLeadForm({ ...leadForm, companyName: e.target.value })}
                         placeholder="Company Name"
-                        className="w-full rounded-xl bg-white/5 px-4 py-3 text-sm text-white placeholder-white/30 outline-none ring-1 ring-white/10 transition focus:ring-[#D4AF37]"
+                        className="w-full rounded-xl bg-white/5 px-4 py-3 text-sm text-white placeholder-white/30 outline-none ring-1 ring-white/10 transition focus:ring-[#163A63]"
                       />
                       <input
                         required
@@ -372,25 +372,25 @@ export default function LiveChatWidget() {
                         value={leadForm.email}
                         onChange={(e) => setLeadForm({ ...leadForm, email: e.target.value })}
                         placeholder="Email *"
-                        className="w-full rounded-xl bg-white/5 px-4 py-3 text-sm text-white placeholder-white/30 outline-none ring-1 ring-white/10 transition focus:ring-[#D4AF37]"
+                        className="w-full rounded-xl bg-white/5 px-4 py-3 text-sm text-white placeholder-white/30 outline-none ring-1 ring-white/10 transition focus:ring-[#163A63]"
                       />
                       <input
                         value={leadForm.phone}
                         onChange={(e) => setLeadForm({ ...leadForm, phone: e.target.value })}
                         placeholder="Phone Number"
-                        className="w-full rounded-xl bg-white/5 px-4 py-3 text-sm text-white placeholder-white/30 outline-none ring-1 ring-white/10 transition focus:ring-[#D4AF37]"
+                        className="w-full rounded-xl bg-white/5 px-4 py-3 text-sm text-white placeholder-white/30 outline-none ring-1 ring-white/10 transition focus:ring-[#163A63]"
                       />
                       <input
                         value={leadForm.country}
                         onChange={(e) => setLeadForm({ ...leadForm, country: e.target.value })}
                         placeholder="Country"
-                        className="w-full rounded-xl bg-white/5 px-4 py-3 text-sm text-white placeholder-white/30 outline-none ring-1 ring-white/10 transition focus:ring-[#D4AF37]"
+                        className="w-full rounded-xl bg-white/5 px-4 py-3 text-sm text-white placeholder-white/30 outline-none ring-1 ring-white/10 transition focus:ring-[#163A63]"
                       />
                       {leadStatus === 'error' && <p role="alert" className="text-xs text-red-300">{leadError}</p>}
                       <button
                         type="submit"
                         disabled={leadStatus === 'loading'}
-                        className="flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-br from-[#D4AF37] to-[#E8C766] px-4 py-2 text-sm font-semibold text-navy transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
+                        className="flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-br from-[#163A63] to-[#163A63] px-4 py-2 text-sm font-semibold text-navy transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
                       >
                         {leadStatus === 'loading' ? <><Loader2 className="h-4 w-4 animate-spin" /> Sending...</> : 'Submit'}
                       </button>
@@ -399,8 +399,8 @@ export default function LiveChatWidget() {
                 )}
 
                 {leadSubmitted && (
-                  <div className="self-start rounded-3xl bg-green-500/10 px-4 py-3 text-sm text-white flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-400" />
+                  <div className="self-start rounded-3xl bg-secondary-navy/10 px-4 py-3 text-sm text-white flex items-center gap-2">
+                    <CheckCircle className="h-4 w-4 text-secondary-navy" />
                     {leadSuccessMessage}
                   </div>
                 )}
@@ -419,11 +419,11 @@ export default function LiveChatWidget() {
                   value={input}
                   onChange={(event) => setInput(event.target.value)}
                   placeholder="Type your message..."
-                  className="flex-1 rounded-3xl border border-white/10 bg-transparent px-4 py-3 text-sm text-white outline-none transition focus:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/20"
+                  className="flex-1 rounded-3xl border border-white/10 bg-transparent px-4 py-3 text-sm text-white outline-none transition focus:border-[#163A63] focus:ring-2 focus:ring-[#163A63]/20"
                 />
                 <button
                   type="submit"
-                  className="inline-flex h-12 w-12 items-center justify-center rounded-3xl bg-gradient-to-br from-[#D4AF37] to-[#E8C766] text-navy transition hover:brightness-110"
+                  className="inline-flex h-12 w-12 items-center justify-center rounded-3xl bg-gradient-to-br from-[#163A63] to-[#163A63] text-navy transition hover:brightness-110"
                   aria-label="Send message"
                 >
                   <Send className="h-5 w-5" />

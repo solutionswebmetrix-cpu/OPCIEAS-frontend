@@ -86,7 +86,7 @@ export default function AllProductsPage() {
   }, [apiProducts, categoryList]);
 
   if (loading) {
-    return <div className="flex min-h-screen items-center justify-center bg-white"><div className="h-8 w-8 animate-spin rounded-full border-2 border-gold border-t-transparent" /></div>;
+    return <div className="flex min-h-screen items-center justify-center bg-white"><div className="h-8 w-8 animate-spin rounded-full border-2 border-accent-blue border-t-transparent" /></div>;
   }
 
   return (
@@ -118,7 +118,7 @@ export default function AllProductsPage() {
                     <div className="p-5">
                       <h3 className="font-heading text-lg font-bold text-navy">{category.name}</h3>
                       <p className="mt-1 font-sub text-xs text-navy/70">{loadError ? 'Product count unavailable' : `${count} product${count !== 1 ? 's' : ''}`}</p>
-                      <span className="mt-3 inline-flex items-center gap-1 font-sub text-xs text-gold font-medium">View Products <ArrowRight className="h-3 w-3" /></span>
+                      <span className="mt-3 inline-flex items-center gap-1 font-sub text-xs text-accent-blue font-medium">View Products <ArrowRight className="h-3 w-3" /></span>
                     </div>
                   </Link>
                 </motion.div>
@@ -133,12 +133,12 @@ export default function AllProductsPage() {
           <div className="mb-8 flex flex-col gap-4 rounded-lux bg-white p-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="relative flex-1 max-w-md">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-navy/40" />
-              <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search all products..." className="w-full rounded-full bg-navy/5 px-10 py-2.5 font-sub text-sm text-navy outline-none ring-1 ring-navy/10 focus:ring-gold" />
+              <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search all products..." className="w-full rounded-full bg-navy/5 px-10 py-2.5 font-sub text-sm text-navy outline-none ring-1 ring-navy/10 focus:ring-accent-blue" />
             </div>
             <div className="flex flex-wrap gap-2">
               <button
                 onClick={() => setActiveCat('all')}
-                className={`inline-flex items-center gap-1.5 rounded-full px-4 py-2 font-sub text-xs transition ${activeCat === 'all' ? 'bg-gold text-navy' : 'bg-gray-100 text-navy hover:bg-gray-200'}`}
+                className={`inline-flex items-center gap-1.5 rounded-full px-4 py-2 font-sub text-xs transition ${activeCat === 'all' ? 'bg-accent-blue text-navy' : 'bg-gray-100 text-navy hover:bg-gray-200'}`}
               >
                 <Grid3X3 className="h-3.5 w-3.5" /> All Categories {loadError ? '(unavailable)' : `(${categoryCounts.all || 0})`}
               </button>
@@ -146,7 +146,7 @@ export default function AllProductsPage() {
                 <button
                   key={category.id}
                   onClick={() => setActiveCat(category.id)}
-                  className={`rounded-full px-4 py-2 font-sub text-xs transition ${activeCat === category.id ? 'bg-gold text-navy' : 'bg-gray-100 text-navy hover:bg-gray-200'}`}
+                  className={`rounded-full px-4 py-2 font-sub text-xs transition ${activeCat === category.id ? 'bg-accent-blue text-navy' : 'bg-gray-100 text-navy hover:bg-gray-200'}`}
                 >
                   {category.name} {loadError ? '(unavailable)' : `(${categoryCounts[category.id] || 0})`}
                 </button>

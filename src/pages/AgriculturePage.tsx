@@ -79,7 +79,7 @@ export default function AgriculturePage() {
             </div>
           </div>
           <div className="mt-16 flex flex-wrap gap-4">
-            <Link to="/company/contact" className="btn-gold flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm">
+            <Link to="/company/contact" className="btn-primary flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm">
               Contact Us <ArrowRight className="h-4 w-4" />
             </Link>
             <Link to="/rfq" className="btn-ghost flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm">

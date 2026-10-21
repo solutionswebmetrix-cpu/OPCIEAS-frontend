@@ -165,13 +165,13 @@ export default function PurchaseRequirementPage() {
             onChange={(e) => update(name, e.target.value)}
             placeholder={placeholder}
             rows={4}
-            className={`w-full pl-4 pr-4 py-3 rounded-xl border text-sm ${errors[name] ? 'border-red-400 focus:ring-red-400' : 'border-slate-300 focus:ring-emerald-500'} focus:outline-none focus:ring-2 bg-white transition resize-none`}
+            className={`w-full pl-4 pr-4 py-3 rounded-xl border text-sm ${errors[name] ? 'border-red-400 focus:ring-red-400' : 'border-slate-300 focus:ring-secondary-navy'} focus:outline-none focus:ring-2 bg-white transition resize-none`}
           />
         ) : options ? (
           <select
             value={(form as any)[name]}
             onChange={(e) => update(name, e.target.value)}
-            className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm ${errors[name] ? 'border-red-400 focus:ring-red-400' : 'border-slate-300 focus:ring-emerald-500'} focus:outline-none focus:ring-2 bg-white transition`}
+            className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm ${errors[name] ? 'border-red-400 focus:ring-red-400' : 'border-slate-300 focus:ring-secondary-navy'} focus:outline-none focus:ring-2 bg-white transition`}
           >
             {options.map((o: any) => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
@@ -183,7 +183,7 @@ export default function PurchaseRequirementPage() {
             value={(form as any)[name]}
             onChange={(e) => update(name, number ? (e.target.value === '' ? '' : Number(e.target.value)) as any : e.target.value)}
             placeholder={placeholder}
-            className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm ${errors[name] ? 'border-red-400 focus:ring-red-400' : 'border-slate-300 focus:ring-emerald-500'} focus:outline-none focus:ring-2 bg-white transition`}
+            className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm ${errors[name] ? 'border-red-400 focus:ring-red-400' : 'border-slate-300 focus:ring-secondary-navy'} focus:outline-none focus:ring-2 bg-white transition`}
           />
         )}
       </div>
@@ -208,23 +208,23 @@ export default function PurchaseRequirementPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-emerald-50 pt-24 pb-16">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-light-blue pt-24 pb-16">
       <PageMeta title="Post Purchase Requirement | OPCIEAS" description="Post your furniture purchase requirement on OPCIEAS. Connect with verified manufacturers for bulk orders, government tenders, and procurement projects." />
       <div className="max-w-6xl mx-auto px-4">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
           <div className="mb-8 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
             <div>
-              <Link to="/products" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-emerald-800 mb-3 transition">
+              <Link to="/products" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-navy mb-3 transition">
                 <ArrowLeft size={14} /> Back to Products
               </Link>
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-100 text-emerald-800 text-sm font-medium mb-3">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-light-blue text-navy text-sm font-medium mb-3">
                 <ShoppingCart size={14} /> Procurement & Tenders
               </div>
               <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-2 tracking-tight">Purchase Requirements</h1>
               <p className="text-slate-600 text-lg">Post your bulk furniture needs and receive quotes from verified manufacturers across India.</p>
             </div>
             {!auth.authenticated && (
-              <Link to="/buyer/login" state={{ from: '/requirements/post' }} className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-emerald-800 to-emerald-900 text-white font-semibold shadow-lg shadow-emerald-900/20 hover:shadow-emerald-900/30 hover:from-emerald-900 hover:to-black transition">
+              <Link to="/buyer/login" state={{ from: '/requirements/post' }} className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-navy to-navy text-white font-semibold shadow-lg shadow-navy/20 hover:shadow-navy/30 hover:from-navy hover:to-black transition">
                 <LogIn size={18} /> Sign In to Track Requirements
               </Link>
             )}
@@ -234,13 +234,13 @@ export default function PurchaseRequirementPage() {
             <div className="flex items-center gap-2 mb-6 p-1 bg-slate-100 rounded-2xl w-fit">
               <button
                 onClick={() => setTab('post')}
-                className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition ${tab === 'post' ? 'bg-white shadow text-emerald-800' : 'text-slate-600 hover:text-slate-900'}`}
+                className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition ${tab === 'post' ? 'bg-white shadow text-navy' : 'text-slate-600 hover:text-slate-900'}`}
               >
                 <Plus size={16} /> Post New Requirement
               </button>
               <button
                 onClick={() => setTab('my')}
-                className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition ${tab === 'my' ? 'bg-white shadow text-emerald-800' : 'text-slate-600 hover:text-slate-900'}`}
+                className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition ${tab === 'my' ? 'bg-white shadow text-navy' : 'text-slate-600 hover:text-slate-900'}`}
               >
                 <ClipboardList size={16} /> My Requirements ({myRequirements.length})
               </button>
@@ -252,15 +252,15 @@ export default function PurchaseRequirementPage() {
               <motion.div key="post" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="grid lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2">
                   <form onSubmit={onSubmit} className="bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-200 overflow-hidden">
-                    <div className="bg-gradient-to-r from-emerald-900 via-emerald-800 to-emerald-900 px-6 py-4">
+                    <div className="bg-gradient-to-r from-navy via-navy to-navy px-6 py-4">
                       <h2 className="text-xl font-bold text-white flex items-center gap-2"><FileCheck size={20} /> New Purchase Requirement</h2>
-                      <p className="text-emerald-200 text-sm mt-0.5">Fill all mandatory fields. More details = better quotes.</p>
+                      <p className="text-border-grey text-sm mt-0.5">Fill all mandatory fields. More details = better quotes.</p>
                     </div>
                     <div className="p-6 space-y-5">
                       <div>
-                        <h3 className="text-xs font-bold text-emerald-700 uppercase tracking-wider mb-3 pb-2 border-b border-slate-100 flex items-center justify-between">
+                        <h3 className="text-xs font-bold text-secondary-navy uppercase tracking-wider mb-3 pb-2 border-b border-slate-100 flex items-center justify-between">
                           <span>1 · What do you need?</span>
-                          <button type="button" onClick={() => setShowProductPicker((p) => !p)} className="text-emerald-700 font-semibold hover:text-emerald-900 inline-flex items-center gap-1 normal-case tracking-normal">
+                          <button type="button" onClick={() => setShowProductPicker((p) => !p)} className="text-secondary-navy font-semibold hover:text-navy inline-flex items-center gap-1 normal-case tracking-normal">
                             <Search size={14} /> Pick from catalog
                           </button>
                         </h3>
@@ -271,15 +271,15 @@ export default function PurchaseRequirementPage() {
                                 <div className="relative mb-3">
                                   <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                                   <input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Search products (e.g. office desk, school bench, locker, bed, rack)..."
-                                    className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-300 text-sm bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none" />
+                                    className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-300 text-sm bg-white focus:ring-2 focus:ring-secondary-navy focus:border-secondary-navy outline-none" />
                                 </div>
                                 {filteredProducts.length > 0 && (
                                   <div className="grid grid-cols-2 md:grid-cols-3 gap-2 max-h-64 overflow-y-auto">
                                     {filteredProducts.map((p) => (
                                       <button type="button" key={p.id}
                                         onClick={() => { update('product_name', p.name); update('title', `Need: ${p.name}`); setShowProductPicker(false); if (p.category_id) update('category_id', p.category_id); }}
-                                        className="text-left p-2.5 rounded-lg bg-white border border-slate-200 hover:border-emerald-400 hover:bg-emerald-50 transition group">
-                                        <p className="text-xs font-semibold text-slate-900 group-hover:text-emerald-900 line-clamp-2">{p.name}</p>
+                                        className="text-left p-2.5 rounded-lg bg-white border border-slate-200 hover:border-secondary-navy hover:bg-light-blue transition group">
+                                        <p className="text-xs font-semibold text-slate-900 group-hover:text-navy line-clamp-2">{p.name}</p>
                                       </button>
                                     ))}
                                   </div>
@@ -308,7 +308,7 @@ export default function PurchaseRequirementPage() {
                       </div>
 
                       <div>
-                        <h3 className="text-xs font-bold text-emerald-700 uppercase tracking-wider mb-3 pb-2 border-b border-slate-100">2 · Specifications & Description</h3>
+                        <h3 className="text-xs font-bold text-secondary-navy uppercase tracking-wider mb-3 pb-2 border-b border-slate-100">2 · Specifications & Description</h3>
                         <div className="space-y-4">
                           <Field label="Detailed Description" name="description" textarea placeholder="Describe in detail: intended use, finish preferences, durability requirements, dimensions, compliance / standards needed (e.g. BIS, ISO), tender reference, installation, delivery terms, etc. Be specific — this directly helps manufacturers quote accurately." required />
                           <div className="grid md:grid-cols-2 gap-4">
@@ -322,7 +322,7 @@ export default function PurchaseRequirementPage() {
                       </div>
 
                       <div>
-                        <h3 className="text-xs font-bold text-emerald-700 uppercase tracking-wider mb-3 pb-2 border-b border-slate-100">3 · Delivery Location</h3>
+                        <h3 className="text-xs font-bold text-secondary-navy uppercase tracking-wider mb-3 pb-2 border-b border-slate-100">3 · Delivery Location</h3>
                         <div className="grid md:grid-cols-2 gap-4">
                           <Field label="Country" icon={MapPin} name="country" />
                           <Field label="State / Region" icon={MapPin} name="state" placeholder="e.g. Maharashtra, Delhi NCR" />
@@ -335,7 +335,7 @@ export default function PurchaseRequirementPage() {
                       </div>
 
                       <div>
-                        <h3 className="text-xs font-bold text-emerald-700 uppercase tracking-wider mb-3 pb-2 border-b border-slate-100">4 · Contact Information</h3>
+                        <h3 className="text-xs font-bold text-secondary-navy uppercase tracking-wider mb-3 pb-2 border-b border-slate-100">4 · Contact Information</h3>
                         <div className="grid md:grid-cols-2 gap-4">
                           <Field label="Company / Organization" icon={Building} name="company_name" placeholder="Optional" />
                           <div />
@@ -345,7 +345,7 @@ export default function PurchaseRequirementPage() {
                           <div>
                             <label className="block text-xs font-bold text-slate-600 uppercase tracking-wide mb-1.5">Visibility</label>
                             <select value={form.visibility} onChange={(e) => update('visibility', e.target.value)}
-                              className="w-full pl-4 pr-4 py-3 rounded-xl border text-sm border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-white transition">
+                              className="w-full pl-4 pr-4 py-3 rounded-xl border text-sm border-slate-300 focus:ring-2 focus:ring-secondary-navy focus:outline-none bg-white transition">
                               <option value="public">🌐 Public — all sellers</option>
                               <option value="verified_sellers">✓ Verified sellers only</option>
                               <option value="invited_only">✉ Invited sellers</option>
@@ -356,8 +356,8 @@ export default function PurchaseRequirementPage() {
 
                       {result && (
                         <motion.div initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }}
-                          className={`rounded-xl p-4 flex items-start gap-3 border text-sm ${result.ok ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-red-50 border-red-200 text-red-900'}`}>
-                          {result.ok ? <CheckCircle2 size={18} className="text-emerald-600 mt-0.5 flex-shrink-0" /> : <AlertCircle size={18} className="text-red-600 mt-0.5 flex-shrink-0" />}
+                          className={`rounded-xl p-4 flex items-start gap-3 border text-sm ${result.ok ? 'bg-light-blue border-border-grey text-navy' : 'bg-red-50 border-red-200 text-red-900'}`}>
+                          {result.ok ? <CheckCircle2 size={18} className="text-secondary-navy mt-0.5 flex-shrink-0" /> : <AlertCircle size={18} className="text-red-600 mt-0.5 flex-shrink-0" />}
                           <div>
                             <p className="font-semibold">{result.ok ? 'Submitted' : 'Error'}</p>
                             <p className="opacity-90">{result.msg}</p>
@@ -370,7 +370,7 @@ export default function PurchaseRequirementPage() {
                           🔒 Your details are shared only with approved sellers. Admin moderates all requirements to prevent spam.
                         </p>
                         <button type="submit" disabled={loading}
-                          className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-gradient-to-r from-emerald-800 to-emerald-900 text-white font-semibold shadow-lg shadow-emerald-900/20 hover:shadow-emerald-900/30 hover:from-emerald-900 hover:to-black transition disabled:opacity-60">
+                          className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-gradient-to-r from-navy to-navy text-white font-semibold shadow-lg shadow-navy/20 hover:shadow-navy/30 hover:from-navy hover:to-black transition disabled:opacity-60">
                           {loading ? (<><div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Submitting...</>)
                             : (<>Submit Purchase Requirement <ChevronRight size={18} /></>)}
                         </button>
@@ -381,7 +381,7 @@ export default function PurchaseRequirementPage() {
 
                 <aside className="space-y-5">
                   <div className="bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-200 p-6">
-                    <h3 className="font-bold text-slate-900 mb-4 flex items-center gap-2"><CheckCircle2 size={18} className="text-emerald-600" /> Why Post Here?</h3>
+                    <h3 className="font-bold text-slate-900 mb-4 flex items-center gap-2"><CheckCircle2 size={18} className="text-secondary-navy" /> Why Post Here?</h3>
                     <ul className="space-y-3 text-sm text-slate-700">
                       {[
                         '📨 One post → Multiple verified manufacturer quotes',
@@ -391,22 +391,22 @@ export default function PurchaseRequirementPage() {
                         '💰 No commission on direct buyer-seller deals',
                         '📄 Tender-ready technical specs support',
                       ].map((t) => (
-                        <li key={t} className="flex gap-2"><span className="text-emerald-600 flex-shrink-0">✓</span>{t}</li>
+                        <li key={t} className="flex gap-2"><span className="text-secondary-navy flex-shrink-0">✓</span>{t}</li>
                       ))}
                     </ul>
                   </div>
-                  <div className="bg-gradient-to-br from-amber-50 to-emerald-50 rounded-2xl border border-amber-200 p-6">
-                    <h3 className="font-bold text-amber-900 mb-2 flex items-center gap-2"><FileCheck size={18} /> Tips for Fast Quotes</h3>
-                    <ol className="space-y-2 text-sm text-amber-900/90 list-decimal list-inside">
+                  <div className="bg-gradient-to-br from-light-blue to-light-blue rounded-2xl border border-border-grey p-6">
+                    <h3 className="font-bold text-navy mb-2 flex items-center gap-2"><FileCheck size={18} /> Tips for Fast Quotes</h3>
+                    <ol className="space-y-2 text-sm text-navy/90 list-decimal list-inside">
                       <li>Always add a realistic budget range</li>
                       <li>Specify exact dimensions & finishes</li>
                       <li>Mention tender / project reference if any</li>
                       <li>Upload sketches when possible (coming soon)</li>
                     </ol>
                   </div>
-                  <Link to="/contact" className="block p-5 rounded-2xl border border-slate-200 hover:border-emerald-400 hover:bg-emerald-50 bg-white transition group">
-                    <h4 className="font-bold text-slate-900 group-hover:text-emerald-900 mb-1 flex items-center gap-2">Need Help? <ChevronRight size={16} /></h4>
-                    <p className="text-sm text-slate-600 group-hover:text-emerald-900/80">Talk to our procurement team directly.</p>
+                  <Link to="/contact" className="block p-5 rounded-2xl border border-slate-200 hover:border-secondary-navy hover:bg-light-blue bg-white transition group">
+                    <h4 className="font-bold text-slate-900 group-hover:text-navy mb-1 flex items-center gap-2">Need Help? <ChevronRight size={16} /></h4>
+                    <p className="text-sm text-slate-600 group-hover:text-navy/80">Talk to our procurement team directly.</p>
                   </Link>
                 </aside>
               </motion.div>
@@ -421,7 +421,7 @@ export default function PurchaseRequirementPage() {
                     </div>
                     <h3 className="text-2xl font-bold text-slate-900 mb-2">No requirements posted yet</h3>
                     <p className="text-slate-600 mb-5 max-w-md mx-auto">Post your first purchase requirement to start receiving quotes from verified sellers.</p>
-                    <button onClick={() => setTab('post')} className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-800 to-emerald-900 text-white font-semibold shadow-lg shadow-emerald-900/20 hover:shadow-emerald-900/30 hover:from-emerald-900 hover:to-black transition">
+                    <button onClick={() => setTab('post')} className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-navy to-navy text-white font-semibold shadow-lg shadow-navy/20 hover:shadow-navy/30 hover:from-navy hover:to-black transition">
                       <Plus size={18} /> Post Your First Requirement
                     </button>
                   </div>
@@ -432,8 +432,8 @@ export default function PurchaseRequirementPage() {
                       <div className="flex-1">
                         <div className="flex flex-wrap items-center gap-2 mb-3">
                           <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${
-                            r.status === STATUS_APPROVED ? 'bg-emerald-100 text-emerald-800' :
-                            r.status === STATUS_PENDING ? 'bg-amber-100 text-amber-800' :
+                            r.status === STATUS_APPROVED ? 'bg-light-blue text-navy' :
+                            r.status === STATUS_PENDING ? 'bg-light-blue text-navy' :
                             r.status === STATUS_REJECTED || r.status === STATUS_FAKE ? 'bg-red-100 text-red-800' :
                             r.status === STATUS_DELETED || r.status === STATUS_CLOSED ? 'bg-slate-100 text-slate-700' :
                             'bg-slate-100 text-slate-700'
@@ -446,7 +446,7 @@ export default function PurchaseRequirementPage() {
                           <span className="text-xs text-slate-500">· {r.required_quantity} {r.unit}</span>
                         </div>
                         <h3 className="text-xl font-bold text-slate-900 mb-1">{r.title}</h3>
-                        {r.product_name && <p className="text-sm text-emerald-700 font-semibold mb-2">Product: {r.product_name}</p>}
+                        {r.product_name && <p className="text-sm text-secondary-navy font-semibold mb-2">Product: {r.product_name}</p>}
                         <p className="text-sm text-slate-600 line-clamp-2">{r.description}</p>
                         <div className="flex flex-wrap gap-2 mt-4 text-xs text-slate-500">
                           {r.budget_min || r.budget_max ? (
@@ -460,7 +460,7 @@ export default function PurchaseRequirementPage() {
                             </span>
                           ) : null}
                           {r.required_by_date ? (
-                            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-amber-50 text-amber-800 font-semibold">
+                            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-light-blue text-navy font-semibold">
                               Need by {new Date(String(r.required_by_date)).toLocaleDateString()}
                             </span>
                           ) : null}

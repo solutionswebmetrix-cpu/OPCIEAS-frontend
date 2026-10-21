@@ -40,7 +40,7 @@ export default function SectionBanner({ title, tagline, image, crumb, crumbTo, v
           {title}
         </motion.h1>
         {tagline && <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="mt-3 max-w-xl font-sub text-base text-white/90 sm:text-lg">{tagline}</motion.p>}
-        <div className="mt-6 h-[3px] w-24 bg-gradient-to-r from-gold to-gold-2 rounded-full" />
+        <div className="mt-6 h-[3px] w-24 bg-gradient-to-r from-accent-blue to-accent-blue-2 rounded-full" />
       </div>
     </section>
   );

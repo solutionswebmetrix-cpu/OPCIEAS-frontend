@@ -46,10 +46,10 @@ export default function RFQ() {
   return (
     <section id="rfq" className="relative overflow-hidden bg-light-grey py-32">
       <div className="absolute inset-0 grid-bg opacity-20" />
-      <div className="absolute left-1/2 top-0 h-96 w-96 -translate-x-1/2 rounded-full bg-gold/10 blur-[120px]" />
+      <div className="absolute left-1/2 top-0 h-96 w-96 -translate-x-1/2 rounded-full bg-accent-blue/10 blur-[120px]" />
       <div className="container-x relative px-6">
         <div className="mx-auto mb-12 max-w-2xl text-center">
-          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-sub text-sm uppercase tracking-[0.3em] text-gold">Request For Quotation</motion.p>
+          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-sub text-sm uppercase tracking-[0.3em] text-accent-blue">Request For Quotation</motion.p>
           <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl xl:text-5xl">
             Tell Us About Your Project
           </motion.h2>
@@ -75,7 +75,7 @@ export default function RFQ() {
             <Field label="GST Number" value={form.gst} onChange={(v) => set('gst', v)} />
             <div>
               <label className="mb-1.5 block font-sub text-xs text-navy/80">Category</label>
-              <select value={form.category} onChange={(e) => set('category', e.target.value)} className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 font-body text-sm text-navy outline-none focus:border-gold">
+              <select value={form.category} onChange={(e) => set('category', e.target.value)} className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 font-body text-sm text-navy outline-none focus:border-accent-blue">
                 <option value="">Select category</option>
                 {categories.map((c) => <option key={c} value={c}>{c}</option>)}
               </select>
@@ -86,7 +86,7 @@ export default function RFQ() {
             <Field label="Expected Delivery" value={form.expected_delivery} onChange={(v) => set('expected_delivery', v)} />
             <div>
               <label className="mb-1.5 block font-sub text-xs text-navy/80">Project Type</label>
-              <select value={form.project_type} onChange={(e) => set('project_type', e.target.value)} className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 font-body text-sm text-navy outline-none focus:border-gold">
+              <select value={form.project_type} onChange={(e) => set('project_type', e.target.value)} className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 font-body text-sm text-navy outline-none focus:border-accent-blue">
                 <option value="">Select</option>
                 <option value="New Campus Construction">New Campus Construction</option>
                 <option value="Hostel Renovation">Hostel Renovation</option>
@@ -97,7 +97,7 @@ export default function RFQ() {
             </div>
             <div>
               <label className="mb-1.5 block font-sub text-xs text-navy/80">Sample Requirement</label>
-              <select value={form.sample_requirement} onChange={(e) => set('sample_requirement', e.target.value)} className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 font-body text-sm text-navy outline-none focus:border-gold">
+              <select value={form.sample_requirement} onChange={(e) => set('sample_requirement', e.target.value)} className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 font-body text-sm text-navy outline-none focus:border-accent-blue">
                 <option value="">Select</option>
                 <option value="Need free sample">Need free sample</option>
                 <option value="Paid Production Sample">Paid Production Sample</option>
@@ -111,33 +111,33 @@ export default function RFQ() {
 
           <div className="mt-5">
             <label className="mb-1.5 block font-sub text-xs text-navy/80">Modification Requirements</label>
-            <textarea value={form.modification_requirements} onChange={(e) => set('modification_requirements', e.target.value)} rows={3} className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 font-body text-sm text-navy outline-none focus:border-gold" placeholder="Any special measurements, branding, custom cutouts, or manufacturing changes?" />
+            <textarea value={form.modification_requirements} onChange={(e) => set('modification_requirements', e.target.value)} rows={3} className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 font-body text-sm text-navy outline-none focus:border-accent-blue" placeholder="Any special measurements, branding, custom cutouts, or manufacturing changes?" />
           </div>
 
           <div className="mt-5">
             <label className="mb-1.5 block font-sub text-xs text-navy/80">Message / Requirements</label>
-            <textarea value={form.message} onChange={(e) => set('message', e.target.value)} rows={4} className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 font-body text-sm text-navy outline-none focus:border-gold" placeholder="Describe your project requirements..." />
+            <textarea value={form.message} onChange={(e) => set('message', e.target.value)} rows={4} className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 font-body text-sm text-navy outline-none focus:border-accent-blue" placeholder="Describe your project requirements..." />
           </div>
 
           {/* Upload placeholders */}
           <div className="mt-5 grid gap-4 sm:grid-cols-3">
             {['Tender PDF', 'Drawing / CAD', 'Reference Images'].map((u) => (
-              <div key={u} className="flex cursor-pointer items-center gap-3 rounded-xl border border-dashed border-gray-300 bg-light-grey p-4 transition hover:border-gold hover:bg-gold/5">
-                <Upload className="h-5 w-5 text-gold" />
+              <div key={u} className="flex cursor-pointer items-center gap-3 rounded-xl border border-dashed border-gray-300 bg-light-grey p-4 transition hover:border-accent-blue hover:bg-accent-blue/5">
+                <Upload className="h-5 w-5 text-accent-blue" />
                 <span className="font-sub text-xs text-navy/80">{u}</span>
               </div>
             ))}
           </div>
 
-          <button type="submit" disabled={status === 'loading'} className="btn-gold mt-6 flex w-full items-center justify-center gap-2 rounded-full px-6 py-4 font-sub text-sm disabled:opacity-60">
+          <button type="submit" disabled={status === 'loading'} className="btn-primary mt-6 flex w-full items-center justify-center gap-2 rounded-full px-6 py-4 font-sub text-sm disabled:opacity-60">
             {status === 'loading' ? <><Loader2 className="h-4 w-4 animate-spin" /> Submitting...</> : <><Send className="h-4 w-4" /> Submit Request</>}
           </button>
 
           <AnimatePresence>
             {status === 'success' && (
-              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="mt-5 flex items-center gap-3 rounded-xl border border-green-400/30 bg-green-500/10 p-4">
-                <CheckCircle2 className="h-5 w-5 text-green-400" />
-                <p className="font-sub text-sm text-green-300">{successMessage}</p>
+              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="mt-5 flex items-center gap-3 rounded-xl border border-secondary-navy/30 bg-secondary-navy/10 p-4">
+                <CheckCircle2 className="h-5 w-5 text-secondary-navy" />
+                <p className="font-sub text-sm text-secondary-navy">{successMessage}</p>
               </motion.div>
             )}
             {status === 'error' && (
@@ -157,7 +157,7 @@ function Field({ label, value, onChange, type = 'text', required }: { label: str
   return (
     <div>
       <label className="mb-1.5 block font-sub text-xs text-navy/80">{label}</label>
-      <input type={type} value={value} onChange={(e) => onChange(e.target.value)} required={required} className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 font-body text-sm text-navy outline-none transition focus:border-gold" />
+      <input type={type} value={value} onChange={(e) => onChange(e.target.value)} required={required} className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 font-body text-sm text-navy outline-none transition focus:border-accent-blue" />
     </div>
   );
 }

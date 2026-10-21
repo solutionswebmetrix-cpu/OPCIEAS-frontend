@@ -33,12 +33,12 @@ export default function IndustryPage() {
     })();
   }, [slug]);
 
-  if (loading) return <div className="flex min-h-screen items-center justify-center bg-white"><div className="h-8 w-8 animate-spin rounded-full border-2 border-gold border-t-transparent" /></div>;
+  if (loading) return <div className="flex min-h-screen items-center justify-center bg-white"><div className="h-8 w-8 animate-spin rounded-full border-2 border-accent-blue border-t-transparent" /></div>;
 
   if (!ind) {
     return <div className="flex min-h-screen flex-col items-center justify-center bg-white px-6 text-center">
       <p className="font-heading text-2xl font-bold text-navy">Industry not found</p>
-      <Link to="/" className="mt-4 rounded-full bg-gold px-6 py-2 font-sub text-sm text-navy">Back Home</Link>
+      <Link to="/" className="mt-4 rounded-full bg-accent-blue px-6 py-2 font-sub text-sm text-navy">Back Home</Link>
     </div>;
   }
 
@@ -71,7 +71,7 @@ export default function IndustryPage() {
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {solutions.map((s, i) => (
                 <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: (i % 4) * 0.08 }} className="rounded-lux bg-white p-6 luxury-shadow">
-                  <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-gold/10 text-gold"><Check className="h-5 w-5" /></div>
+                  <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-accent-blue/10 text-accent-blue"><Check className="h-5 w-5" /></div>
                   <h3 className="font-heading text-base font-bold text-navy">{s.title}</h3>
                   <p className="mt-2 font-body text-sm text-navy/60">{s.desc}</p>
                 </motion.div>
@@ -104,7 +104,7 @@ export default function IndustryPage() {
                   </div>
                   <div className="p-5">
                     <h3 className="font-heading text-lg font-bold text-navy">{p.title}</h3>
-                    {p.client && <p className="mt-1 font-sub text-sm text-gold">{p.client}</p>}
+                    {p.client && <p className="mt-1 font-sub text-sm text-accent-blue">{p.client}</p>}
                     <div className="mt-2 flex items-center gap-4 font-sub text-xs text-navy/50">
                       {p.location && <span className="flex items-center gap-1"><MapPin className="h-3 w-3" /> {p.location}</span>}
                       {p.year && <span className="flex items-center gap-1"><Calendar className="h-3 w-3" /> {p.year}</span>}
@@ -126,7 +126,7 @@ export default function IndustryPage() {
             <div className="flex flex-wrap gap-4">
               {ind.certifications.map((c, i) => (
                 <div key={i} className="flex items-center gap-2 rounded-full bg-navy/5 px-5 py-3 font-sub text-sm font-medium text-navy">
-                  <Check className="h-4 w-4 text-gold" /> {c}
+                  <Check className="h-4 w-4 text-accent-blue" /> {c}
                 </div>
               ))}
             </div>

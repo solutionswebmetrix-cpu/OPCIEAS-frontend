@@ -23,7 +23,7 @@ export default function ProtectingTheAffluent() {
             initial={{ opacity: 0 }} 
             whileInView={{ opacity: 1 }} 
             viewport={{ once: true }} 
-            className="font-sub text-sm uppercase tracking-[0.3em] text-gold"
+            className="font-sub text-sm uppercase tracking-[0.3em] text-accent-blue"
           >
             Our Commitment
           </motion.p>
@@ -49,7 +49,7 @@ export default function ProtectingTheAffluent() {
                 transition={{ delay: i * 0.05 }}
                 className="rounded-lux glass p-8"
               >
-                <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-gold/10 text-gold mb-6">
+                <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-accent-blue/10 text-accent-blue mb-6">
                   <Icon className="h-7 w-7" />
                 </div>
                 <h3 className="font-heading text-xl font-bold text-navy mb-3">{feature.title}</h3>

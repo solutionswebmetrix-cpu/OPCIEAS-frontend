@@ -54,7 +54,7 @@ function BusinessVerticalImage({ title, category }: { title: string; category: B
       {images.length > 1 && (
         <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-1.5" aria-hidden="true">
           {images.map((image, index) => (
-            <span key={image} className={`h-1.5 w-1.5 rounded-full ${index === activeIndex ? 'bg-gold' : 'bg-white/75'}`} />
+            <span key={image} className={`h-1.5 w-1.5 rounded-full ${index === activeIndex ? 'bg-accent-blue' : 'bg-white/75'}`} />
           ))}
         </div>
       )}
@@ -140,7 +140,7 @@ export default function HomePage() {
       <section id="what-we-manufacture" className="bg-white py-10 sm:py-12 lg:py-14">
         <div className="container-x px-6">
           <div className="mb-8 text-center">
-            <p className="font-sub text-xs uppercase tracking-[0.35em] text-gold">What We Manufacture</p>
+            <p className="font-sub text-xs uppercase tracking-[0.35em] text-accent-blue">What We Manufacture</p>
             <h2 className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl">Educational and institutional furniture Manufacture</h2>
           </div>
 
@@ -168,14 +168,14 @@ export default function HomePage() {
                             key={pill.label}
                             to={getCategorySubcategoryRoute(categorySlug, pill.subcategory)}
                             aria-label={`View ${pill.homepageLabel ?? pill.label} products`}
-                            className="rounded-full border border-navy/10 bg-white px-3 py-1.5 font-sub text-xs text-navy/70 transition-colors hover:border-gold/40 hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+                            className="rounded-full border border-navy/10 bg-white px-3 py-1.5 font-sub text-xs text-navy/70 transition-colors hover:border-accent-blue/40 hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue"
                           >
                             {pill.homepageLabel ?? pill.label}
                           </Link>
                         ))}
                       </div>
                     )}
-                    <Link to={item.link} className="mt-auto inline-flex items-center gap-2 pt-5 font-sub text-sm font-semibold text-gold">
+                    <Link to={item.link} className="mt-auto inline-flex items-center gap-2 pt-5 font-sub text-sm font-semibold text-accent-blue">
                       View Collection <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </Link>
                   </div>
@@ -205,7 +205,7 @@ export default function HomePage() {
       <section className="border-t border-navy/10 bg-light-grey py-10 sm:py-12 lg:py-14">
         <div className="container-x px-6">
           <div className="mb-7 text-center">
-            <p className="font-sub text-xs uppercase tracking-[0.35em] text-gold">Custom / Project Supply</p>
+            <p className="font-sub text-xs uppercase tracking-[0.35em] text-accent-blue">Custom / Project Supply</p>
             <h2 className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl">Customized Manufacturer</h2>
           </div>
 
@@ -218,14 +218,14 @@ export default function HomePage() {
               'OEM / Custom Production',
             ].map((item) => (
               <div key={item} className="rounded-lux border border-navy/10 bg-white p-5 text-center shadow-sm">
-                <p className="font-sub text-[10px] uppercase tracking-[0.28em] text-gold">Project</p>
+                <p className="font-sub text-[10px] uppercase tracking-[0.28em] text-accent-blue">Project</p>
                 <h3 className="mt-3 font-heading text-xl font-black text-navy">{item}</h3>
               </div>
             ))}
           </div>
 
           <div className="mt-8 flex justify-center">
-            <Link to="/rfq" className="btn-gold inline-flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm">
+            <Link to="/rfq" className="btn-primary inline-flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm">
               Request Custom Manufacturing <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
@@ -237,7 +237,7 @@ export default function HomePage() {
       <section className="bg-white py-10 sm:py-12 lg:py-14">
         <div className="container-x px-6">
           <div className="mb-7 text-center">
-            <p className="font-sub text-xs uppercase tracking-[0.35em] text-gold">Who We Serve</p>
+            <p className="font-sub text-xs uppercase tracking-[0.35em] text-accent-blue">Who We Serve</p>
             <h2 className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl">Educational , Institutional , Corporates , Government, Semi-Government, Hostels, Defence,</h2>
           </div>
 
@@ -255,10 +255,10 @@ export default function HomePage() {
 
       <Clients />
 
-      <section className="bg-[#F0F4F9] py-10 sm:py-12 lg:py-14">
+      <section className="bg-[#EAF1F8] py-10 sm:py-12 lg:py-14">
         <div className="container-x px-6">
           <div className="mx-auto max-w-4xl text-center">
-            <p className="font-sub text-xs uppercase tracking-[0.35em] text-gold">For International Buyers</p>
+            <p className="font-sub text-xs uppercase tracking-[0.35em] text-accent-blue">For International Buyers</p>
             <h2 className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl">Bulk Commercial Furniture Manufacturer  </h2>
             <p className="mt-4 font-body text-base leading-relaxed text-navy/70">
               OPCIEAS provides commercial furniture, school and hostel systems, and custom supply support for institutional and export-focused procurement projects.
@@ -275,7 +275,7 @@ export default function HomePage() {
               'Packing & Logistics',
             ].map((step, index) => (
               <div key={step} className="rounded-lux border border-navy/10 bg-white p-5 shadow-sm">
-                <p className="font-sub text-[10px] uppercase tracking-[0.28em] text-gold">0{index + 1}</p>
+                <p className="font-sub text-[10px] uppercase tracking-[0.28em] text-accent-blue">0{index + 1}</p>
                 <h3 className="mt-3 font-heading text-xl font-black text-navy">{step}</h3>
               </div>
             ))}
@@ -297,14 +297,14 @@ export default function HomePage() {
             viewport={{ once: true }}
             className="mx-auto max-w-3xl text-center"
           >
-            <p className="font-sub text-xs uppercase tracking-[0.35em] text-gold">Request Quote</p>
+            <p className="font-sub text-xs uppercase tracking-[0.35em] text-accent-blue">Request Quote</p>
             <h2 className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl">Request a bulk quote for your next institutional or export requirement.</h2>
             <p className="mt-4 font-body text-base leading-relaxed text-navy/75">
               Share your product requirement, quantity, project type, specification, location, sample need and message to receive a commercial response.
             </p>
 
             <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
-              <Link to="/rfq" className="btn-gold flex items-center gap-2 rounded-full px-8 py-3 font-sub text-sm">
+              <Link to="/rfq" className="btn-primary flex items-center gap-2 rounded-full px-8 py-3 font-sub text-sm">
                 Request Bulk Quote <ArrowRight className="h-4 w-4" />
               </Link>
               <Link to="/catalogue" className="btn-ghost flex items-center gap-2 rounded-full px-8 py-3 font-sub text-sm">

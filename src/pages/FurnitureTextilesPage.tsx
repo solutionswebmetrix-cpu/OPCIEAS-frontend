@@ -40,7 +40,7 @@ export default function FurnitureTextilesPage() {
         <div className="container-x px-6">
           <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
             <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-              <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Overview</p>
+              <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue">Overview</p>
               <h2 className="mt-3 font-heading text-3xl font-black text-navy sm:text-4xl">Institutional-grade furniture and textile solutions for high-use environments</h2>
               <p className="mt-6 font-body text-base leading-relaxed text-navy/70">
                 OPCIEAS Furniture & Textiles division combines manufacturing discipline with institutional understanding. We serve schools, campuses, hostels, offices, healthcare spaces and public projects with purpose-built, durable and compliant solutions.
@@ -48,7 +48,7 @@ export default function FurnitureTextilesPage() {
             </motion.div>
 
             <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="rounded-lux border border-navy/10 bg-navy/5 p-8 shadow-sm">
-              <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Highlights</p>
+              <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue">Highlights</p>
               <ul className="mt-6 space-y-3 text-sm text-navy/75">
                 <li>• Educational and institutional seating systems</li>
                 <li>• Heavy-duty storage and steel furniture</li>
@@ -69,7 +69,7 @@ export default function FurnitureTextilesPage() {
                 transition={{ delay: index * 0.04 }}
                 className="rounded-lux border border-navy/10 bg-white p-6 shadow-sm"
               >
-                <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-gold/10 text-gold">
+                <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-accent-blue/10 text-accent-blue">
                   <Icon className="h-5 w-5" />
                 </div>
                 <h3 className="mt-4 font-heading text-lg font-bold text-navy">{title}</h3>
@@ -79,7 +79,7 @@ export default function FurnitureTextilesPage() {
           </div>
 
           <div className="mt-16 flex flex-wrap gap-4">
-            <Link to="/products" className="btn-gold flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm">
+            <Link to="/products" className="btn-primary flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm">
               Explore Products <ArrowRight className="h-4 w-4" />
             </Link>
             <Link to="/rfq" className="btn-ghost flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm">

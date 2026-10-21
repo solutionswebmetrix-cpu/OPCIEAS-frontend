@@ -128,7 +128,7 @@ function DivisionSection({
             transition={{ duration: 0.7 }}
             className="max-w-3xl"
           >
-            <div className="inline-flex items-center gap-3 rounded-full border border-gold/30 bg-white px-4 py-2 shadow-sm">
+            <div className="inline-flex items-center gap-3 rounded-full border border-accent-blue/30 bg-white px-4 py-2 shadow-sm">
               <div className={`inline-flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br ${accent} text-white shadow-sm`}>
                 <Icon className="h-4 w-4" />
               </div>
@@ -138,7 +138,7 @@ function DivisionSection({
               {name}
             </h2>
             <p className="mt-4 font-sub text-lg text-body-text">{tagline}</p>
-            <div className="mt-6 h-[3px] w-24 bg-gradient-to-r from-gold to-gold-2 rounded-full" />
+            <div className="mt-6 h-[3px] w-24 bg-gradient-to-r from-accent-blue to-accent-blue-2 rounded-full" />
           </motion.div>
         </div>
       </div>
@@ -154,17 +154,17 @@ function DivisionSection({
             transition={{ duration: 0.7 }}
             className={`${narrationScopeClass || ''} flex h-full flex-col`}
           >
-            <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Narration</p>
+            <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue">Narration</p>
             <h3 className="furniture-section-heading mt-3 font-heading text-2xl font-black text-navy sm:text-3xl">
               About the Division
             </h3>
-            <div className="mt-5 h-[2px] w-16 bg-gradient-to-r from-gold to-gold-2" />
+            <div className="mt-5 h-[2px] w-16 bg-gradient-to-r from-accent-blue to-accent-blue-2" />
             <div className="furniture-section-copy mt-6 space-y-4 font-body text-[15px] leading-[1.8] text-body-text">
               {narration.split('\n\n').map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
             </div>
             <Link
               to={linkTo}
-              className="mt-6 inline-flex items-center gap-2 self-start rounded-full btn-gold px-6 py-3 font-sub text-sm"
+              className="mt-6 inline-flex items-center gap-2 self-start rounded-full btn-primary px-6 py-3 font-sub text-sm"
             >
               Learn More <ArrowRight className="h-4 w-4" />
             </Link>
@@ -177,7 +177,7 @@ function DivisionSection({
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.1 }}
           >
-            <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Core Focus Areas</p>
+            <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue">Core Focus Areas</p>
             <h3 className="mt-3 font-heading text-2xl font-black text-navy sm:text-3xl">
               Key Pillars
             </h3>
@@ -193,7 +193,7 @@ function DivisionSection({
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: 0.05 * i }}
-                      className={`rounded-lux border border-navy/10 bg-white p-6 shadow-sm transition-all duration-300 hover:border-gold/30 hover:shadow-md ${p.to ? 'h-full' : ''}`}
+                      className={`rounded-lux border border-navy/10 bg-white p-6 shadow-sm transition-all duration-300 hover:border-accent-blue/30 hover:shadow-md ${p.to ? 'h-full' : ''}`}
                     >
                       <div className={`inline-flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br ${accent} text-white shadow-sm`}>
                         <PI className="h-5 w-5" strokeWidth={1.75} />
@@ -201,7 +201,7 @@ function DivisionSection({
                       <h4 className="mt-4 font-heading text-base font-bold text-navy">{p.title}</h4>
                       <p className="mt-2 font-body text-sm leading-relaxed text-navy/70">{p.desc}</p>
                       {p.to && (
-                        <p className="mt-4 font-sub text-[11px] uppercase tracking-[0.2em] text-gold transition group-hover:translate-x-0.5">
+                        <p className="mt-4 font-sub text-[11px] uppercase tracking-[0.2em] text-accent-blue transition group-hover:translate-x-0.5">
                           View Details →
                         </p>
                       )}
@@ -250,7 +250,7 @@ export default function ThreeDivisions() {
         narration={`OPCIEAS Furniture & Textiles division is a premium manufacturing force built on institutional-grade quality, certified materials, and turnkey delivery. We are the trusted source for Institutional Furniture — desks, benches, storage, seating, and interiors built for schools, colleges, hospitals, offices, hostels, and public buildings that see heavy daily use. Our FRP Furniture range addresses outdoor, coastal, and high-moisture environments where steel and wood cannot deliver the same corrosion-free lifespan. Our Steel Furniture line — racks, lockers, cabinets, workbenches, storage systems — is fabricated from heavy-gauge steel, precision welded, and powder-coated to exacting standards. Our Textiles practice coordinates premium upholstery, furnishing fabrics, curtains, mattress systems, and soft furnishing accessories into cohesive interior packages. Our Bundled Furnishing Solutions simplify procurement for large projects: one partner, one specification, one delivery, one installation, one invoice, and one point of accountability. Above all, we are committed to Eliminating Substandard Products from the supply chain. No ungraded steel, no untested boards, no short-cuts on hardware or finish. Every piece leaving our facility is Export Ready — metric-sized, ISPM-15 packaged, documented for customs, and finished to international quality benchmarks.`}
         icon={Building2}
         image={IMG.products['Educational Furniture'].img}
-        accent="from-[#D4AF37] via-[#B8932B] to-[#8B6F1E]"
+        accent="from-[#163A63] via-[#0B1F3A] to-[#163A63]"
         linkTo="/furniture"
         pillars={FURNITURE_PILLARS}
         index={1}
@@ -266,7 +266,7 @@ export default function ThreeDivisions() {
         narration={SOCIAL_EXACT_NARRATION}
         icon={Heart}
         image={IMG.gallery[4]?.src || IMG.heroBg}
-        accent="from-[#34D399] via-[#059669] to-[#047857]"
+        accent="from-[#EAF1F8] via-[#163A63] to-[#0B1F3A]"
         linkTo="/social-service"
         pillars={SOCIAL_PILLARS}
         index={2}

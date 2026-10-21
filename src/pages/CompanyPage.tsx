@@ -171,7 +171,7 @@ export default function CompanyPage() {
         <section className="bg-navy/5 py-20">
           <div className="container-x px-6">
             <div className="mx-auto mb-12 max-w-3xl text-center">
-              <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-sub text-sm uppercase tracking-[0.3em] text-gold">Our Leadership</motion.p>
+              <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-sub text-sm uppercase tracking-[0.3em] text-accent-blue">Our Leadership</motion.p>
               <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl">Experienced Leadership and Operations Team</motion.h2>
               <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-4 font-body text-base text-navy/70">
                 Our team combines manufacturing expertise, project delivery excellence and business development capabilities to support enterprise and institutional furniture requirements.
@@ -202,7 +202,7 @@ export default function CompanyPage() {
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {certs.map((c, i) => (
                 <motion.div key={c.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: (i % 3) * 0.08 }} className="flex gap-4 rounded-lux bg-white p-6 luxury-shadow">
-                  <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-gold/10 text-gold"><Award className="h-6 w-6" /></div>
+                  <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-accent-blue/10 text-accent-blue"><Award className="h-6 w-6" /></div>
                   <div>
                     <h3 className="font-heading text-base font-bold text-navy">{c.name}</h3>
                     {c.issuer && <p className="font-sub text-xs text-navy/50">Issued by {c.issuer}</p>}
@@ -242,28 +242,28 @@ export default function CompanyPage() {
               <h2 className="font-heading text-2xl font-black text-navy sm:text-3xl">Get in Touch</h2>
               <p className="mt-4 font-body text-sm text-navy/60">Have a question or need a quote? Fill out the form and our team will respond within 24 hours.</p>
               <div className="mt-8 space-y-4">
-                <div className="flex items-center gap-3"><div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gold/10 text-gold"><MapPin className="h-5 w-5" /></div><div><p className="font-sub text-xs text-navy/50">Address</p><p className="font-sub text-sm text-navy">SY No. 76, SITE No. 136, HOMMA DEVANAHALLI, CK. PALAYA ROAD, Bengaluru - 560083, Karnataka, India</p></div></div>
-                <div className="flex items-center gap-3"><div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gold/10 text-gold"><Phone className="h-5 w-5" /></div><div><p className="font-sub text-xs text-navy/50">Contact Person</p><a href="tel:+919845579049" className="font-sub text-sm text-navy hover:text-gold">Ravi • +91 9845579049</a></div></div>
-                <div className="flex items-center gap-3"><div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gold/10 text-gold"><Mail className="h-5 w-5" /></div><div><p className="font-sub text-xs text-navy/50">Email</p><a href="mailto:opcieas.opcieas4@gmail.com" className="font-sub text-sm text-navy hover:text-gold">opcieas.opcieas4@gmail.com</a></div></div>
+                <div className="flex items-center gap-3"><div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent-blue/10 text-accent-blue"><MapPin className="h-5 w-5" /></div><div><p className="font-sub text-xs text-navy/50">Address</p><p className="font-sub text-sm text-navy">SY No. 76, SITE No. 136, HOMMA DEVANAHALLI, CK. PALAYA ROAD, Bengaluru - 560083, Karnataka, India</p></div></div>
+                <div className="flex items-center gap-3"><div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent-blue/10 text-accent-blue"><Phone className="h-5 w-5" /></div><div><p className="font-sub text-xs text-navy/50">Contact Person</p><a href="tel:+919845579049" className="font-sub text-sm text-navy hover:text-accent-blue">Ravi • +91 9845579049</a></div></div>
+                <div className="flex items-center gap-3"><div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent-blue/10 text-accent-blue"><Mail className="h-5 w-5" /></div><div><p className="font-sub text-xs text-navy/50">Email</p><a href="mailto:opcieas.opcieas4@gmail.com" className="font-sub text-sm text-navy hover:text-accent-blue">opcieas.opcieas4@gmail.com</a></div></div>
               </div>
             </div>
             <div className="rounded-lux bg-white p-8 border border-gray-200">
               {contactStatus === 'success' ? (
                 <div className="flex flex-col items-center justify-center py-12 text-center">
-                  <CheckCircle className="mb-3 h-12 w-12 text-green-600" />
+                  <CheckCircle className="mb-3 h-12 w-12 text-secondary-navy" />
                   <h3 className="font-heading text-lg font-bold text-navy">Message Received</h3>
-                  <p className={`mt-2 font-sub text-sm ${contactMessage.includes('could not be delivered') ? 'text-amber-800' : 'text-navy/60'}`}>{contactMessage}</p>
+                  <p className={`mt-2 font-sub text-sm ${contactMessage.includes('could not be delivered') ? 'text-navy' : 'text-navy/60'}`}>{contactMessage}</p>
                   <button onClick={() => setContactStatus('idle')} className="mt-4 rounded-full bg-navy/10 px-5 py-2 font-sub text-xs text-navy hover:bg-navy/20">Send Another</button>
                 </div>
               ) : (
                 <form onSubmit={submitContactForm} className="space-y-3">
                   <h3 className="font-heading text-xl font-bold text-navy">Send a Message</h3>
-                  <input required value={contactForm.name} onChange={(e) => set('name', e.target.value)} placeholder="Name *" className="w-full rounded-xl bg-navy/5 px-4 py-2.5 font-sub text-sm text-navy placeholder-navy/30 outline-none ring-1 ring-navy/10 focus:ring-gold" />
-                  <input required type="email" value={contactForm.email} onChange={(e) => set('email', e.target.value)} placeholder="Email *" className="w-full rounded-xl bg-navy/5 px-4 py-2.5 font-sub text-sm text-navy placeholder-navy/30 outline-none ring-1 ring-navy/10 focus:ring-gold" />
-                  <input value={contactForm.phone} onChange={(e) => set('phone', e.target.value)} placeholder="Phone" className="w-full rounded-xl bg-navy/5 px-4 py-2.5 font-sub text-sm text-navy placeholder-navy/30 outline-none ring-1 ring-navy/10 focus:ring-gold" />
-                  <input value={contactForm.subject} onChange={(e) => set('subject', e.target.value)} placeholder="Subject" className="w-full rounded-xl bg-navy/5 px-4 py-2.5 font-sub text-sm text-navy placeholder-navy/30 outline-none ring-1 ring-navy/10 focus:ring-gold" />
-                  <textarea required value={contactForm.message} onChange={(e) => set('message', e.target.value)} placeholder="Message *" rows={4} className="w-full rounded-xl bg-navy/5 px-4 py-2.5 font-sub text-sm text-navy placeholder-navy/30 outline-none ring-1 ring-navy/10 focus:ring-gold" />
-                  <button type="submit" disabled={contactStatus === 'loading'} className="btn-gold flex w-full items-center justify-center gap-2 rounded-full px-6 py-3 font-sub text-sm disabled:cursor-not-allowed disabled:opacity-70">
+                  <input required value={contactForm.name} onChange={(e) => set('name', e.target.value)} placeholder="Name *" className="w-full rounded-xl bg-navy/5 px-4 py-2.5 font-sub text-sm text-navy placeholder-navy/30 outline-none ring-1 ring-navy/10 focus:ring-accent-blue" />
+                  <input required type="email" value={contactForm.email} onChange={(e) => set('email', e.target.value)} placeholder="Email *" className="w-full rounded-xl bg-navy/5 px-4 py-2.5 font-sub text-sm text-navy placeholder-navy/30 outline-none ring-1 ring-navy/10 focus:ring-accent-blue" />
+                  <input value={contactForm.phone} onChange={(e) => set('phone', e.target.value)} placeholder="Phone" className="w-full rounded-xl bg-navy/5 px-4 py-2.5 font-sub text-sm text-navy placeholder-navy/30 outline-none ring-1 ring-navy/10 focus:ring-accent-blue" />
+                  <input value={contactForm.subject} onChange={(e) => set('subject', e.target.value)} placeholder="Subject" className="w-full rounded-xl bg-navy/5 px-4 py-2.5 font-sub text-sm text-navy placeholder-navy/30 outline-none ring-1 ring-navy/10 focus:ring-accent-blue" />
+                  <textarea required value={contactForm.message} onChange={(e) => set('message', e.target.value)} placeholder="Message *" rows={4} className="w-full rounded-xl bg-navy/5 px-4 py-2.5 font-sub text-sm text-navy placeholder-navy/30 outline-none ring-1 ring-navy/10 focus:ring-accent-blue" />
+                  <button type="submit" disabled={contactStatus === 'loading'} className="btn-primary flex w-full items-center justify-center gap-2 rounded-full px-6 py-3 font-sub text-sm disabled:cursor-not-allowed disabled:opacity-70">
                     {contactStatus === 'loading' ? <><Loader2 className="h-4 w-4 animate-spin" /> Sending...</> : <><Send className="h-4 w-4" /> Send Message</>}
                   </button>
                   {contactStatus === 'error' && <p className="text-center font-sub text-xs text-red-600">Something went wrong. Please try again.</p>}

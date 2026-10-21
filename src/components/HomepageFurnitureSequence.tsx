@@ -76,14 +76,14 @@ export default function HomepageFurnitureSequence() {
       <div className="container-x w-full px-6">
         <div className="grid min-w-0 gap-6 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:items-center lg:gap-8">
           <div className="min-w-0 max-w-xl">
-            <p className="mt-8 font-sub text-xs uppercase tracking-[0.3em] text-gold">Educational Journey</p>
+            <p className="mt-8 font-sub text-xs uppercase tracking-[0.3em] text-accent-blue">Educational Journey</p>
             <h2 className="mt-3 font-heading text-3xl font-black text-navy sm:text-4xl">Furniture That Builds Better Learning Spaces</h2>
             <p className="mt-4 font-body text-base leading-7 text-navy/70">Premium Educational &amp; Institutional Furniture Manufacturing Since 1999</p>
-            <div className="mt-6 border-l-4 border-gold bg-white px-5 py-4 font-heading text-xl font-black leading-relaxed text-navy sm:text-2xl">
+            <div className="mt-6 border-l-4 border-accent-blue bg-white px-5 py-4 font-heading text-xl font-black leading-relaxed text-navy sm:text-2xl">
               {activeScene.heading}
             </div>
             <div className="mt-7 flex flex-wrap items-center gap-4">
-              <Link to={activeScene.route} className="btn-gold inline-flex items-center gap-2 rounded-full px-5 py-3 font-sub text-sm">Explore Products <ArrowRight className="h-4 w-4" /></Link>
+              <Link to={activeScene.route} className="btn-primary inline-flex items-center gap-2 rounded-full px-5 py-3 font-sub text-sm">Explore Products <ArrowRight className="h-4 w-4" /></Link>
               <span className="font-sub text-xs text-navy/60">Educational • Institutional • Export Ready</span>
             </div>
           </div>
@@ -100,7 +100,7 @@ export default function HomepageFurnitureSequence() {
               >
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <p className="font-sub text-xs uppercase tracking-[0.25em] text-gold">Scene {sceneIndex + 1}</p>
+                    <p className="font-sub text-xs uppercase tracking-[0.25em] text-accent-blue">Scene {sceneIndex + 1}</p>
                     <h3 className="mt-2 font-heading text-2xl font-black text-navy sm:text-3xl">{activeScene.label}</h3>
                     <p className="mt-2 max-w-md font-body text-sm leading-6 text-navy/65">{activeScene.subtitle}</p>
                   </div>
@@ -132,7 +132,7 @@ export default function HomepageFurnitureSequence() {
                   onClick={() => setSceneIndex(index)}
                   className="flex h-6 w-6 items-center justify-center rounded-full"
                 >
-                  <span className={`h-2.5 w-2.5 rounded-full transition-all ${index === sceneIndex ? 'bg-gold ring-4 ring-gold/15' : 'bg-navy/20 hover:bg-navy/40'}`} />
+                  <span className={`h-2.5 w-2.5 rounded-full transition-all ${index === sceneIndex ? 'bg-accent-blue ring-4 ring-accent-blue/15' : 'bg-navy/20 hover:bg-navy/40'}`} />
                 </button>
               ))}
             </div>

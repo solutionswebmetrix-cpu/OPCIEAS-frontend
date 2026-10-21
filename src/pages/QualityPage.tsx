@@ -26,14 +26,14 @@ export default function QualityPage() {
 
       {/* Seven-Stage Quality Process */}
       <section className="relative overflow-hidden bg-white py-20 sm:py-32">
-        <div className="pointer-events-none absolute left-1/3 top-1/2 h-96 w-96 rounded-full bg-gold/10 blur-3xl animate-float" />
+        <div className="pointer-events-none absolute left-1/3 top-1/2 h-96 w-96 rounded-full bg-accent-blue/10 blur-3xl animate-float" />
         <div className="container-x relative z-10 px-6">
           <div className="mx-auto max-w-3xl text-center">
             <motion.p
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="font-sub text-xs uppercase tracking-[0.3em] text-gold"
+              className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue"
             >
               Our Standards
             </motion.p>
@@ -91,11 +91,11 @@ export default function QualityPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
-                className="group relative overflow-hidden rounded-lux border border-gold/20 bg-navy/5 p-6 transition-all duration-500 hover:bg-gold/10"
+                className="group relative overflow-hidden rounded-lux border border-accent-blue/20 bg-navy/5 p-6 transition-all duration-500 hover:bg-accent-blue/10"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-gold/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                <div className="absolute inset-0 bg-gradient-to-br from-accent-blue/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                 <div className="relative z-10">
-                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gold/20 text-gold text-lg font-bold">
+                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-accent-blue/20 text-accent-blue text-lg font-bold">
                     {item.stage}
                   </div>
                   <h3 className="mt-4 font-heading text-base font-bold text-navy">{item.title}</h3>

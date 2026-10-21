@@ -81,7 +81,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
         className="fixed inset-0 z-[99999] flex items-center justify-center bg-[#050505] text-white"
       >
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(212,175,55,0.08),_transparent_40%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(22,58,99,0.08),_transparent_40%)]" />
           <div className="splash-particle left-[12%] top-[18%] h-2 w-2" />
           <div className="splash-particle left-[25%] top-[72%] h-1.5 w-1.5" />
           <div className="splash-particle left-[42%] top-[35%] h-1.5 w-1.5" />
@@ -89,14 +89,14 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
           <div className="splash-particle left-[78%] top-[60%] h-1 w-1" />
           <div className="splash-particle left-[88%] top-[42%] h-2.5 w-2.5" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.08),_transparent_35%)] opacity-25" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,_rgba(212,175,55,0.12),_transparent_22%)] opacity-60 blur-2xl" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,_rgba(22,58,99,0.12),_transparent_22%)] opacity-60 blur-2xl" />
         </div>
 
         <div className="relative mx-auto flex min-h-[80vh] w-full max-w-4xl flex-col items-center justify-center px-6 text-center">
           <button
             type="button"
             onClick={handleSkip}
-            className="glass absolute right-6 top-6 z-10 rounded-full border border-white/15 px-4 py-2 text-xs uppercase tracking-[0.35em] text-white/80 transition hover:border-gold hover:text-gold"
+            className="glass absolute right-6 top-6 z-10 rounded-full border border-white/15 px-4 py-2 text-xs uppercase tracking-[0.35em] text-white/80 transition hover:border-accent-blue hover:text-accent-blue"
           >
             Skip Intro
           </button>
@@ -107,14 +107,14 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
             transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
             className="relative flex items-center justify-center"
           >
-            <div className="absolute inset-0 rounded-[36px] bg-gradient-to-r from-[#F2D37B]/20 via-[#D4AF37]/10 to-transparent blur-3xl opacity-80" />
+            <div className="absolute inset-0 rounded-[36px] bg-gradient-to-r from-[#163A63]/20 via-[#163A63]/10 to-transparent blur-3xl opacity-80" />
             <div className="relative flex h-36 w-36 items-center justify-center sm:h-40 sm:w-40">
               <CompanyLogo alt="OPCIEAS logo" className="h-full w-full object-contain" />
             </div>
             <motion.div
               animate={{ opacity: logoVisible ? 1 : 0, scale: logoVisible ? 1 : 0.75 }}
               transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute inset-0 m-auto h-44 w-44 rounded-full bg-gold/10 blur-3xl"
+              className="absolute inset-0 m-auto h-44 w-44 rounded-full bg-accent-blue/10 blur-3xl"
             />
           </motion.div>
 
@@ -151,7 +151,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
               initial={{ x: '-110%' }}
               animate={{ x: showSweep ? '110%' : '-110%' }}
               transition={{ duration: 1.8, ease: 'easeInOut' }}
-              className="splash-sweep absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-transparent via-[#F6E4A3]/90 to-transparent"
+              className="splash-sweep absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-transparent via-[#EAF1F8]/90 to-transparent"
             />
           </div>
         </div>

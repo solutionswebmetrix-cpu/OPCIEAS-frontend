@@ -30,7 +30,7 @@ export default function ManufacturingPage() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="font-sub text-xs uppercase tracking-[0.3em] text-gold"
+              className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue"
             >
               Our Process
             </motion.p>
@@ -73,9 +73,9 @@ export default function ManufacturingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="rounded-lux border border-navy/10 bg-gradient-to-br from-navy/5 to-gold/5 p-8 luxury-shadow"
+                className="rounded-lux border border-navy/10 bg-gradient-to-br from-navy/5 to-accent-blue/5 p-8 luxury-shadow"
               >
-                <div className="text-5xl font-black text-gold/30">{item.step}</div>
+                <div className="text-5xl font-black text-accent-blue/30">{item.step}</div>
                 <h3 className="mt-4 font-heading text-lg font-bold text-navy">{item.title}</h3>
                 <p className="mt-2 font-body text-sm text-navy/70">{item.description}</p>
               </motion.div>
@@ -86,14 +86,14 @@ export default function ManufacturingPage() {
 
       {/* Capacity & Infrastructure */}
       <section className="relative overflow-hidden bg-white py-20 sm:py-32">
-        <div className="pointer-events-none absolute right-1/4 top-1/2 h-80 w-80 rounded-full bg-gold/10 blur-3xl animate-float" />
+        <div className="pointer-events-none absolute right-1/4 top-1/2 h-80 w-80 rounded-full bg-accent-blue/10 blur-3xl animate-float" />
         <div className="container-x relative z-10 px-6">
           <div className="mx-auto max-w-3xl text-center">
             <motion.p
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="font-sub text-xs uppercase tracking-[0.3em] text-gold"
+              className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue"
             >
               Infrastructure
             </motion.p>
@@ -122,9 +122,9 @@ export default function ManufacturingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
-                className="rounded-lux border border-gold/20 bg-navy/5 p-8"
+                className="rounded-lux border border-accent-blue/20 bg-navy/5 p-8"
               >
-                <p className="font-sub text-xs uppercase tracking-[0.2em] text-gold">{item.label}</p>
+                <p className="font-sub text-xs uppercase tracking-[0.2em] text-accent-blue">{item.label}</p>
                 <p className="mt-3 font-heading text-2xl font-black text-navy">{item.value}</p>
               </motion.div>
             ))}

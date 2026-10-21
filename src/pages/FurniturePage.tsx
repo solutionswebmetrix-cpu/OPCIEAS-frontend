@@ -116,12 +116,12 @@ export default function FurniturePage() {
       <main className="bg-white">
         <section className="container-x px-6 py-16 sm:py-20">
           <div className="mx-auto max-w-4xl text-center">
-            <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Commercial Furniture</p>
+            <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue">Commercial Furniture</p>
             <h1 className="mt-3 font-heading text-3xl font-black text-navy sm:text-5xl">Commercial & Institutional Furniture Built for Scale</h1>
             <p className="mt-6 font-body text-base leading-8 text-navy/75">
               At OPCIEAS, based in Bengaluru, we specialize in high-volume, precision-engineered furniture for institutions, commercial projects, and large-scale contractors. We have streamlined our production to focus exclusively on standardized, high-demand furniture solutions -combining high-grade steel framing with advanced fiberglass to deliver unmatched durability, zero-maintenance longevity, and modern aesthetics.
             </p>
-            <p className="mt-6 border-l-4 border-gold bg-gold/5 px-5 py-4 text-left font-heading text-xl font-bold leading-relaxed text-navy sm:text-2xl">
+            <p className="mt-6 border-l-4 border-accent-blue bg-accent-blue/5 px-5 py-4 text-left font-heading text-xl font-bold leading-relaxed text-navy sm:text-2xl">
               OPCIEAS Fiberglass Furniture - durable, eco-friendly, and built to last for India’s institutions.
             </p>
           </div>
@@ -132,7 +132,7 @@ export default function FurniturePage() {
         <section className="bg-light-grey px-6 py-16 sm:py-20">
           <div className="container-x">
             <div className="mx-auto max-w-3xl text-center">
-              <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Why Choose OPCIEAS?</p>
+              <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue">Why Choose OPCIEAS?</p>
               <h2 className="mt-3 font-heading text-3xl font-black text-navy sm:text-4xl">Why Choose OPCIEAS?</h2>
             </div>
             <div className="mt-12">
@@ -140,8 +140,8 @@ export default function FurniturePage() {
               <p className="mt-3 max-w-3xl font-body text-base leading-7 text-navy/70">Why Bulk Commercial Supply? By focusing our production on high-volume commercial needs rather than one-off custom pieces, we deliver clear advantages for large projects:</p>
               <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 {bulkSupplyBenefits.map(([title, description]) => (
-                  <article key={title} className="border-t-2 border-gold bg-white p-6">
-                    <CheckCircle2 className="h-5 w-5 text-gold" />
+                  <article key={title} className="border-t-2 border-accent-blue bg-white p-6">
+                    <CheckCircle2 className="h-5 w-5 text-accent-blue" />
                     <h4 className="mt-4 font-heading text-lg font-bold text-navy">{title}</h4>
                     <p className="mt-2 font-body text-sm leading-6 text-navy/70">{description}</p>
                   </article>
@@ -165,7 +165,7 @@ export default function FurniturePage() {
 
         <section id="selected-bulk-product-range" className="container-x px-6 py-16 sm:py-20">
           <div className="max-w-3xl">
-            <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Selected Bulk Product Range</p>
+            <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue">Selected Bulk Product Range</p>
             <h2 className="mt-3 font-heading text-3xl font-black text-navy sm:text-4xl">Selected Bulk Product Range</h2>
           </div>
           <div className="mt-12 space-y-16">
@@ -190,9 +190,9 @@ export default function FurniturePage() {
         <section id="manufacturing-excellence" className="bg-navy px-6 py-16 text-white sm:py-20">
           <div className="container-x">
             <div className="max-w-4xl">
-              <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Manufacturing Excellence & Quality Commitment</p>
+              <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue">Manufacturing Excellence & Quality Commitment</p>
               <h2 className="mt-3 font-heading text-3xl font-black sm:text-4xl">Manufacturing Excellence & Quality Commitment</h2>
-              <h3 className="mt-10 font-heading text-2xl font-bold text-gold">Strict Quality Policy</h3>
+              <h3 className="mt-10 font-heading text-2xl font-bold text-accent-blue">Strict Quality Policy</h3>
               <p className="mt-4 font-body text-base leading-8 text-white/80">Quality and durability drive everything we do. Our steel is directly sourced through long-term partnerships with India's leading steel producers, while our fiberglass formulations meet international structural standards. Every raw material batch undergoes strict pre-production screening, followed by continuous monitoring through fabrication to ensure flawless performance.</p>
             </div>
             <div className="mt-14 border-t border-white/15 pt-12">
@@ -201,7 +201,7 @@ export default function FurniturePage() {
               <div className="mt-8 grid gap-5 md:grid-cols-3">
                 {infrastructure.map(([title, description, Icon]) => (
                   <article key={title} className="border border-white/15 p-6">
-                    <Icon className="h-6 w-6 text-gold" />
+                    <Icon className="h-6 w-6 text-accent-blue" />
                     <h4 className="mt-5 font-heading text-lg font-bold">{title}</h4>
                     <p className="mt-2 font-body text-sm leading-6 text-white/70">{description}</p>
                   </article>
@@ -212,12 +212,12 @@ export default function FurniturePage() {
         </section>
 
         <section id="bulk-order-cta" className="container-x px-6 py-16 sm:py-20">
-          <div className="border-t-4 border-gold bg-light-grey p-8 sm:p-12">
-            <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Partner with OPCIEAS</p>
+          <div className="border-t-4 border-accent-blue bg-light-grey p-8 sm:p-12">
+            <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue">Partner with OPCIEAS</p>
             <h2 className="mt-3 font-heading text-3xl font-black text-navy sm:text-4xl">Partner with OPCIEAS for Your Next Bulk Order</h2>
             <p className="mt-5 max-w-3xl font-body text-base leading-8 text-navy/75">Equip your institution with furniture designed to eliminate recurring replacement costs. Contact our team today for bulk inquiries, technical specifications, or quotation details.</p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link to="/rfq" className="btn-gold inline-flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm"><FileText className="h-4 w-4" /> REQUEST BULK INQUIRY</Link>
+              <Link to="/rfq" className="btn-primary inline-flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm"><FileText className="h-4 w-4" /> REQUEST BULK INQUIRY</Link>
               <Link to="/contact" className="btn-ghost inline-flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm text-navy"><ArrowRight className="h-4 w-4" /> REQUEST QUOTATION</Link>
               <a href="mailto:info@opcieas.com" className="inline-flex items-center gap-2 rounded-full border border-navy/20 px-6 py-3 font-sub text-sm text-navy"><Mail className="h-4 w-4" /> info@opcieas.com</a>
             </div>

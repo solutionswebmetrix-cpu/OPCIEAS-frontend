@@ -115,7 +115,7 @@ export default function BuyerPage() {
       {/* Why OPCIEAS for Buyers */}
       <section className="relative overflow-hidden bg-white py-20 sm:py-32">
         <div className="pointer-events-none absolute inset-0">
-          <div className="absolute -left-40 top-1/3 h-96 w-96 rounded-full bg-gold/10 blur-[100px] animate-float" />
+          <div className="absolute -left-40 top-1/3 h-96 w-96 rounded-full bg-accent-blue/10 blur-[100px] animate-float" />
           <div className="absolute -right-40 bottom-1/3 h-80 w-80 rounded-full bg-navy-3/10 blur-[120px] animate-float-slow" />
         </div>
 
@@ -125,7 +125,7 @@ export default function BuyerPage() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="font-sub text-xs uppercase tracking-[0.3em] text-gold"
+              className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue"
             >
               Buyer Benefits
             </motion.p>
@@ -158,11 +158,11 @@ export default function BuyerPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
-                  className="group relative overflow-hidden rounded-lux border border-border-grey bg-gradient-to-br from-white to-blue-50/30 p-8 transition-all duration-300 hover:border-gold hover:shadow-lg"
+                  className="group relative overflow-hidden rounded-lux border border-border-grey bg-gradient-to-br from-white to-blue-50/30 p-8 transition-all duration-300 hover:border-accent-blue hover:shadow-lg"
                 >
-                  <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-gold/5 transition-all group-hover:bg-gold/10" />
+                  <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-accent-blue/5 transition-all group-hover:bg-accent-blue/10" />
                   <div className="relative z-10">
-                    <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-gold/15 text-gold transition-all group-hover:bg-gold/25">
+                    <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-accent-blue/15 text-accent-blue transition-all group-hover:bg-accent-blue/25">
                       <Icon className="h-6 w-6" />
                     </div>
                     <h3 className="font-heading text-lg font-bold text-navy">{feature.title}</h3>
@@ -188,7 +188,7 @@ export default function BuyerPage() {
                 transition={{ delay: i * 0.1 }}
                 className="relative rounded-lux border border-border-grey bg-white p-8 text-center hover:shadow-lg transition-all"
               >
-                <div className="text-4xl font-heading font-black text-gold mb-2">{adv.num}</div>
+                <div className="text-4xl font-heading font-black text-accent-blue mb-2">{adv.num}</div>
                 <p className="font-heading text-lg font-bold text-navy">{adv.label}</p>
                 <p className="mt-3 font-body text-sm text-navy/70">{adv.desc}</p>
               </motion.div>
@@ -205,7 +205,7 @@ export default function BuyerPage() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="font-sub text-xs uppercase tracking-[0.3em] text-gold"
+              className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue"
             >
               What You Can Buy
             </motion.p>
@@ -236,7 +236,7 @@ export default function BuyerPage() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
-                className="group relative overflow-hidden rounded-lux border border-border-grey bg-gradient-to-br from-blue-50/50 to-transparent p-8 hover:border-gold hover:bg-gold/5 hover:shadow-lg transition-all"
+                className="group relative overflow-hidden rounded-lux border border-border-grey bg-gradient-to-br from-blue-50/50 to-transparent p-8 hover:border-accent-blue hover:bg-accent-blue/5 hover:shadow-lg transition-all"
               >
                 <div className="text-4xl mb-4">{cat.icon}</div>
                 <h3 className="font-heading text-lg font-bold text-navy">{cat.name}</h3>
@@ -255,7 +255,7 @@ export default function BuyerPage() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="font-sub text-xs uppercase tracking-[0.3em] text-gold"
+              className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue"
             >
               Easy Onboarding
             </motion.p>
@@ -296,10 +296,10 @@ export default function BuyerPage() {
                   className="relative flex gap-6"
                 >
                   <div className="flex flex-col items-center">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold/20 font-heading text-lg font-bold text-gold">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-accent-blue/20 font-heading text-lg font-bold text-accent-blue">
                       {item.step}
                     </div>
-                    {i < 4 && <div className="mt-4 w-1 h-20 bg-gradient-to-b from-gold/40 to-transparent" />}
+                    {i < 4 && <div className="mt-4 w-1 h-20 bg-gradient-to-b from-accent-blue/40 to-transparent" />}
                   </div>
                   <div className="pt-2 pb-8">
                     <h3 className="font-heading text-lg font-bold text-navy">{item.title}</h3>
@@ -321,7 +321,7 @@ export default function BuyerPage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold mb-4">
+              <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue mb-4">
                 Trust & Security
               </p>
               <h2 className="font-heading text-3xl font-black text-navy sm:text-4xl mb-6">
@@ -338,7 +338,7 @@ export default function BuyerPage() {
                   'Dedicated buyer support for all inquiries',
                 ].map((item, i) => (
                   <li key={i} className="flex gap-3 font-body text-navy/70">
-                    <CheckCircle2 className="h-5 w-5 text-gold mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="h-5 w-5 text-accent-blue mt-0.5 flex-shrink-0" />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -350,9 +350,9 @@ export default function BuyerPage() {
               viewport={{ once: true }}
               className="relative rounded-lux border border-border-grey overflow-hidden bg-gradient-to-br from-blue-50 to-transparent p-10"
             >
-              <div className="absolute -right-20 -top-20 h-40 w-40 rounded-full bg-gold/10 blur-[60px]" />
+              <div className="absolute -right-20 -top-20 h-40 w-40 rounded-full bg-accent-blue/10 blur-[60px]" />
               <div className="relative z-10 text-center">
-                <Lock className="h-16 w-16 text-gold mx-auto mb-4" />
+                <Lock className="h-16 w-16 text-accent-blue mx-auto mb-4" />
                 <p className="font-heading text-xl font-bold text-navy mb-3">Buyer Declaration</p>
                 <p className="font-body text-sm text-navy/70 leading-relaxed">
                   "As a buyer on OPCIEAS, I commit to genuine procurement, transparent communication, and fair business practices. I understand all suppliers are verified and compliance-verified for my trust and security."
@@ -366,7 +366,7 @@ export default function BuyerPage() {
       {/* Primary CTA */}
       <section className="relative overflow-hidden bg-gradient-to-br from-navy via-navy-2 to-navy/95 py-20 sm:py-32">
         <div className="pointer-events-none absolute inset-0">
-          <div className="absolute left-1/4 top-1/4 h-72 w-72 rounded-full bg-gold/10 blur-[100px] animate-float-slow" />
+          <div className="absolute left-1/4 top-1/4 h-72 w-72 rounded-full bg-accent-blue/10 blur-[100px] animate-float-slow" />
           <div className="absolute right-1/4 bottom-1/4 h-96 w-96 rounded-full bg-white/10 blur-[120px] animate-float" />
         </div>
 
@@ -387,7 +387,7 @@ export default function BuyerPage() {
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <Link
                 to="/buyer/application"
-                className="btn-gold flex items-center gap-2 rounded-full px-8 py-3 font-sub text-sm"
+                className="btn-primary flex items-center gap-2 rounded-full px-8 py-3 font-sub text-sm"
               >
                 Register as Buyer <ArrowRight className="h-4 w-4" />
               </Link>
@@ -406,7 +406,7 @@ export default function BuyerPage() {
             </div>
 
             <p className="mt-6 font-body text-sm text-white/70">
-              Questions? Reach out to our buyer support team at <a href="mailto:buyer@opcieas.com" className="text-gold hover:underline">buyer@opcieas.com</a>
+              Questions? Reach out to our buyer support team at <a href="mailto:buyer@opcieas.com" className="text-accent-blue hover:underline">buyer@opcieas.com</a>
             </p>
           </motion.div>
         </div>

@@ -75,7 +75,7 @@ export default function InitiativePage() {
       <section className="bg-white py-20">
         <div className="container-x grid gap-10 px-6 lg:grid-cols-[1.1fr_0.9fr]">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <p className="font-sub text-sm uppercase tracking-[0.3em] text-gold">OPCIEAS Initiatives</p>
+            <p className="font-sub text-sm uppercase tracking-[0.3em] text-accent-blue">OPCIEAS Initiatives</p>
             <h2 className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl">Purpose-built growth for public, social and enterprise programs</h2>
             <p className="mt-5 font-body text-base leading-relaxed text-navy/70">{page.intro}</p>
           </motion.div>
@@ -83,7 +83,7 @@ export default function InitiativePage() {
             <h3 className="font-heading text-xl font-bold text-navy">What this program delivers</h3>
             <ul className="mt-5 space-y-3">
               {page.highlights.map((item) => (
-                <li key={item} className="flex items-start gap-2 font-body text-sm text-navy/70"><span className="mt-1 h-2.5 w-2.5 rounded-full bg-gold" />{item}</li>
+                <li key={item} className="flex items-start gap-2 font-body text-sm text-navy/70"><span className="mt-1 h-2.5 w-2.5 rounded-full bg-accent-blue" />{item}</li>
               ))}
             </ul>
           </div>
@@ -95,11 +95,11 @@ export default function InitiativePage() {
           <h2 className="mb-8 font-heading text-2xl font-black text-navy sm:text-3xl">Explore Related OPCIEAS Pages</h2>
           <div className="grid gap-5 md:grid-cols-3">
             {page.links.map((link) => (
-              <Link key={link.to} to={link.to} className="group rounded-lux border border-navy/10 bg-white p-6 transition hover:-translate-y-1 hover:border-gold">
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gold/10 text-gold"><Building2 className="h-5 w-5" /></div>
+              <Link key={link.to} to={link.to} className="group rounded-lux border border-navy/10 bg-white p-6 transition hover:-translate-y-1 hover:border-accent-blue">
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent-blue/10 text-accent-blue"><Building2 className="h-5 w-5" /></div>
                 <h3 className="mt-4 font-heading text-lg font-bold text-navy">{link.label}</h3>
                 <p className="mt-2 font-body text-sm text-navy/60">Continue exploring OPCIEAS solutions and strategic initiatives.</p>
-                <span className="mt-4 inline-flex items-center gap-2 font-sub text-sm text-gold">Learn more <ArrowRight className="h-4 w-4" /></span>
+                <span className="mt-4 inline-flex items-center gap-2 font-sub text-sm text-accent-blue">Learn more <ArrowRight className="h-4 w-4" /></span>
               </Link>
             ))}
           </div>
@@ -109,7 +109,7 @@ export default function InitiativePage() {
       <section className="bg-white py-20">
         <div className="container-x px-6">
           <div className="mx-auto max-w-3xl rounded-lux border border-navy/10 bg-white p-8 text-navy">
-            <div className="flex items-center gap-3 text-gold"><Factory className="h-5 w-5" /><span className="font-sub text-sm uppercase tracking-[0.3em]">Inquiry</span></div>
+            <div className="flex items-center gap-3 text-accent-blue"><Factory className="h-5 w-5" /><span className="font-sub text-sm uppercase tracking-[0.3em]">Inquiry</span></div>
             <h2 className="mt-4 font-heading text-2xl font-black sm:text-3xl">Start a conversation with OPCIEAS</h2>
             <p className="mt-3 font-body text-sm text-navy/60">Tell us about your project, institution or outreach program and our team will respond with relevant furniture and infrastructure recommendations.</p>
             <div className="mt-8"><InquiryForm category={page.title} /></div>

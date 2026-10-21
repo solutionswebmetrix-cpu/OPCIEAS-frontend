@@ -18,7 +18,7 @@ export default function QualityCommitment() {
     <section className="bg-white py-24">
       <div className="container-x px-6">
         <div className="mx-auto mb-16 max-w-2xl text-center">
-          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-sub text-sm uppercase tracking-[0.3em] text-gold">Our Promise</motion.p>
+          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-sub text-sm uppercase tracking-[0.3em] text-accent-blue">Our Promise</motion.p>
           <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl">Our Commitment to Quality</motion.h2>
         </div>
 
@@ -32,9 +32,9 @@ export default function QualityCommitment() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: (i % 4) * 0.08 }}
-                className="group relative overflow-hidden rounded-lux border border-navy/10 bg-navy/5 p-8 transition-all duration-500 hover:border-gold hover:shadow-[0_20px_60px_rgba(212,175,55,0.15)]"
+                className="group relative overflow-hidden rounded-lux border border-navy/10 bg-navy/5 p-8 transition-all duration-500 hover:border-accent-blue hover:shadow-[0_20px_60px_rgba(22,58,99,0.15)]"
               >
-                <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-navy text-gold transition-all duration-500 group-hover:bg-gold group-hover:text-navy mb-6">
+                <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-navy text-accent-blue transition-all duration-500 group-hover:bg-accent-blue group-hover:text-navy mb-6">
                   <Icon className="h-7 w-7" />
                 </div>
                 <h3 className="font-heading text-xl font-bold text-navy mb-3">{feature.title}</h3>

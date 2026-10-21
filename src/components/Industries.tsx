@@ -39,11 +39,11 @@ function IndustryCard({ icon: Icon, name, stat, img, i }: { icon: typeof Buildin
       <img src={img} alt={`${name} furniture by OPCIEAS`} className="absolute inset-0 h-full w-full object-cover opacity-25 transition-all duration-700 group-hover:opacity-45 group-hover:scale-110" loading="lazy" />
       <div className="absolute inset-0 bg-gradient-to-t from-white via-white/85 to-white/60" />
       <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center" style={{ transform: 'translateZ(30px)' }}>
-        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gold/15 text-gold transition-all duration-500 group-hover:scale-110 group-hover:bg-gold group-hover:text-navy shadow-sm">
+        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-accent-blue/15 text-accent-blue transition-all duration-500 group-hover:scale-110 group-hover:bg-accent-blue group-hover:text-navy shadow-sm">
           <Icon className="h-7 w-7" />
         </div>
         <h3 className="mt-4 font-heading text-base font-bold text-navy">{name}</h3>
-        <p className="mt-1 font-sub text-xs text-gold">{stat}</p>
+        <p className="mt-1 font-sub text-xs text-accent-blue">{stat}</p>
       </div>
       </Link>
     </motion.div>
@@ -56,7 +56,7 @@ export default function Industries() {
       <div className="pointer-events-none absolute inset-0 grid-bg opacity-10" />
       <div className="container-x relative px-6">
         <div className="mx-auto mb-8 max-w-2xl text-center">
-          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-sub text-sm uppercase tracking-[0.3em] text-gold">Industries We Serve</motion.p>
+          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-sub text-sm uppercase tracking-[0.3em] text-accent-blue">Industries We Serve</motion.p>
           <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl xl:text-5xl">
             Trusted Across Every Sector
           </motion.h2>
@@ -72,7 +72,7 @@ export default function Industries() {
           viewport={{ once: true }}
           className="mt-8 text-center"
         >
-          <Link to="/industries" className="inline-flex items-center gap-2 rounded-full border border-gold/50 bg-gold/10 px-6 py-3 font-sub text-sm text-gold transition hover:bg-gold/20">
+          <Link to="/industries" className="inline-flex items-center gap-2 rounded-full border border-accent-blue/50 bg-accent-blue/10 px-6 py-3 font-sub text-sm text-accent-blue transition hover:bg-accent-blue/20">
             Explore All Industries <ArrowRight className="h-4 w-4" />
           </Link>
         </motion.div>

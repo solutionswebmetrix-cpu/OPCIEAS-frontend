@@ -26,7 +26,7 @@ export default function TechBusinessPromotionPage() {
             <h2 className="break-words font-heading text-3xl font-black leading-tight text-navy sm:text-4xl">
               A New Era for Indian Industrialists
             </h2>
-            <div className="mt-5 h-1 w-20 rounded-full bg-gold" aria-hidden="true" />
+            <div className="mt-5 h-1 w-20 rounded-full bg-accent-blue" aria-hidden="true" />
 
             <section className="mt-9">
               <h3 className="font-heading text-2xl font-bold leading-tight text-navy sm:text-[26px]">The Present Reality</h3>
@@ -40,7 +40,7 @@ export default function TechBusinessPromotionPage() {
               <p className="mt-4 font-body text-base leading-[1.75] text-navy/80 sm:text-[17px]">
                 We are not just a portal; we are fellow industrialists who have navigated these challenges for decades. Under visionary leadership, we are bringing changes that no traditional advertising or service Company has ever offered. If we do not unite for our own sake, no one else will. Coming together is the only remedy to grow our businesses, support our families, and strengthen our nation. This is the time to rise.
               </p>
-              <blockquote className="mt-6 rounded-lg border-l-4 border-gold bg-[#FBF7E9] px-5 py-5 font-body text-base leading-[1.75] text-navy sm:px-7 sm:text-[17px]">
+              <blockquote className="mt-6 rounded-lg border-l-4 border-accent-blue bg-[#EAF1F8] px-5 py-5 font-body text-base leading-[1.75] text-navy sm:px-7 sm:text-[17px]">
                 “Our digital platform uses smart matchmaking to seamlessly coordinate shared manpower, pooled procurement, and cross-facility manufacturing in real time.”
               </blockquote>
               <p className="mt-5 font-body text-base leading-[1.75] text-navy/80 sm:text-[17px]">
@@ -118,7 +118,7 @@ export default function TechBusinessPromotionPage() {
           </article>
 
           <div className="mx-auto mt-12 flex max-w-5xl flex-col items-stretch justify-center gap-4 border-t border-navy/10 pt-8 sm:flex-row sm:items-center">
-            <Link to="/contact" className="btn-gold inline-flex items-center justify-center gap-2 rounded-full px-7 py-3 font-sub text-base">
+            <Link to="/contact" className="btn-primary inline-flex items-center justify-center gap-2 rounded-full px-7 py-3 font-sub text-base">
               Contact Us <ArrowRight className="h-4 w-4" />
             </Link>
             <Link to="/rfq" className="btn-ghost inline-flex items-center justify-center rounded-full px-7 py-3 font-sub text-base">

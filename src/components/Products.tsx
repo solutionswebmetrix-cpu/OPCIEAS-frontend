@@ -68,7 +68,7 @@ function HomeProductCard({ product, index, categoryIndex }: { product: Product; 
           <h3 className="mt-1 font-heading text-base font-bold text-navy sm:text-lg leading-tight line-clamp-2">{product.name}</h3>
           {product.short_desc && <p className="mt-2 line-clamp-2 font-body text-xs leading-relaxed text-navy/70">{product.short_desc}</p>}
           {product.price_range && <p className="mt-2 font-sub text-xs font-semibold text-navy">{product.price_range}</p>}
-          <span className="mt-auto inline-flex items-center gap-1.5 pb-2 pt-4 font-sub text-sm font-semibold text-gold">
+          <span className="mt-auto inline-flex items-center gap-1.5 pb-2 pt-4 font-sub text-sm font-semibold text-accent-blue">
             View Details <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
           </span>
         </div>
@@ -135,7 +135,7 @@ export default function Products() {
       <section id="products" className="relative overflow-hidden bg-white py-12 sm:py-14 lg:py-16">
         <div className="container-x px-6">
           <div className="mb-8 lg:mb-10 text-center">
-            <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-sub text-sm uppercase tracking-[0.3em] text-gold">Product Showcase</motion.p>
+            <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-sub text-sm uppercase tracking-[0.3em] text-accent-blue">Product Showcase</motion.p>
             <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl xl:text-5xl">
               Furniture for Every Commercial Space
             </motion.h2>
@@ -143,7 +143,7 @@ export default function Products() {
               Browse the approved local product range across education, hostel, storage, bathroom and commercial categories.
             </motion.p>
           </div>
-          <div className="font-sub text-sm uppercase tracking-[0.2em] text-gold">Loading products...</div>
+          <div className="font-sub text-sm uppercase tracking-[0.2em] text-accent-blue">Loading products...</div>
         </div>
       </section>
     );
@@ -153,7 +153,7 @@ export default function Products() {
     <section id="products" className="relative overflow-hidden bg-white py-12 sm:py-14 lg:py-16">
       <div className="container-x px-6">
         <div className="mb-8 lg:mb-10 text-center">
-          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-sub text-sm uppercase tracking-[0.3em] text-gold">What We Manufacture</motion.p>
+          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-sub text-sm uppercase tracking-[0.3em] text-accent-blue">What We Manufacture</motion.p>
           <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-4 font-heading text-3xl font-black text-navy sm:text-4xl xl:text-5xl">
             Commercial Furniture- Educational and Institutional furniture Manufacturer
           </motion.h2>
@@ -180,7 +180,7 @@ export default function Products() {
                   role="tab"
                   aria-selected={selected}
                   onClick={() => setSelectedCategoryId(categoryId)}
-                  className={`rounded-full border px-4 py-2 font-sub text-xs transition ${selected ? 'border-gold bg-gold text-navy' : 'border-transparent bg-transparent text-navy/70 hover:border-gold/50 hover:text-gold'}`}
+                  className={`rounded-full border px-4 py-2 font-sub text-xs transition ${selected ? 'border-accent-blue bg-accent-blue text-navy' : 'border-transparent bg-transparent text-navy/70 hover:border-accent-blue/50 hover:text-accent-blue'}`}
                 >
                   {category.name}
                 </button>
@@ -209,7 +209,7 @@ export default function Products() {
                   </div>
                   <Link
                     to={`/products/category/${category.slug}`}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-gold/40 bg-gold/5 px-4 py-2 font-sub text-xs font-semibold text-gold transition-all duration-300 hover:border-gold hover:bg-gold hover:text-navy"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-accent-blue/40 bg-accent-blue/5 px-4 py-2 font-sub text-xs font-semibold text-accent-blue transition-all duration-300 hover:border-accent-blue hover:bg-accent-blue hover:text-navy"
                   >
                     View All <ArrowRight className="h-3.5 w-3.5" />
                   </Link>
@@ -234,7 +234,7 @@ export default function Products() {
             );
           })}
           {visibleProductGroups.length === 0 && !loading && !error && (
-            <div className="font-sub text-sm uppercase tracking-[0.2em] text-gold">No products available.</div>
+            <div className="font-sub text-sm uppercase tracking-[0.2em] text-accent-blue">No products available.</div>
           )}
         </div>
       </div>

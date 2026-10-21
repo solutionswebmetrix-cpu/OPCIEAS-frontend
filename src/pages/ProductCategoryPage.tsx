@@ -278,7 +278,7 @@ export default function ProductCategoryPage() {
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-white">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-gold border-t-transparent" />
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-accent-blue border-t-transparent" />
       </div>
     );
   }
@@ -287,7 +287,7 @@ export default function ProductCategoryPage() {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center bg-white px-6 text-center">
         <p className="font-heading text-2xl font-bold text-navy">Category not found</p>
-        <Link to="/products" className="mt-4 rounded-full bg-gold px-6 py-2 font-sub text-sm text-navy">View All Products</Link>
+        <Link to="/products" className="mt-4 rounded-full bg-accent-blue px-6 py-2 font-sub text-sm text-navy">View All Products</Link>
       </div>
     );
   }
@@ -317,7 +317,7 @@ export default function ProductCategoryPage() {
               viewport={{ once: true }}
               className="mb-12 rounded-lux border border-navy/10 bg-navy/5 p-6"
             >
-              <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Category Highlights</p>
+              <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue">Category Highlights</p>
               <h2 className="mt-2 font-heading text-2xl font-black text-navy">{cat.name}</h2>
               <p className="mt-3 font-body text-sm text-navy/70">{content.overview}</p>
               <div className="mt-4 flex flex-wrap gap-2">
@@ -326,7 +326,7 @@ export default function ProductCategoryPage() {
                     key={item.label}
                     to={getCategorySubcategoryRoute(cat.slug, item.subcategory)}
                     aria-label={`View ${item.label} products`}
-                    className="rounded-full border border-navy/10 bg-white px-3 py-1.5 font-sub text-xs text-navy/70 transition-colors hover:border-gold/40 hover:text-navy"
+                    className="rounded-full border border-navy/10 bg-white px-3 py-1.5 font-sub text-xs text-navy/70 transition-colors hover:border-accent-blue/40 hover:text-navy"
                   >
                     {item.label}
                   </Link>
@@ -334,14 +334,14 @@ export default function ProductCategoryPage() {
               </div>
               {highlightGroup.accessories && (
                 <div className="mt-6">
-                  <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Accessories</p>
+                  <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue">Accessories</p>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {highlightGroup.accessories.map((item) => (
                       <Link
                         key={item.label}
                         to={getCategorySubcategoryRoute(cat.slug, item.subcategory)}
                         aria-label={`View ${item.label} products`}
-                        className="rounded-full border border-navy/10 bg-white px-3 py-1.5 font-sub text-xs text-navy/70 transition-colors hover:border-gold/40 hover:text-navy"
+                        className="rounded-full border border-navy/10 bg-white px-3 py-1.5 font-sub text-xs text-navy/70 transition-colors hover:border-accent-blue/40 hover:text-navy"
                       >
                         {item.label}
                       </Link>
@@ -359,7 +359,7 @@ export default function ProductCategoryPage() {
               viewport={{ once: true }}
               className="mb-12 rounded-lux border border-navy/10 bg-navy/5 p-6"
             >
-              <p className="font-sub text-base uppercase tracking-[0.3em] text-[#FF6600]">Category Overview</p>
+              <p className="font-sub text-base uppercase tracking-[0.3em] text-[#163A63]">Category Overview</p>
               <h2 className="mt-2 font-heading text-2xl font-black text-navy">{cat.name}</h2>
               {content.overview && <p className="mt-3 font-body text-base leading-relaxed text-navy/70">{content.overview}</p>}
               <div className="mt-6 grid gap-6 lg:grid-cols-2">
@@ -383,7 +383,7 @@ export default function ProductCategoryPage() {
                 ))}
               </div>
               <div className="mt-5">
-                <Link to="/products" className="inline-flex items-center gap-1.5 font-sub text-sm font-semibold text-gold">
+                <Link to="/products" className="inline-flex items-center gap-1.5 font-sub text-sm font-semibold text-accent-blue">
                   <ArrowRight className="h-3.5 w-3.5 rotate-180" /> Back to All Products
                 </Link>
               </div>
@@ -391,7 +391,7 @@ export default function ProductCategoryPage() {
           ) : content && !highlightGroup && (
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12 grid gap-6 rounded-lux border border-navy/10 bg-navy/5 p-6 lg:grid-cols-[1.2fr_0.8fr]">
               <div>
-                <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Category Highlights</p>
+                <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue">Category Highlights</p>
                 <h2 className="mt-2 font-heading text-2xl font-black text-navy">{cat.name}</h2>
                 <p className="mt-3 font-body text-sm text-navy/70">{content.overview}</p>
                 <div className="mt-4 flex flex-wrap gap-2">
@@ -401,16 +401,16 @@ export default function ProductCategoryPage() {
                 </div>
                 {content.accessories && (
                   <div className="mt-6">
-                    <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Accessories</p>
+                    <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue">Accessories</p>
                     <div className="mt-3 flex flex-wrap gap-2">
                       {content.accessories.map((item) => (
-                        <span key={item} className="rounded-full border border-gold/20 bg-gold/10 px-3 py-1.5 font-sub text-xs text-navy/70">{item}</span>
+                        <span key={item} className="rounded-full border border-accent-blue/20 bg-accent-blue/10 px-3 py-1.5 font-sub text-xs text-navy/70">{item}</span>
                       ))}
                     </div>
                   </div>
                 )}
                 <div className="mt-5">
-                  <Link to="/products" className="inline-flex items-center gap-1.5 font-sub text-xs font-semibold text-gold">
+                  <Link to="/products" className="inline-flex items-center gap-1.5 font-sub text-xs font-semibold text-accent-blue">
                     <ArrowRight className="h-3.5 w-3.5 rotate-180" /> Back to All Products
                   </Link>
                 </div>
@@ -433,7 +433,7 @@ export default function ProductCategoryPage() {
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12 rounded-lux bg-white p-6 shadow-sm ring-1 ring-navy/10">
               <div className="flex flex-wrap items-center justify-between gap-4">
                 <div>
-                  <p className="font-sub text-xs uppercase tracking-[0.3em] text-gold">Gallery & Details</p>
+                  <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue">Gallery & Details</p>
                   <h3 className="mt-1 font-heading text-xl font-bold text-navy">Product Gallery & Technical Notes</h3>
                 </div>
                 <div className="flex flex-wrap gap-2">
@@ -444,7 +444,7 @@ export default function ProductCategoryPage() {
               </div>
               <div className="mt-4 flex flex-wrap gap-3">
                 {content.gallery.map((item) => (
-                  <span key={item} className="rounded-full border border-gold/20 bg-gold/10 px-3 py-1.5 font-sub text-xs text-gold-3">{item}</span>
+                  <span key={item} className="rounded-full border border-accent-blue/20 bg-accent-blue/10 px-3 py-1.5 font-sub text-xs text-accent-blue-3">{item}</span>
                 ))}
               </div>
             </motion.div>
@@ -453,7 +453,7 @@ export default function ProductCategoryPage() {
           <div className="mb-8 flex flex-col gap-4 rounded-lux bg-navy/5 p-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="relative flex-1 max-w-md">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-navy/40" />
-              <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search products..." className="w-full rounded-full bg-white px-10 py-2.5 font-sub text-sm text-navy outline-none ring-1 ring-navy/10 transition focus:ring-gold" />
+              <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search products..." className="w-full rounded-full bg-white px-10 py-2.5 font-sub text-sm text-navy outline-none ring-1 ring-navy/10 transition focus:ring-accent-blue" />
             </div>
             <div className="flex items-center gap-3">
               <select value={sort} onChange={(e) => setSort(e.target.value)} className="rounded-full bg-white px-4 py-2.5 font-sub text-sm text-navy outline-none ring-1 ring-navy/10">
@@ -465,9 +465,9 @@ export default function ProductCategoryPage() {
             </div>
           </div>
 
-          <div className="mb-8 border-l-2 border-gold bg-gold/5 px-4 py-3 font-body text-sm leading-relaxed text-navy/75">
+          <div className="mb-8 border-l-2 border-accent-blue bg-accent-blue/5 px-4 py-3 font-body text-sm leading-relaxed text-navy/75">
             For formal quotations, complete category catalogues, or product flyers, please contact info@opcieas.com or click 'Request On-Demand Catalogue'.
-            <Link to="/contact" className="ml-1 font-semibold text-gold underline underline-offset-2">Request On-Demand Catalogue</Link>
+            <Link to="/contact" className="ml-1 font-semibold text-accent-blue underline underline-offset-2">Request On-Demand Catalogue</Link>
           </div>
 
           {loadError ? (
@@ -481,7 +481,7 @@ export default function ProductCategoryPage() {
             <div className="flex flex-col items-center justify-center py-20 text-center">
               <Boxes className="mb-4 h-12 w-12 text-navy/20" />
               <p className="font-sub text-sm text-navy/50">No products found in this category.</p>
-              <Link to="/products" className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-gold px-5 py-2 font-sub text-xs text-navy">
+              <Link to="/products" className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-accent-blue px-5 py-2 font-sub text-xs text-navy">
                 Browse All Products <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </div>

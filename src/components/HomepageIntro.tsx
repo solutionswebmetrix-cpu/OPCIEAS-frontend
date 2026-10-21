@@ -20,7 +20,7 @@ const divisions = [
     tagline: 'Institutional • Commercial • Educational • Storage',
     narration:
       'Premium furniture solutions for schools, colleges, hostels, institutions and bulk commercial projects.',
-    accent: 'from-[#D4AF37] via-[#B8932B] to-[#8B6F1E]',
+    accent: 'from-[#163A63] via-[#0B1F3A] to-[#163A63]',
     to: '/furniture',
   },
   {
@@ -29,7 +29,7 @@ const divisions = [
     tagline: 'Community Growth • Sustainability • Aquaculture',
     narration:
       'Community-led initiatives that strengthen rural livelihoods, agriculture, and social infrastructure.',
-    accent: 'from-[#34D399] via-[#059669] to-[#047857]',
+    accent: 'from-[#EAF1F8] via-[#163A63] to-[#0B1F3A]',
     to: '/social-service',
   },
 ];
@@ -41,7 +41,7 @@ export default function HomepageIntro() {
       style={{ scrollMarginTop: '100px' }}
       className="relative overflow-hidden bg-white py-10 sm:py-14 lg:py-16"
     >
-      <div className="pointer-events-none absolute top-0 right-0 h-56 w-56 rounded-full bg-gold/5 blur-[80px] animate-float-slow" />
+      <div className="pointer-events-none absolute top-0 right-0 h-56 w-56 rounded-full bg-accent-blue/5 blur-[80px] animate-float-slow" />
       <div className="pointer-events-none absolute bottom-0 left-0 h-64 w-64 rounded-full bg-navy/5 blur-[80px] animate-float" />
 
       <div className="container-x relative z-10 px-6">
@@ -57,7 +57,7 @@ export default function HomepageIntro() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="font-sub text-xs uppercase tracking-[0.35em] text-gold"
+            className="font-sub text-xs uppercase tracking-[0.35em] text-accent-blue"
           >
             OPCIEAS Pvt. Ltd.
           </motion.p>
@@ -84,7 +84,7 @@ export default function HomepageIntro() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.25 }}
-            className="mt-4 font-sub text-xs uppercase tracking-[0.25em] text-gold"
+            className="mt-4 font-sub text-xs uppercase tracking-[0.25em] text-accent-blue"
           >
             Educational • Institutional • Government • Export
           </motion.p>
@@ -124,7 +124,7 @@ export default function HomepageIntro() {
                   <d.icon className="h-6 w-6" strokeWidth={1.75} />
                 </div>
                 <h3 className="font-heading text-base font-bold text-navy">{d.name}</h3>
-                <p className="mt-1.5 font-sub text-xs text-gold">{d.tagline}</p>
+                <p className="mt-1.5 font-sub text-xs text-accent-blue">{d.tagline}</p>
                 <p className="mt-3 font-body text-xs leading-relaxed text-navy/65">{d.narration}</p>
                 <Link
                   to={d.to}

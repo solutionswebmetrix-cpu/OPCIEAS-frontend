@@ -57,7 +57,7 @@ export default function About() {
   return (
     <section id="overview" ref={ref} style={{ scrollMarginTop: '100px' }} className="relative overflow-hidden bg-white py-32">
       <div className="pointer-events-none absolute right-10 top-20 h-40 w-40 rounded-full border border-navy/10 bg-navy/5 blur-2xl animate-float-slow" />
-      <div className="pointer-events-none absolute bottom-20 left-10 h-60 w-60 rounded-full border border-gold/10 bg-gold/5 blur-3xl animate-float" />
+      <div className="pointer-events-none absolute bottom-20 left-10 h-60 w-60 rounded-full border border-accent-blue/10 bg-accent-blue/5 blur-3xl animate-float" />
 
       <div className="container-x grid gap-12 px-6 lg:grid-cols-2 lg:items-center">
         {/* Left — Animated Image Gallery */}
@@ -68,8 +68,8 @@ export default function About() {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="relative"
         >
-          <div className="group relative overflow-hidden rounded-lux border-2 border-gold/30 p-1">
-            <div className="absolute inset-0 animate-glow rounded-lux bg-gradient-to-r from-gold/20 via-transparent to-gold/20" />
+          <div className="group relative overflow-hidden rounded-lux border-2 border-accent-blue/30 p-1">
+            <div className="absolute inset-0 animate-glow rounded-lux bg-gradient-to-r from-accent-blue/20 via-transparent to-accent-blue/20" />
             <div 
               className="about-gallery-shell relative overflow-hidden rounded-lux"
               onMouseEnter={() => setIsPaused(true)}
@@ -116,7 +116,7 @@ export default function About() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="font-sub text-sm uppercase tracking-[0.3em] text-gold"
+            className="font-sub text-sm uppercase tracking-[0.3em] text-accent-blue"
           >
             About OPCIEAS
           </motion.p>
@@ -174,7 +174,7 @@ export default function About() {
         </motion.h3>
         <div className="relative">
           <div className="absolute left-0 top-0 h-1 w-full overflow-hidden rounded-full bg-navy/10">
-            <motion.div className="h-full bg-gradient-to-r from-gold-2 to-gold" style={{ scaleX: scrollYProgress, transformOrigin: 'left' }} />
+            <motion.div className="h-full bg-gradient-to-r from-accent-blue-2 to-accent-blue" style={{ scaleX: scrollYProgress, transformOrigin: 'left' }} />
           </div>
           <div className="grid grid-cols-2 gap-4 pt-10 md:grid-cols-3 lg:grid-cols-6">
             {timeline.map((t, i) => (
@@ -186,8 +186,8 @@ export default function About() {
                 transition={{ delay: i * 0.1, duration: 0.5 }}
                 className="relative"
               >
-                <div className="absolute -top-[42px] left-0 h-5 w-5 rounded-full border-2 border-gold bg-white" />
-                <p className="font-heading text-2xl font-black gold-text">{t.year}</p>
+                <div className="absolute -top-[42px] left-0 h-5 w-5 rounded-full border-2 border-accent-blue bg-white" />
+                <p className="font-heading text-2xl font-black accent-blue-text">{t.year}</p>
                 <p className="mt-1 font-sub text-sm font-semibold text-navy">{t.title}</p>
                 <p className="mt-1 font-body text-xs text-navy/60">{t.desc}</p>
               </motion.div>
