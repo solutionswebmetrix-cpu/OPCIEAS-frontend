@@ -88,6 +88,7 @@ export default function Footer() {
               <p>Contact: opcieas.opcieas4@gmail.com</p>
               <p>www.opcieas.com</p>
               <p>+91 9845579049</p>
+              <p>+918105138218</p>
               <p className="mt-3 flex flex-wrap gap-2 text-accent-blue">
                 <span className="rounded-full border border-accent-blue/40 px-2 py-1">ISO</span>
                 <span className="rounded-full border border-accent-blue/40 px-2 py-1">MSME</span>
