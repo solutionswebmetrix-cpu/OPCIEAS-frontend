@@ -68,21 +68,6 @@ export default function TechBusinessPromotionPage() {
             </section>
 
             <section className="mt-11 border-t border-navy/10 pt-8">
-              <h3 className="font-heading text-2xl font-bold leading-tight text-navy sm:text-[26px]">Automated Registration Acknowledgment</h3>
-              <p className="mt-2 font-body text-sm font-semibold leading-relaxed text-navy/75 sm:text-base">
-                (For instant deployment via Email or WhatsApp upon registration)
-              </p>
-              <div className="mt-5 break-words rounded-lux border border-navy/15 bg-light-grey p-5 font-body text-base leading-[1.75] text-navy/80 sm:p-7">
-                <p className="font-semibold text-navy">Subject: Welcome to the OPCIEAS Verified Network!</p>
-                <p className="mt-4">Dear [Contact Person Name],</p>
-                <p className="mt-4">Thank you for registering [Company Name] with OPCIEAS. We have successfully received your company details along with your confirmation to join our verified network.</p>
-                <p className="mt-4">As part of our founding initiative, subscription fees will be collected only after we achieve the minimum required memberships. This means that building each category in our portal depends on your wholehearted cooperation. Your participation is vital - while some are ready to step into the mainstream, lasting change for Indian industry requires collective effort. Together, we can overcome financial challenges and create a stronger future through teamwork.</p>
-                <p className="mt-4">Our team is currently reviewing your profile. Once we verify it, we'll add your company to our directory and notify you.</p>
-                <p className="mt-4">Best regards,<br />Team OPCIEAS <a className="font-semibold text-accent-blue underline underline-offset-2" href="http://www.opcieas.co/">[www.opcieas.co]</a></p>
-              </div>
-            </section>
-
-            <section className="mt-11 border-t border-navy/10 pt-8">
               <h3 className="font-heading text-2xl font-bold leading-tight text-navy sm:text-[26px]">World-Class Manufacturing &amp; Global Reach</h3>
               <p className="mt-5 font-body text-base leading-[1.75] text-navy/80 sm:text-[17px]">
                 By putting these collaborative processes into action, we elevate our manufacturing to world-class standards, enabling all participating factories to produce items of uniform, unique quality.
