@@ -76,6 +76,11 @@ function getAssetFolderPath(path: string): string {
   return folderSegments.length ? folderSegments.join('/') : 'Product Assets';
 }
 
+const PRODUCT_NAME_OVERRIDES: Record<string, string> = {
+  'educational furniture/k g/kg board less class group desk steel laminated with fibreglass':
+    'Kindergarten Boardless Classroom Group Desk, Steel Laminated with Fiberglass',
+};
+
 function createAsset(path: string, image: string): ProductAsset {
   const segments = path.split(/[\\/]+/).filter(Boolean);
   const productIndex = segments.lastIndexOf('product');
@@ -91,7 +96,7 @@ function createAsset(path: string, image: string): ProductAsset {
     folder,
     fileName,
     slug,
-    name: cleanProductName(fileName),
+    name: PRODUCT_NAME_OVERRIDES[normalizeAssetLookup(relativePath)] ?? cleanProductName(fileName),
     category,
   };
 }
