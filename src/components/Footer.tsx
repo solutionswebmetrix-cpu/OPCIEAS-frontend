@@ -85,7 +85,7 @@ export default function Footer() {
             </p>
             <div className="mt-5 space-y-1.5 font-body text-xs leading-relaxed text-navy/70">
               <p>OPCIEAS Pvt. Ltd.</p>
-              <p>Contact: info@opcieas.com</p>
+              <p>Contact: opcieas.opcieas4@gmail.com</p>
               <p>www.opcieas.com</p>
               <p>+91 9845579049</p>
               <p className="mt-3 flex flex-wrap gap-2 text-accent-blue">
