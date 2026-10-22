@@ -283,9 +283,9 @@ export default function ProductDetailPage() {
 
           {/* Info */}
           <div>
-            <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="font-heading text-3xl font-black text-navy sm:text-4xl">{product.name}</motion.h1>
+            <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="break-words font-heading text-2xl font-black leading-tight text-navy sm:text-3xl xl:text-4xl">{product.name}</motion.h1>
             {product.short_desc && <p className="mt-2 font-sub text-lg text-body-text">{product.short_desc}</p>}
-            <div className="mt-4 inline-flex rounded-full border border-accent-blue/70 bg-accent-blue/10 px-3 py-1.5 font-sub text-xs font-semibold uppercase tracking-[0.2em] text-navy">{supplyLabel}</div>
+            <div className="mt-4 inline-flex max-w-full whitespace-normal break-words rounded-full border border-navy/30 bg-light-blue px-3 py-1.5 font-sub text-xs font-semibold uppercase leading-relaxed tracking-[0.15em] text-navy">{supplyLabel}</div>
             {hasExport && (<div className="mt-3 inline-flex rounded-full border border-accent-blue/70 bg-accent-blue/10 px-3 py-1.5 font-sub text-xs font-semibold uppercase tracking-[0.2em] text-accent-blue">Export Specifications & Paid Samples Available.</div>)}
             {product.price_range && <p className="mt-4 font-heading text-xl font-bold accent-blue-text">{product.price_range}</p>}
             {supplyNote && <p className="mt-3 font-body text-sm text-navy/70">{supplyNote}</p>}
@@ -296,12 +296,14 @@ export default function ProductDetailPage() {
               {warrantyText && <div><span className="font-sub uppercase tracking-[0.18em] text-navy/60">Warranty</span><p className="mt-1 font-medium">{warrantyText}</p></div>}
             </div>
 
-            {!validation.valid && (
+            {(!validation.valid || validation.warnings.length > 0) && (
               <div className="mt-6 rounded-lux border border-border-grey bg-light-blue p-4 text-sm text-navy">
                 <p className="font-semibold">Product publishing checklist</p>
-                <ul className="mt-2 list-disc space-y-1 pl-5">
-                  {validation.missing.map((item) => <li key={item}>{item}</li>)}
-                  {validation.warnings.map((item) => <li key={item}>{item}</li>)}
+                <ul className="mt-3 list-disc space-y-2 pl-5 leading-relaxed">
+                  <li>Caption or short description</li>
+                  <li>Description</li>
+                  <li>Add a price or mark as “price on request” where applicable.</li>
+                  <li>Add supply type for manufacturing visibility.</li>
                 </ul>
               </div>
             )}

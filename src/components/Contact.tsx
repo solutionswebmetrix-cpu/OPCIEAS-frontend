@@ -114,6 +114,7 @@ export default function Contact() {
                 {[
                   { icon: MapPin, label: 'Google Maps', href: 'https://www.google.com/maps/search/?api=1&query=SY+No+76+SITE+No+136+HOMMA+DEVANAHALLI+CK+PALAYA+ROAD+Bengaluru+560083+Karnataka+India' },
                   { icon: MessageCircle, label: 'WhatsApp', href: 'https://wa.me/919845579049' },
+                  { icon: MessageCircle, label: 'WhatsApp +918105138218', href: 'https://wa.me/918105138218' },
                   { icon: Phone, label: 'Call Now', href: 'tel:+919845579049' },
                   { icon: Mail, label: 'Email', href: 'mailto:opcieas.opcieas4@gmail.com' },
                   { icon: Calendar, label: 'Request Quote', href: '/rfq' },

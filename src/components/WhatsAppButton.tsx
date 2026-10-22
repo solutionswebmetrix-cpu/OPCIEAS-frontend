@@ -52,6 +52,15 @@ export default function WhatsAppButton() {
                   <Send className="h-3.5 w-3.5 text-[#25D366]" /> {a}
                 </a>
               ))}
+              <a
+                href="https://wa.me/918105138218"
+                target="_blank"
+                rel="noreferrer"
+                className="flex flex-col items-start gap-0.5 rounded-xl border border-navy/10 bg-light-grey px-3 py-2.5 font-sub text-xs text-navy shadow-sm transition hover:border-accent-blue hover:bg-accent-blue/10 hover:text-accent-blue"
+              >
+                <span className="font-semibold">Additional WhatsApp contact</span>
+                <span>+918105138218</span>
+              </a>
             </div>
           </motion.div>
         )}

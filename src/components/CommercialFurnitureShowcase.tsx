@@ -58,7 +58,7 @@ export default function CommercialFurnitureShowcase() {
           <div>
             <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue">Available for specification-led supply</p>
             <h2 className="mt-3 font-heading text-3xl font-black text-navy sm:text-4xl">Furniture for bulk requirements</h2>
-            <p className="mt-4 max-w-3xl font-body text-base leading-7 text-navy/70">Furniture for which specifications, images or technical drawings are available and which can be supplied for bulk requirements.</p>
+            <p className="mt-4 max-w-3xl font-body text-base leading-7 text-navy/70">Any furniture required in bulk, with specifications, images, and technical drawings available, can be supplied.</p>
           </div>
         </div>
 

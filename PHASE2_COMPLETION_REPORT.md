@@ -187,8 +187,7 @@ CONTACT → /contact
 
 ### Visual & Style
 - [ ] Times New Roman font in headings
-- [ ] Navy (#071A35) color scheme primary
-- [ ] Gold (#D4AF37) for accents only
+- [ ] Navy (#0B1F3A) color scheme primary with blue accents
 - [ ] White/light backgrounds
 - [ ] No unauthorized colors
 - [ ] Consistent spacing

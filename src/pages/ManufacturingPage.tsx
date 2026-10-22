@@ -109,11 +109,11 @@ export default function ManufacturingPage() {
 
           <div className="mt-16 grid gap-8 sm:grid-cols-2">
             {[
-              { label: 'Production Capacity', value: '10,000+ units/month' },
-              { label: 'Factory Size', value: '45,000 sq ft' },
+              { label: 'Production capacity', value: '5000 to 10000' },
+              { label: 'Factory Size', value: '10000 Sq ft' },
               { label: 'Skilled Workforce', value: '200+ workers' },
               { label: 'Quality Standards', value: 'ISO 9001:2015 certified' },
-              { label: 'Delivery Timeline', value: '7-30 days (depending on order)' },
+              { label: 'Delivery Timeline', value: 'Delivery time line 30 to 45 days Hand crafted Fibreglads Products within 65to 75 days as per Quotation or agreed upon.' },
               { label: 'Global Markets', value: '20+ export countries' },
             ].map((item, i) => (
               <motion.div
@@ -125,7 +125,7 @@ export default function ManufacturingPage() {
                 className="rounded-lux border border-accent-blue/20 bg-navy/5 p-8"
               >
                 <p className="font-sub text-xs uppercase tracking-[0.2em] text-accent-blue">{item.label}</p>
-                <p className="mt-3 font-heading text-2xl font-black text-navy">{item.value}</p>
+                <p className="mt-3 break-words font-heading text-2xl font-black leading-snug text-navy">{item.value}</p>
               </motion.div>
             ))}
           </div>

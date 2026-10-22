@@ -49,10 +49,11 @@ export default function TechBusinessPromotionPage() {
             </section>
 
             <section className="mt-11 border-t border-navy/10 pt-8">
-              <h3 className="font-heading text-2xl font-bold leading-tight text-navy sm:text-[26px]">Our Quality &amp; Market Standards</h3>
+              <h3 className="font-heading text-2xl font-bold leading-tight text-navy sm:text-[26px]">Material Ad Production</h3>
+              <h4 className="mt-4 font-heading text-xl font-bold leading-tight text-navy sm:text-2xl">Our Quality &amp; Market Standards</h4>
               <ul className="mt-5 list-disc space-y-4 pl-6 font-body text-base leading-[1.75] text-navy/80 sm:text-[17px]">
                 <li>
-                  <strong className="font-bold text-navy">Premium Sourcing &amp; Packaging:</strong> We source premium steel through long-term partnerships with leading producers, complemented by engineered wooden boards. By securing plywood below local market prices and providing specialized packaging, including multi-layered corrugated boxes, bubble packs, film packs, and related accessories, we empower the supplier to ensure complete safety in transit to the buyer.
+                  <strong className="font-bold text-navy">Premium Sourcing &amp; Packaging:</strong> We source premium steel through long-term partnerships with India's leading producers, complemented by engineered wooden boards. By securing plywood below local market prices and providing specialized packaging, including multi-layered corrugated boxes, bubble packs, film packs, and related accessories
                 </li>
               </ul>
               <p className="mt-4 font-body text-base leading-[1.75] text-navy/80 sm:text-[17px]">
@@ -64,6 +65,21 @@ export default function TechBusinessPromotionPage() {
               <p className="mt-4 font-body text-base leading-[1.75] text-navy/80 sm:text-[17px]">
                 <strong className="font-bold text-navy">Direct Savings &amp; Trust:</strong> By cutting costs significantly through collective procurement, manpower pooling, and streamlined production processes, we pass direct savings on to the buyer. Backed by uncompromised quality, clear specifications, and superior packaging, we are reinstating the solid bond of trust between buyers and sellers that has been missing from the market for years.
               </p>
+            </section>
+
+            <section className="mt-11 border-t border-navy/10 pt-8">
+              <h3 className="font-heading text-2xl font-bold leading-tight text-navy sm:text-[26px]">Automated Registration Acknowledgment</h3>
+              <p className="mt-2 font-body text-sm font-semibold leading-relaxed text-navy/75 sm:text-base">
+                (For instant deployment via Email or WhatsApp upon registration)
+              </p>
+              <div className="mt-5 break-words rounded-lux border border-navy/15 bg-light-grey p-5 font-body text-base leading-[1.75] text-navy/80 sm:p-7">
+                <p className="font-semibold text-navy">Subject: Welcome to the OPCIEAS Verified Network!</p>
+                <p className="mt-4">Dear [Contact Person Name],</p>
+                <p className="mt-4">Thank you for registering [Company Name] with OPCIEAS. We have successfully received your company details along with your confirmation to join our verified network.</p>
+                <p className="mt-4">As part of our founding initiative, subscription fees will be collected only after we achieve the minimum required memberships. This means that building each category in our portal depends on your wholehearted cooperation. Your participation is vital - while some are ready to step into the mainstream, lasting change for Indian industry requires collective effort. Together, we can overcome financial challenges and create a stronger future through teamwork.</p>
+                <p className="mt-4">Our team is currently reviewing your profile. Once we verify it, we'll add your company to our directory and notify you.</p>
+                <p className="mt-4">Best regards,<br />Team OPCIEAS <a className="font-semibold text-accent-blue underline underline-offset-2" href="http://www.opcieas.co/">[www.opcieas.co]</a></p>
+              </div>
             </section>
 
             <section className="mt-11 border-t border-navy/10 pt-8">

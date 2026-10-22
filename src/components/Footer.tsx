@@ -45,6 +45,9 @@ export default function Footer() {
             <div>
               <h3 className="font-heading text-2xl font-black text-navy sm:text-3xl">Stay Updated</h3>
               <p className="mt-2 font-body text-sm text-body-text">Subscribe for product updates, export news and tender opportunities.</p>
+              <a href="mailto:opcieas.opcieas4@gmail.com" className="mt-2 inline-block break-all font-body text-sm font-semibold text-navy transition hover:text-accent-blue">
+                opcieas.opcieas4@gmail.com
+              </a>
             </div>
             <form onSubmit={subscribe} className="flex gap-3">
               <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email" className="flex-1 rounded-full border border-gray-300 bg-white px-5 py-3 font-body text-sm text-navy outline-none focus:border-accent-blue" />
@@ -120,7 +123,7 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-gray-200 py-8 sm:flex-row">
-          <p className="font-body text-xs text-muted-text">© 2025 OPCIEAS Tech Business Promotion, Social Services Pvt. Ltd. All rights reserved.</p>
+          <p className="font-body text-xs text-muted-text">© 2026 All rights reserved. OPCIEAS Tech Business Promotion, Social Services Pvt. Ltd.</p>
           <div className="flex gap-6">
             <a href="/privacy-policy" className="font-body text-xs text-muted-text transition hover:text-accent-blue">Privacy Policy</a>
             <a href="/terms-of-use" className="font-body text-xs text-muted-text transition hover:text-accent-blue">Terms</a>
