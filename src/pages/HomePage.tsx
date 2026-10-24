@@ -8,7 +8,6 @@ import Industries from '../components/Industries';
 import Clients from '../components/Clients';
 import Testimonials from '../components/Testimonials';
 import HomepageFurnitureSequence from '../components/HomepageFurnitureSequence';
-import HomepageHostelSequence from '../components/HomepageHostelSequence';
 import { motion } from 'framer-motion';
 import { ArrowRight, FileText, Cpu, Building2, Heart, Ship, Globe, FileCheck, Truck } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -18,8 +17,8 @@ import { IMG } from '../lib/images';
 import { categoryHighlightGroups, getCategorySubcategoryRoute } from '../lib/categorySubcategories';
 
 import studentWritingPadChairImage from '../assets/product/Educational Furniture/Colleges & Higher Education/JUNIOR COLLEGE - STEEL WRITING PAD CHAIR WITH WOODEN FULL PAD.webp';
-import hostelFurnitureImage from '../assets/product/Hostel Furniture/Bunker Cots.webp';
-import industrialStorageImage from '../assets/product/Industrial Storage/Industrial Heavy-Duty Racks.webp';
+import hostelFurnitureImage from '../assets/product/Hostel Furniture/Bunker Cots/Modern Charcoal Metal Bunk Bed.webp';
+import industrialStorageImage from '../assets/product/Industrial Storage/Industrial Heavy-Duty Racks.png';
 import bathroomCollectionImage from '../assets/product/Bathroom Collection/Heart Shape.png';
 import letterBoxImage from '../assets/product/Letter Box/ABS Plastic Letter Box.png';
 
@@ -231,8 +230,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      <HomepageHostelSequence />
 
       <section className="bg-white py-10 sm:py-12 lg:py-14">
         <div className="container-x px-6">

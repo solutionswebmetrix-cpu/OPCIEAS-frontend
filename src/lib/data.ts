@@ -286,6 +286,7 @@ export function productBelongsToSubcategory(
   };
 
   if (target === normalizeTerms('Accessories')) {
+    if (candidates.some((value) => matchesSubcategory(value, target))) return true;
     const protectorSubcategory = categoryHighlightGroups['hostel-furniture'].accessories?.map((item) => item.subcategory) ?? [];
     return [...HOSTEL_ACCESSORY_SUBCATEGORIES, ...protectorSubcategory]
       .some((accessorySubcategory) => candidates.some((value) => matchesSubcategory(value, normalizeTerms(accessorySubcategory))));

@@ -32,6 +32,15 @@ const SCHOOL_SUBCATEGORY_BY_FOLDER: Record<string, string> = {
   'university college': 'University College',
 };
 
+const HOSTEL_SUBCATEGORY_BY_FOLDER: Record<string, string> = {
+  accessories: 'Accessories',
+  'bunker cots': 'Bunker Cots',
+  'hostel single cot': 'Single Cots',
+  'single cot': 'Single Cots',
+  'single cots': 'Single Cots',
+  'triple cots': 'Triple Cots',
+};
+
 const SUBCATEGORY_BY_PRODUCT: Record<string, Record<string, string>> = {
   'school furniture': {
     'student desk': 'Student Desk',
@@ -110,6 +119,10 @@ function getSubcategoryForAsset(asset: ProductAsset, categoryFolder: string): st
   if (normalizedAssetCategory === 'school furniture' && assetSubcategoryFolders.length) {
     const schoolSubcategory = SCHOOL_SUBCATEGORY_BY_FOLDER[assetSubcategoryFolders.join(' ')];
     if (schoolSubcategory) return schoolSubcategory;
+  }
+  if (normalizedAssetCategory === 'hostel furniture' && assetSubcategoryFolders.length) {
+    const hostelSubcategory = HOSTEL_SUBCATEGORY_BY_FOLDER[assetSubcategoryFolders.join(' ')];
+    if (hostelSubcategory) return hostelSubcategory;
   }
 
   const normalizedProductName = normalizeAssetLabel(asset.fileName);

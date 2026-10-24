@@ -80,16 +80,6 @@ input, select, textarea { font-family: var(--font-sans); font-size: 16px; }
     border: 1px solid #E5E7EB;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
   }
-  .splash-particle {
-    position: absolute;
-    border-radius: 9999px;
-    background: radial-gradient(circle, rgba(22,58,99,0.9) 0%, rgba(22,58,99,0.08) 40%, transparent 100%);
-    filter: blur(0.6px);
-    animation: splash-drift 6s ease-in-out infinite;
-  }
-  .splash-sweep {
-    box-shadow: 0 0 32px rgba(169, 200, 234, 0.7);
-  }
   .accent-blue-text {
     background: linear-gradient(135deg, #163A63 0%, #163A63 50%, #0B1F3A 100%);
     -webkit-background-clip: text;
@@ -314,11 +304,6 @@ input, select, textarea { font-family: var(--font-sans); font-size: 16px; }
 .animate-shimmer { background-size: 200% 100%; animation: shimmer 3s linear infinite; }
 
 /* Splash drift */
-@keyframes splash-drift {
-  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.65; }
-  50% { transform: translate(6px, -8px) scale(1.15); opacity: 0.95; }
-}
-
 /* Glow pulse */
 @keyframes glow-pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
 .animate-glow { animation: glow-pulse 3s ease-in-out infinite; }

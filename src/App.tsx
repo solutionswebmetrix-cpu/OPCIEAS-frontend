@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
 import LiveChatWidget from './components/LiveChatWidget';
-import SplashScreen from './components/SplashScreen';
 import RFQ from './components/RFQ';
 import HomePage from './pages/HomePage';
 import AllProductsPage from './pages/AllProductsPage';
@@ -56,20 +55,9 @@ function ScrollToTop() {
 }
 
 export default function App() {
-  const [skipSplash, setSkipSplash] = useState(false);
-
-  useEffect(() => {
-    if (sessionStorage.getItem('opcieas_intro_played') === 'true') {
-      setSkipSplash(true);
-    }
-  }, []);
-
-  const handleSplashComplete = () => setSkipSplash(true);
-
   return (
     <BrowserRouter>
       <ScrollToTop />
-      {!skipSplash && <SplashScreen onComplete={handleSplashComplete} />}
       <div className="border-b border-accent-blue/40 bg-navy px-4 py-3 text-center text-sm font-semibold leading-relaxed text-white sm:px-6 sm:py-3.5 sm:text-base">
         <p className="mx-auto max-w-6xl break-words">
           Free to Join Today: We do not collect any subscription fees until our minimum required membership is confirmed. Add your voice with a simple "Yes"!{' '}

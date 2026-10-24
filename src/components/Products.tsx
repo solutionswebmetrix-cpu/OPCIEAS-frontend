@@ -2,7 +2,8 @@ import { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
-import { fetchCategories, fetchProducts, isCategoryVisible, resolveProductImage, type Category, type Product } from '../lib/data';
+import { fetchCategories, fetchProducts, isCategoryVisible, productBelongsToCategory, productBelongsToSubcategory, resolveProductImage, type Category, type Product } from '../lib/data';
+import { getCategorySubcategoryRoute } from '../lib/categorySubcategories';
 
 const EDUCATIONAL_PROGRESSION = ['KG', 'Primary', 'High School', 'Junior College', 'PG College'] as const;
 type EducationalProgression = typeof EDUCATIONAL_PROGRESSION[number];
@@ -18,6 +19,23 @@ const PROGRESSION_BY_SUBCATEGORY: Record<string, EducationalProgression> = {
   'p g imiversity': 'PG College',
   'university college': 'PG College',
 };
+
+const HOSTEL_SUBCATEGORIES = [
+  { label: 'Hostel – Single Cot', subcategory: 'Single Cots' },
+  { label: 'Bunker Cots', subcategory: 'Bunker Cots' },
+  { label: 'Triple Cots', subcategory: 'Triple Cots' },
+  { label: 'Accessories', subcategory: 'Accessories' },
+] as const;
+
+const CATEGORY_FILTERS = [
+  { label: 'Educational Furniture', slug: 'educational-furniture' },
+  { label: 'School Furniture', slug: 'school-furniture' },
+  { label: 'Hostel Furniture', slug: 'hostel-furniture' },
+  { label: 'Industrial Storage', slug: 'industrial-storage' },
+  { label: 'Bathroom Collection', slug: 'bathroom-collection' },
+  { label: 'Letter Box', slug: 'letter-boxes' },
+  { label: 'Commercial Furniture', slug: 'commercial-furniture' },
+] as const;
 
 function getProgressionGroup(categorySlug: string, product: Product): string {
   const subcategory = (product.subcategory ?? '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
@@ -82,7 +100,7 @@ export default function Products() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<boolean>(false);
-  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
+  const [selectedCategorySlug, setSelectedCategorySlug] = useState<string>('educational-furniture');
 
   useEffect(() => {
     (async () => {
@@ -115,20 +133,34 @@ export default function Products() {
       const products = allProducts
         .filter((product) => String(product.category_id ?? '') === String(category.id))
         .sort((a, b) => Number(b.featured || b.is_featured) - Number(a.featured || a.is_featured));
-      const isEducationalListing = ['educational-furniture', 'school-furniture'].includes(category.slug);
-      const visibleProducts = isEducationalListing ? products : products.slice(0, 5);
 
       return {
         category,
-        products: visibleProducts,
+        products,
       };
     }).filter((entry) => entry.products.length > 0);
   }, [allProducts, categories]);
 
   const visibleProductGroups = useMemo(() => {
-    if (!selectedCategoryId) return productsByCategory.slice(0, 1);
-    return productsByCategory.filter(({ category }) => String(category.id) === selectedCategoryId);
-  }, [productsByCategory, selectedCategoryId]);
+    if (selectedCategorySlug === 'hostel-furniture') return [];
+    return productsByCategory.filter(({ category }) => category.slug === selectedCategorySlug);
+  }, [productsByCategory, selectedCategorySlug]);
+
+  const hostelSubcategoryGroups = useMemo(() => {
+    const hostelCategory = categories.find((category) => category.slug === 'hostel-furniture');
+    const hostelProducts = allProducts.filter((product) =>
+      hostelCategory
+        ? productBelongsToCategory(product, hostelCategory)
+        : product.category_slug?.trim().toLowerCase() === 'hostel-furniture'
+    );
+
+    return HOSTEL_SUBCATEGORIES.map(({ label, subcategory }) => ({
+      label,
+      subcategory,
+      products: hostelProducts.filter((product) => productBelongsToSubcategory(product, subcategory)),
+    }));
+  }, [allProducts, categories]);
+  const hasHostelProducts = hostelSubcategoryGroups.some(({ products }) => products.length > 0);
 
   if (loading) {
     return (
@@ -169,20 +201,24 @@ export default function Products() {
         )}
 
         <div className="mb-6 lg:mb-8 rounded-xl border border-navy/10 bg-light-grey/70 p-2">
-          <div className="flex flex-wrap items-center justify-center gap-2" role="tablist" aria-label="Product categories">
-            {productsByCategory.map(({ category }) => {
-              const categoryId = String(category.id);
-              const selected = (selectedCategoryId || String(productsByCategory[0]?.category.id)) === categoryId;
+          <div className="flex flex-wrap items-center justify-center gap-2" role="group" aria-label="Filter products by category">
+            {CATEGORY_FILTERS.map(({ label, slug }) => {
+              const selected = selectedCategorySlug === slug;
               return (
                 <button
-                  key={categoryId}
+                  key={slug}
                   type="button"
-                  role="tab"
-                  aria-selected={selected}
-                  onClick={() => setSelectedCategoryId(categoryId)}
-                  className={`rounded-full border px-4 py-2 font-sub text-xs transition ${selected ? 'border-accent-blue bg-accent-blue text-navy' : 'border-transparent bg-transparent text-navy/70 hover:border-accent-blue/50 hover:text-accent-blue'}`}
+                  aria-pressed={selected}
+                  onClick={() => setSelectedCategorySlug(slug)}
+                  style={{
+                    backgroundColor: selected ? '#0B1F3A' : '#FFFFFF',
+                    color: selected ? '#FFFFFF' : '#0B1F3A',
+                  }}
+                  className={`relative z-10 inline-flex min-h-10 items-center justify-center whitespace-nowrap rounded-full border px-4 py-2 font-sub text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 ${
+                    selected ? 'border-navy' : 'border-navy/15 hover:border-navy/40 hover:bg-light-grey'
+                  }`}
                 >
-                  {category.name}
+                  {label}
                 </button>
               );
             })}
@@ -233,8 +269,47 @@ export default function Products() {
               </motion.div>
             );
           })}
-          {visibleProductGroups.length === 0 && !loading && !error && (
+          {visibleProductGroups.length === 0 &&
+            !(selectedCategorySlug === 'hostel-furniture' && hasHostelProducts) &&
+            !loading &&
+            !error && (
             <div className="font-sub text-sm uppercase tracking-[0.2em] text-accent-blue">No products available.</div>
+          )}
+
+          {selectedCategorySlug === 'hostel-furniture' && (
+            <div className="space-y-8">
+              {hostelSubcategoryGroups.map(({ label, subcategory, products }, groupIndex) => {
+              return (
+                <div key={subcategory}>
+                  <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+                    <h3 className="font-heading text-xl font-black text-navy sm:text-2xl">{label}</h3>
+                    <Link
+                      to={getCategorySubcategoryRoute('hostel-furniture', subcategory)}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-accent-blue/40 bg-accent-blue/5 px-4 py-2 font-sub text-xs font-semibold text-accent-blue transition-all duration-300 hover:border-accent-blue hover:bg-accent-blue hover:text-navy"
+                    >
+                      View All <ArrowRight className="h-3.5 w-3.5" />
+                    </Link>
+                  </div>
+                  {products.length > 0 ? (
+                    <div className="grid grid-cols-2 gap-4 sm:gap-5 md:gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+                      {products.map((product, index) => (
+                        <HomeProductCard
+                          key={product.id || product.slug}
+                          product={product}
+                          index={index}
+                          categoryIndex={productsByCategory.length + groupIndex}
+                        />
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="rounded-lux border border-navy/10 bg-light-grey px-4 py-5 font-body text-sm text-navy/65">
+                      No products are currently available in this subcategory.
+                    </p>
+                  )}
+                </div>
+              );
+              })}
+            </div>
           )}
         </div>
       </div>
