@@ -59,12 +59,8 @@ export default function ProductDetailPage() {
   const specs = product.specs || {};
   const features = product.features || [];
   const waText = `Hi, I'm interested in ${encodeURIComponent(product.name)}. Please share details.`;
-  const dimensionValue = specs['Dimensions'] || specs.Dimensions || specs['dimensions'] || (product.dimensions ? JSON.stringify(product.dimensions) : 'Available on request');
-  const materialsValue = specs['Materials Used'] || specs['Material'] || product.materials_used || product.material || 'Available on request';
-  const packagingValue = specs['Packaging Specifications'] || specs['Packaging'] || product.packaging_specifications || 'Available on request';
+  const customizationNote = 'Available We are offering customized options as per your technical specifications (Dimensions, Materials Used, Weight, Packaging, and Variants).';
   const warrantyText = product.warranty_terms || specs['Warranty'] || '12 Months Warranty on domestic supply.';
-  const weightValue = specs['Weight'] || product.weight || 'Available on request';
-  const variantsValue = specs['Variants'] || (Array.isArray(product.variants) ? product.variants.join(', ') : typeof product.variants === 'string' ? product.variants : 'Available on request');
   const hasExport = !!(product.export_available || /export/i.test(String(specs['Export Available'] || '')));
   const supplyLabel = product.supply_type === 'IN_HOUSE' ? 'In-House Manufacturing' : product.supply_type === 'PARTNER' ? 'Partner Supply' : 'Direct Manufacturer';
   const supplyNote = product.supply_type === 'IN_HOUSE' ? 'Manufactured in our own facility with production control and quality assurance.' : 'Supplied through trusted production partners and quality-checked before dispatch.';
@@ -181,6 +177,7 @@ export default function ProductDetailPage() {
                 </tbody>
               </table>
             </div>
+            <p className="mt-4 font-body text-sm leading-6 text-navy/80">{customizationNote}</p>
           </div>
         </section>
 
@@ -376,13 +373,7 @@ export default function ProductDetailPage() {
             </div>
             <div className="rounded-lux border border-navy/10 bg-white p-5">
               <h3 className="font-heading text-lg font-bold text-navy">Technical Specifications</h3>
-              <ul className="mt-4 space-y-3 font-sub text-sm text-navy/70">
-                <li><span className="text-navy/50">Dimensions:</span> {dimensionValue}</li>
-                <li><span className="text-navy/50">Materials Used:</span> {materialsValue}</li>
-                <li><span className="text-navy/50">Weight:</span> {weightValue}</li>
-                <li><span className="text-navy/50">Packaging:</span> {packagingValue}</li>
-                <li><span className="text-navy/50">Variants:</span> {variantsValue}</li>
-              </ul>
+              <p className="mt-4 font-sub text-sm leading-6 text-navy/70">{customizationNote}</p>
             </div>
           </div>
         </div>
