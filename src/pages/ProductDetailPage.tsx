@@ -359,7 +359,7 @@ export default function ProductDetailPage() {
               </div>
               <div className="rounded-lux border border-navy/10 bg-white p-5">
                 <p className="font-heading text-sm font-bold text-navy">MOQ & Catalogue</p>
-                <p className="mt-2 font-body text-sm text-navy/70">Minimum order quantities vary by product and project. Download our catalogue or request a quote for exact details.</p>
+                <p className="mt-2 font-body text-sm text-navy/70">Minimum order quantity is fixed at 500+ units across all categories. For specialized project customization, please request a quote or download our catalogue.</p>
               </div>
             </div>
           </div>
