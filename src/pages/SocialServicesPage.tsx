@@ -217,7 +217,7 @@ export default function SocialServicesPage() {
                 <Users className="h-7 w-7 text-accent-blue" />
                 <h3 className="mt-5 font-heading text-xl font-bold text-navy">Shared effort</h3>
                 <p className="mt-3 font-body text-sm leading-relaxed text-navy/70">
-                  Rural transformation grows when families, communities, and local institutions work together with discipline and concern for the common good.
+                  Shared Strength & Township Living — through true unity among neighbors, ordinary rural communities evolve into thriving, advanced townships. Collective progress thrives on discipline, shared responsibility, and the common good.
                 </p>
               </article>
               <article className="rounded-lux bg-navy p-6 text-white shadow-sm">
