@@ -369,7 +369,7 @@ export default function ProductDetailPage() {
           <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
             <div className="max-w-3xl">
               <h3 className="font-heading text-xl font-bold text-navy">Product Description</h3>
-              <p className="mt-3 font-body text-sm leading-relaxed text-navy/70">{product.long_desc || product.description || product.short_desc || 'Description available on request.'}</p>
+              <p className="mt-3 font-body text-sm leading-relaxed text-navy/70">{product.long_desc || product.description || product.short_desc || 'Customized size.'}</p>
             </div>
             <div className="rounded-lux border border-navy/10 bg-white p-5">
               <h3 className="font-heading text-lg font-bold text-navy">Technical Specifications</h3>

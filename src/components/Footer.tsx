@@ -64,9 +64,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div className="flex min-w-0 items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-accent-blue/40 bg-navy/60">
-                <CompanyLogo alt="OPCIEAS logo" className="h-full w-full" />
-              </div>
+              <CompanyLogo alt="OPCIEAS logo" className="h-12 w-12" />
               <img
                 src={opcIeasTextWordmark}
                 alt="OPCIEAS Private Limited — Hand Crafted Since 1999 wordmark"
