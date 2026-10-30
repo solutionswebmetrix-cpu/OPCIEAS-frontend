@@ -215,9 +215,9 @@ export default function SocialServicesPage() {
             <div className="grid gap-5 sm:grid-cols-2">
               <article className="rounded-lux bg-white p-6 shadow-sm">
                 <Users className="h-7 w-7 text-accent-blue" />
-                <h3 className="mt-5 font-heading text-xl font-bold text-navy">Shared effort</h3>
+                <h3 className="mt-5 font-heading text-xl font-bold text-navy">Shared Strength & Township Living</h3>
                 <p className="mt-3 font-body text-sm leading-relaxed text-navy/70">
-                  Shared Strength & Township Living — through true unity among neighbors, ordinary rural communities evolve into thriving, advanced townships. Collective progress thrives on discipline, shared responsibility, and the common good.
+                  through true unity among neighbors, ordinary rural communities evolve into thriving, advanced townships. Collective progress thrives on discipline, shared responsibility, and the common good.
                 </p>
               </article>
               <article className="rounded-lux bg-navy p-6 text-white shadow-sm">
@@ -249,12 +249,22 @@ export default function SocialServicesPage() {
           <div className="container-x grid gap-12 px-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
             <SectionTitle eyebrow="Protection and Inclusion" title="Protecting the Vulnerable" />
             <div className="grid gap-5 sm:grid-cols-2">
-              {['Dignity', 'Safety', 'Fairness', 'Protection', 'Legal safeguards', 'Shared responsibility'].map((item) => (
-                <div key={item} className="rounded-lux border border-white/15 bg-white/5 p-6">
+              {[
+                { title: 'Dignity' },
+                { title: 'Safety' },
+                { title: 'Fairness' },
+                { title: 'Protection' },
+                { title: 'Legal safeguards' },
+                {
+                  title: 'Eradicating Adversity',
+                  text: 'Pooling local resources and uniting the community under strong leadership to immediately eliminate hunger, substance abuse, petty crime, and exploitation.',
+                },
+              ].map(({ title, text }) => (
+                <div key={title} className="rounded-lux border border-white/15 bg-white/5 p-6">
                   <ShieldCheck className="h-6 w-6 text-accent-blue-2" />
-                  <h3 className="mt-4 font-heading text-lg font-bold">{item}</h3>
+                  <h3 className="mt-4 font-heading text-lg font-bold">{title}</h3>
                   <p className="mt-2 font-body text-sm leading-relaxed text-white/70">
-                    Rural development must protect people across all economic levels and strengthen the dignity of every family.
+                    {text ?? 'Rural development must protect people across all economic levels and strengthen the dignity of every family.'}
                   </p>
                 </div>
               ))}

@@ -69,6 +69,28 @@ const infrastructure = [
   ['Dedicated Design & Project Support', 'Experienced engineering professionals ensuring seamless execution from blueprint to bulk delivery.', Building2],
 ] as const;
 
+const engineeringAdvantages = [
+  ['The Internal Steel Skeleton', 'Hidden beneath sleek surfaces is a heavy-duty, rigid structural steel skeleton anchored to bear high-intensity institutional loads. It will not wobble, warp, or sag.'],
+  ['The Handcrafted Composite Armor', 'Encased in a meticulous, handcrafted fiberglass composite, the exterior is entirely impervious to water, oil, acids, chemicals, humidity, and UV degradation.'],
+  ['Inbuilt, Non-Fading Colors', 'Featuring more than 54 vivid color combinations, the rich color is permanently inbuilt directly into the composite matrix during molding—meaning it will never fade, peel, or require repainting, even under intense sunlight and continuous heavy commercial usage.'],
+  ['The 25-Year Horizon', "Built to endure for a quarter-century or more. By eliminating exposed loose screws or bolts and utilizing in-house high-strength adhesives, our lightweight yet strong fiberglass ensures a long lifespan on normal use, resistance to rough use, and significant cost savings. If it isn't intentionally damaged, it outlasts multiple renovation cycles=saving institutions millions in recurring replacement costs."],
+] as const;
+
+const furnitureComparisons = [
+  ['Lifespan', '3 to 7 years before structural failure', '25+ years of unyielding structural integrity'],
+  ['Maintenance', 'Frequent repairs, bolt tightening, and disposal', 'Zero structural upkeep; weather and chemical resistant'],
+  ['Environmental Impact', 'Contributes to landfills through constant churn', 'Sustainability: Conserves raw materials and eliminates replacement waste'],
+  ['Long-Term Cost', 'High cumulative cost over 25 years', 'One-time capital investment for a generation'],
+] as const;
+
+const productLineup = [
+  ['Classroom & Academic Seating', 'Ergonomic desks, single and dual benches, fixed-lecture hall seating, and integrated writing-pad chairs for schools and universities.'],
+  ['Laboratory & Specialized Furniture', 'Chemical-, electrical-, and thermal-resistant workstations, rotatable stools, and modular record storage units designed for industrial and educational labs.'],
+  ['Hostel & Residential Accommodation', 'Heavy-duty single, bunker, and triple cots, paired with marine-grade stainless steel hardware and waterproof amenities.'],
+  ['Institutional & Office Storage', 'Steel and fiberglass cupboards, anti-corrosive filing cabinets, and secure locker systems for students, staff, and industrial facilities.'],
+  ['Auditorium & Library Infrastructure', 'Sturdy high-capacity library racks, auditorium rows, and heavy-use public space seating.'],
+] as const;
+
 function matchesProduct(product: Product, group: typeof bulkGroups[number], categoryName: string) {
   const searchable = product.name.toLowerCase();
   const categoryMatch = group.categories.some((name) => name.toLowerCase() === categoryName.toLowerCase());
@@ -137,7 +159,7 @@ export default function FurniturePage() {
             </div>
             <div className="mt-12">
               <h3 className="font-heading text-2xl font-bold text-navy">Why Bulk Commercial Supply?</h3>
-              <p className="mt-3 max-w-3xl font-body text-base leading-7 text-navy/70">Why Bulk Commercial Supply? By focusing our production on high-volume commercial needs rather than one-off custom pieces, we deliver clear advantages for large projects:</p>
+              <p className="mt-3 max-w-3xl font-body text-base leading-7 text-navy/70">By focusing our production on high-volume commercial needs rather than one-off custom pieces, we deliver clear advantages for large projects:</p>
               <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 {bulkSupplyBenefits.map(([title, description]) => (
                   <article key={title} className="border-t-2 border-accent-blue bg-white p-6">
@@ -163,10 +185,100 @@ export default function FurniturePage() {
           </div>
         </section>
 
+        <section id="beyond-the-budget-cycle" className="bg-white px-6 py-16 sm:py-20">
+          <div className="container-x">
+            <div className="max-w-4xl">
+              <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue">Built for the Next Generation</p>
+              <h2 className="mt-3 font-heading text-3xl font-black text-navy sm:text-4xl">Beyond the Budget Cycle: Why True Infrastructure Shouldn't Be Disposable</h2>
+              <p className="mt-6 font-body text-base leading-8 text-navy/75">For decades, institutional furniture has operated on a broken loop: procure, wear out, discard, and repurchase. In many sectors, annual renovation budgets demand visible change-even when the furniture is barely past its prime. But what if public assets stopped acting like consumables and started acting like investments?</p>
+              <p className="mt-5 font-heading text-xl font-bold leading-relaxed text-navy">Meet the next generation of institutional furniture from OPCIEAS:<br />Handcrafted, Steel-Reinforced Fiberglass Composite.</p>
+            </div>
+
+            <div className="mt-14 border-t border-navy/10 pt-12">
+              <h3 className="font-heading text-2xl font-bold text-navy">The Engineering Advantage: Why It Outlives the Cycle</h3>
+              <p className="mt-3 max-w-4xl font-body text-base leading-7 text-navy/70">Standard commercial furniture-whether mass-produced wood boards or light tubular steel-succumbs to humidity, structural fatigue, termite infestation, and heavy daily wear within a few short years. Our hybrid architecture changes the physics of durability:</p>
+              <div className="mt-8 grid gap-4 md:grid-cols-2">
+                {engineeringAdvantages.map(([title, description]) => (
+                  <article key={title} className="rounded-lux border border-navy/10 bg-light-grey p-6">
+                    <h4 className="font-heading text-lg font-bold text-navy">{title}</h4>
+                    <p className="mt-2 font-body text-sm leading-6 text-navy/70">{description}</p>
+                  </article>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-14 border-t border-navy/10 pt-12">
+              <h3 className="font-heading text-2xl font-bold text-navy">The Economic and Environmental Case for Decision-Makers</h3>
+              <div className="mt-4 max-w-4xl space-y-4 font-body text-base leading-8 text-navy/75">
+                <p>We understand the pressures faced by institutional leaders and public administrators. Budgets are allocated annually, and the urge to show immediate transformation is real. But true leadership means leaving a legacy of fiscal prudence and permanent quality.</p>
+                <p>Unlike traditional wooden furniture that often ends up in heaps of damage by the end of a financial year, our handcrafted solutions redefine value.</p>
+              </div>
+              <p className="mt-6 inline-block rounded-lux bg-accent-blue/5 px-5 py-4 font-heading text-xl font-bold text-navy">Everyone says Go Green… We Show How!!!</p>
+              <h4 className="mt-8 font-heading text-lg font-bold text-navy">CONVENTIONAL COMMERCIAL FURNITURE vs THE OPCIEAS HYBRID STANDARD</h4>
+              <div className="mt-5 grid gap-4 lg:hidden">
+                {furnitureComparisons.map(([category, conventional, hybrid]) => (
+                  <article key={category} className="rounded-lux border border-navy/10 bg-light-grey p-5">
+                    <h5 className="font-heading text-lg font-bold text-navy">{category}</h5>
+                    <div className="mt-4 space-y-4">
+                      <div>
+                        <p className="font-sub text-xs uppercase tracking-[0.2em] text-navy/55">Conventional Commercial Furniture</p>
+                        <p className="mt-1 break-words font-body text-sm leading-6 text-navy/75">{conventional}</p>
+                      </div>
+                      <div>
+                        <p className="font-sub text-xs uppercase tracking-[0.2em] text-accent-blue">The OPCIEAS Hybrid Standard</p>
+                        <p className="mt-1 break-words font-body text-sm leading-6 text-navy/75">{hybrid}</p>
+                      </div>
+                    </div>
+                  </article>
+                ))}
+              </div>
+              <div className="mt-5 hidden overflow-hidden rounded-lux border border-navy/10 lg:block">
+                <table className="w-full table-fixed border-collapse text-left">
+                  <thead className="bg-navy text-white">
+                    <tr>
+                      <th className="w-1/5 p-4 font-heading text-sm">Comparison</th>
+                      <th className="w-2/5 p-4 font-heading text-sm">Conventional Commercial Furniture</th>
+                      <th className="w-2/5 p-4 font-heading text-sm">The OPCIEAS Hybrid Standard</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {furnitureComparisons.map(([category, conventional, hybrid]) => (
+                      <tr key={category} className="border-t border-navy/10 even:bg-light-grey">
+                        <th scope="row" className="break-words p-4 font-heading text-sm font-bold text-navy">{category}</th>
+                        <td className="break-words p-4 font-body text-sm leading-6 text-navy/75">{conventional}</td>
+                        <td className="break-words p-4 font-body text-sm leading-6 text-navy/75">{hybrid}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div className="mt-14 border-t border-navy/10 pt-12">
+              <h3 className="font-heading text-2xl font-bold text-navy">Redefining Institutional Prestige & Social Mission</h3>
+              <div className="mt-4 max-w-4xl space-y-4 font-body text-base leading-8 text-navy/75">
+                <p>Durability doesn't mean utilitarian or boring. Because every piece is handcrafted with personal attention and precision by master artisans, our fiberglass furniture and play equipment feature smooth, ergonomic curves and seamless one-piece molding with no sharp seams or hidden crevices where dirt and bacteria accumulate.</p>
+                <p>Over time, our collections have found trusted homes in schools, colleges, universities, hospitals, hospitality spaces, and public institutions, proving their absolute versatility.</p>
+                <p>Beyond our commercial manufacturing standards, OPCIEAS is deeply committed to social welfare, rural community empowerment, and dignity living models for seniors—embodying our core belief that sustainable enterprise must serve both the economy and society.</p>
+              </div>
+              <p className="mt-6 border-l-4 border-accent-blue bg-accent-blue/5 px-5 py-4 font-heading text-xl font-bold leading-relaxed text-navy">An asset that looks premium on day one, and performs like new on day 3,000.</p>
+              <p className="mt-6 font-heading text-lg font-bold leading-relaxed text-navy">Stop buying furniture for the next budget cycle. Invest in infrastructure built for the next generation with OPCIEAS.</p>
+            </div>
+          </div>
+        </section>
+
         <section id="selected-bulk-product-range" className="container-x px-6 py-16 sm:py-20">
           <div className="max-w-3xl">
             <p className="font-sub text-xs uppercase tracking-[0.3em] text-accent-blue">Selected Bulk Product Range</p>
             <h2 className="mt-3 font-heading text-3xl font-black text-navy sm:text-4xl">Selected Bulk Product Range</h2>
+          </div>
+          <div className="mt-8 grid gap-4 md:grid-cols-2">
+            {productLineup.map(([title, description]) => (
+              <article key={title} className="rounded-lux border border-navy/10 bg-light-grey p-6">
+                <h3 className="font-heading text-lg font-bold text-navy">{title}</h3>
+                <p className="mt-2 font-body text-sm leading-6 text-navy/70">{description}</p>
+              </article>
+            ))}
           </div>
           <div className="mt-12 space-y-16">
             {productsByGroup.map(({ group, products: matchingProducts }) => (
@@ -208,6 +320,11 @@ export default function FurniturePage() {
                 ))}
               </div>
             </div>
+            <div className="mt-14 border-t border-white/15 pt-12">
+              <h3 className="font-heading text-2xl font-bold">Materials Sourcing & Quality</h3>
+              <p className="mt-4 font-body text-base leading-8 text-white/80">MATERIALS ARE BUYING FROM INDIAN LEADING MANUFACTURERS.</p>
+              <p className="mt-3 font-body text-base leading-8 text-white/80">Indian STEEL (L Angies, Pipes and tube materials) purchases from TATA, SAIL, jindal.</p>
+            </div>
           </div>
         </section>
 
@@ -221,7 +338,7 @@ export default function FurniturePage() {
               <Link to="/contact" className="btn-ghost inline-flex items-center gap-2 rounded-full px-6 py-3 font-sub text-sm text-navy"><ArrowRight className="h-4 w-4" /> REQUEST QUOTATION</Link>
               <a href="mailto:info@opcieas.com" className="inline-flex items-center gap-2 rounded-full border border-navy/20 px-6 py-3 font-sub text-sm text-navy"><Mail className="h-4 w-4" /> info@opcieas.com</a>
             </div>
-            <p className="mt-6 font-body text-sm text-navy/60">www.opcieas.co</p>
+            <p className="mt-6 font-body text-sm text-navy/60"><a href="http://www.opcieas.co/" className="underline underline-offset-4 hover:text-accent-blue">www.opcieas.co</a></p>
           </div>
         </section>
       </main>
