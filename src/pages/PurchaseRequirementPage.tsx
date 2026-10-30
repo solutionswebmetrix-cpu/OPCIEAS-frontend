@@ -171,7 +171,7 @@ export default function PurchaseRequirementPage() {
           <select
             value={(form as any)[name]}
             onChange={(e) => update(name, e.target.value)}
-            className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm ${errors[name] ? 'border-red-400 focus:ring-red-400' : 'border-slate-300 focus:ring-secondary-navy'} focus:outline-none focus:ring-2 bg-white transition`}
+            className={`${name === 'product_name' ? 'product-name-display ' : ''}w-full pl-10 pr-4 py-3 rounded-xl border text-sm ${errors[name] ? 'border-red-400 focus:ring-red-400' : 'border-slate-300 focus:ring-secondary-navy'} focus:outline-none focus:ring-2 bg-white transition`}
           >
             {options.map((o: any) => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
@@ -279,7 +279,7 @@ export default function PurchaseRequirementPage() {
                                       <button type="button" key={p.id}
                                         onClick={() => { update('product_name', p.name); update('title', `Need: ${p.name}`); setShowProductPicker(false); if (p.category_id) update('category_id', p.category_id); }}
                                         className="text-left p-2.5 rounded-lg bg-white border border-slate-200 hover:border-secondary-navy hover:bg-light-blue transition group">
-                                        <p className="text-xs font-semibold text-slate-900 group-hover:text-navy line-clamp-2">{p.name}</p>
+                                        <p className="product-name-display text-xs font-semibold text-slate-900 group-hover:text-navy line-clamp-2">{p.name}</p>
                                       </button>
                                     ))}
                                   </div>

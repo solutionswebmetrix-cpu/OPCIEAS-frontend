@@ -63,7 +63,7 @@ export default function Product360Viewer({ images, productName, open, onClose }:
         >
           <div className="mb-4 flex items-center justify-between">
             <div>
-              <h3 className="font-heading text-lg font-bold text-navy">{productName}</h3>
+              <h3 className="product-name-display font-heading text-lg font-bold text-navy">{productName}</h3>
               <p className="font-sub text-xs text-accent-blue">360° Product Viewer</p>
             </div>
             <button onClick={onClose} className="rounded-full bg-navy/10 p-2 text-navy transition hover:bg-navy/20">

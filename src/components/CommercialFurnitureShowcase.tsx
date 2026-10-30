@@ -33,9 +33,9 @@ function AssetGrid({ items }: { items: ProductAsset[] }) {
       {items.map((item) => (
         <Link key={item.slug} to={`/product/${item.slug}`} className="group overflow-hidden rounded-xl border border-navy/10 bg-white">
           <div className="flex h-32 items-center justify-center bg-light-grey p-2 sm:h-40 sm:p-3">
-            <img src={item.image} alt={item.name} className="h-full w-full object-contain object-center" loading="lazy" />
+            <img src={item.image} alt={item.name.toUpperCase()} className="h-full w-full object-contain object-center" loading="lazy" />
           </div>
-          <p className="min-h-12 p-2 font-sub text-[10px] font-semibold leading-4 text-navy sm:p-3 sm:text-xs">{item.name}</p>
+          <p className="product-name-display min-h-12 p-2 font-sub text-[10px] font-semibold leading-4 text-navy sm:p-3 sm:text-xs">{item.name}</p>
         </Link>
       ))}
     </div>

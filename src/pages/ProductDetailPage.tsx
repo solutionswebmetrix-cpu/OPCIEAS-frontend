@@ -65,6 +65,7 @@ export default function ProductDetailPage() {
   const supplyLabel = product.supply_type === 'IN_HOUSE' ? 'In-House Manufacturing' : product.supply_type === 'PARTNER' ? 'Partner Supply' : 'Direct Manufacturer';
   const supplyNote = product.supply_type === 'IN_HOUSE' ? 'Manufactured in our own facility with production control and quality assurance.' : 'Supplied through trusted production partners and quality-checked before dispatch.';
   const validation = validateProductEssentials(product);
+  const displayProductName = product.name.toUpperCase();
   const isSSRackProduct = /ss detachable wire rack|ss wire rack|detachable wire rack/i.test(`${product.name} ${product.slug}`);
 
   if (isSSRackProduct) {
@@ -90,7 +91,7 @@ export default function ProductDetailPage() {
     return (
       <>
         <PageMeta
-          title={`${product.name} | OPCIEAS`}
+          title={`${displayProductName} | OPCIEAS`}
           description={product.short_desc || `Premium ${product.name} from OPCIEAS.`}
           keywords={`${product.name}, stainless steel rack, OPCIEAS, industrial storage`}
           canonical={`https://www.opcieascommercialfurniture.com/product/${product.slug}`}
@@ -98,7 +99,7 @@ export default function ProductDetailPage() {
         />
         <section className="bg-white pt-32">
           <div className="container-x px-6 pb-8">
-            <Breadcrumbs items={[{ label: 'Products', to: '/products' }, { label: product.name }]} />
+            <Breadcrumbs items={[{ label: 'Products', to: '/products' }, { label: displayProductName }]} />
           </div>
         </section>
 
@@ -106,7 +107,7 @@ export default function ProductDetailPage() {
           <div className="container-x grid gap-10 px-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
             <div className="h-[420px] overflow-hidden rounded-lux border border-navy/10 bg-light-grey p-3 sm:h-[520px]">
               {mainImage ? (
-                <img src={mainImage} alt={product.name} className="h-full w-full rounded-xl object-contain object-center" />
+                <img src={mainImage} alt={product.name.toUpperCase()} className="h-full w-full rounded-xl object-contain object-center" />
               ) : (
                 <div className="flex h-full items-center justify-center rounded-xl bg-navy/5 text-navy/50">Product image unavailable</div>
               )}
@@ -200,7 +201,7 @@ export default function ProductDetailPage() {
               <h2 className="mt-3 font-heading text-3xl font-black text-navy">Visual presentation</h2>
             </div>
             <div className="h-[420px] overflow-hidden rounded-lux border border-navy/10 bg-white p-4 sm:h-[560px]">
-              {mainImage ? <img src={mainImage} alt={product.name} className="h-full w-full rounded-xl object-contain object-center" /> : <div className="flex h-full items-center justify-center rounded-xl bg-navy/5 text-navy/50">Product image unavailable</div>}
+              {mainImage ? <img src={mainImage} alt={product.name.toUpperCase()} className="h-full w-full rounded-xl object-contain object-center" /> : <div className="flex h-full items-center justify-center rounded-xl bg-navy/5 text-navy/50">Product image unavailable</div>}
             </div>
           </div>
         </section>
@@ -212,7 +213,7 @@ export default function ProductDetailPage() {
     <>
       {product && (
         <PageMeta
-          title={`${product.name} | OPCIEAS`}
+          title={`${displayProductName} | OPCIEAS`}
           description={product.short_desc || `Premium ${product.name} from OPCIEAS.`}
           keywords={`${product.name}, commercial furniture, OPCIEAS, ${product.category_id}`}
           canonical={`https://www.opcieascommercialfurniture.com/product/${product.slug}`}
@@ -221,7 +222,7 @@ export default function ProductDetailPage() {
       )}
       <section className="bg-white pt-32">
         <div className="container-x px-6 pb-8">
-          <Breadcrumbs items={[{ label: 'Products', to: '/products' }, { label: product.name }]} />
+          <Breadcrumbs items={[{ label: 'Products', to: '/products' }, { label: displayProductName }]} />
         </div>
       </section>
 
@@ -232,7 +233,7 @@ export default function ProductDetailPage() {
             <div className="group relative aspect-square overflow-hidden rounded-lux border border-navy/10 bg-light-grey">
               {resolvedGallery.length ? <img
                 src={resolvedGallery[activeImg]}
-                alt={product.name}
+                alt={product.name.toUpperCase()}
                 className="h-full w-full object-contain object-center"
               /> : <div className="h-full w-full bg-navy/5" aria-label="Product image unavailable" />}
               {resolvedGallery.length > 1 && (
@@ -280,7 +281,7 @@ export default function ProductDetailPage() {
 
           {/* Info */}
           <div>
-            <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="break-words font-heading text-2xl font-black leading-tight text-navy sm:text-3xl xl:text-4xl">{product.name}</motion.h1>
+            <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="product-name-display break-words font-heading text-2xl font-black leading-tight text-navy sm:text-3xl xl:text-4xl">{product.name}</motion.h1>
             {product.short_desc && <p className="mt-2 font-sub text-lg text-body-text">{product.short_desc}</p>}
             <div className="mt-4 inline-flex max-w-full whitespace-normal break-words rounded-full border border-navy/30 bg-light-blue px-3 py-1.5 font-sub text-xs font-semibold uppercase leading-relaxed tracking-[0.15em] text-navy">{supplyLabel}</div>
             {hasExport && (<div className="mt-3 inline-flex rounded-full border border-accent-blue/70 bg-accent-blue/10 px-3 py-1.5 font-sub text-xs font-semibold uppercase tracking-[0.2em] text-accent-blue">Export Specifications & Paid Samples Available.</div>)}
@@ -312,7 +313,7 @@ export default function ProductDetailPage() {
               <a href={`https://wa.me/919845579049?text=${waText}`} target="_blank" rel="noreferrer" className="flex items-center gap-2 rounded-full bg-[#25D366] px-5 py-2.5 font-sub text-sm text-white"><MessageCircle className="h-4 w-4" /> WhatsApp Inquiry</a>
               <button onClick={() => setViewerOpen(true)} className="btn-ghost flex items-center gap-2 rounded-full px-5 py-2.5 font-sub text-sm"><RotateCw className="h-4 w-4" /> 360° Viewer</button>
               <a href="tel:+919845579049" className="btn-ghost flex items-center gap-2 rounded-full px-5 py-2.5 font-sub text-sm"><Phone className="h-4 w-4" /> Call</a>
-              <button onClick={() => navigator.share?.({ title: product.name, url: window.location.href }).catch(() => {})} className="btn-ghost flex items-center gap-2 rounded-full px-5 py-2.5 font-sub text-sm"><Share2 className="h-4 w-4" /> Share</button>
+              <button onClick={() => navigator.share?.({ title: displayProductName, url: window.location.href }).catch(() => {})} className="btn-ghost flex items-center gap-2 rounded-full px-5 py-2.5 font-sub text-sm"><Share2 className="h-4 w-4" /> Share</button>
             </div>
 
             {/* Specs */}
@@ -449,7 +450,7 @@ export default function ProductDetailPage() {
         </section>
       )}
 
-      <Product360Viewer images={gallery} productName={product.name} open={viewerOpen} onClose={() => setViewerOpen(false)} />
+      <Product360Viewer images={gallery} productName={displayProductName} open={viewerOpen} onClose={() => setViewerOpen(false)} />
 
       <div className="bg-white border-t border-navy/5 pb-8 pt-4">
         <div className="container-x px-6">

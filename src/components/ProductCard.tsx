@@ -30,7 +30,7 @@ export default function ProductCard({ product, index }: Props) {
           className="relative block aspect-[4/5] shrink-0 overflow-hidden bg-light-grey"
         >
           {image ? (
-            <img src={image} alt={product.name} className="absolute inset-0 h-full w-full object-contain object-center" loading="lazy" />
+            <img src={image} alt={product.name.toUpperCase()} className="absolute inset-0 h-full w-full object-contain object-center" loading="lazy" />
           ) : (
             <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-slate-200 to-slate-300" />
           )}
@@ -45,7 +45,7 @@ export default function ProductCard({ product, index }: Props) {
               <span className="rounded-full border border-accent-blue/60 bg-accent-blue/15 px-2 py-0.5 font-sub text-[9px] uppercase tracking-[0.2em] text-accent-blue">{supplyLabel}</span>
               {product.price_range && <span className="font-sub text-[10px] uppercase tracking-wider text-navy/70">{product.price_range}</span>}
             </div>
-            <h3 className="mt-2 line-clamp-2 min-h-[3.5rem] font-heading text-lg font-bold leading-7 text-navy">{product.name}</h3>
+            <h3 className="product-name-display mt-2 line-clamp-2 min-h-[3.5rem] font-heading text-lg font-bold leading-7 text-navy">{product.name}</h3>
             {product.short_desc && <p className="mt-1 line-clamp-2 min-h-8 font-body text-xs leading-4 text-navy/70">{product.short_desc}</p>}
           </div>
 

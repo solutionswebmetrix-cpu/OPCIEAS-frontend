@@ -78,7 +78,7 @@ export default function InquiryForm({ productName, category, compact }: Props) {
         </label>
         <label className="flex min-w-0 flex-col gap-1.5 font-sub text-sm font-medium text-navy">
           <span>Product{isRFQ && <span className="text-red-700"> *</span>}</span>
-          <input required={isRFQ} value={form.product} onChange={(e) => set('product', e.target.value)} placeholder="Product of interest" className="w-full rounded-xl border border-navy/20 bg-white px-4 py-3 font-sub text-base text-navy placeholder:text-navy/50 outline-none transition focus:border-accent-blue focus:ring-2 focus:ring-accent-blue/30" />
+          <input required={isRFQ} value={form.product} onChange={(e) => set('product', e.target.value)} placeholder="Product of interest" className="product-name-display w-full rounded-xl border border-navy/20 bg-white px-4 py-3 font-sub text-base text-navy placeholder:text-navy/50 outline-none transition focus:border-accent-blue focus:ring-2 focus:ring-accent-blue/30" />
         </label>
         <label className="flex min-w-0 flex-col gap-1.5 font-sub text-sm font-medium text-navy">
           <span>Quantity{isRFQ && <span className="text-red-700"> *</span>}</span>

@@ -77,13 +77,13 @@ function HomeProductCard({ product, index, categoryIndex }: { product: Product; 
         <div className="h-56 sm:h-60 xl:h-64 bg-white p-2.5 sm:p-3">
           {image ? <img
             src={image}
-            alt={product.name}
+            alt={product.name.toUpperCase()}
             className="h-full w-full object-contain object-center"
             loading={categoryIndex === 0 && index < 4 ? 'eager' : 'lazy'}
           /> : <div className="h-full w-full bg-navy/5" aria-label="Product image unavailable" />}
         </div>
         <div className="flex min-h-[9rem] flex-col border-t border-navy/10 p-3.5 sm:p-4">
-          <h3 className="mt-1 font-heading text-base font-bold text-navy sm:text-lg leading-tight line-clamp-2">{product.name}</h3>
+          <h3 className="product-name-display mt-1 font-heading text-base font-bold text-navy sm:text-lg leading-tight line-clamp-2">{product.name}</h3>
           {product.short_desc && <p className="mt-2 line-clamp-2 font-body text-xs leading-relaxed text-navy/70">{product.short_desc}</p>}
           {product.price_range && <p className="mt-2 font-sub text-xs font-semibold text-navy">{product.price_range}</p>}
           <span className="mt-auto inline-flex items-center gap-1.5 pb-2 pt-4 font-sub text-sm font-semibold text-accent-blue">

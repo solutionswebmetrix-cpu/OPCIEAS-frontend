@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Building2, User, Mail, Phone, MapPin, CreditCard, Landmark, FileCheck, PenTool, CalendarDays, CheckCircle2, AlertCircle, ChevronRight } from 'lucide-react';
+import { Building2, User, Mail, Phone, MapPin, CreditCard, FileCheck, PenTool, CalendarDays, CheckCircle2, AlertCircle, ChevronRight } from 'lucide-react';
 import PageMeta from '../components/PageMeta';
 import { apiPost } from '../lib/api';
 
@@ -14,9 +14,6 @@ const initialForm = {
   phone_number: '',
   email: '',
   whatsapp_number: '',
-  bank_name: '',
-  account_number: '',
-  ifsc_code: '',
   declaration_text: 'I/We hereby declare that only standard products, compliant with OPCIEAS norms, will be supplied through this platform.',
   signature: '',
   name_designation: '',
@@ -38,7 +35,7 @@ export default function SupplierApplicationPage() {
 
   const validate = () => {
     const e: Record<string, string> = {};
-    const required: Array<keyof typeof initialForm> = ['full_name', 'company_name', 'business_registration_number', 'tax_identification_number', 'address', 'phone_number', 'email', 'whatsapp_number', 'bank_name', 'account_number', 'ifsc_code', 'declaration_text', 'signature', 'name_designation', 'application_date', 'password'];
+    const required: Array<keyof typeof initialForm> = ['full_name', 'company_name', 'business_registration_number', 'tax_identification_number', 'address', 'phone_number', 'email', 'whatsapp_number', 'declaration_text', 'signature', 'name_designation', 'application_date', 'password'];
     required.forEach((key) => {
       if (!String(form[key]).trim()) e[key] = 'This field is required';
     });
@@ -91,7 +88,7 @@ export default function SupplierApplicationPage() {
 
   return (
     <div className="min-h-screen bg-slate-50 pt-24 pb-16">
-      <PageMeta title="Supplier Application Form | OPCIEAS" description="Submit your supplier application with verified banking and compliance declarations to OPCIEAS." />
+      <PageMeta title="Supplier Application Form | OPCIEAS" description="Submit your supplier application with compliance declarations to OPCIEAS." />
       <div className="mx-auto max-w-6xl px-4">
         <motion.div initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.4 }} className="rounded-3xl border border-slate-200 bg-white shadow-2xl shadow-slate-200/50 overflow-hidden">
           <div className="bg-gradient-to-r from-blue-900 via-blue-800 to-blue-700 px-8 py-8 text-white">
@@ -115,15 +112,7 @@ export default function SupplierApplicationPage() {
                 </div>
               </section>
               <section className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
-                <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-slate-900"><Landmark size={18} className="text-secondary-navy" /> Section B – Banking Details</h2>
-                <div className="grid gap-4 md:grid-cols-2">
-                  <Field label="Bank Name" icon={Landmark} name="bank_name" />
-                  <Field label="Account Number" icon={CreditCard} name="account_number" />
-                  <Field label="IFSC Code" icon={FileCheck} name="ifsc_code" />
-                </div>
-              </section>
-              <section className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
-                <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-slate-900"><PenTool size={18} className="text-secondary-navy" /> Section C – Declaration & Undertaking</h2>
+                <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-slate-900"><PenTool size={18} className="text-secondary-navy" /> Section B – Declaration & Undertaking</h2>
                 <Field label="Declaration" icon={FileCheck} name="declaration_text" textarea required={false} />
                 <div className="mt-4 grid gap-4 md:grid-cols-2">
                   <Field label="Signature" icon={PenTool} name="signature" />
