@@ -18,8 +18,8 @@ import { categoryHighlightGroups, getCategorySubcategoryRoute } from '../lib/cat
 
 import studentWritingPadChairImage from '../assets/product/Educational Furniture/Colleges & Higher Education/JUNIOR COLLEGE - STEEL WRITING PAD CHAIR WITH WOODEN FULL PAD.webp';
 import hostelFurnitureImage from '../assets/product/Hostel Furniture/Bunker Cots/BUNK BED MODERN CHARCOAL METAL.webp';
-import industrialStorageImage from '../assets/product/Industrial Storage/INDUSTRIAL HEAVY-DUTY RACKS.png';
-import bathroomCollectionImage from '../assets/product/Bathroom Collection/HEART SHAPE.png';
+import industrialStorageImage from '../assets/product/Industrial Storage/Industrial Heavy-Duty Racks.png';
+import bathroomCollectionImage from '../assets/product/Bathroom Collection/Heart Shape.png';
 import letterBoxImage from '../assets/product/Letter Box/Modern White Letter Box Mailbox.png';
 
 function BusinessVerticalImage({ title, category }: { title: string; category: BusinessVerticalKey }) {
