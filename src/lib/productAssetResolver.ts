@@ -78,7 +78,7 @@ function getAssetFolderPath(path: string): string {
 
 const PRODUCT_NAME_OVERRIDES: Record<string, string> = {
   'educational furniture/k g/kg board less class group desk steel laminated with fibreglass':
-    'Kindergarten Boardless Classroom Group Desk, Steel Laminated with Fiberglass',
+    'KINDERGARTEN BOARDLESS CLASSROOM GROUP DESK, STEEL LAMINATED WITH FIBERGLASS',
 };
 
 function createAsset(path: string, image: string): ProductAsset {
