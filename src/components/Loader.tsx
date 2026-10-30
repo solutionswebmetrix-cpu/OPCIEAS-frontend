@@ -1,72 +1,127 @@
-import { motion, AnimatePresence } from 'framer-motion';
+import { useCallback, useEffect, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import opcIeasTextWordmark from '../assets/logo/OPCIEAS_approved_text_wordmark.png';
+import CompanyLogo from './CompanyLogo';
 
-export default function Loader({ done }: { done: boolean }) {
+const subtitles = [
+  'Commercial Furniture Manufacturer',
+  'Government Tender Specialist',
+  'Export Furniture Manufacturer',
+];
+
+export default function Loader({ done, onComplete }: { done: boolean; onComplete: () => void }) {
+  const [logoVisible, setLogoVisible] = useState(false);
+  const [logoPulse, setLogoPulse] = useState(false);
+  const [showTitle, setShowTitle] = useState(false);
+  const [showSubtitle, setShowSubtitle] = useState(false);
+
+  const complete = useCallback(() => {
+    document.body.style.overflow = '';
+    onComplete();
+  }, [onComplete]);
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    const wordmarkPreload = document.createElement('link');
+    wordmarkPreload.rel = 'preload';
+    wordmarkPreload.as = 'image';
+    wordmarkPreload.href = opcIeasTextWordmark;
+    document.head.appendChild(wordmarkPreload);
+
+    const timeline = [
+      window.setTimeout(() => setLogoVisible(true), 150),
+      window.setTimeout(() => setLogoPulse(true), 1200),
+      window.setTimeout(() => setShowTitle(true), 1700),
+      window.setTimeout(() => setShowSubtitle(true), 2600),
+      window.setTimeout(complete, 5900),
+    ];
+
+    return () => {
+      document.body.style.overflow = '';
+      timeline.forEach(window.clearTimeout);
+      if (wordmarkPreload.parentNode) wordmarkPreload.parentNode.removeChild(wordmarkPreload);
+    };
+  }, [complete]);
+
+  const handleSkip = () => complete();
+
   return (
     <AnimatePresence>
       {!done && (
         <motion.div
-          className="fixed inset-0 z-[10000] flex flex-col items-center justify-center bg-white"
+          key="splash"
+          role="status"
+          aria-label="OPCIEAS intro"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           exit={{ opacity: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }}
+          className="fixed inset-0 z-[99999] flex items-center justify-center overflow-y-auto bg-[#FFFFFF] text-navy"
         >
-          {/* Ambient glow */}
-          <div className="absolute inset-0 overflow-hidden">
-            <div className="absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent-blue/15 blur-[120px]" />
-            <div className="absolute inset-0 grid-bg opacity-40" />
-          </div>
+        <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+          <div className="splash-particle left-[12%] top-[18%] h-2 w-2" />
+          <div className="splash-particle left-[25%] top-[72%] h-1.5 w-1.5" />
+          <div className="splash-particle left-[42%] top-[35%] h-1.5 w-1.5" />
+          <div className="splash-particle left-[63%] top-[16%] h-2 w-2" />
+          <div className="splash-particle left-[78%] top-[60%] h-1 w-1" />
+          <div className="splash-particle left-[88%] top-[42%] h-2.5 w-2.5" />
+        </div>
 
-          {/* 3D rotating logo */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="relative mb-10"
-            style={{ perspective: 800 }}
+        <div className="relative mx-auto flex min-h-[80vh] w-full max-w-4xl flex-col items-center justify-center px-6 py-20 text-center">
+          <button
+            type="button"
+            onClick={handleSkip}
+            className="absolute right-6 top-6 z-10 rounded-full border border-navy/20 bg-light-grey px-4 py-2 text-xs uppercase tracking-[0.35em] text-navy/80 transition hover:border-accent-blue hover:text-accent-blue"
           >
-            <motion.div
-              animate={{ rotateY: 360 }}
-              transition={{ duration: 2.4, repeat: Infinity, ease: 'linear' }}
-              style={{ transformStyle: 'preserve-3d' }}
-              className="relative flex h-28 w-28 items-center justify-center rounded-lux border border-accent-blue/40 bg-white shadow-[0_8px_40px_rgba(7,26,53,0.1),0_0_30px_rgba(22,58,99,0.15)] glow-navy"
-            >
-              <span className="font-heading text-6xl font-black accent-blue-text" style={{ transform: 'translateZ(20px)' }}>O</span>
-              <div className="absolute inset-0 rounded-lux border border-accent-blue/20" style={{ transform: 'translateZ(-20px)' }} />
-            </motion.div>
+            Skip Intro
+          </button>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.2 }}
+            animate={{ opacity: logoVisible ? 1 : 0, scale: logoVisible ? (logoPulse ? 1.05 : 1) : 0.2 }}
+            transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+            className="relative flex items-center justify-center"
+          >
+            <div className="absolute inset-0 rounded-[36px] bg-accent-blue/5 blur-3xl" />
+            <div className="relative flex h-36 w-36 items-center justify-center sm:h-40 sm:w-40">
+              <CompanyLogo alt="OPCIEAS logo" className="h-full w-full object-contain" />
+            </div>
           </motion.div>
 
-          <motion.h1
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-            className="font-heading text-2xl font-extrabold tracking-[0.3em] text-navy"
+            animate={{ opacity: showTitle ? 1 : 0, y: showTitle ? 0 : 20 }}
+            transition={{ duration: 0.8, delay: 0.1, ease: 'easeOut' }}
+            className="mt-10 max-w-3xl"
           >
-            OPCIEAS
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 0.6 }}
-            className="mt-3 font-sub text-sm tracking-wide text-accent-blue"
-          >
-            Everyone Says Go Green... We Show How!!!
-          </motion.p>
+            <img
+              src={opcIeasTextWordmark}
+              alt="OPCIEAS Private Limited — Hand Crafted Since 1999"
+              className="h-auto w-[min(72vw,340px)] object-contain"
+            />
+          </motion.div>
 
-          {/* Progress bar */}
-          <div className="mt-10 h-[2px] w-56 overflow-hidden rounded-full bg-navy/10">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: showSubtitle ? 1 : 0, y: showSubtitle ? 0 : 16 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+            className="mt-8 grid w-full gap-3 text-sm font-medium text-navy/85 sm:grid-cols-3"
+          >
+            {subtitles.map((line) => (
+              <div key={line} className="rounded-3xl border border-navy/10 bg-light-grey px-5 py-3 shadow-sm">
+                {line}
+              </div>
+            ))}
+          </motion.div>
+
+          <div className="relative mt-12 h-2.5 w-full overflow-hidden rounded-full bg-navy/5 sm:w-3/4">
             <motion.div
-              className="h-full bg-gradient-to-r from-accent-blue-2 to-accent-blue"
-              initial={{ width: '0%' }}
-              animate={{ width: '100%' }}
-              transition={{ duration: 2, ease: [0.16, 1, 0.3, 1] }}
+              initial={{ x: '-110%' }}
+              animate={{ x: showSubtitle ? '110%' : '-110%' }}
+              transition={{ duration: 1.8, ease: 'easeInOut' }}
+              className="splash-sweep absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-transparent via-accent-blue/30 to-transparent"
             />
           </div>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8 }}
-            className="mt-4 font-body text-xs tracking-[0.2em] text-navy/40"
-          >
-            LOADING EXPERIENCE
-          </motion.p>
+        </div>
         </motion.div>
       )}
     </AnimatePresence>

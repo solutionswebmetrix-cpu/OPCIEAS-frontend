@@ -308,6 +308,18 @@ input, select, textarea { font-family: var(--font-sans); font-size: 16px; }
 .animate-shimmer { background-size: 200% 100%; animation: shimmer 3s linear infinite; }
 
 /* Splash drift */
+@keyframes splash-drift {
+  0%, 100% { transform: translateY(0); opacity: 0.35; }
+  50% { transform: translateY(-14px); opacity: 0.8; }
+}
+.splash-particle {
+  position: absolute;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(22,58,99,0.28) 0%, rgba(22,58,99,0.04) 55%, transparent 100%);
+  filter: blur(0.6px);
+  animation: splash-drift 6s ease-in-out infinite;
+}
+.splash-sweep { box-shadow: 0 0 24px rgba(22,58,99,0.16); }
 /* Glow pulse */
 @keyframes glow-pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
 .animate-glow { animation: glow-pulse 3s ease-in-out infinite; }

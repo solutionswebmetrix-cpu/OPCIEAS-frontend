@@ -1,7 +1,8 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import Loader from './components/Loader';
 import WhatsAppButton from './components/WhatsAppButton';
 import LiveChatWidget from './components/LiveChatWidget';
 import RFQ from './components/RFQ';
@@ -55,8 +56,12 @@ function ScrollToTop() {
 }
 
 export default function App() {
+  const [splashDone, setSplashDone] = useState(false);
+  const handleSplashComplete = useCallback(() => setSplashDone(true), []);
+
   return (
     <BrowserRouter>
+      <Loader done={splashDone} onComplete={handleSplashComplete} />
       <ScrollToTop />
       <div className="border-b border-accent-blue/40 bg-navy px-4 py-3 text-center text-sm font-semibold leading-relaxed text-white sm:px-6 sm:py-3.5 sm:text-base">
         <p className="mx-auto max-w-6xl break-words">
